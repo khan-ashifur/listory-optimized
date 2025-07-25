@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Copy, Download, Star, Tag, Video, ShoppingCart, Eye, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Copy, Download, Star, Tag, Video, ShoppingCart, Eye, TrendingUp, Image } from 'lucide-react';
 import toast from 'react-hot-toast';
 import PlatformPreview from '../components/PlatformPreview';
 import ListingOptimizationScore from '../components/ListingOptimizationScore';
+import ImageGenerationStatus from '../components/ImageGenerationStatus';
 import { listingAPI } from '../services/api';
 
 const ListingResults = () => {
@@ -234,6 +235,13 @@ const ListingResults = () => {
                 active={activeTab === 'optimization'}
                 onClick={setActiveTab}
               />
+              <TabButton
+                id="images"
+                label="Product Images"
+                icon={Image}
+                active={activeTab === 'images'}
+                onClick={setActiveTab}
+              />
               {currentListing.platform === 'tiktok' && (
                 <TabButton
                   id="video"
@@ -368,6 +376,16 @@ const ListingResults = () => {
                 transition={{ duration: 0.3 }}
               >
                 <ListingOptimizationScore listing={currentListing} />
+              </motion.div>
+            )}
+
+            {activeTab === 'images' && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ImageGenerationStatus listingId={listingId} />
               </motion.div>
             )}
 

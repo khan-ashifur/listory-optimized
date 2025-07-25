@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Sparkles } from 'lucide-react';
+import { ArrowLeft, Sparkles, Upload, X, Image } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { productAPI, listingAPI } from '../services/api';
 
@@ -23,6 +23,8 @@ const ProductForm = () => {
   });
   
   const [isLoading, setIsLoading] = useState(false);
+  const [productImage, setProductImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const brandTones = [
     { value: 'professional', label: 'Professional' },
@@ -41,18 +43,52 @@ const ProductForm = () => {
     }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        toast.error('Image size should be less than 5MB');
+        return;
+      }
+      
+      setProductImage(file);
+      
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    setProductImage(null);
+    setImagePreview(null);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     
     try {
-      // Create product first
-      const productData = {
-        ...formData,
-        target_platform: selectedPlatform
-      };
+      // Create FormData for multipart upload
+      const productFormData = new FormData();
       
-      const productResponse = await productAPI.create(productData);
+      // Add all text fields
+      Object.keys(formData).forEach(key => {
+        productFormData.append(key, formData[key]);
+      });
+      
+      // Add platform
+      productFormData.append('target_platform', selectedPlatform);
+      
+      // Add image if exists
+      if (productImage) {
+        productFormData.append('product_image', productImage);
+      }
+      
+      const productResponse = await productAPI.create(productFormData);
       const productId = productResponse.data.id;
       
       // Generate listing
@@ -181,6 +217,50 @@ const ProductForm = () => {
                 placeholder="Describe your product in detail..."
                 required
               />
+            </div>
+
+            {/* Product Image Upload */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Product Image
+              </label>
+              <div className="mt-1">
+                {!imagePreview ? (
+                  <label className="relative cursor-pointer bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 p-6 hover:border-primary-400 transition-colors">
+                    <div className="text-center">
+                      <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                      <p className="mt-2 text-sm text-gray-600">
+                        Click to upload product image
+                      </p>
+                      <p className="text-xs text-gray-500">PNG, JPG up to 5MB</p>
+                    </div>
+                    <input
+                      type="file"
+                      className="sr-only"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                    />
+                  </label>
+                ) : (
+                  <div className="relative">
+                    <img
+                      src={imagePreview}
+                      alt="Product preview"
+                      className="h-48 w-full object-cover rounded-lg"
+                    />
+                    <button
+                      type="button"
+                      onClick={removeImage}
+                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+                    >
+                      <X className="h-5 w-5" />
+                    </button>
+                  </div>
+                )}
+              </div>
+              <p className="mt-2 text-xs text-gray-500">
+                Upload a clear image of your product for AI to generate better listing images
+              </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">

@@ -49,6 +49,10 @@ class ListingGeneratorService:
             
             listing.status = 'completed'
             listing.save()
+            
+            # Queue image generation in background
+            self._queue_image_generation(listing)
+            
             return listing
             
         except Exception as e:
@@ -605,3 +609,15 @@ Return ONLY valid JSON:
         if urls:
             return f"\nCOMPETITOR ANALYSIS: Differentiate from competitors at {', '.join(urls[:3])}"
         return ""
+    
+    def _queue_image_generation(self, listing):
+        """Queue image generation for the listing"""
+        try:
+            from .image_service import generate_all_listing_images
+            # Queue the task asynchronously
+            generate_all_listing_images.delay(listing.id)
+            print(f"Queued image generation for listing {listing.id}")
+        except Exception as e:
+            print(f"Error queuing image generation: {e}")
+            # Don't fail the listing generation if image generation fails
+            pass

@@ -4,17 +4,20 @@ const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
-// Request interceptor to add auth token
+// Request interceptor to add auth token and content type
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('auth_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  
+  // Set content type if not FormData (for file uploads)
+  if (!config.data || !(config.data instanceof FormData)) {
+    config.headers['Content-Type'] = 'application/json';
+  }
+  
   return config;
 });
 
@@ -45,6 +48,8 @@ export const listingAPI = {
   list: () => api.get('/listings/generated/'),
   get: (id) => api.get(`/listings/generated/${id}/`),
   delete: (id) => api.delete(`/listings/generated/${id}/`),
+  getImages: (id) => api.get(`/listings/generated/${id}/images/`),
+  regenerateImages: (id) => api.post(`/listings/generated/${id}/regenerate_images/`),
 };
 
 export const userAPI = {

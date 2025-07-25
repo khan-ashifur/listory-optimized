@@ -1,9 +1,16 @@
 from rest_framework import serializers
-from .models import GeneratedListing, KeywordResearch, ListingOptimization
+from .models import GeneratedListing, KeywordResearch, ListingOptimization, ListingImage
+
+
+class ListingImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ListingImage
+        fields = '__all__'
 
 
 class GeneratedListingSerializer(serializers.ModelSerializer):
     product_name = serializers.CharField(source='product.name', read_only=True)
+    images = ListingImageSerializer(many=True, read_only=True)
     
     class Meta:
         model = GeneratedListing

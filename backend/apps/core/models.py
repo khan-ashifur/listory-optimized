@@ -31,6 +31,10 @@ class Product(models.Model):
     categories = models.TextField(help_text="Product categories, comma-separated", blank=True, default="")
     features = models.TextField(help_text="Key features, comma-separated", blank=True, default="")
     target_keywords = models.TextField(help_text="Target keywords, comma-separated", blank=True)
+    
+    # Product image
+    product_image = models.ImageField(upload_to='products/', null=True, blank=True, help_text="Upload your product image")
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

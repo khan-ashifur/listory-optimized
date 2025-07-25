@@ -72,3 +72,36 @@ class ListingOptimization(models.Model):
     
     def __str__(self):
         return f"{self.optimization_type} for {self.listing.product.name}"
+
+
+class ListingImage(models.Model):
+    IMAGE_TYPE_CHOICES = [
+        ('hero', 'Hero Shot'),
+        ('infographic', 'Infographic'),
+        ('lifestyle', 'Lifestyle'),
+        ('testimonial', 'Testimonial'),
+        ('whats_in_box', 'What\'s in the Box'),
+    ]
+    
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('generating', 'Generating'),
+        ('completed', 'Completed'),
+        ('failed', 'Failed'),
+    ]
+    
+    listing = models.ForeignKey(GeneratedListing, on_delete=models.CASCADE, related_name='images')
+    image_type = models.CharField(max_length=20, choices=IMAGE_TYPE_CHOICES)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    prompt = models.TextField(blank=True)
+    image_url = models.URLField(blank=True)
+    error_message = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ['listing', 'image_type']
+        ordering = ['created_at']
+    
+    def __str__(self):
+        return f"{self.get_image_type_display()} for {self.listing.product.name}"
