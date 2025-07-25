@@ -613,11 +613,20 @@ Return ONLY valid JSON:
     def _queue_image_generation(self, listing):
         """Queue image generation for the listing"""
         try:
-            from .image_service import generate_all_listing_images
-            # Queue the task asynchronously
-            generate_all_listing_images.delay(listing.id)
-            print(f"Queued image generation for listing {listing.id}")
+            from .image_service import ImageGenerationService, CELERY_AVAILABLE
+            
+            service = ImageGenerationService()
+            if CELERY_AVAILABLE:
+                from .image_service import generate_all_listing_images
+                # Queue the task asynchronously
+                generate_all_listing_images.delay(listing.id)
+                print(f"Queued image generation for listing {listing.id}")
+            else:
+                # Generate images synchronously
+                print(f"Generating images synchronously for listing {listing.id}")
+                service.queue_all_images(listing)
+                
         except Exception as e:
-            print(f"Error queuing image generation: {e}")
+            print(f"Error with image generation: {e}")
             # Don't fail the listing generation if image generation fails
             pass

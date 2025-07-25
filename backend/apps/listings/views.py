@@ -82,20 +82,36 @@ class GeneratedListingViewSet(viewsets.ModelViewSet):
         """Regenerate failed images for a listing"""
         listing = self.get_object()
         
-        # Import here to avoid circular imports
-        from .image_service import generate_listing_image
-        
-        # Find failed images and requeue them
-        failed_images = listing.images.filter(status='failed')
-        requeued_count = 0
-        
-        for image in failed_images:
-            image.status = 'pending'
-            image.save()
-            generate_listing_image.delay(image.id)
-            requeued_count += 1
-        
-        return Response({
-            'status': 'success',
-            'message': f'Requeued {requeued_count} failed images for regeneration'
-        })
+        try:
+            # Import here to avoid circular imports
+            from .image_service import generate_listing_image, ImageGenerationService, CELERY_AVAILABLE
+            
+            # Find failed images and requeue them
+            failed_images = listing.images.filter(status='failed')
+            requeued_count = 0
+            
+            if CELERY_AVAILABLE:
+                for image in failed_images:
+                    image.status = 'pending'
+                    image.save()
+                    generate_listing_image.delay(image.id)
+                    requeued_count += 1
+            else:
+                # Generate synchronously if Celery not available
+                service = ImageGenerationService()
+                for image in failed_images:
+                    image.status = 'pending'
+                    image.save()
+                    service.generate_image(image.id)
+                    requeued_count += 1
+            
+            return Response({
+                'status': 'success',
+                'message': f'Requeued {requeued_count} failed images for regeneration'
+            })
+            
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'message': f'Error regenerating images: {str(e)}'
+            }, status=400)

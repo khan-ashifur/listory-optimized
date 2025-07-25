@@ -2,7 +2,15 @@ import json
 import logging
 from django.conf import settings
 from .models import ListingImage
-from celery import shared_task
+
+try:
+    from celery import shared_task
+    CELERY_AVAILABLE = True
+except ImportError:
+    # Celery not installed - define dummy decorator
+    def shared_task(func):
+        return func
+    CELERY_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
 
@@ -162,7 +170,12 @@ Details: Each item clearly visible and identifiable.{image_reference}"""
             image_ids.append(listing_image.id)
             
             # Queue the image generation task
-            generate_listing_image.delay(listing_image.id)
+            if CELERY_AVAILABLE:
+                generate_listing_image.delay(listing_image.id)
+            else:
+                # Generate synchronously if Celery is not available
+                logger.warning("Celery not available - generating images synchronously")
+                self.generate_image(listing_image.id)
         
         return image_ids
 

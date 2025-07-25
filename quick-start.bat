@@ -19,7 +19,7 @@ if not exist "venv" (
 
 echo [2/4] Installing Python dependencies...
 call venv\Scripts\activate
-pip install -q Django==5.1.3 djangorestframework==3.15.2 django-cors-headers==4.6.0 python-decouple==3.8 openai==1.57.0 celery==5.4.0 redis==5.2.0 requests==2.32.3 Pillow==11.0.0
+pip install -q -r ../requirements-basic.txt
 
 echo [3/4] Setting up database...
 if not exist ".env" (
