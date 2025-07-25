@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.platform-card {
+  @apply bg-white rounded-xl shadow-lg p-6 border-2 border-gray-200 hover:border-primary-500 hover:shadow-xl transition-all duration-300 cursor-pointer;
+}
+
+.platform-card.selected {
+  @apply border-primary-500 bg-primary-50 shadow-xl;
+}
+
+.btn-primary {
+  @apply bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors font-semibold;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-300 transition-colors font-semibold;
+}
+
+.form-input {
+  @apply w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
