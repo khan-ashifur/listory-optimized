@@ -80,7 +80,6 @@ class ListingImage(models.Model):
         ('infographic', 'Infographic'),
         ('lifestyle', 'Lifestyle'),
         ('testimonial', 'Testimonial'),
-        ('whats_in_box', 'What\'s in the Box'),
     ]
     
     STATUS_CHOICES = [

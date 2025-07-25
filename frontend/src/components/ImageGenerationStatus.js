@@ -14,16 +14,14 @@ const ImageGenerationStatus = ({ listingId }) => {
     hero: 'Hero Shot',
     infographic: 'Infographic',
     lifestyle: 'Lifestyle',
-    testimonial: 'Testimonial',
-    whats_in_box: "What's in the Box"
+    testimonial: 'Testimonial'
   };
 
   const imageTypeDescriptions = {
-    hero: 'Main product photo with professional lighting',
+    hero: 'Professional product photo based on your uploaded image',
     infographic: 'Visual representation of key features',
-    lifestyle: 'Product shown in real-world use',
-    testimonial: 'Visual story of customer satisfaction',
-    whats_in_box: 'Flat lay of all included items'
+    lifestyle: 'Your product shown in real-world use',
+    testimonial: 'Visual story of customer satisfaction'
   };
 
   const fetchImageStatus = async () => {

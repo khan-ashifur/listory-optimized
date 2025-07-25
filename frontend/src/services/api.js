@@ -49,6 +49,7 @@ export const listingAPI = {
   get: (id) => api.get(`/listings/generated/${id}/`),
   delete: (id) => api.delete(`/listings/generated/${id}/`),
   getImages: (id) => api.get(`/listings/generated/${id}/images/`),
+  generateImages: (id) => api.post(`/listings/generated/${id}/generate_images/`),
   regenerateImages: (id) => api.post(`/listings/generated/${id}/regenerate_images/`),
 };
 

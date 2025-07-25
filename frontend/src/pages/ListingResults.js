@@ -22,6 +22,17 @@ const ListingResults = () => {
         const response = await listingAPI.get(listingId);
         setListing(response.data);
         setLoading(false);
+        
+        // Check if images exist, if not, trigger generation
+        const hasImages = response.data.images && response.data.images.length > 0;
+        if (!hasImages) {
+          try {
+            await listingAPI.generateImages(listingId);
+            console.log('Image generation triggered');
+          } catch (error) {
+            console.error('Error triggering image generation:', error);
+          }
+        }
       } catch (error) {
         console.error('Error fetching listing:', error);
         setLoading(false);

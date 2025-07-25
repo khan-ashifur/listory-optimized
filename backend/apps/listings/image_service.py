@@ -41,19 +41,15 @@ class ImageGenerationService:
             'hero': self._create_hero_prompt(product, title, features),
             'infographic': self._create_infographic_prompt(product, features),
             'lifestyle': self._create_lifestyle_prompt(product, title),
-            'testimonial': self._create_testimonial_prompt(product),
-            'whats_in_box': self._create_whats_in_box_prompt(product)
+            'testimonial': self._create_testimonial_prompt(product)
         }
         
         return prompts
 
     def _create_hero_prompt(self, product, title, features):
         """Create hero shot prompt"""
-        image_reference = ""
-        if product.product_image:
-            image_reference = f"\nReference the uploaded product image for accurate representation of {product.name}"
-        
-        return f"""Create a professional hero product photograph of {product.name}.
+        if not product.product_image:
+            return f"""Create a professional hero product photograph of {product.name}.
 Style: Clean, modern e-commerce product photography
 Background: Pure white or subtle gradient
 Lighting: Professional studio lighting with soft shadows
@@ -61,7 +57,21 @@ Angle: 3/4 view showing the product's best features
 Details: Sharp focus, high-quality rendering showing texture and materials
 Brand tone: {product.brand_tone}
 Key features to highlight: {', '.join(features[:2]) if features else 'premium quality'}
-No text or logos in the image.{image_reference}"""
+No text or logos in the image."""
+        
+        return f"""Create a professional hero product photograph that EXACTLY matches the uploaded product image.
+CRITICAL REQUIREMENTS:
+- Use the uploaded image as the EXACT reference for product appearance, colors, shape, and design
+- Maintain the same product features, textures, and proportions as shown in the reference
+- Only change the background to pure white professional photography backdrop
+- Use professional studio lighting with soft shadows
+- 3/4 angle view showing the product's best features
+- High-quality e-commerce photography style
+- Brand tone: {product.brand_tone}
+- NO modifications to the actual product appearance - it must look identical to the reference
+- No text or logos in the image
+Product: {product.name}
+Description: {product.description}"""
 
     def _create_infographic_prompt(self, product, features):
         """Create infographic prompt"""
@@ -76,18 +86,28 @@ No actual text - use visual representations only."""
 
     def _create_lifestyle_prompt(self, product, title):
         """Create lifestyle shot prompt"""
-        image_reference = ""
-        if product.product_image:
-            image_reference = f"\nEnsure the product matches the design and features from the uploaded reference image"
-        
-        return f"""Create a lifestyle photograph showing {product.name} in use.
+        if not product.product_image:
+            return f"""Create a lifestyle photograph showing {product.name} in use.
 Setting: Natural, real-world environment where the product would be used
 People: Show diverse person(s) happily using or benefiting from the product
 Mood: {product.brand_tone}, aspirational, relatable
 Lighting: Natural, warm lighting
 Composition: Product clearly visible but integrated into the scene
 Emotion: Show the positive transformation or benefit
-Context: Realistic usage scenario that resonates with target customers.{image_reference}"""
+Context: Realistic usage scenario that resonates with target customers."""
+        
+        return f"""Create a lifestyle photograph showing the EXACT product from the uploaded image being used in real life.
+CRITICAL REQUIREMENTS:
+- The product must look IDENTICAL to the uploaded reference image (same colors, shape, design, features)
+- Show diverse person(s) happily using or benefiting from the exact product
+- Setting: Natural, real-world environment where this specific product would be used
+- Mood: {product.brand_tone}, aspirational, relatable
+- Lighting: Natural, warm lighting
+- Composition: Product clearly visible and integrated into the scene
+- Emotion: Show positive transformation or benefit from using this specific product
+- The product appearance cannot be modified - only the context/setting changes
+Product: {product.name}
+Description: {product.description}"""
 
     def _create_testimonial_prompt(self, product):
         """Create testimonial visual prompt"""
@@ -100,20 +120,6 @@ Design: Clean, professional layout suggesting social proof
 Focus: Visual representation of positive customer experience
 No actual text or quotes - use visual storytelling only."""
 
-    def _create_whats_in_box_prompt(self, product):
-        """Create what's in the box prompt"""
-        image_reference = ""
-        if product.product_image:
-            image_reference = f"\nEnsure the main product accurately reflects the uploaded reference image"
-        
-        return f"""Create a flat lay photograph showing {product.name} unboxed.
-Style: Organized, aesthetic flat lay photography
-Background: Clean, neutral surface (white, wood, or marble)
-Layout: Main product centered with accessories/components arranged around it
-Items: Show the main product plus any accessories, manual, packaging
-Lighting: Soft, even lighting from above, minimal shadows
-Composition: Neat, organized, Instagram-worthy arrangement
-Details: Each item clearly visible and identifiable.{image_reference}"""
 
     def generate_image(self, listing_image_id):
         """Generate a single image for a listing"""

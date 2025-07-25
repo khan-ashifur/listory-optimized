@@ -50,8 +50,8 @@ class ListingGeneratorService:
             listing.status = 'completed'
             listing.save()
             
-            # Queue image generation in background
-            self._queue_image_generation(listing)
+            # Note: Image generation is now triggered separately from frontend
+            # This allows the listing to be shown immediately
             
             return listing
             
@@ -90,13 +90,14 @@ PRODUCT DETAILS:
 ✅ Write like you're convincing a friend, not listing specs
 ✅ NO markdown formatting (no ** or bold text)
 
-3️⃣ DESCRIPTION (Structured HTML with emotional hooks):
+3️⃣ DESCRIPTION (Flowing paragraphs with emotional hooks):
 ✅ Start with H2 headline featuring emotional benefit
 ✅ Opening paragraph: relatable pain point or scenario
-✅ H3 sections with benefits, features, guarantee
-✅ Use proper HTML tags: <h2>, <h3>, <p>, <ul>, <li>, <strong>
+✅ Multiple flowing paragraphs telling a story
+✅ Use proper HTML tags: <h2>, <h3>, <p>, <strong> (NO bullet points or lists)
 ✅ Show transformation: "Imagine working 8 hours without back pain..."
 ✅ End with vision of better lifestyle or call to action
+✅ Write in paragraph format, NOT bullet points
 
 4️⃣ SEO KEYWORDS (10-12 total, grouped):
 ✅ Primary Keywords (3-4): Main product terms
@@ -132,7 +133,7 @@ Return ONLY valid JSON:
     "🎯 [Perfect For]: [Who this serves best - lifestyle/use case fit]",
     "💯 [Guarantee/Value]: [Risk reversal - why there's no downside to trying]"
   ],
-  "long_description": "<h2>[Emotional Benefit] - Transform Your [Use Case] Today</h2><p><strong>Picture this:</strong> [Relatable scenario that highlights their pain]. You've tried everything, but nothing seems to work...</p><p>Now imagine [transformation vision]. That's exactly what happens when you experience the power of [product name].</p><h3>✨ What Makes This Different</h3><ul><li><strong>[Key Feature 1]:</strong> [How it solves a specific problem]</li><li><strong>[Key Feature 2]:</strong> [Another pain point it addresses]</li><li><strong>[Key Feature 3]:</strong> [Third major benefit]</li></ul><h3>🛡️ Our Promise to You</h3><p>We're so confident you'll love this that we offer a <strong>30-day money-back guarantee</strong>. If you don't experience [main benefit], we'll refund every penny.</p><p><strong>Join [number]+ satisfied customers</strong> who've already transformed their [use case]. Don't let another day go by feeling [pain point].</p>",
+  "long_description": "<h2>[Emotional Benefit] - Transform Your [Use Case] Today</h2><p><strong>Picture this:</strong> [Relatable scenario that highlights their pain]. You've tried everything, but nothing seems to work. The frustration builds as you realize you need a solution that actually delivers on its promises.</p><p>Now imagine [transformation vision]. That's exactly what happens when you experience the power of [product name]. From the moment you start using it, you'll notice the difference. The quality becomes apparent, the benefits become real, and suddenly your daily routine transforms in ways you never expected.</p><p>What makes this truly special is [unique selling point]. Unlike other products that overpromise and underdeliver, this focuses on [key benefit] while ensuring [secondary benefit]. The attention to detail shows in every aspect, from the [material/build quality] to the thoughtful [design feature] that makes all the difference.</p><p>We're so confident you'll love this that we offer a <strong>30-day money-back guarantee</strong>. If you don't experience [main benefit], we'll refund every penny. Join thousands of satisfied customers who've already transformed their [use case]. Don't let another day go by feeling [pain point] - take the step toward [desired outcome] today.</p>",
   "aplus_content": {{
     "module1": {{
       "type": "Hero Banner with Text Overlay",

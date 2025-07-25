@@ -115,3 +115,24 @@ class GeneratedListingViewSet(viewsets.ModelViewSet):
                 'status': 'error',
                 'message': f'Error regenerating images: {str(e)}'
             }, status=400)
+    
+    @action(detail=True, methods=['post'])
+    def generate_images(self, request, pk=None):
+        """Trigger image generation for a listing"""
+        listing = self.get_object()
+        
+        try:
+            from .services import ListingGeneratorService
+            service = ListingGeneratorService()
+            service._queue_image_generation(listing)
+            
+            return Response({
+                'status': 'success',
+                'message': 'Image generation started'
+            })
+            
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'message': f'Error starting image generation: {str(e)}'
+            }, status=400)
