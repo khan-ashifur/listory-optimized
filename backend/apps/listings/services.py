@@ -125,129 +125,238 @@ class ListingGeneratorService:
             'structure': 'Problem narrative → Solution introduction → Key benefits → Trust elements → Clear CTA'
         }
         
-        # Generate dynamic, brand-specific prompt based on tone
+        # Generate dynamic, human-centered prompt with heavy anti-template randomization
+        import random
+        
+        # Create radical variation systems to prevent templating
+        
+        # Random emotional hooks (rotate these to prevent repetition)
+        emotional_hooks = [
+            "Think about the last time you felt genuinely satisfied with a purchase",
+            "Imagine if this one change could shift your entire daily experience", 
+            "What if I told you there's something you've been missing without even knowing it",
+            "Here's the thing nobody talks about with these products",
+            "You know that feeling when something just works perfectly",
+            "Most people don't realize this, but there's a huge difference between",
+            "Ever notice how some products just feel right from the moment you use them",
+            "There's something almost magical about finding the perfect solution",
+            "Picture this: it's six months from now and you're wondering why you waited so long"
+        ]
+        
+        # Random conversation starters (completely different each time)
+        conversation_starters = [
+            "Let me tell you why this caught my attention",
+            "So here's what makes this different from everything else",
+            "I'll be honest - I was skeptical at first, but",
+            "You know what surprised me most about this",
+            "Can we talk about something for a minute",
+            "I've been thinking about this lately",
+            "Here's something interesting I discovered",
+            "Want to know what changed my mind about these"
+        ]
+        
+        # Random personality quirks (inject humanity)
+        personality_elements = [
+            "and honestly, it's kind of addictive",
+            "which, let's be real, is exactly what we need",
+            "and yes, I know how that sounds",
+            "trust me on this one",
+            "and I'm not just saying that",
+            "which sounds dramatic but isn't",
+            "and here's the kicker",
+            "plot twist:",
+            "spoiler alert:"
+        ]
+        
+        # Random structural approaches (break the template)
+        structure_variants = [
+            "story_first", "problem_discovery", "benefit_reveal", "comparison_natural", 
+            "personal_testimonial", "technical_curiosity", "lifestyle_integration", "surprise_factor"
+        ]
+        
+        # Randomly select elements to inject variety
+        chosen_hook = random.choice(emotional_hooks)
+        chosen_starter = random.choice(conversation_starters)
+        chosen_personality = random.choice(personality_elements)
+        chosen_structure = random.choice(structure_variants)
+        
+        # Anti-template instructions based on tone
         tone_style = product.brand_tone.lower()
         
         # Create completely different writing approaches for each brand tone
         tone_specific_prompts = {
             'professional': f"""
-You are writing for {product.brand_name} using a PROFESSIONAL tone. Write like an industry expert consultant who builds credibility through expertise and proven results.
+WRITE AS A HUMAN EXPERT, NOT A MARKETING ROBOT
 
-BRAND PERSONALITY: Authoritative advisor who leads with facts, certifications, and proven track record. Think "Harvard Business Review meets technical excellence."
+You're a respected professional who genuinely knows this field. Your job is to write like you're personally recommending this to a colleague, not creating marketing copy.
 
-TITLE APPROACH: Lead with industry authority and measurable outcomes
-- Patterns: "Industry-Leading [Product]", "Professional-Grade [Product] Used by [Professionals]", "Certified [Product] with Proven [Benefit]"
-- Keywords: Professional, Certified, Industry-Standard, Proven, Validated, Trusted by Professionals
+CRITICAL ANTI-ROBOT RULES:
+❌ NEVER use "revolutionary", "game-changing", "cutting-edge", "state-of-the-art"
+❌ NEVER start with brand name in title unless it naturally fits
+❌ NEVER use the same bullet structure as other products
+❌ NEVER start description with "Are you tired of..." or "Experience the..."
+❌ NEVER use "**FEATURE NAME:**" format in bullets
 
-BULLET STYLE: Technical specifications with business impact
-- Format: "PROVEN PERFORMANCE: [Specific metric] delivers [business outcome] as validated by [authority/study]"
-- Focus: ROI, efficiency gains, professional standards, certifications
-- Language: Precise, data-driven, outcome-focused
+HUMAN WRITING APPROACH:
+✅ Write like you're explaining to a smart colleague
+✅ Use specific, unusual details that show you actually understand the product
+✅ Include subtle professional insights that only an expert would know
+✅ Vary sentence structure dramatically - mix very short and longer explanations
+✅ Use unexpected but professional language
 
-DESCRIPTION STYLE: Case study approach
-- Structure: Challenge → Solution → Results → Validation
-- Include: Performance metrics, industry standards, professional testimonials
-- Tone: Confident expertise without being arrogant
+TODAY'S EMOTIONAL HOOK: "{chosen_hook}"
+TODAY'S CONVERSATION STARTER: "{chosen_starter}"
+PERSONALITY ELEMENT TO INCLUDE: "{chosen_personality}"
+STRUCTURAL APPROACH: "{chosen_structure}"
+
+TITLE VARIATION: Create something that sounds like a professional wrote it, not a marketing team
+BULLET VARIATION: Write each bullet completely differently - some short, some detailed, varied formats
+DESCRIPTION VARIATION: Tell the story from a professional's perspective, not marketing copy
 """,
             
             'casual': f"""
-You are writing for {product.brand_name} using a CASUAL tone. Write like a helpful friend sharing an amazing discovery - warm, relatable, and genuinely excited to help.
+WRITE LIKE A REAL FRIEND WHO FOUND SOMETHING AMAZING
 
-BRAND PERSONALITY: That friend who always finds the best stuff and loves sharing discoveries. Think "your most helpful friend who makes everything simple."
+You're that friend who discovers cool stuff and can't wait to share it. Write like you're texting someone you care about, not creating an ad.
 
-TITLE APPROACH: Friendly recommendations and relatable benefits
-- Patterns: "This [Product] Makes [Daily Task] So Much Easier", "The [Product] Everyone's Talking About", "Simple [Product] That Just Works"
-- Keywords: Easy, Simple, Perfect for, Just Works, Love This, Game-Changer
+CRITICAL ANTI-ROBOT RULES:
+❌ NEVER use "game-changer", "life-saver", "must-have"
+❌ NEVER start bullets with "MAKES LIFE EASIER:" or similar templates
+❌ NEVER use the same casual phrases everyone uses
+❌ NEVER sound like you're trying to sell something
+❌ NEVER use forced enthusiasm
 
-BULLET STYLE: Conversational benefits with relatable scenarios
-- Format: "MAKES LIFE EASIER: [Relatable situation] becomes [simple outcome] - just like [familiar comparison]"
-- Focus: Daily convenience, stress reduction, time-saving
-- Language: Conversational, reassuring, down-to-earth
+HUMAN FRIEND APPROACH:
+✅ Write like you're actually excited about this thing
+✅ Use specific, quirky details that make it feel real
+✅ Include slightly imperfect, conversational language
+✅ Share it like you'd tell a story to a friend
+✅ Use casual language that doesn't sound forced
 
-DESCRIPTION STYLE: Friend-to-friend recommendation
-- Structure: Personal connection → shared frustration → discovery → how it helps → encouragement
-- Include: Relatable stories, simple explanations, reassuring tone
-- Tone: Warm, helpful, like texting a friend
+TODAY'S EMOTIONAL HOOK: "{chosen_hook}"
+TODAY'S CONVERSATION STARTER: "{chosen_starter}"
+PERSONALITY ELEMENT TO INCLUDE: "{chosen_personality}"
+STRUCTURAL APPROACH: "{chosen_structure}"
+
+TITLE VARIATION: Write it like a casual recommendation, not marketing copy
+BULLET VARIATION: Each bullet should sound completely different - some chatty, some quick, varied styles
+DESCRIPTION VARIATION: Tell it like you're sharing a personal discovery with a friend
 """,
             
             'luxury': f"""
-You are writing for {product.brand_name} using a LUXURY tone. Write like a curator of exceptional experiences who understands discerning taste and elevated lifestyle.
+WRITE AS A SOPHISTICATED CONNOISSEUR, NOT A LUXURY SALES PERSON
 
-BRAND PERSONALITY: Sophisticated connoisseur who appreciates craftsmanship and exclusivity. Think "private concierge meets museum curator."
+You appreciate true quality and understand what makes something genuinely exceptional. Write like you're sharing a rare discovery with someone who appreciates fine things.
 
-TITLE APPROACH: Elevated language emphasizing exclusivity and refinement
-- Patterns: "Exquisite [Product] for the Discerning [User]", "Handcrafted [Product] Collection", "Premium [Product] Experience"
-- Keywords: Exquisite, Handcrafted, Curated, Exclusive, Premium, Artisan, Heritage
+CRITICAL ANTI-ROBOT RULES:
+❌ NEVER use "exquisite", "handcrafted", "premium experience", "discerning"
+❌ NEVER start with "for the discerning" or "exclusive collection"
+❌ NEVER use obvious luxury buzzwords
+❌ NEVER sound pretentious or trying-too-hard
+❌ NEVER use "EXCEPTIONAL CRAFTSMANSHIP:" bullet format
 
-BULLET STYLE: Craftsmanship and elevated experience
-- Format: "EXCEPTIONAL CRAFTSMANSHIP: [Artisan detail] creates [elevated experience] worthy of [prestigious comparison]"
-- Focus: Materials, craftsmanship, exclusivity, elevated experience
-- Language: Sophisticated, appreciative of quality, sensory-rich
+SOPHISTICATED HUMAN APPROACH:
+✅ Write with quiet confidence about genuine quality
+✅ Use subtle language that shows real appreciation for quality
+✅ Include specific details that only someone who knows quality would notice
+✅ Let the quality speak for itself without shouting about it
+✅ Use refined but not pretentious language
 
-DESCRIPTION STYLE: Connoisseur's appreciation
-- Structure: Heritage → craftsmanship → experience → exclusivity → invitation
-- Include: Artisan details, premium materials, elevated experiences
-- Tone: Sophisticated appreciation without pretension
+TODAY'S EMOTIONAL HOOK: "{chosen_hook}"
+TODAY'S CONVERSATION STARTER: "{chosen_starter}"
+PERSONALITY ELEMENT TO INCLUDE: "{chosen_personality}"
+STRUCTURAL APPROACH: "{chosen_structure}"
+
+TITLE VARIATION: Something that quietly suggests quality without screaming luxury
+BULLET VARIATION: Each should demonstrate quality through specific details, not declarations
+DESCRIPTION VARIATION: Show appreciation for quality through informed perspective
 """,
             
             'playful': f"""
-You are writing for {product.brand_name} using a PLAYFUL tone. Write with energy, creativity, and fun - like a cool friend who makes everything more interesting.
+WRITE WITH GENUINE CREATIVITY, NOT FORCED ENTHUSIASM
 
-BRAND PERSONALITY: Creative innovator who brings joy and excitement to everyday moments. Think "best friend who makes everything fun meets creative genius."
+You're naturally creative and see fun possibilities everywhere. Write like you're sharing something that genuinely delights you, not trying to be quirky.
 
-TITLE APPROACH: Fun, energetic language with creative twists
-- Patterns: "The [Product] That's Changing Everything", "Seriously Cool [Product] for [Fun Outcome]", "[Product] That Makes [Activity] Actually Fun"
-- Keywords: Seriously Cool, Amazing, Awesome, Game-Changer, Revolutionary, Mind-Blowing
+CRITICAL ANTI-ROBOT RULES:
+❌ NEVER use "seriously cool", "totally awesome", "mind-blowing", "game-changer"
+❌ NEVER start bullets with "TOTALLY AWESOME:" or similar
+❌ NEVER force quirky comparisons that don't fit
+❌ NEVER sound like you're trying too hard to be fun
+❌ NEVER use obviously playful templates
 
-BULLET STYLE: Energetic benefits with creative comparisons
-- Format: "TOTALLY AWESOME: [Fun outcome] happens [creative way] - it's like [surprising comparison] but better"
-- Focus: Excitement, creativity, unexpected benefits, fun factor
-- Language: Energetic, creative, surprising, delightful
+GENUINELY CREATIVE APPROACH:
+✅ Find unexpected but fitting ways to describe things
+✅ Use creativity that flows naturally from the product
+✅ Include surprising details that make people smile
+✅ Let your natural creativity show without forcing it
+✅ Write with energy that feels authentic
 
-DESCRIPTION STYLE: Enthusiastic discovery
-- Structure: Excitement → surprising benefit → creative explanation → community → fun invitation
-- Include: Creative metaphors, surprising comparisons, community feeling
-- Tone: Energetic enthusiasm that's infectious
+TODAY'S EMOTIONAL HOOK: "{chosen_hook}"
+TODAY'S CONVERSATION STARTER: "{chosen_starter}"
+PERSONALITY ELEMENT TO INCLUDE: "{chosen_personality}"
+STRUCTURAL APPROACH: "{chosen_structure}"
+
+TITLE VARIATION: Something creative that fits the product naturally
+BULLET VARIATION: Each should surprise in a different way - some clever, some simple, varied approaches
+DESCRIPTION VARIATION: Share the creative possibility in a way that feels natural
 """,
             
             'minimal': f"""
-You are writing for {product.brand_name} using a MINIMAL tone. Write with clarity, purpose, and elegant simplicity - every word must earn its place.
+WRITE WITH PURPOSEFUL CLARITY, NOT STRIPPED-DOWN MARKETING
 
-BRAND PERSONALITY: Thoughtful designer who values essence over excess. Think "Steve Jobs meets zen master - profound simplicity."
+You understand that the best things are simple and clear. Write like someone who values substance over style and knows what really matters.
 
-TITLE APPROACH: Clear, essential benefits without unnecessary words
-- Patterns: "Essential [Product] for [Pure Benefit]", "Simply Better [Product]", "[Product]. [Clear Benefit]. Done."
-- Keywords: Essential, Pure, Simply, Clean, Clear, Focused, Refined
+CRITICAL ANTI-ROBOT RULES:
+❌ NEVER use "essential", "simply better", "pure", "refined"
+❌ NEVER use "CLEAR BENEFIT:" bullet format
+❌ NEVER artificially strip away all personality
+❌ NEVER sound cold or robotic in pursuit of minimalism
+❌ NEVER use obvious minimal buzzwords
 
-BULLET STYLE: Clean statements of clear value
-- Format: "CLEAR BENEFIT: [Direct outcome] through [simple method] - nothing more, nothing less"
-- Focus: Core functionality, clear benefits, purposeful design
-- Language: Clean, direct, purposeful, uncluttered
+THOUGHTFUL SIMPLICITY APPROACH:
+✅ Say exactly what needs to be said, nothing more
+✅ Use clear language that gets to the point
+✅ Include only details that truly matter
+✅ Let simplicity emerge from clarity, not force it
+✅ Write with calm confidence in the essentials
 
-DESCRIPTION STYLE: Essential clarity
-- Structure: Purpose → function → benefit → simplicity
-- Include: Core benefits only, clean explanations, purposeful details
-- Tone: Calm confidence in essential value
+TODAY'S EMOTIONAL HOOK: "{chosen_hook}"
+TODAY'S CONVERSATION STARTER: "{chosen_starter}"
+PERSONALITY ELEMENT TO INCLUDE: "{chosen_personality}"
+STRUCTURAL APPROACH: "{chosen_structure}"
+
+TITLE VARIATION: Clear and direct without unnecessary words
+BULLET VARIATION: Each should be as long as it needs to be - some short, some longer, all clear
+DESCRIPTION VARIATION: Focus on what matters most, explained clearly
 """,
             
             'bold': f"""
-You are writing for {product.brand_name} using a BOLD tone. Write with power, confidence, and transformative energy - make bold claims and back them up.
+WRITE WITH AUTHENTIC CONFIDENCE, NOT MARKETING HYPERBOLE
 
-BRAND PERSONALITY: Powerful leader who inspires transformation and isn't afraid to challenge the status quo. Think "motivational speaker meets industry disruptor."
+You believe strongly in what you're sharing and aren't afraid to make confident claims you can back up. Write like someone with genuine conviction, not a salesperson.
 
-TITLE APPROACH: Strong, transformative language that commands attention
-- Patterns: "Revolutionary [Product] That Destroys [Problem]", "The [Product] That Changes Everything", "Breakthrough [Product] for [Transformation]"
-- Keywords: Revolutionary, Breakthrough, Destroys, Dominates, Unleashes, Transforms, Shatters
+CRITICAL ANTI-ROBOT RULES:
+❌ NEVER use "revolutionary", "breakthrough", "destroys", "shatters", "unleashes"
+❌ NEVER start bullets with "BREAKTHROUGH POWER:" or similar
+❌ NEVER use obvious bold/power buzzwords
+❌ NEVER sound like you're compensating with volume
+❌ NEVER use dramatic language that doesn't fit the product
 
-BULLET STYLE: Powerful transformation statements
-- Format: "BREAKTHROUGH POWER: [Dramatic transformation] destroys [old problem] and unleashes [powerful outcome]"
-- Focus: Dramatic change, power, breakthrough results, dominance
-- Language: Strong, transformative, confident, commanding
+GENUINELY CONFIDENT APPROACH:
+✅ Make strong claims that you can actually support
+✅ Use confident language that feels earned, not manufactured
+✅ Include specific evidence for your bold statements
+✅ Let your conviction show through substance, not adjectives
+✅ Write with power that comes from genuine belief
 
-DESCRIPTION STYLE: Manifesto approach
-- Structure: Challenge status quo → breakthrough moment → transformation → power → dominance
-- Include: Strong claims, dramatic benefits, transformative outcomes
-- Tone: Confident authority with transformative energy
+TODAY'S EMOTIONAL HOOK: "{chosen_hook}"
+TODAY'S CONVERSATION STARTER: "{chosen_starter}"
+PERSONALITY ELEMENT TO INCLUDE: "{chosen_personality}"
+STRUCTURAL APPROACH: "{chosen_structure}"
+
+TITLE VARIATION: Confident but specific, not generically bold
+BULLET VARIATION: Each should demonstrate confidence in different ways - some direct, some detailed
+DESCRIPTION VARIATION: Show conviction through evidence and specific benefits
 """
         }
         
@@ -265,190 +374,160 @@ DESCRIPTION STYLE: Manifesto approach
         ]
         random.shuffle(variety_elements)
         
-        # Extract key product insights
+        # Create truly randomized product insights to prevent templating
         product_category = product.categories.split(',')[0].strip() if product.categories else "product"
-        primary_keywords = [product.name.lower(), product_category.lower(), product.brand_name.lower()]
         
-        # Analyze features to extract benefits
-        feature_list = product.features.split(',') if product.features else []
-        benefit_keywords = []
-        for feature in feature_list[:3]:
-            feature = feature.strip()
-            if feature:
-                benefit_keywords.append(feature.lower())
-        
-        # Analyze the product to create unique content strategy
-        product_type = "unknown"
-        if "fan" in product.name.lower() or "cooling" in product.description.lower():
-            product_type = "cooling_device"
-        elif "watch" in product.name.lower() or "timepiece" in product.description.lower():
-            product_type = "luxury_watch"
-        elif "earbuds" in product.name.lower() or "headphones" in product.name.lower():
-            product_type = "audio_device"
-        elif "blanket" in product.name.lower() or "weighted" in product.description.lower():
-            product_type = "comfort_item"
-        elif "chair" in product.name.lower() or "gaming" in product.description.lower():
-            product_type = "furniture"
-        
-        # Extract unique features and benefits
+        # Generate completely unique content approaches based on product analysis
         features_list = [f.strip() for f in product.features.split(',') if f.strip()] if product.features else []
-        unique_features = features_list[:3]  # Focus on top 3 features
         
-        # Determine customer pain points based on product type
-        pain_point_map = {
-            "cooling_device": ["overheating", "sweating", "discomfort in heat", "bulky fans", "noisy cooling"],
-            "luxury_watch": ["ordinary timepieces", "lack of elegance", "poor craftsmanship", "status anxiety"],
-            "audio_device": ["language barriers", "poor translation", "communication problems", "travel difficulties"],
-            "comfort_item": ["poor sleep", "anxiety", "restlessness", "stress", "discomfort"],
-            "furniture": ["back pain", "poor posture", "uncomfortable seating", "fatigue"],
-            "unknown": ["daily frustrations", "inconvenience", "poor performance", "wasted time"]
-        }
-        pain_points = pain_point_map.get(product_type, ["daily problems"])
+        # Random content focus areas (rotate to prevent similarity)
+        content_focus_options = [
+            "unexpected_benefit", "specific_use_case", "problem_solving", "lifestyle_enhancement",
+            "technical_advantage", "emotional_satisfaction", "practical_convenience", "unique_approach"
+        ]
+        chosen_focus = random.choice(content_focus_options)
         
-        # Create unique emotional hooks based on product analysis
-        emotion_starters = ["Finally", "Breakthrough", "Never Again", "Transform Your", "Revolutionary", "Game-Changing"]
-        import random
-        chosen_starter = random.choice(emotion_starters)
+        # Random title approaches (completely different each time)
+        title_approaches = [
+            "benefit_led", "problem_solution", "category_specific", "user_focused", 
+            "feature_highlight", "outcome_driven", "comparison_based", "story_driven"
+        ]
+        chosen_title_approach = random.choice(title_approaches)
         
-        # Prepare data for the comprehensive prompt
-        data = {
-            'productTitle': product.name,
-            'brandName': product.brand_name,
-            'category': product.categories.split(',')[0].strip() if product.categories else product_type,
-            'mainFeaturesBenefits': product.features or product.description,
-            'productDescription': product.description,
-            'brandTone': product.brand_tone,
-            'competitorUrl': getattr(product, 'competitor_url', ''),
-            'competitorASIN': getattr(product, 'competitor_asin', ''),
-            'useCaseOccasion': getattr(product, 'use_case', ''),
-            'materialSizeColor': getattr(product, 'material_size_color', ''),
-            'targetBuyerPersona': getattr(product, 'target_persona', ''),
-            'keywordsToTarget': ', '.join(pain_points) if pain_points else ''
-        }
+        # Random FAQ styles (break the Q&A template)
+        faq_styles = [
+            "conversational_honest", "technical_explained_simply", "comparison_focused", 
+            "concern_addressing", "story_based", "practical_focused"
+        ]
+        chosen_faq_style = random.choice(faq_styles)
 
+        # Now create the completely new human-focused prompt
         prompt = f"""
-            Generate a complete Amazon product listing JSON for: {data.get('productTitle')} by {data.get('brandName')}.
+{base_prompt}
 
-            Product Details:
-            - Product: {data.get('productTitle')}
-            - Brand: {data.get('brandName')} 
-            - Category: {data.get('category')}
-            - Features: {data.get('mainFeaturesBenefits')}
-            - Description: {data.get('productDescription')}
-            - Brand Tone: {data.get('brandTone')}
+PRODUCT INFORMATION:
+- Product: {product.name}
+- Brand: {product.brand_name}
+- Category: {product_category}
+- Description: {product.description}
+- Features: {', '.join(features_list) if features_list else 'Not specified'}
+- Price: ${product.price if product.price else 'Not specified'}
 
-            Return ONLY a valid JSON object with this structure:
+RANDOMIZATION ELEMENTS FOR TODAY:
+- Content Focus: {chosen_focus}
+- Title Approach: {chosen_title_approach}  
+- FAQ Style: {chosen_faq_style}
+- Variety Emphasis: {variety_elements[0]}
 
-            {{
-              "productTitle": "An SEO-optimized, Amazon-standard product title (max 200 characters). Start with brand name '{data.get('brandName')}', followed by high-volume keywords, product type, key features/benefits from '{data.get('mainFeaturesBenefits')}', material/size/color (if applicable). Prioritize concise phrasing and natural flow. Avoid redundant words. Consider including a 'Gift-Ready' or similar modifier if applicable.",
-              "bulletPoints": [
-                "**FEATURE 1:** Write actual compelling benefit for this product (max 200 chars)",
-                "**FEATURE 2:** Write actual compelling benefit for this product (max 200 chars)",
-                "**FEATURE 3:** Write actual compelling benefit for this product (max 200 chars)",
-                "**FEATURE 4:** Write actual compelling benefit for this product (max 200 chars)",
-                "**FEATURE 5:** Write actual compelling benefit for this product (max 200 chars)"
-              ],
-              "productDescription": "A detailed Product Description (max 2000 chars). Structure into 3 shorter, well-formatted paragraphs. The first paragraph must start with an emotional hook or question. The second should elaborate on features and benefits, naturally embedding relevant long-tail keyword phrases. Include a 'What's Included' line. The third should end with a strong, product-specific Call-to-Action (CTA). Use concise, scannable language. Mention giftability if applicable. EXAMPLE: 'Are you tired of cold lunches at work? The {data.get('brandName')} {data.get('productTitle')} transforms your dining experience with revolutionary heating technology that delivers restaurant-quality warmth in minutes. This compact powerhouse features advanced temperature control, leak-proof design, and dishwasher-safe components perfect for busy professionals. What's Included: heated lunch box, power cord, user manual, and recipe guide. Make every meal a moment to savor - order your {data.get('brandName')} today and taste the difference quality makes!'",
-              "aPlusContentPlan": {{
-                "hero_section": {{
-                  "title": "Write compelling headline for this product",
-                  "content": "Write 2-3 sentences about product benefits",
-                  "image_requirements": "DETAILED IMAGE DESCRIPTION: Professional lifestyle photo showing real person actively using the product in its intended environment. SPECIFICATIONS: High-resolution (300+ DPI), well-lit natural lighting, clean background that complements but doesn't distract from the product. COMPOSITION: Rule of thirds placement, product should occupy 40-60% of frame. STYLING: Models should represent target demographic, genuine expressions of satisfaction/happiness. TECHNICAL: No watermarks, logos, or text overlays. Product branding should be clearly visible. COLOR PALETTE: Brand-consistent colors, avoid oversaturated filters."
-                }},
-                "features_section": {{
-                  "title": "Key Features",
-                  "content": "List 4-5 main features with benefits", 
-                  "image_requirements": "DETAILED IMAGE DESCRIPTION: Clean product infographic with feature callouts and annotations. LAYOUT: Grid or circular layout showing 4-6 key features with icons and brief descriptions. DESIGN STYLE: Modern, minimalist design with plenty of white space. TYPOGRAPHY: Sans-serif fonts, hierarchical text sizing. VISUAL ELEMENTS: Use branded color scheme, consistent icon style (line art or filled), arrow callouts pointing to specific product areas. TECHNICAL SPECS: Vector-based graphics preferred, 1500x1500px minimum, Amazon-compliant (no promotional text like 'Best' or 'Sale')."
-                }},
-                "comparison_section": {{
-                  "title": "Why Choose This Product",
-                  "content": "Comparison vs competitors",
-                  "image_requirements": "DETAILED IMAGE DESCRIPTION: Professional comparison chart or side-by-side product shots. COMPARISON FORMAT: Table or grid layout comparing 3-4 key differentiators. VISUAL HIERARCHY: Clear headers, consistent spacing, readable fonts (minimum 14pt). CONTENT FOCUS: Feature comparisons, not price comparisons. Use checkmarks, stars, or other visual indicators. COLOR CODING: Green for advantages, neutral colors for standard features. BACKGROUND: Clean white or light gray, ensure high contrast for text readability. SIZE: Optimized for mobile viewing while maintaining legibility."
-                }},
-                "usage_section": {{
-                  "title": "How to Use",
-                  "content": "Step-by-step usage instructions or scenarios",
-                  "image_requirements": "DETAILED IMAGE DESCRIPTION: Step-by-step instructional images or usage scenarios. FORMAT: Sequential panels (2-4 steps) showing product setup/use process. CLARITY: Each step clearly numbered, actions easy to follow visually. PHOTOGRAPHY: Multiple angles if needed, hands-on demonstration shots. CONSISTENCY: Same lighting and background across all steps. TEXT OVERLAY: Minimal text, focus on visual storytelling. SAFETY: If applicable, show proper handling or safety measures. DEMOGRAPHIC: Models should match target customer base."
-                }},
-                "lifestyle_section": {{
-                  "title": "Perfect For Your Lifestyle",
-                  "content": "Show product fitting into customer's daily life",
-                  "image_requirements": "DETAILED IMAGE DESCRIPTION: Multiple lifestyle scenarios showing product versatility. SCENES: 2-3 different environments where product would be used (home, office, travel, etc.). AUTHENTICITY: Real-life settings, not staged studio shots. DIVERSITY: Show different user types/ages if applicable. EMOTIONAL CONNECTION: Capture moments of satisfaction, convenience, or joy. PRODUCT PROMINENCE: Product visible but naturally integrated into scene. ASPIRATIONAL: Slightly elevated lifestyle while remaining relatable. LIGHTING: Natural lighting preferred, avoid harsh shadows or overexposure."
-                }}
-              }},
-              "brandSummary": "Brief, emotional, and unique brand summary for '{data.get('brandName')}' (max 300 chars). Start with a compelling tagline. Focus on emotionally differentiating the brand and its core promise or solution. End with a customer-focused line encouraging joining the brand's community or highlighting brand values.",
-              "backendKeywords": "A single space-separated string of hidden backend keywords (exactly 249 bytes max). Exclude terms already present in the product title, bullet points, primary keywords, or secondary keywords. Include problem-solving terms, gifting keywords, and semantic intent variations.",
-              "topCompetitorKeywords": "Comma-separated 5-10 highly relevant and high-performing keywords extracted from competitor analysis (if competitor info provided).",
-              "keywordStrategy": "Brief explanation of the overall keyword strategy (max 500 chars). Provide reasoning for keyword selection per section. Discuss keyword clustering logic: 'Top of Funnel = lifestyle terms', 'Mid-Funnel = comfort terms', 'Bottom of Funnel = technical terms', or 'Informational vs. Transactional keywords'.",
-              "ppcStrategy": {{
-                "exactMatch": {{
-                  "keywords": ["List 3-5 exact match keywords for this product"],
-                  "bidRange": "$0.75-1.25",
-                  "targetAcos": "20%"
-                }},
-                "phraseMatch": {{
-                  "keywords": ["List 3-5 phrase match keywords for this product"],
-                  "bidRange": "$0.50-0.85", 
-                  "targetAcos": "30%"
-                }},
-                "negativeKeywords": ["cheap", "free", "used", "broken"]
-              }},
-              "keyword_cluster": {{
-                "primary_keywords": ["REQUIRED: Generate exactly 8 high-volume primary keywords", "Include brand + product name", "Include main product category", "Include 5 more relevant primary keywords"],
-                "secondary_keywords": ["REQUIRED: Generate exactly 10 long-tail secondary keywords", "Include problem-solving phrases", "Include user intent keywords", "Include 7 more specific long-tail variations"],
-                "backend_search_terms": "REQUIRED: Generate space-separated backend keywords (MUST be exactly 240-249 characters). Include synonyms, misspellings, alternate spellings, related terms, seasonal keywords, gift keywords, and demographic terms.",
-                "ppc_keywords": [
-                  {{"keyword": "main exact match keyword", "match_type": "Exact", "bid": "0.75"}},
-                  {{"keyword": "secondary phrase match keyword", "match_type": "Phrase", "bid": "0.65"}},
-                  {{"keyword": "broad match keyword", "match_type": "Broad", "bid": "0.45"}},
-                  {{"keyword": "another exact match", "match_type": "Exact", "bid": "0.80"}},
-                  {{"keyword": "another phrase match", "match_type": "Phrase", "bid": "0.60"}}
-                ]
-              }}
-            }}
+YOUR MISSION: Write an Amazon listing that sounds like a real human expert wrote it. Each section should feel completely different from typical Amazon listings.
 
-            User Input Details:
-            Product Title: {data.get('productTitle')}
-            Brand Name: {data.get('brandName')}
-            Category: {data.get('category')}
-            Main Features/Benefits: {data.get('mainFeaturesBenefits')}
-            Product Description (from seller): {data.get('productDescription')}
-            Brand Tone: {data.get('brandTone')}
-            {f"Competitor URL: {data.get('competitorUrl')}" if data.get('competitorUrl') else ''}
-            {f"Competitor ASIN: {data.get('competitorASIN')}" if data.get('competitorASIN') else ''}
-            {f"Use Case/Occasion: {data.get('useCaseOccasion')}" if data.get('useCaseOccasion') else ''}
-            {f"Material/Size/Color: {data.get('materialSizeColor')}" if data.get('materialSizeColor') else ''}
-            {f"Target Buyer Persona: {data.get('targetBuyerPersona')}" if data.get('targetBuyerPersona') else ''}
-            {f"Keywords to Target: {data.get('keywordsToTarget')}" if data.get('keywordsToTarget') else ''}
+CRITICAL JSON FORMATTING RULES:
+1. ALL JSON field values MUST use double quotes (") not single quotes (')
+2. INSIDE content text, use single quotes for contractions: dont, cant, wont, its  
+3. NEVER use unescaped double quotes inside content text
+4. JSON structure: {{"field": "content with single quotes inside"}}
+5. Test your JSON structure before submitting
+6. CORRECT: {{"title": "This is Johns favorite product"}}
+7. WRONG: {{'title': 'This is Johns favorite product'}}
 
-            CRITICAL REQUIREMENTS - MUST GENERATE ALL FIELDS:
+RESPONSE FORMAT: Return valid JSON with these fields (note the double quotes around all field names and values):
 
-            1. productDescription - REQUIRED: Write a compelling 3-paragraph description about {data.get('productTitle')}
-            2. keyword_cluster - REQUIRED: Generate comprehensive keywords for {data.get('productTitle')}
-               - primary_keywords: EXACTLY 8 keywords (must include brand+product, category, and 6 more)
-               - secondary_keywords: EXACTLY 10 long-tail keywords (problem-solving + intent-based)
-               - backend_search_terms: EXACTLY 240-249 characters of space-separated terms
-               - ppc_keywords: EXACTLY 5 PPC keyword objects with different match types
-            3. bulletPoints - REQUIRED: Write 5 bullet points with **BOLD** format
-            4. All other fields must be completed with actual content
-            
-            KEYWORD GENERATION RULES:
-            - NO generic examples - use actual product-specific keywords
-            - Include synonyms, alternate spellings, and related terms
-            - Backend keywords must be comprehensive and reach character limit
-
-            EXAMPLE of what you MUST generate for productDescription:
-            "Are you tired of [problem]? The {data.get('brandName')} {data.get('productTitle')} solves this with [specific solution]. 
-
-            This premium product features [list actual features from input]. Perfect for [target users], it delivers [specific benefits]. Built with [quality materials] and designed for [use case].
-
-            What's Included: [product], user manual, warranty. Order your {data.get('brandName')} {data.get('productTitle')} today and experience the difference!"
-
-            EXAMPLE of what you MUST generate for keywords:
-            {{"primary_keywords": ["{data.get('productTitle').lower()}", "premium {data.get('category').lower()}", "best {data.get('productTitle').lower()}"]}}
-
-            OUTPUT ONLY THE JSON - NO OTHER TEXT:
-            """        
+{{
+  "productTitle": "Write a 160-200 character title using your {chosen_title_approach} approach. MUST be 160+ characters to meet Amazon standards. Make it feel like a human named this product, not a marketing team. Include key search terms naturally but expand to full length.",
+  
+  "bulletPoints": [
+    "BULLET 1: Write 150-500 characters. Each bullet MUST be minimum 150 characters to meet Amazon standards. Mix different styles but ensure each is detailed enough to reach length requirement.",
+    "BULLET 2: Write 150-500 characters. Try a different approach but maintain minimum length. Add specific details, benefits, or examples to reach character count.",
+    "BULLET 3: Write 150-500 characters. Can be shorter style but still minimum 150 chars. Add context or examples to meet length requirement.", 
+    "BULLET 4: Write 150-500 characters. Could be longer with more detail. Expand with specific benefits, features, or customer outcomes.",
+    "BULLET 5: Write 150-500 characters. Surprise with unique angle but maintain minimum length. Add compelling details to reach character requirement."
+  ],
+  
+  "productDescription": "Write EXACTLY 1600-2000 characters (COUNT YOUR CHARACTERS - must be minimum 1600 to meet Amazon standards). Write this like you're personally recommending it. Start with '{chosen_starter}' and include '{chosen_personality}' naturally. Use the {chosen_structure} approach. Avoid the tired 'Are you tired of...' opening and 'Experience the...' language. Write 5-6 substantial paragraphs with rich detail, personal anecdotes, specific benefits, and compelling reasons to buy. Add concrete examples, usage scenarios, and emotional outcomes to reach the character requirement.",
+  
+  "aPlusContentPlan": {{
+    "hero_section": {{
+      "title": "Write a compelling headline that fits the product naturally",
+      "content": "2-3 sentences that feel authentic to your tone",
+      "image_requirements": "Describe what image would genuinely help sell this product. Be specific about composition, setting, and mood but let it flow from the product's actual use case."
+    }},
+    "features_section": {{
+      "title": "Create your own section title - doesn't have to be 'Key Features'",
+      "content": "Explain the most important aspects in your authentic voice",
+      "image_requirements": "Describe visual elements that would actually be helpful for this specific product. Focus on what customers really need to see."
+    }},
+    "comparison_section": {{
+      "title": "Your comparison title that fits the product",
+      "content": "Natural comparison in your voice",
+      "image_requirements": "What visual comparison would actually help customers choose this product over alternatives?"
+    }},
+    "usage_section": {{
+      "title": "Usage section title in your style",
+      "content": "How to use/when to use in natural language",
+      "image_requirements": "What images would actually help someone use this product successfully?"
+    }},
+    "lifestyle_section": {{
+      "title": "Lifestyle section that fits the product's actual use",
+      "content": "How this fits into real life, not forced lifestyle marketing",
+      "image_requirements": "Real lifestyle scenarios where this product actually makes sense, not stock photo situations."
+    }},
+    "aplus_content_suggestions": {{
+      "title": "Content Enhancement Suggestions",
+      "content": "Specific suggestions for additional A+ content that would enhance this listing, including video content, comparison charts, technical specifications, customer testimonials integration, seasonal use cases, and maintenance/care instructions that would genuinely help customers.",
+      "image_requirements": "Additional image types that would complete the customer's understanding of this product - technical diagrams, size comparisons, packaging contents, warranty information visuals, or instructional graphics."
+    }}
+  }},
+  
+  "brandSummary": "Write 200-400 characters about the brand like you actually know something about them. Include brand history, values, customer focus, product quality commitment, and what makes {product.brand_name} different from competitors. Make it feel authentic and detailed, not generic brand-speak.",
+  
+  "backendKeywords": "Write 240+ characters of actual search terms people might use. Include synonyms, related products, problem keywords, and variations. Make it comprehensive but real.",
+  
+  "topCompetitorKeywords": "What keywords would actually compete with this product?",
+  
+  "keywordStrategy": "Explain your keyword approach like you're talking to someone who knows marketing.",
+  
+  "ppcStrategy": {{
+    "campaign_structure": "Detailed campaign organization with Auto, Exact, Phrase, and Broad campaigns for this specific product category",
+    "exactMatch": {{
+      "keywords": ["Minimum 8 actual exact match keywords for this specific product including brand + product type, specific model names, and high-intent terms"],
+      "bidRange": "$0.75-1.25",
+      "targetAcos": "20%",
+      "dailyBudget": "$25-50"
+    }},
+    "phraseMatch": {{
+      "keywords": ["Minimum 10 real phrase match keywords that make sense for this product category and target audience"],
+      "bidRange": "$0.50-0.85", 
+      "targetAcos": "30%",
+      "dailyBudget": "$15-30"
+    }},
+    "broadMatch": {{
+      "keywords": ["5-8 broad match keywords for discovery and reaching new customers"],
+      "bidRange": "$0.30-0.65",
+      "targetAcos": "35%",
+      "dailyBudget": "$10-20"
+    }},
+    "negativeKeywords": ["Comprehensive list of negative keywords specific to this product category to avoid irrelevant traffic"],
+    "targeting_strategy": "Detailed explanation of audience targeting, competitor targeting, and ASIN targeting specific to this product",
+    "optimization_schedule": "Specific timeline for bid adjustments, keyword harvesting, and performance optimization"
+  }},
+  
+  "keyword_cluster": {{
+    "primary_keywords": ["Minimum 12 actual primary keywords that people search for this product including brand terms, product type, and main features"],
+    "secondary_keywords": ["Minimum 15 real long-tail keywords with genuine search intent including problem-solving terms and specific use cases"],
+    "backend_search_terms": "240+ characters of comprehensive search terms including misspellings, synonyms, alternative product names, related accessories, and problem keywords",
+    "misspellings_and_synonyms": ["Common misspellings and alternative terms customers might use when searching for this product"],
+    "ppc_keywords": [
+      {{"keyword": "real high-volume keyword", "match_type": "Exact", "bid": "0.75"}},
+      {{"keyword": "another high-intent keyword", "match_type": "Phrase", "bid": "0.65"}},
+      {{"keyword": "broad discovery keyword", "match_type": "Broad", "bid": "0.45"}},
+      {{"keyword": "brand + product keyword", "match_type": "Exact", "bid": "0.80"}},
+      {{"keyword": "problem-solving keyword", "match_type": "Phrase", "bid": "0.60"}},
+      {{"keyword": "competitor alternative keyword", "match_type": "Phrase", "bid": "0.70"}},
+      {{"keyword": "feature-specific keyword", "match_type": "Exact", "bid": "0.85"}},
+      {{"keyword": "use-case keyword", "match_type": "Broad", "bid": "0.50"}}
+    ]
+  }}
+}}"""        
         self.logger.info("OpenAI client is available - proceeding with AI generation")
         try:
             self.logger.info(f"Generating AI content for {product.name} on Amazon...")
@@ -502,7 +581,7 @@ DESCRIPTION STYLE: Manifesto approach
                     response = self.client.chat.completions.create(
                         model="gpt-4o-mini",  # Use a model capable of JSON output
                         messages=[
-                            {"role": "system", "content": "You are a highly skilled Amazon listing copywriter, SEO expert, and PPC strategist with expertise in visual content direction. Your goal is to generate comprehensive and optimized Amazon listings with detailed A+ content strategies. CRITICAL REQUIREMENTS: 1) Generate ALL required fields including productTitle, bulletPoints, productDescription, aPlusContentPlan, ppcStrategy, keyword_cluster, brandSummary, and backendKeywords. 2) The productDescription field must be a detailed, compelling 3-paragraph description. 3) The aPlusContentPlan must include comprehensive, professional image_requirements for each section - these should be detailed enough for a photographer/designer to execute without additional guidance. 4) Always return a valid JSON object strictly following the user's schema. Focus on creating conversion-optimized content that drives sales through emotional connection and clear value proposition."},
+                            {"role": "system", "content": "You are a creative copywriting expert who writes like a real human, not a marketing robot. CRITICAL: Return ONLY valid JSON - no markdown, no explanations, just pure JSON that parses correctly. JSON RULES: All field names and values must use double quotes, inside content use single quotes for contractions (dont, cant, wont, its), never use unescaped double quotes in content. CORRECT FORMAT: {\"field\": \"content with 'single quotes' inside\"}. Your mission is to break every predictable Amazon listing pattern and create content that sounds genuinely human and emotionally varied while maintaining perfect JSON formatting. Write each section in a completely different style and tone. Use unexpected but authentic language that fits the product. Vary everything - sentence length, structure, personality, approach. Sound like a real person who genuinely knows and likes this product. Include human quirks and conversational elements. Your goal is to create listings so human and varied that customers feel like theyre talking to a real expert, not reading marketing copy."},
                             {"role": "user", "content": prompt}
                         ],
                         max_tokens=4000,  # Increased max_tokens to accommodate detailed JSON output
@@ -2101,7 +2180,8 @@ Return ONLY valid JSON:
                 ('features_section', '⭐ Key Features'), 
                 ('comparison_section', '🏆 Why Choose This'),
                 ('usage_section', '📖 How to Use'),
-                ('lifestyle_section', '🌟 Perfect For Your Lifestyle')
+                ('lifestyle_section', '🌟 Perfect For Your Lifestyle'),
+                ('aplus_content_suggestions', '💡 A+ Content Suggestions')
             ]
             
             # Generate HTML for each A+ section
