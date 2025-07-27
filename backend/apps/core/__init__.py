@@ -1,0 +1,1 @@
+# Force Django reload - Unicode fix active

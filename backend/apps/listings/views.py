@@ -5,8 +5,10 @@ from rest_framework.permissions import AllowAny
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from .models import GeneratedListing, ListingImage
-from .serializers import GeneratedListingSerializer, ListingImageSerializer
+from .serializers import (GeneratedListingSerializer, ListingImageSerializer, 
+                         QualityValidationInputSerializer, QualityValidationOutputSerializer)
 from .services import ListingGeneratorService
+from .quality_validator import ListingQualityValidator
 from apps.users.models import UserProfile
 
 
@@ -183,3 +185,89 @@ class GeneratedListingViewSet(viewsets.ModelViewSet):
                 'status': 'error',
                 'message': f'Error starting image generation: {str(e)}'
             }, status=400)
+    
+    @action(detail=False, methods=['post'])
+    def validate_quality(self, request):
+        """
+        Validate listing content for 10/10 emotional, conversion-focused quality.
+        
+        Expects JSON payload with:
+        - title (required): Product title
+        - bullet_points (optional): Bullet point content
+        - long_description (optional): Product description
+        - faqs (optional): FAQ content
+        
+        Returns comprehensive quality report with scores and improvement suggestions.
+        """
+        try:
+            # Validate input data
+            input_serializer = QualityValidationInputSerializer(data=request.data)
+            if not input_serializer.is_valid():
+                return Response({
+                    'error': 'Invalid input data',
+                    'details': input_serializer.errors
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Perform quality validation
+            validator = ListingQualityValidator()
+            quality_report = validator.get_validation_json(input_serializer.validated_data)
+            
+            # Serialize and return results
+            output_serializer = QualityValidationOutputSerializer(data=quality_report)
+            if output_serializer.is_valid():
+                return Response({
+                    'status': 'success',
+                    'message': 'Quality validation completed',
+                    'validation_report': output_serializer.validated_data
+                }, status=status.HTTP_200_OK)
+            else:
+                return Response({
+                    'status': 'error',
+                    'message': 'Error formatting validation results',
+                    'raw_report': quality_report
+                }, status=status.HTTP_200_OK)
+                
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'message': f'Quality validation failed: {str(e)}'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    @action(detail=True, methods=['get'])
+    def quality_report(self, request, pk=None):
+        """Get quality validation report for an existing listing."""
+        try:
+            listing = self.get_object()
+            
+            # Prepare listing data for validation
+            validation_data = {
+                'title': listing.title or '',
+                'bullet_points': listing.bullet_points or '',
+                'long_description': listing.long_description or '',
+                'faqs': listing.faqs or ''
+            }
+            
+            # Perform validation
+            validator = ListingQualityValidator()
+            quality_report = validator.get_validation_json(validation_data)
+            
+            # Include stored scores if available
+            if hasattr(listing, 'quality_score') and listing.quality_score:
+                quality_report['stored_scores'] = {
+                    'quality_score': listing.quality_score,
+                    'emotion_score': listing.emotion_score,
+                    'conversion_score': listing.conversion_score,
+                    'trust_score': listing.trust_score
+                }
+            
+            return Response({
+                'status': 'success',
+                'listing_id': listing.id,
+                'validation_report': quality_report
+            }, status=status.HTTP_200_OK)
+            
+        except Exception as e:
+            return Response({
+                'status': 'error',
+                'message': f'Error generating quality report: {str(e)}'
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

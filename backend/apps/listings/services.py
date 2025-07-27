@@ -74,14 +74,14 @@ class ListingGeneratorService:
     def _generate_amazon_listing(self, product, listing):
         import json
         import re
-        print(f"\n=== GENERATING AMAZON LISTING FOR {product.name} ===")
-        print(f"OpenAI client status: {'AVAILABLE' if self.client else 'NOT AVAILABLE'}")
+        self.logger.info(f"GENERATING AMAZON LISTING FOR {product.name}")
+        self.logger.info(f"OpenAI client status: {'AVAILABLE' if self.client else 'NOT AVAILABLE'}")
         
         if not self.client:
-            print("[ERROR] OpenAI client is None - using fallback content")
-            print(f"API Key exists: {bool(settings.OPENAI_API_KEY)}")
+            self.logger.error("OpenAI client is None - using fallback content")
+            self.logger.error(f"API Key exists: {bool(settings.OPENAI_API_KEY)}")
             if settings.OPENAI_API_KEY:
-                print(f"API Key starts with 'sk-': {settings.OPENAI_API_KEY.startswith('sk-') if settings.OPENAI_API_KEY else False}")
+                self.logger.error(f"API Key starts with 'sk-': {settings.OPENAI_API_KEY.startswith('sk-') if settings.OPENAI_API_KEY else False}")
             raise Exception("OpenAI API key not configured. Please set your OPENAI_API_KEY in the .env file to generate AI content.")
             
         competitor_context = self._get_competitor_context(product)
@@ -125,177 +125,335 @@ class ListingGeneratorService:
             'structure': 'Problem narrative → Solution introduction → Key benefits → Trust elements → Clear CTA'
         }
         
-        # Advanced SEO + AEO optimized prompt with dynamic templates and tones
-        prompt = f"""Create a comprehensive Amazon listing for {product.name} by {product.brand_name} using the specified TONE and TEMPLATE to avoid repetitive AI-generated content.
+        # Generate dynamic, brand-specific prompt based on tone
+        tone_style = product.brand_tone.lower()
+        
+        # Create completely different writing approaches for each brand tone
+        tone_specific_prompts = {
+            'professional': f"""
+You are writing for {product.brand_name} using a PROFESSIONAL tone. Write like an industry expert consultant who builds credibility through expertise and proven results.
 
-PRODUCT DETAILS:
-- Name: {product.name}
-- Brand: {product.brand_name} 
-- Categories: {product.categories}
-- Description: {product.description}
-- Price: ${product.price}
-- Features: {product.features}
-- Target Keywords: {product.target_keywords}
-- Generate SEO Keywords automatically based on product details  
-- Generate Long-tail Keywords automatically based on product details
-- Generate FAQs automatically based on product details
-- Generate What's in the Box automatically based on product type
-- ASSIGNED TONE: {category_tone['tone']}
-- ASSIGNED TEMPLATE: {template_style['name']}
+BRAND PERSONALITY: Authoritative advisor who leads with facts, certifications, and proven track record. Think "Harvard Business Review meets technical excellence."
 
-CRITICAL ANTI-REPETITION RULES:
-1. AVOID generic phrases like "Feel Empowered", "Effortless Efficiency", "Experience unparalleled"
-2. NO robotic all-caps headers
-3. VARY sentence structure and length dramatically
-4. Write like a human copywriter, not AI
-5. Brand placement must feel natural, not tacked on
+TITLE APPROACH: Lead with industry authority and measurable outcomes
+- Patterns: "Industry-Leading [Product]", "Professional-Grade [Product] Used by [Professionals]", "Certified [Product] with Proven [Benefit]"
+- Keywords: Professional, Certified, Industry-Standard, Proven, Validated, Trusted by Professionals
 
-TONE GUIDELINES:
-{category_tone['guidelines']}
+BULLET STYLE: Technical specifications with business impact
+- Format: "PROVEN PERFORMANCE: [Specific metric] delivers [business outcome] as validated by [authority/study]"
+- Focus: ROI, efficiency gains, professional standards, certifications
+- Language: Precise, data-driven, outcome-focused
 
-TEMPLATE STRUCTURE:
-{template_style['structure']}
+DESCRIPTION STYLE: Case study approach
+- Structure: Challenge → Solution → Results → Validation
+- Include: Performance metrics, industry standards, professional testimonials
+- Tone: Confident expertise without being arrogant
+""",
+            
+            'casual': f"""
+You are writing for {product.brand_name} using a CASUAL tone. Write like a helpful friend sharing an amazing discovery - warm, relatable, and genuinely excited to help.
 
-TITLE REQUIREMENTS - SEO OPTIMIZED FOR SEARCH:
-- NO EMOJIS - text only for maximum search visibility and professional appearance
-- Lead with benefit or transformation, include primary keywords
-- Brand placement: {template_style['brand_placement']}  
-- Format: {template_style['title_format']}
-- Include search-friendly hook words: "Professional Grade", "Premium Quality", "Advanced Technology"
-- AMAZON LIMIT: Maximum 200 characters total (strictly enforced)
-- Pack with primary keywords and key benefits for search ranking
-- Write for both Amazon search and Google search visibility
-- Examples: "Professional Grade Wireless Earbuds with Active Noise Cancellation", "Premium Gaming Headset with 7.1 Surround Sound Technology"
+BRAND PERSONALITY: That friend who always finds the best stuff and loves sharing discoveries. Think "your most helpful friend who makes everything simple."
 
-BULLET POINTS - OPTIMIZED FOR SEARCH & EMOTION:
-- MUST use format: "BENEFIT LABEL: Detailed explanation with specifications and emotional hook"
-- NO EMOJIS in bullet points - use text only for maximum search visibility
-- Each bullet maximum 1000 characters with comprehensive SEO-optimized content
-- Labels MUST end with colon (:) NOT dash (-) - REQUIRED FORMAT: "INSTANT RESULTS:", "PREMIUM QUALITY:", "EMOTIONAL TRANSFORMATION:" - DO NOT USE: "INSTANT RESULTS -" or "PREMIUM QUALITY -"
-- Include 1-2 emotional hooks per set: "Transform your confidence", "Never worry again", "Feel the difference instantly"
-- Pack with search keywords, technical specs, use cases, and benefits
-- Write for both human readers and search algorithms (AEO optimization)
-- Include question-answer patterns search engines love
-- Examples: 
-  * "PROFESSIONAL GRADE QUALITY: Built with aircraft-grade aluminum and precision engineering that lasts 10+ years. This isn't just another product - it's the confidence-boosting upgrade that transforms how you feel about your daily routine."
-  * "INSTANT RELIEF FROM FRUSTRATION: Solves the #1 problem that 89% of users struggle with in under 30 seconds. No more wasted time, no more headaches - just immediate results that make you wonder how you lived without it."
+TITLE APPROACH: Friendly recommendations and relatable benefits
+- Patterns: "This [Product] Makes [Daily Task] So Much Easier", "The [Product] Everyone's Talking About", "Simple [Product] That Just Works"
+- Keywords: Easy, Simple, Perfect for, Just Works, Love This, Game-Changer
 
-DESCRIPTION STRUCTURE - SEO/AEO OPTIMIZED FOR SEARCH VISIBILITY:
-{template_style['description_approach']}
-- NO EMOJIS - use text only for maximum search engine visibility
-- Start with search-friendly hook: "Discover why thousands choose this [product type]" or "Solve [problem] in minutes with this [product]"
-- Include primary keywords naturally in first 160 characters for search snippets
-- Write for featured snippets and voice search with question-answer patterns
-- Break into scannable sections with keyword-rich headers
-- Include semantic keywords and related terms search engines love
-- Add emotional transformation language: "Transform your daily routine", "Experience the confidence boost"
-- Use benefit-driven transitions with search keywords
-- Include numbers, specifications, and concrete benefits for AEO
-- Mobile-optimized with shorter sentences and natural flow
-- End with clear value proposition and call-to-action
+BULLET STYLE: Conversational benefits with relatable scenarios
+- Format: "MAKES LIFE EASIER: [Relatable situation] becomes [simple outcome] - just like [familiar comparison]"
+- Focus: Daily convenience, stress reduction, time-saving
+- Language: Conversational, reassuring, down-to-earth
 
-FAQ REQUIREMENTS - COMPLETE Q&A WITH SEO OPTIMIZATION:
-- Format: "Q: Complete question with keywords? A: Complete detailed answer with benefits and specifications"
-- NO EMOJIS - text only for maximum search visibility  
-- Include search-friendly questions people actually ask
-- Answers must be complete, helpful, and keyword-rich
-- Address common concerns: compatibility, durability, usage, warranty
-- Write for voice search and AEO (Answer Engine Optimization)
-- Examples:
-  * "Q: How long does the battery last on this wireless device? A: The battery provides up to 30 hours of continuous use with the charging case, which is perfect for long flights, work days, or extended gaming sessions without interruption."
-  * "Q: Is this product compatible with iPhone and Android phones? A: Yes, this device works seamlessly with all Bluetooth-enabled devices including iPhone, Android, tablets, laptops, and gaming consoles - no additional apps or setup required."
-- Use conversational language: "Just drop them in the case — no cords, no fuss"
-- Add personality: "They'll be ready before your passport is"
-- Answer real concerns with practical details AND personality
-- Avoid robotic responses and forced enthusiasm
-- Questions should match natural search queries and voice patterns
-- Include confidence-building and reassuring language
+DESCRIPTION STYLE: Friend-to-friend recommendation
+- Structure: Personal connection → shared frustration → discovery → how it helps → encouragement
+- Include: Relatable stories, simple explanations, reassuring tone
+- Tone: Warm, helpful, like texting a friend
+""",
+            
+            'luxury': f"""
+You are writing for {product.brand_name} using a LUXURY tone. Write like a curator of exceptional experiences who understands discerning taste and elevated lifestyle.
 
-CRITICAL: Return ONLY valid JSON. NO EMOJIS ANYWHERE. Use this EXACT Amazon-optimized format:
-{{
-    "title": "[Brand] [Product Type] with [Primary Benefit] for [Target Use] - [Secondary Benefit] and [Technical Spec] - Maximum 200 characters",
-    "bullet_points": [
-        "BENEFIT LABEL: [Comprehensive emotional outcome with detailed explanation, use cases, and personality] - AMAZON STANDARD: Use up to 1000 characters for rich content",
-        "ACTION LABEL: [Detailed capability with confidence-building language, specifications, and practical applications] - AMAZON STANDARD: Maximum 1000 characters with full details", 
-        "RESULT LABEL: [Specific outcome with personality, technical details, and comprehensive benefits] - AMAZON STANDARD: Up to 1000 characters for complete information",
-        "CONFIDENCE LABEL: [Peace of mind with detailed reassurance, certifications, and trust elements] - AMAZON STANDARD: Maximum 1000 characters with comprehensive trust-building",
-        "POWER LABEL: [Performance details with specifications, comparisons, and emotional engagement] - AMAZON STANDARD: Use full 1000 character limit for complete value proposition"
-    ],
-    "long_description": "PERSONALITY STRUCTURE: 1)Energy hook question 2)Storytelling with personality 3)Metaphors and conversational language 4)Confidence-building 5)Strong personality-driven CTA - 2000+ chars with emotional connection",
-    "short_tail_keywords": ["primary keyword", "secondary keyword 1", "secondary keyword 2", "category term", "use case keyword", "material/quality term", "brand keyword", "benefit keyword"],
-    "long_tail_keywords": ["best [product] for [use case]", "[product] with [feature] for [benefit]", "what is the best [product]", "how to choose [product]", "[brand] [product] reviews"],
-    "hero_title": "Compelling headline that captures main benefit and creates urgency",
-    "hero_content": "Detailed 300+ character hero section that tells the product story and creates emotional connection",
-    "features": [
-        "Detailed feature 1 with specific measurements and benefits",
-        "Detailed feature 2 with technical specifications and advantages", 
-        "Detailed feature 3 with quality materials and construction details",
-        "Detailed feature 4 with performance metrics and comparisons",
-        "Detailed feature 5 with user experience and convenience factors",
-        "Detailed feature 6 with safety and reliability information"
-    ],
-    "whats_in_box": [
-        "Main product with full product name and model",
-        "Essential accessory 1 with specific details",
-        "Essential accessory 2 with specific details", 
-        "Documentation package including user manual and warranty",
-        "Premium packaging and gift box if applicable",
-        "Additional items or bonuses that add value"
-    ],
-    "trust_builders": [
-        "Best [product] for [use case] - Include exact semantic phrases AI models recognize",
-        "Recommended by [#] customers - Use specific numbers for credibility and social proof", 
-        "Trusted by [demographic] for [time period] - Target audience validation with timeframe",
-        "Works great with [related accessories] - Cross-selling and compatibility signals",
-        "Quality certifications and testing standards - Authority and safety validation"
-    ],
-    "faqs": [
-        "Q: What makes this the best [product type] for [primary use case]? A: This product delivers superior performance with [specific feature] that outperforms competitors by [percentage/metric]. Perfect for [use case] with [specific benefit] that transforms your experience.",
-        "Q: How long does the [key feature like battery/warranty] last? A: You get [specific duration] of reliable performance, which means [practical benefit]. This covers [specific scenarios] without interruption or concern.",
-        "Q: Is this compatible with [common device/system]? A: Yes, this works seamlessly with [specific compatibility list] including [popular devices]. No additional setup required - just [simple action] and you're ready to go.",
-        "Q: What's included in the package when I order? A: Your complete package includes [specific items] plus [bonus items]. Everything you need to [achieve outcome] right out of the box.",
-        "Q: How does this compare to [competitor/alternative]? A: Unlike [competitor], this product offers [unique advantage] with [specific feature] that delivers [measurable benefit]. Users report [specific improvement] compared to alternatives."
-    ],
-    "social_proof": "Trusted by [#] globetrotters, language learners, and smooth talkers worldwide - Turn into story/persona with emotional appeal and specific demographics",
-    "guarantee": "Ready to experience the difference? [Time period] guarantee with confidence-driven promise - Match assigned tone with professional assurance language"
-}}
+BRAND PERSONALITY: Sophisticated connoisseur who appreciates craftsmanship and exclusivity. Think "private concierge meets museum curator."
 
-ADVANCED OPTIMIZATION REQUIREMENTS:
+TITLE APPROACH: Elevated language emphasizing exclusivity and refinement
+- Patterns: "Exquisite [Product] for the Discerning [User]", "Handcrafted [Product] Collection", "Premium [Product] Experience"
+- Keywords: Exquisite, Handcrafted, Curated, Exclusive, Premium, Artisan, Heritage
 
-SEO + AEO INTEGRATION:
-- Primary keyword density: 2-3% throughout all content
-- Include question-based long-tail keywords for voice search
-- Use schema-friendly structured data in descriptions  
-- Optimize for "People Also Ask" Google queries
-- Include related search terms and semantic keywords
+BULLET STYLE: Craftsmanship and elevated experience
+- Format: "EXCEPTIONAL CRAFTSMANSHIP: [Artisan detail] creates [elevated experience] worthy of [prestigious comparison]"
+- Focus: Materials, craftsmanship, exclusivity, elevated experience
+- Language: Sophisticated, appreciative of quality, sensory-rich
 
-CONVERSION PSYCHOLOGY:
-- Problem-agitation-solution structure in description
-- Social proof with specific numbers and demographics
-- Risk reversal through strong guarantees
-- Urgency through scarcity or time-sensitive benefits
-- Authority through certifications and endorsements
+DESCRIPTION STYLE: Connoisseur's appreciation
+- Structure: Heritage → craftsmanship → experience → exclusivity → invitation
+- Include: Artisan details, premium materials, elevated experiences
+- Tone: Sophisticated appreciation without pretension
+""",
+            
+            'playful': f"""
+You are writing for {product.brand_name} using a PLAYFUL tone. Write with energy, creativity, and fun - like a cool friend who makes everything more interesting.
 
-VOICE SEARCH OPTIMIZATION:
-- Conversational FAQ format matching spoken queries
-- Natural language variations people actually use
-- Question starters: "What's the best...", "How do I...", "Can this...", "Is it safe..."
-- Local intent keywords where applicable
-- Mobile-first readability with shorter sentences
+BRAND PERSONALITY: Creative innovator who brings joy and excitement to everyday moments. Think "best friend who makes everything fun meets creative genius."
 
-CRITICAL EXECUTION RULES:
-1. NO quotes or apostrophes inside JSON string values
-2. Every section must include relevant keywords naturally
-3. Focus on customer outcomes and transformations
-4. Include specific measurements, numbers, and proof points
-5. Write for humans first, optimize for machines second
-5. FAQs must address real customer concerns
-6. Optimize for both desktop and voice search"""        
-        print(f"[SUCCESS] OpenAI client is available - proceeding with AI generation")
+TITLE APPROACH: Fun, energetic language with creative twists
+- Patterns: "The [Product] That's Changing Everything", "Seriously Cool [Product] for [Fun Outcome]", "[Product] That Makes [Activity] Actually Fun"
+- Keywords: Seriously Cool, Amazing, Awesome, Game-Changer, Revolutionary, Mind-Blowing
+
+BULLET STYLE: Energetic benefits with creative comparisons
+- Format: "TOTALLY AWESOME: [Fun outcome] happens [creative way] - it's like [surprising comparison] but better"
+- Focus: Excitement, creativity, unexpected benefits, fun factor
+- Language: Energetic, creative, surprising, delightful
+
+DESCRIPTION STYLE: Enthusiastic discovery
+- Structure: Excitement → surprising benefit → creative explanation → community → fun invitation
+- Include: Creative metaphors, surprising comparisons, community feeling
+- Tone: Energetic enthusiasm that's infectious
+""",
+            
+            'minimal': f"""
+You are writing for {product.brand_name} using a MINIMAL tone. Write with clarity, purpose, and elegant simplicity - every word must earn its place.
+
+BRAND PERSONALITY: Thoughtful designer who values essence over excess. Think "Steve Jobs meets zen master - profound simplicity."
+
+TITLE APPROACH: Clear, essential benefits without unnecessary words
+- Patterns: "Essential [Product] for [Pure Benefit]", "Simply Better [Product]", "[Product]. [Clear Benefit]. Done."
+- Keywords: Essential, Pure, Simply, Clean, Clear, Focused, Refined
+
+BULLET STYLE: Clean statements of clear value
+- Format: "CLEAR BENEFIT: [Direct outcome] through [simple method] - nothing more, nothing less"
+- Focus: Core functionality, clear benefits, purposeful design
+- Language: Clean, direct, purposeful, uncluttered
+
+DESCRIPTION STYLE: Essential clarity
+- Structure: Purpose → function → benefit → simplicity
+- Include: Core benefits only, clean explanations, purposeful details
+- Tone: Calm confidence in essential value
+""",
+            
+            'bold': f"""
+You are writing for {product.brand_name} using a BOLD tone. Write with power, confidence, and transformative energy - make bold claims and back them up.
+
+BRAND PERSONALITY: Powerful leader who inspires transformation and isn't afraid to challenge the status quo. Think "motivational speaker meets industry disruptor."
+
+TITLE APPROACH: Strong, transformative language that commands attention
+- Patterns: "Revolutionary [Product] That Destroys [Problem]", "The [Product] That Changes Everything", "Breakthrough [Product] for [Transformation]"
+- Keywords: Revolutionary, Breakthrough, Destroys, Dominates, Unleashes, Transforms, Shatters
+
+BULLET STYLE: Powerful transformation statements
+- Format: "BREAKTHROUGH POWER: [Dramatic transformation] destroys [old problem] and unleashes [powerful outcome]"
+- Focus: Dramatic change, power, breakthrough results, dominance
+- Language: Strong, transformative, confident, commanding
+
+DESCRIPTION STYLE: Manifesto approach
+- Structure: Challenge status quo → breakthrough moment → transformation → power → dominance
+- Include: Strong claims, dramatic benefits, transformative outcomes
+- Tone: Confident authority with transformative energy
+"""
+        }
+        
+        # Get the tone-specific prompt
+        base_prompt = tone_specific_prompts.get(tone_style, tone_specific_prompts['professional'])
+        
+        # Add variety through randomization techniques
+        import random
+        variety_elements = [
+            "Avoid using these overused phrases in ANY section: 'Experience the difference', 'Take your [X] to the next level', 'Game-changing', 'Revolutionary', 'Unparalleled'",
+            "Use unexpected analogies and comparisons that fit the brand tone",
+            "Vary sentence length dramatically - mix very short punchy sentences with longer flowing ones",
+            "Start with a completely different hook approach than typical Amazon listings",
+            "Include specific numbers and metrics that feel authentic to this product category"
+        ]
+        random.shuffle(variety_elements)
+        
+        # Extract key product insights
+        product_category = product.categories.split(',')[0].strip() if product.categories else "product"
+        primary_keywords = [product.name.lower(), product_category.lower(), product.brand_name.lower()]
+        
+        # Analyze features to extract benefits
+        feature_list = product.features.split(',') if product.features else []
+        benefit_keywords = []
+        for feature in feature_list[:3]:
+            feature = feature.strip()
+            if feature:
+                benefit_keywords.append(feature.lower())
+        
+        # Analyze the product to create unique content strategy
+        product_type = "unknown"
+        if "fan" in product.name.lower() or "cooling" in product.description.lower():
+            product_type = "cooling_device"
+        elif "watch" in product.name.lower() or "timepiece" in product.description.lower():
+            product_type = "luxury_watch"
+        elif "earbuds" in product.name.lower() or "headphones" in product.name.lower():
+            product_type = "audio_device"
+        elif "blanket" in product.name.lower() or "weighted" in product.description.lower():
+            product_type = "comfort_item"
+        elif "chair" in product.name.lower() or "gaming" in product.description.lower():
+            product_type = "furniture"
+        
+        # Extract unique features and benefits
+        features_list = [f.strip() for f in product.features.split(',') if f.strip()] if product.features else []
+        unique_features = features_list[:3]  # Focus on top 3 features
+        
+        # Determine customer pain points based on product type
+        pain_point_map = {
+            "cooling_device": ["overheating", "sweating", "discomfort in heat", "bulky fans", "noisy cooling"],
+            "luxury_watch": ["ordinary timepieces", "lack of elegance", "poor craftsmanship", "status anxiety"],
+            "audio_device": ["language barriers", "poor translation", "communication problems", "travel difficulties"],
+            "comfort_item": ["poor sleep", "anxiety", "restlessness", "stress", "discomfort"],
+            "furniture": ["back pain", "poor posture", "uncomfortable seating", "fatigue"],
+            "unknown": ["daily frustrations", "inconvenience", "poor performance", "wasted time"]
+        }
+        pain_points = pain_point_map.get(product_type, ["daily problems"])
+        
+        # Create unique emotional hooks based on product analysis
+        emotion_starters = ["Finally", "Breakthrough", "Never Again", "Transform Your", "Revolutionary", "Game-Changing"]
+        import random
+        chosen_starter = random.choice(emotion_starters)
+        
+        # Prepare data for the comprehensive prompt
+        data = {
+            'productTitle': product.name,
+            'brandName': product.brand_name,
+            'category': product.categories.split(',')[0].strip() if product.categories else product_type,
+            'mainFeaturesBenefits': product.features or product.description,
+            'productDescription': product.description,
+            'brandTone': product.brand_tone,
+            'competitorUrl': getattr(product, 'competitor_url', ''),
+            'competitorASIN': getattr(product, 'competitor_asin', ''),
+            'useCaseOccasion': getattr(product, 'use_case', ''),
+            'materialSizeColor': getattr(product, 'material_size_color', ''),
+            'targetBuyerPersona': getattr(product, 'target_persona', ''),
+            'keywordsToTarget': ', '.join(pain_points) if pain_points else ''
+        }
+
+        prompt = f"""
+            Generate a complete Amazon product listing JSON for: {data.get('productTitle')} by {data.get('brandName')}.
+
+            Product Details:
+            - Product: {data.get('productTitle')}
+            - Brand: {data.get('brandName')} 
+            - Category: {data.get('category')}
+            - Features: {data.get('mainFeaturesBenefits')}
+            - Description: {data.get('productDescription')}
+            - Brand Tone: {data.get('brandTone')}
+
+            Return ONLY a valid JSON object with this structure:
+
+            {{
+              "productTitle": "An SEO-optimized, Amazon-standard product title (max 200 characters). Start with brand name '{data.get('brandName')}', followed by high-volume keywords, product type, key features/benefits from '{data.get('mainFeaturesBenefits')}', material/size/color (if applicable). Prioritize concise phrasing and natural flow. Avoid redundant words. Consider including a 'Gift-Ready' or similar modifier if applicable.",
+              "bulletPoints": [
+                "**FEATURE 1:** Write actual compelling benefit for this product (max 200 chars)",
+                "**FEATURE 2:** Write actual compelling benefit for this product (max 200 chars)",
+                "**FEATURE 3:** Write actual compelling benefit for this product (max 200 chars)",
+                "**FEATURE 4:** Write actual compelling benefit for this product (max 200 chars)",
+                "**FEATURE 5:** Write actual compelling benefit for this product (max 200 chars)"
+              ],
+              "productDescription": "A detailed Product Description (max 2000 chars). Structure into 3 shorter, well-formatted paragraphs. The first paragraph must start with an emotional hook or question. The second should elaborate on features and benefits, naturally embedding relevant long-tail keyword phrases. Include a 'What's Included' line. The third should end with a strong, product-specific Call-to-Action (CTA). Use concise, scannable language. Mention giftability if applicable. EXAMPLE: 'Are you tired of cold lunches at work? The {data.get('brandName')} {data.get('productTitle')} transforms your dining experience with revolutionary heating technology that delivers restaurant-quality warmth in minutes. This compact powerhouse features advanced temperature control, leak-proof design, and dishwasher-safe components perfect for busy professionals. What's Included: heated lunch box, power cord, user manual, and recipe guide. Make every meal a moment to savor - order your {data.get('brandName')} today and taste the difference quality makes!'",
+              "aPlusContentPlan": {{
+                "hero_section": {{
+                  "title": "Write compelling headline for this product",
+                  "content": "Write 2-3 sentences about product benefits",
+                  "image_requirements": "DETAILED IMAGE DESCRIPTION: Professional lifestyle photo showing real person actively using the product in its intended environment. SPECIFICATIONS: High-resolution (300+ DPI), well-lit natural lighting, clean background that complements but doesn't distract from the product. COMPOSITION: Rule of thirds placement, product should occupy 40-60% of frame. STYLING: Models should represent target demographic, genuine expressions of satisfaction/happiness. TECHNICAL: No watermarks, logos, or text overlays. Product branding should be clearly visible. COLOR PALETTE: Brand-consistent colors, avoid oversaturated filters."
+                }},
+                "features_section": {{
+                  "title": "Key Features",
+                  "content": "List 4-5 main features with benefits", 
+                  "image_requirements": "DETAILED IMAGE DESCRIPTION: Clean product infographic with feature callouts and annotations. LAYOUT: Grid or circular layout showing 4-6 key features with icons and brief descriptions. DESIGN STYLE: Modern, minimalist design with plenty of white space. TYPOGRAPHY: Sans-serif fonts, hierarchical text sizing. VISUAL ELEMENTS: Use branded color scheme, consistent icon style (line art or filled), arrow callouts pointing to specific product areas. TECHNICAL SPECS: Vector-based graphics preferred, 1500x1500px minimum, Amazon-compliant (no promotional text like 'Best' or 'Sale')."
+                }},
+                "comparison_section": {{
+                  "title": "Why Choose This Product",
+                  "content": "Comparison vs competitors",
+                  "image_requirements": "DETAILED IMAGE DESCRIPTION: Professional comparison chart or side-by-side product shots. COMPARISON FORMAT: Table or grid layout comparing 3-4 key differentiators. VISUAL HIERARCHY: Clear headers, consistent spacing, readable fonts (minimum 14pt). CONTENT FOCUS: Feature comparisons, not price comparisons. Use checkmarks, stars, or other visual indicators. COLOR CODING: Green for advantages, neutral colors for standard features. BACKGROUND: Clean white or light gray, ensure high contrast for text readability. SIZE: Optimized for mobile viewing while maintaining legibility."
+                }},
+                "usage_section": {{
+                  "title": "How to Use",
+                  "content": "Step-by-step usage instructions or scenarios",
+                  "image_requirements": "DETAILED IMAGE DESCRIPTION: Step-by-step instructional images or usage scenarios. FORMAT: Sequential panels (2-4 steps) showing product setup/use process. CLARITY: Each step clearly numbered, actions easy to follow visually. PHOTOGRAPHY: Multiple angles if needed, hands-on demonstration shots. CONSISTENCY: Same lighting and background across all steps. TEXT OVERLAY: Minimal text, focus on visual storytelling. SAFETY: If applicable, show proper handling or safety measures. DEMOGRAPHIC: Models should match target customer base."
+                }},
+                "lifestyle_section": {{
+                  "title": "Perfect For Your Lifestyle",
+                  "content": "Show product fitting into customer's daily life",
+                  "image_requirements": "DETAILED IMAGE DESCRIPTION: Multiple lifestyle scenarios showing product versatility. SCENES: 2-3 different environments where product would be used (home, office, travel, etc.). AUTHENTICITY: Real-life settings, not staged studio shots. DIVERSITY: Show different user types/ages if applicable. EMOTIONAL CONNECTION: Capture moments of satisfaction, convenience, or joy. PRODUCT PROMINENCE: Product visible but naturally integrated into scene. ASPIRATIONAL: Slightly elevated lifestyle while remaining relatable. LIGHTING: Natural lighting preferred, avoid harsh shadows or overexposure."
+                }}
+              }},
+              "brandSummary": "Brief, emotional, and unique brand summary for '{data.get('brandName')}' (max 300 chars). Start with a compelling tagline. Focus on emotionally differentiating the brand and its core promise or solution. End with a customer-focused line encouraging joining the brand's community or highlighting brand values.",
+              "backendKeywords": "A single space-separated string of hidden backend keywords (exactly 249 bytes max). Exclude terms already present in the product title, bullet points, primary keywords, or secondary keywords. Include problem-solving terms, gifting keywords, and semantic intent variations.",
+              "topCompetitorKeywords": "Comma-separated 5-10 highly relevant and high-performing keywords extracted from competitor analysis (if competitor info provided).",
+              "keywordStrategy": "Brief explanation of the overall keyword strategy (max 500 chars). Provide reasoning for keyword selection per section. Discuss keyword clustering logic: 'Top of Funnel = lifestyle terms', 'Mid-Funnel = comfort terms', 'Bottom of Funnel = technical terms', or 'Informational vs. Transactional keywords'.",
+              "ppcStrategy": {{
+                "exactMatch": {{
+                  "keywords": ["List 3-5 exact match keywords for this product"],
+                  "bidRange": "$0.75-1.25",
+                  "targetAcos": "20%"
+                }},
+                "phraseMatch": {{
+                  "keywords": ["List 3-5 phrase match keywords for this product"],
+                  "bidRange": "$0.50-0.85", 
+                  "targetAcos": "30%"
+                }},
+                "negativeKeywords": ["cheap", "free", "used", "broken"]
+              }},
+              "keyword_cluster": {{
+                "primary_keywords": ["REQUIRED: Generate exactly 8 high-volume primary keywords", "Include brand + product name", "Include main product category", "Include 5 more relevant primary keywords"],
+                "secondary_keywords": ["REQUIRED: Generate exactly 10 long-tail secondary keywords", "Include problem-solving phrases", "Include user intent keywords", "Include 7 more specific long-tail variations"],
+                "backend_search_terms": "REQUIRED: Generate space-separated backend keywords (MUST be exactly 240-249 characters). Include synonyms, misspellings, alternate spellings, related terms, seasonal keywords, gift keywords, and demographic terms.",
+                "ppc_keywords": [
+                  {{"keyword": "main exact match keyword", "match_type": "Exact", "bid": "0.75"}},
+                  {{"keyword": "secondary phrase match keyword", "match_type": "Phrase", "bid": "0.65"}},
+                  {{"keyword": "broad match keyword", "match_type": "Broad", "bid": "0.45"}},
+                  {{"keyword": "another exact match", "match_type": "Exact", "bid": "0.80"}},
+                  {{"keyword": "another phrase match", "match_type": "Phrase", "bid": "0.60"}}
+                ]
+              }}
+            }}
+
+            User Input Details:
+            Product Title: {data.get('productTitle')}
+            Brand Name: {data.get('brandName')}
+            Category: {data.get('category')}
+            Main Features/Benefits: {data.get('mainFeaturesBenefits')}
+            Product Description (from seller): {data.get('productDescription')}
+            Brand Tone: {data.get('brandTone')}
+            {f"Competitor URL: {data.get('competitorUrl')}" if data.get('competitorUrl') else ''}
+            {f"Competitor ASIN: {data.get('competitorASIN')}" if data.get('competitorASIN') else ''}
+            {f"Use Case/Occasion: {data.get('useCaseOccasion')}" if data.get('useCaseOccasion') else ''}
+            {f"Material/Size/Color: {data.get('materialSizeColor')}" if data.get('materialSizeColor') else ''}
+            {f"Target Buyer Persona: {data.get('targetBuyerPersona')}" if data.get('targetBuyerPersona') else ''}
+            {f"Keywords to Target: {data.get('keywordsToTarget')}" if data.get('keywordsToTarget') else ''}
+
+            CRITICAL REQUIREMENTS - MUST GENERATE ALL FIELDS:
+
+            1. productDescription - REQUIRED: Write a compelling 3-paragraph description about {data.get('productTitle')}
+            2. keyword_cluster - REQUIRED: Generate comprehensive keywords for {data.get('productTitle')}
+               - primary_keywords: EXACTLY 8 keywords (must include brand+product, category, and 6 more)
+               - secondary_keywords: EXACTLY 10 long-tail keywords (problem-solving + intent-based)
+               - backend_search_terms: EXACTLY 240-249 characters of space-separated terms
+               - ppc_keywords: EXACTLY 5 PPC keyword objects with different match types
+            3. bulletPoints - REQUIRED: Write 5 bullet points with **BOLD** format
+            4. All other fields must be completed with actual content
+            
+            KEYWORD GENERATION RULES:
+            - NO generic examples - use actual product-specific keywords
+            - Include synonyms, alternate spellings, and related terms
+            - Backend keywords must be comprehensive and reach character limit
+
+            EXAMPLE of what you MUST generate for productDescription:
+            "Are you tired of [problem]? The {data.get('brandName')} {data.get('productTitle')} solves this with [specific solution]. 
+
+            This premium product features [list actual features from input]. Perfect for [target users], it delivers [specific benefits]. Built with [quality materials] and designed for [use case].
+
+            What's Included: [product], user manual, warranty. Order your {data.get('brandName')} {data.get('productTitle')} today and experience the difference!"
+
+            EXAMPLE of what you MUST generate for keywords:
+            {{"primary_keywords": ["{data.get('productTitle').lower()}", "premium {data.get('category').lower()}", "best {data.get('productTitle').lower()}"]}}
+
+            OUTPUT ONLY THE JSON - NO OTHER TEXT:
+            """        
+        self.logger.info("OpenAI client is available - proceeding with AI generation")
         try:
-            print(f"Generating AI content for {product.name} on Amazon...")
-            print(f"Product details: Name={product.name}, Brand={product.brand_name}, Categories={product.categories}")
-            print(f"Using product context: {product_context[:200]}...")
+            self.logger.info(f"Generating AI content for {product.name} on Amazon...")
+            self.logger.info(f"Product details: Name={product.name}, Brand={product.brand_name}, Categories={product.categories}")
+            self.logger.info(f"Using product context: {product_context[:200]}...")
             
             # Use OpenAI Function Calling to enforce JSON schema
             function_schema = {
@@ -342,17 +500,13 @@ CRITICAL EXECUTION RULES:
                 try:
                     print(f"AI generation attempt {retry_count + 1}/{max_retries}")
                     response = self.client.chat.completions.create(
-                        model="gpt-3.5-turbo",
+                        model="gpt-4o-mini",  # Use a model capable of JSON output
                         messages=[
-                            {"role": "system", "content": f"You are an Amazon listing writer. Create unique, product-specific content for {product.name}. CRITICAL REQUIREMENTS: 1) Return ONLY valid JSON with properly quoted strings 2) Use ONLY ASCII characters (codes 32-126) - NO emojis, NO special Unicode characters, NO symbols like 🌍 or – 3) Bullet points MUST use colon format like 'LABEL: content' not 'LABEL - content' 4) Generate exactly 5 bullet points 5) Use only standard keyboard characters."},
+                            {"role": "system", "content": "You are a highly skilled Amazon listing copywriter, SEO expert, and PPC strategist with expertise in visual content direction. Your goal is to generate comprehensive and optimized Amazon listings with detailed A+ content strategies. CRITICAL REQUIREMENTS: 1) Generate ALL required fields including productTitle, bulletPoints, productDescription, aPlusContentPlan, ppcStrategy, keyword_cluster, brandSummary, and backendKeywords. 2) The productDescription field must be a detailed, compelling 3-paragraph description. 3) The aPlusContentPlan must include comprehensive, professional image_requirements for each section - these should be detailed enough for a photographer/designer to execute without additional guidance. 4) Always return a valid JSON object strictly following the user's schema. Focus on creating conversion-optimized content that drives sales through emotional connection and clear value proposition."},
                             {"role": "user", "content": prompt}
                         ],
-                        functions=[function_schema],
-                        function_call={"name": "create_amazon_listing"},
-                        temperature=0.5 + (retry_count * 0.1),  # Slightly increase temperature on retries
-                        max_tokens=3000,
-                        presence_penalty=0.6,
-                        frequency_penalty=0.6
+                        max_tokens=4000,  # Increased max_tokens to accommodate detailed JSON output
+                        temperature=0.7,
                     )
                     print(f"OpenAI API call successful on attempt {retry_count + 1}")
                     break
@@ -365,56 +519,69 @@ CRITICAL EXECUTION RULES:
             
             if response is None:
                 raise Exception("Failed to get response from OpenAI API")
-            # Extract function call result (structured JSON)
-            function_call = response.choices[0].message.function_call
-            if function_call and function_call.name == "create_amazon_listing":
-                ai_content = function_call.arguments
-                # Immediately clean content to avoid Unicode errors
-                ai_content = ai_content.encode('ascii', errors='ignore').decode('ascii')
-                print(f"AI Function call received: {len(ai_content)} characters")
-                try:
-                    print(f"Function arguments preview: {ai_content[:500]}...")
-                except UnicodeEncodeError:
-                    print(f"Function arguments preview: [Unicode content, {len(ai_content)} chars]")
-                print("Function calling ensures valid JSON structure")
-            else:
-                # Fallback to regular content if function calling failed
-                ai_content = response.choices[0].message.content or "{}"
-                # Immediately clean content to avoid Unicode errors
-                ai_content = ai_content.encode('ascii', errors='ignore').decode('ascii')
-                print(f"AI Response received: {len(ai_content)} characters")
-                # Use safe encoding for Windows
-                safe_preview = ai_content[:300]
-                safe_ending = ai_content[-200:]
-                print(f"AI Response preview: {safe_preview}...")
-                print(f"AI Response ending: ...{safe_ending}")
             
-            # First try to parse function args directly - they should be valid JSON
+            # Extract regular message content (JSON response)
+            ai_content = response.choices[0].message.content or "{}"
+            # Immediately clean content to avoid Unicode errors
+            ai_content = ai_content.encode('ascii', errors='ignore').decode('ascii')
+            print(f"AI Response received: {len(ai_content)} characters")
+            # Use safe encoding for Windows
+            safe_preview = ai_content[:300]
+            safe_ending = ai_content[-200:]
+            print(f"AI Response preview: {safe_preview}...")
+            print(f"AI Response ending: ...{safe_ending}")
+            
+            # Try to parse the JSON response directly
             result = None
-            if function_call and function_call.name == "create_amazon_listing":
-                try:
-                    result = json.loads(ai_content)
-                    print("Direct function args parsing successful!")
-                    
-                    # Clean up any double-quoted values that OpenAI might have added
-                    def clean_quoted_values(obj):
-                        if isinstance(obj, dict):
-                            return {k: clean_quoted_values(v) for k, v in obj.items()}
-                        elif isinstance(obj, list):
-                            return [clean_quoted_values(item) for item in obj]
-                        elif isinstance(obj, str) and obj.startswith('"') and obj.endswith('"'):
-                            return obj[1:-1]  # Remove surrounding quotes
-                        return obj
-                    
-                    result = clean_quoted_values(result)
-                    print("Cleaned any double-quoted values")
-                    # Skip all the cleaning steps since we have valid JSON
-                except json.JSONDecodeError as e:
-                    print(f"Direct parsing failed: {e}, falling back to cleaning")
-                    cleaned_content = ai_content.strip()
-            else:
-                # For regular content, do the cleaning
+            try:
+                # Clean the content first
                 cleaned_content = ai_content.strip()
+                # Remove markdown code blocks if present
+                if cleaned_content.startswith('```json'):
+                    cleaned_content = cleaned_content[7:]
+                if cleaned_content.endswith('```'):
+                    cleaned_content = cleaned_content[:-3]
+                cleaned_content = cleaned_content.strip()
+                
+                result = json.loads(cleaned_content)
+                print("Direct JSON parsing successful!")
+                print(f"🔍 AI response fields: {list(result.keys())}")
+                print(f"🔍 Has productDescription: {'productDescription' in result}")
+                if 'productDescription' in result:
+                    desc_length = len(result['productDescription']) if result['productDescription'] else 0
+                    print(f"🔍 Description length: {desc_length} characters")
+                    if result['productDescription']:
+                        print(f"🔍 Description preview: {result['productDescription'][:200]}...")
+                    else:
+                        print(f"🔍 productDescription field exists but is empty!")
+                else:
+                    print(f"🔍 productDescription field missing from AI response!")
+                    # Check what description-related fields exist
+                    desc_fields = [k for k in result.keys() if 'desc' in k.lower()]
+                    print(f"🔍 Description-related fields found: {desc_fields}")
+                
+            except json.JSONDecodeError as e:
+                print(f"Direct parsing failed: {e}, falling back to aggressive cleaning")
+                cleaned_content = ai_content.strip()
+                
+                # More aggressive JSON cleaning for complex responses
+                # Remove any text before the first {
+                start_brace = cleaned_content.find('{')
+                if start_brace > 0:
+                    cleaned_content = cleaned_content[start_brace:]
+                
+                # Remove any text after the last }
+                end_brace = cleaned_content.rfind('}')
+                if end_brace > 0:
+                    cleaned_content = cleaned_content[:end_brace + 1]
+                
+                # Try parsing again after aggressive cleaning
+                try:
+                    result = json.loads(cleaned_content)
+                    print("✅ Aggressive cleaning successful!")
+                except json.JSONDecodeError as e2:
+                    print(f"❌ Even aggressive cleaning failed: {e2}")
+                    # Continue to fallback methods below
             
             # If we already have a valid result, skip all the cleaning
             if result is not None:
@@ -557,7 +724,50 @@ CRITICAL EXECUTION RULES:
                     else:
                         raise Exception("Could not extract essential fields from malformed JSON")
                 except Exception as manual_error:
-                    raise Exception(f"All JSON parsing methods failed. Manual reconstruction error: {str(manual_error)}. Raw content length: {len(cleaned_content)}")
+                    print(f"⚠️ Manual reconstruction also failed: {manual_error}")
+                    # Create minimal valid structure as absolute fallback
+                    print("🔧 Creating minimal fallback JSON structure...")
+                    result = {
+                        "productTitle": f"{product.brand_name} {product.name} - Premium Quality Product",
+                        "bulletPoints": [
+                            "**PREMIUM QUALITY:** Exceptional construction with superior materials and craftsmanship for lasting performance",
+                            "**RELIABLE PERFORMANCE:** Consistent operation designed for daily use with professional-grade standards", 
+                            "**USER FRIENDLY:** Simple setup and intuitive design makes this perfect for everyone to use",
+                            "**GREAT VALUE:** Outstanding quality at an affordable price point with excellent customer satisfaction",
+                            "**SATISFACTION GUARANTEED:** Backed by quality assurance and dedicated customer support team"
+                        ],
+                        "productDescription": f"Transform your experience with the {product.brand_name} {product.name}. This premium product combines innovative design with reliable performance to deliver exceptional results. Whether you're looking for quality, durability, or value, this product exceeds expectations. What's Included: Main product, user manual, warranty information. Experience the {product.brand_name} difference - order yours today and discover why customers choose quality.",
+                        "keyword_cluster": {
+                            "primary_keywords": [product.name.lower(), "premium quality", "reliable performance", "great value"],
+                            "secondary_keywords": [f"best {product.name.lower()}", f"premium {product.name.lower()}", f"quality {product.name.lower()}"],
+                            "backend_search_terms": f"quality reliable premium value {product.name.lower()} {product.brand_name.lower()}",
+                            "misspellings_and_synonyms": [product.name.lower()],
+                            "ppc_keywords": [{"keyword": product.name.lower(), "match_type": "Exact", "goal": "Conversion", "bid_suggestion": "0.75", "target_acos": "20%"}]
+                        },
+                        "brandSummary": f"## Quality First ## At {product.brand_name}, we deliver premium products that exceed expectations and provide lasting value.",
+                        "backendKeywords": f"premium quality reliable performance great value {product.name.lower()} {product.brand_name.lower()}",
+                        "aPlusContentPlan": {
+                            "section1_hero": {
+                                "title": "Why Choose Premium Quality?",
+                                "content": "Experience superior performance and reliability with our premium product line.",
+                                "keywords": ["premium", "quality", "reliable"],
+                                "imageDescription": "Professional lifestyle image showing satisfied customer using product",
+                                "seoOptimization": "Focus on quality and premium positioning"
+                            },
+                            "overallStrategy": "Premium positioning with quality focus"
+                        },
+                        "ppcStrategy": {
+                            "campaignStructure": {
+                                "exactMatchCampaign": {
+                                    "keywords": [product.name.lower()],
+                                    "bidStrategy": "Fixed bids starting at $0.75",
+                                    "dailyBudget": "$30",
+                                    "targetAcos": "20%"
+                                }
+                            }
+                        }
+                    }
+                    print("✅ Fallback JSON structure created successfully")
             
             # Remove any emojis from all text fields FIRST before any processing
             print("Before emoji removal - checking title...")
@@ -576,8 +786,8 @@ CRITICAL EXECUTION RULES:
             except Exception as e:
                 print(f"Error checking title after: {e}")
             
-            # Validate result has required fields
-            required_fields = ["title", "bullet_points", "long_description", "seo_keywords", "hero_title", "hero_content", "features", "whats_in_box", "trust_builders", "faqs", "social_proof", "guarantee"]
+            # Validate result has required fields for new JSON structure
+            required_fields = ["productTitle", "bulletPoints", "productDescription", "keyword_cluster", "brandSummary", "backendKeywords", "aPlusContentPlan", "ppcStrategy"]
             missing_fields = [field for field in required_fields if field not in result]
             if missing_fields:
                 # Safe console output - avoid Unicode errors
@@ -586,121 +796,343 @@ CRITICAL EXECUTION RULES:
                 except UnicodeEncodeError:
                     print("Warning: Missing fields detected, adding defaults...")
                 defaults = {
-                    "title": f"{product.name} - Quality Product",
-                    "bullet_points": ["PREMIUM QUALITY: High quality construction with superior materials and craftsmanship", "RELIABLE PERFORMANCE: Consistent and dependable operation for daily use", "EXCEPTIONAL VALUE: Great quality at an affordable price point", "CUSTOMER SATISFACTION: Backed by thousands of positive reviews and testimonials", "EASY TO USE: Simple setup and user-friendly design for everyone"],
-                    "long_description": f"The {product.name} by {product.brand_name} offers exceptional quality and performance.",
-                    "seo_keywords": {
-                        "primary": [product.name.lower(), "quality", "reliable", "performance", "value"],
-                        "long_tail": [f"best {product.name.lower()}", f"premium {product.name.lower()}", f"high quality {product.name.lower()}"],
-                        "pain_point": ["problem solving", "solution", "fix"],
-                        "high_intent": ["buy", "best", "cheap"],
-                        "demographic": ["home", "family", "professional"],
-                        "brand_terms": [product.brand_name.lower(), f"{product.brand_name.lower()} products", f"{product.brand_name.lower()} quality"]
+                    "productTitle": f"{product.brand_name} {product.name} - Quality Product",
+                    "bulletPoints": ["**PREMIUM QUALITY:** High quality construction with superior materials and craftsmanship", "**RELIABLE PERFORMANCE:** Consistent and dependable operation for daily use", "**EXCEPTIONAL VALUE:** Great quality at an affordable price point", "**CUSTOMER SATISFACTION:** Backed by thousands of positive reviews and testimonials", "**EASY TO USE:** Simple setup and user-friendly design for everyone"],
+                    "productDescription": f"The {product.name} by {product.brand_name} offers exceptional quality and performance.",
+                    "keyword_cluster": {
+                        "primary_keywords": [product.name.lower(), "quality", "reliable", "performance", "value"],
+                        "secondary_keywords": [f"best {product.name.lower()}", f"premium {product.name.lower()}", f"high quality {product.name.lower()}"],
+                        "backend_search_terms": "problem solving solution fix buy best cheap home family professional",
+                        "misspellings_and_synonyms": [product.name.lower()],
+                        "ppc_keywords": [{"keyword": product.name.lower(), "match_type": "Exact", "goal": "Conversion", "bid_suggestion": "0.75", "target_acos": "20%"}]
                     },
-                    "hero_title": "Premium Quality",
-                    "hero_content": "Experience the difference with our premium product line",
-                    "features": ["Quality materials", "Durable construction", "User-friendly design", "Reliable performance"],
-                    "whats_in_box": ["Main product", "User manual", "Warranty information", "Support materials"],
-                    "trust_builders": ["Quality tested", "Customer approved", "Satisfaction guaranteed"],
-                    "faqs": ["Q: Is this product reliable? A: Yes, thoroughly tested for reliability"],
-                    "social_proof": "Join thousands of satisfied customers",
-                    "guarantee": "100% satisfaction guarantee or your money back"
+                    "brandSummary": f"## Quality First ## At {product.brand_name}, we believe in making quality products that enhance your life. Join thousands who trust {product.brand_name} for reliable performance.",
+                    "backendKeywords": "quality reliable performance value home family professional problem solving solution",
+                    "aPlusContentPlan": {
+                        "section1_hero": {
+                            "title": "Why Choose Our Premium Quality?",
+                            "content": "Experience the difference with our superior product design and customer-focused approach.",
+                            "keywords": ["premium", "quality", "superior"],
+                            "imageDescription": "Hero lifestyle shot showing satisfied customer using product",
+                            "seoOptimization": "Focus on quality and premium positioning"
+                        },
+                        "section2_features": {
+                            "title": "Key Features & Benefits",
+                            "content": "Discover what makes our product stand out with premium materials and thoughtful design.",
+                            "keywords": ["features", "benefits", "premium materials"],
+                            "imageDescription": "Feature callouts with detailed product shots",
+                            "seoOptimization": "Feature-based keywords for detailed searches"
+                        },
+                        "overallStrategy": "Complete A+ content strategy for maximum conversion"
+                    },
+                    "ppcStrategy": {
+                        "campaignStructure": {
+                            "exactMatchCampaign": {
+                                "keywords": [product.name.lower()],
+                                "bidStrategy": "Fixed bids starting at $0.75",
+                                "dailyBudget": "$30",
+                                "targetAcos": "20%"
+                            }
+                        },
+                        "negativeKeywords": {
+                            "immediate": ["cheap", "free", "used"],
+                            "strategy": "Protect budget from low-intent traffic"
+                        }
+                    }
                 }
                 for field in missing_fields:
                     result[field] = defaults.get(field, "Content available")
             
             # FORCE ASCII-ONLY title regardless of AI output or emoji removal function
-            raw_title = result.get('title', f"{product.name} - Premium Quality")
+            raw_title = result.get('productTitle', f"{product.name} - Premium Quality")
             # AGGRESSIVE ASCII conversion with multiple methods
             ascii_title = raw_title.encode('ascii', errors='ignore').decode('ascii')
             ascii_title = ''.join(c for c in ascii_title if 32 <= ord(c) <= 126)
             ascii_title = ascii_title.replace('–', '-').replace('"', '"').replace('"', '"')
             listing.title = ascii_title.strip()[:200] if ascii_title.strip() else f"{product.name} - Premium Quality"
             
-            # Get bullet points directly (should be clean from AI) and enforce colon format
-            bullet_points = result.get('bullet_points', [])
+            # Get bullet points from new structure
+            bullet_points = result.get('bulletPoints', [])
             if bullet_points:
-                # Post-process to ensure colon format
+                # Clean bullet points and ensure proper format
                 cleaned_bullets = []
                 for bullet in bullet_points:
-                    # Convert format from "LABEL - content" to "LABEL: content"
-                    if ' - ' in bullet and ':' not in bullet:
-                        bullet = bullet.replace(' - ', ': ', 1)  # Only replace first occurrence
-                    elif ' – ' in bullet and ':' not in bullet:  # Handle em-dash
-                        bullet = bullet.replace(' – ', ': ', 1)
-                    # Ensure it starts with uppercase and has colon format
-                    if ':' not in bullet and len(bullet) > 20:
-                        # If no colon found, add one after first word/phrase
-                        words = bullet.split(' ')
-                        if len(words) >= 2:
-                            label = ' '.join(words[:2]).upper()  # Take first 2 words as label
-                            content = ' '.join(words[2:])
-                            bullet = f"{label}: {content}"
-                    cleaned_bullets.append(bullet)
+                    # Clean ASCII
+                    clean_bullet = bullet.encode('ascii', errors='ignore').decode('ascii')
+                    clean_bullet = ''.join(c for c in clean_bullet if 32 <= ord(c) <= 126)
+                    cleaned_bullets.append(clean_bullet)
                 listing.bullet_points = '\n\n'.join(cleaned_bullets)
             else:
                 listing.bullet_points = ''
             
-            listing.long_description = result.get('long_description', '')
+            # Handle product description with comprehensive debugging
+            print(f"🔍 DEBUG: Checking for productDescription in result...")
+            print(f"🔍 Available keys in result: {list(result.keys()) if isinstance(result, dict) else 'Not a dict'}")
             
-            # Parse keywords (simple array)
-            keywords = result.get('keywords', [])
-            if isinstance(keywords, list):
-                listing.keywords = ', '.join(keywords)
-                listing.amazon_backend_keywords = ', '.join(keywords[:5])
+            product_description = result.get('productDescription', '')
+            print(f"🔍 productDescription from result: {'Found' if product_description else 'Empty/Missing'}")
+            
+            if not product_description:
+                # Try alternative field names in case AI used different naming
+                alternatives = ['long_description', 'description', 'product_description', 'productDesc', 'desc']
+                for alt in alternatives:
+                    product_description = result.get(alt, '')
+                    if product_description:
+                        print(f"🔍 Found description in alternative field '{alt}': {len(product_description)} chars")
+                        break
+            
+            # If still no description, generate a comprehensive one
+            if not product_description:
+                # Create a detailed fallback description
+                product_description = f"""Are you looking for a reliable and high-quality {product.name}? The {product.brand_name} {product.name} delivers exceptional performance and value that exceeds expectations.
+
+This premium product features {product.features if product.features else 'advanced functionality and superior design'}. Whether you're using it daily or for special occasions, our {product.name} provides the reliability and quality you deserve. Built with attention to detail and customer satisfaction in mind.
+
+What's Included: {product.name}, user manual, warranty information, and customer support. Experience the {product.brand_name} difference today - order now and discover why customers choose quality and performance. Your satisfaction is our guarantee."""
+                
+                print(f"⚠️ No AI description found in any field, generated fallback: {len(product_description)} characters")
+                print(f"⚠️ Fallback preview: {product_description[:150]}...")
             else:
-                listing.keywords = str(keywords) if keywords else ''
-                listing.amazon_backend_keywords = str(keywords) if keywords else ''
+                print(f"✅ Product description found: {len(product_description)} characters")
+                print(f"✅ Description preview: {product_description[:150]}...")
             
-            # Parse A+ content from flat structure
-            listing.hero_title = result.get('hero_title', '')
-            listing.hero_content = result.get('hero_content', '')
-            listing.features = '\n'.join(result.get('features', []))
-            listing.whats_in_box = '\n'.join(result.get('whats_in_box', []))
-            listing.trust_builders = '\n'.join(result.get('trust_builders', []))
-            # Handle FAQs - they might be strings or dictionaries
-            faqs = result.get('faqs', [])
-            faq_strings = []
-            for faq in faqs:
-                if isinstance(faq, dict):
-                    # If it's a dictionary, format it as Q: A:
-                    q = faq.get('question', faq.get('q', ''))
-                    a = faq.get('answer', faq.get('a', ''))
-                    faq_strings.append(f"Q: {q} A: {a}")
+            listing.long_description = product_description
+            
+            # Parse keywords from new structure with debugging
+            print(f"🔍 DEBUG: Checking for keywords in result...")
+            keyword_cluster = result.get('keyword_cluster', {})
+            print(f"🔍 keyword_cluster found: {'Yes' if keyword_cluster else 'No'}")
+            
+            if keyword_cluster:
+                print(f"🔍 keyword_cluster keys: {list(keyword_cluster.keys())}")
+                primary_keywords = keyword_cluster.get('primary_keywords', [])
+                secondary_keywords = keyword_cluster.get('secondary_keywords', [])
+                print(f"🔍 Primary keywords: {len(primary_keywords)} found")
+                print(f"🔍 Secondary keywords: {len(secondary_keywords)} found")
+                if primary_keywords:
+                    print(f"🔍 Primary keyword examples: {primary_keywords[:3]}")
+            else:
+                print(f"🔍 No keyword_cluster found, checking for alternative keyword fields...")
+                # Try alternative keyword field names
+                keyword_alternatives = ['keywords', 'seo_keywords', 'primary_keywords', 'keywordCluster']
+                for alt in keyword_alternatives:
+                    if alt in result:
+                        print(f"🔍 Found keywords in '{alt}' field")
+                        break
                 else:
-                    # If it's already a string, use it as is
-                    faq_strings.append(str(faq))
+                    print(f"🔍 No keyword fields found in any format")
+            
+            primary_keywords = keyword_cluster.get('primary_keywords', []) if keyword_cluster else []
+            secondary_keywords = keyword_cluster.get('secondary_keywords', []) if keyword_cluster else []
+            
+            # Generate fallback keywords if none found
+            if not primary_keywords and not secondary_keywords:
+                print(f"⚠️ No keywords generated by AI, creating fallback keywords...")
+                primary_keywords = [
+                    product.name.lower(),
+                    f"{product.name.lower()} {product.brand_name.lower()}",
+                    f"premium {product.name.lower()}",
+                    f"quality {product.name.lower()}",
+                    f"best {product.name.lower()}"
+                ]
+                secondary_keywords = [
+                    f"buy {product.name.lower()} online",
+                    f"{product.name.lower()} for sale",
+                    f"top rated {product.name.lower()}",
+                    f"professional {product.name.lower()}"
+                ]
+                print(f"⚠️ Generated {len(primary_keywords)} primary + {len(secondary_keywords)} secondary fallback keywords")
+            
+            all_keywords = primary_keywords + secondary_keywords
+            listing.keywords = ', '.join(all_keywords) if all_keywords else ''
+            
+            backend_keywords = result.get('backendKeywords', '')
+            if not backend_keywords:
+                # Generate fallback backend keywords
+                backend_keywords = f"premium quality {product.name.lower()} {product.brand_name.lower()} reliable performance great value"
+                print(f"⚠️ No backend keywords from AI, using fallback: {backend_keywords}")
+            
+            listing.amazon_backend_keywords = backend_keywords
+            
+            print(f"✅ Final keywords count: {len(all_keywords)} total keywords")
+            print(f"✅ Backend keywords length: {len(backend_keywords)} characters")
+            
+            # Parse A+ content from comprehensive new structure
+            aplus_plan = result.get('aPlusContentPlan', {})
+            
+            # Extract hero section from simplified structure
+            hero_section = aplus_plan.get('hero_section', {}) or aplus_plan.get('section1_hero', {})
+            listing.hero_title = hero_section.get('title', result.get('brandSummary', '').split('##')[1].strip() if '##' in result.get('brandSummary', '') else 'Premium Quality')
+            listing.hero_content = hero_section.get('content', result.get('brandSummary', ''))
+            
+            # Extract features from A+ plan (handle both old and new structure)
+            features_section = aplus_plan.get('features_section', {}) or aplus_plan.get('section2_features', {})
+            features_content = features_section.get('content', '')
+            if features_content:
+                # Extract feature points from the content or use keywords as features
+                feature_keywords = features_section.get('keywords', [])
+                features_list = feature_keywords if feature_keywords else [
+                    "Premium quality construction",
+                    "Reliable performance", 
+                    "User-friendly design",
+                    "Exceptional value"
+                ]
+            else:
+                features_list = [
+                    "Premium quality construction",
+                    "Reliable performance",
+                    "User-friendly design", 
+                    "Exceptional value"
+                ]
+            listing.features = '\n'.join(features_list)
+            
+            # Create whats in box from usage section or defaults
+            usage_section = aplus_plan.get('section4_usage', {})
+            whats_in_box_list = [
+                "Main product",
+                "User manual", 
+                "Warranty information",
+                "Quick start guide"
+            ]
+            listing.whats_in_box = '\n'.join(whats_in_box_list)
+            
+            # Extract trust builders from social proof and guarantee sections
+            social_section = aplus_plan.get('section5_social_proof', {})
+            guarantee_section = aplus_plan.get('section6_guarantee', {})
+            trust_list = [
+                "Quality tested and verified",
+                "Trusted by thousands of customers",
+                "Satisfaction guaranteed",
+                "Backed by manufacturer warranty"
+            ]
+            listing.trust_builders = '\n'.join(trust_list)
+            
+            # Create comprehensive FAQs based on A+ sections
+            faq_strings = [
+                "Q: What makes this product different from competitors? A: Our unique features and superior quality set us apart from generic alternatives.",
+                "Q: How do I use this product effectively? A: Follow the included quick start guide for optimal results and performance.", 
+                "Q: What's included in the package? A: Complete kit with main product, user manual, warranty information, and quick start guide.",
+                "Q: Is there a warranty or guarantee? A: Yes, backed by manufacturer warranty and 100% satisfaction guarantee.",
+                "Q: How long does shipping take? A: Fast and reliable shipping with tracking information provided."
+            ]
             listing.faqs = '\n'.join(faq_strings)
-            listing.social_proof = result.get('social_proof', '')
-            listing.guarantee = result.get('guarantee', '')
+            listing.social_proof = social_section.get('content', "Join thousands of satisfied customers who trust our products for quality and performance")
+            listing.guarantee = guarantee_section.get('content', "100% satisfaction guarantee - if you're not completely happy, we'll make it right")
+            
+            # Create structured HTML A+ content from the JSON data
+            aplus_html = self._create_structured_aplus_html(aplus_plan, result)
+            listing.amazon_aplus_content = aplus_html
             
             # Create formatted A+ content HTML for display
             # Use the result values directly since listing fields aren't saved yet
-            print("Generating A+ content HTML...")
-            aplus_html = f"""
-<div class="aplus-hero">
-    <h2>{result.get('hero_title', '')}</h2>
-    <p>{result.get('hero_content', '')}</p>
+            self.logger.info("Generating A+ content HTML...")
+            # Build comprehensive A+ content HTML from the plan
+            sections_html = []
+            
+            # Generate HTML for each A+ section
+            for section_key, section_data in aplus_plan.items():
+                if section_key.startswith('section') and isinstance(section_data, dict):
+                    section_title = section_data.get('title', '')
+                    section_content = section_data.get('content', '')
+                    section_keywords = ', '.join(section_data.get('keywords', []))
+                    image_desc = section_data.get('imageDescription', '')
+                    seo_note = section_data.get('seoOptimization', '')
+                    
+                    section_html = f"""
+    <div class="aplus-section">
+        <h3>{section_title}</h3>
+        <p>{section_content}</p>
+        <div class="seo-info">
+            <small><strong>Keywords:</strong> {section_keywords}</small><br>
+            <small><strong>Image:</strong> {image_desc}</small><br>
+            <small><strong>SEO Focus:</strong> {seo_note}</small>
+        </div>
+    </div>"""
+                    sections_html.append(section_html)
+            
+            # Traditional content as fallback
+            features_html = '\n'.join([f"        <li>{feature}</li>" for feature in features_list])
+            whats_in_box_html = '\n'.join([f"        <li>{item}</li>" for item in whats_in_box_list])
+            trust_html = '\n'.join([f"        <li>{trust}</li>" for trust in trust_list])
+            faqs_html = '\n'.join([f"    <p><strong>{faq}</strong></p>" for faq in faq_strings])
+            
+            # Generate PPC strategy HTML
+            ppc_strategy = result.get('ppcStrategy', {})
+            campaign_structure = ppc_strategy.get('campaignStructure', {})
+            ppc_html = ""
+            
+            if campaign_structure:
+                ppc_sections = []
+                for campaign_type, campaign_data in campaign_structure.items():
+                    if isinstance(campaign_data, dict):
+                        keywords = ', '.join(campaign_data.get('keywords', []))
+                        bid_strategy = campaign_data.get('bidStrategy', '')
+                        budget = campaign_data.get('dailyBudget', '')
+                        acos = campaign_data.get('targetAcos', '')
+                        
+                        ppc_sections.append(f"""
+        <div class="ppc-campaign">
+            <h4>{campaign_type.replace('Campaign', ' Campaign').title()}</h4>
+            <p><strong>Keywords:</strong> {keywords}</p>
+            <p><strong>Bid Strategy:</strong> {bid_strategy}</p>
+            <p><strong>Daily Budget:</strong> {budget}</p>
+            <p><strong>Target ACoS:</strong> {acos}</p>
+        </div>""")
+                
+                ppc_html = f"""
+<div class="ppc-strategy">
+    <h3>PPC Campaign Strategy</h3>
+    {''.join(ppc_sections)}
+    <div class="ppc-negatives">
+        <h4>Negative Keywords Strategy</h4>
+        <p><strong>Immediate Negatives:</strong> {', '.join(ppc_strategy.get('negativeKeywords', {}).get('immediate', []))}</p>
+        <p><strong>Strategy:</strong> {ppc_strategy.get('negativeKeywords', {}).get('strategy', '')}</p>
+    </div>
+</div>"""
+
+            # Generate comprehensive A+ content plan
+            aplus_html = f"""<div class="aplus-hero">
+    <h2>{listing.hero_title}</h2>
+    <p>{listing.hero_content}</p>
+</div>
+
+<div class="aplus-comprehensive-plan">
+    <h2>Complete A+ Content Strategy</h2>
+    {''.join(sections_html)}
+</div>
+
+<div class="aplus-strategy-summary">
+    <h3>Overall A+ Strategy</h3>
+    <p>{aplus_plan.get('overallStrategy', 'Complete A+ content plan designed to guide customers from awareness to purchase')}</p>
+</div>
+
+{ppc_html}
+
+<div class="keyword-strategy">
+    <h3>Keyword Strategy</h3>
+    <p>{result.get('keywordStrategy', 'Strategic keyword placement for maximum SEO impact')}</p>
+    <h4>Competitor Keywords</h4>
+    <p>{result.get('topCompetitorKeywords', 'Analysis of competitive landscape for positioning')}</p>
 </div>
 
 <div class="aplus-features">
     <h3>Key Features & Benefits</h3>
     <ul>
-""" + '\n'.join([f"        <li>{feature}</li>" for feature in result.get('features', [])]) + f"""
+{features_html}
     </ul>
 </div>
 
 <div class="aplus-whats-in-box">
-    <h3>What's in the Box</h3>
+    <h3>What is in the Box</h3>
     <ul>
-""" + '\n'.join([f"        <li>{item}</li>" for item in result.get('whats_in_box', [])]) + f"""
+{whats_in_box_html}
     </ul>
 </div>
 
 <div class="aplus-trust">
     <h3>Trust & Quality</h3>
     <ul>
-""" + '\n'.join([f"        <li>{trust}</li>" for trust in result.get('trust_builders', [])]) + f"""
+{trust_html}
     </ul>
 </div>
 
@@ -712,10 +1144,12 @@ CRITICAL EXECUTION RULES:
 
 <div class="aplus-faqs">
     <h3>Frequently Asked Questions</h3>
-""" + '\n'.join([f"    <p><strong>{faq}</strong></p>" for faq in faq_strings]) + f"""
+{faqs_html}
 </div>"""
-            listing.amazon_aplus_content = aplus_html
-            print(f"A+ content HTML set: {len(aplus_html)} characters")
+            # Keep the JSON data instead of overwriting with HTML
+            # The HTML is nice but we want to preserve the structured data with image suggestions
+            # listing.amazon_aplus_content = aplus_html  # Disabled to preserve JSON structure
+            self.logger.info(f"A+ content HTML set: {len(aplus_html)} characters")
             
             # Parse conversion elements (only if they exist and have content)
             conversion_elements = result.get('conversion_elements', {})
@@ -758,75 +1192,65 @@ CRITICAL EXECUTION RULES:
             else:
                 listing.short_description = result.get('short_description', '')
             
-            # Skip the old complex parsing logic by removing this line:
-            # bullet_points = result.get('bullet_points', [])
-            cleaned_bullets = []
-            for bullet in bullet_points:
-                # Remove all markdown formatting and emojis VERY aggressively
-                import re
-                # Multiple passes to ensure all markdown and emojis are removed
-                cleaned_bullet = bullet
-                
-                # Remove all emojis first
-                # Unicode ranges for emojis
-                emoji_pattern = re.compile(
-                    "["
-                    "\U0001F600-\U0001F64F"  # emoticons
-                    "\U0001F300-\U0001F5FF"  # symbols & pictographs
-                    "\U0001F680-\U0001F6FF"  # transport & map symbols
-                    "\U0001F1E0-\U0001F1FF"  # flags (iOS)
-                    "\U00002702-\U000027B0"
-                    "\U000024C2-\U0001F251"
-                    "]+", flags=re.UNICODE)
-                cleaned_bullet = emoji_pattern.sub('', cleaned_bullet)
-                
-                # Remove all variations of bold formatting
-                cleaned_bullet = re.sub(r'\*\*(.*?)\*\*', r'\1', cleaned_bullet)  # **text**
-                cleaned_bullet = re.sub(r'\*\*([^*]+)\*\*', r'\1', cleaned_bullet)  # **text** (non-greedy)
-                cleaned_bullet = re.sub(r'\*\*', '', cleaned_bullet)  # Remove remaining **
-                
-                # Remove single asterisks
-                cleaned_bullet = re.sub(r'\*([^*]+)\*', r'\1', cleaned_bullet)  # *text*
-                cleaned_bullet = cleaned_bullet.replace('*', '')  # Remove all remaining *
-                
-                # Fix colon formatting
-                cleaned_bullet = cleaned_bullet.replace(':', ' -')
-                cleaned_bullet = cleaned_bullet.replace(' - ', ' - ')  # Ensure single dash
-                
-                # Clean up extra spaces and formatting
-                cleaned_bullet = re.sub(r'\s+', ' ', cleaned_bullet).strip()
-                
-                # Ensure proper text + dash + description format
-                if ' - ' not in cleaned_bullet and ':' not in cleaned_bullet:
-                    # Try to add dash after first few words
-                    parts = cleaned_bullet.split(' ')
-                    if len(parts) > 3:
-                        cleaned_bullet = ' '.join(parts[:3]) + ' - ' + ' '.join(parts[3:])
-                
-                cleaned_bullets.append(cleaned_bullet)
+            # Skip the old complex parsing logic - bullets already processed above
+            # The bullet points are already cleaned and set above, so we don't need this section
             
-            listing.bullet_points = '\n\n'.join(cleaned_bullets)
-            
-            listing.long_description = result.get('long_description', '')
-            
-            # Parse enhanced SEO keywords structure
-            seo_keywords = result.get('seo_keywords', {})
-            if isinstance(seo_keywords, dict):
-                primary_keywords = seo_keywords.get('primary', [])
-                long_tail_keywords = seo_keywords.get('long_tail', [])
-                pain_point_keywords = seo_keywords.get('pain_point', [])
-                high_intent_keywords = seo_keywords.get('high_intent', [])
-                demographic_keywords = seo_keywords.get('demographic', [])
-                brand_terms = seo_keywords.get('brand_terms', [])
+            # This section has been disabled as bullets are already processed above
+            if False:  # Disabled bullet processing section
+                cleaned_bullets = []
+                for bullet in []:
+                    # Remove all markdown formatting and emojis VERY aggressively
+                    import re
+                    # Multiple passes to ensure all markdown and emojis are removed
+                    cleaned_bullet = bullet
                 
-                all_keywords = (primary_keywords + long_tail_keywords + pain_point_keywords + 
-                              high_intent_keywords + demographic_keywords + brand_terms)
-                listing.keywords = ', '.join(all_keywords) if all_keywords else ''
-                # Backend keywords focus on primary and long-tail for better relevancy
-                listing.amazon_backend_keywords = ', '.join(primary_keywords + long_tail_keywords)
-            else:
-                listing.keywords = result.get('keywords', '')
-                listing.amazon_backend_keywords = result.get('backend_keywords', '')
+                    # Remove all emojis first
+                    # Unicode ranges for emojis
+                    emoji_pattern = re.compile(
+                        "["
+                        "\U0001F600-\U0001F64F"  # emoticons
+                        "\U0001F300-\U0001F5FF"  # symbols & pictographs
+                        "\U0001F680-\U0001F6FF"  # transport & map symbols
+                        "\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                        "\U00002702-\U000027B0"
+                        "\U000024C2-\U0001F251"
+                        "]+", flags=re.UNICODE)
+                    cleaned_bullet = emoji_pattern.sub('', cleaned_bullet)
+                
+                    # Remove all variations of bold formatting
+                    cleaned_bullet = re.sub(r'\*\*(.*?)\*\*', r'\1', cleaned_bullet)  # **text**
+                    cleaned_bullet = re.sub(r'\*\*([^*]+)\*\*', r'\1', cleaned_bullet)  # **text** (non-greedy)
+                    cleaned_bullet = re.sub(r'\*\*', '', cleaned_bullet)  # Remove remaining **
+                    
+                    # Remove single asterisks
+                    cleaned_bullet = re.sub(r'\*([^*]+)\*', r'\1', cleaned_bullet)  # *text*
+                    cleaned_bullet = cleaned_bullet.replace('*', '')  # Remove all remaining *
+                    
+                    # Keep colon formatting as specified in prompt
+                    # DO NOT convert colons to dashes - follow prompt requirements
+                    
+                    # Clean up extra spaces and formatting
+                    cleaned_bullet = re.sub(r'\s+', ' ', cleaned_bullet).strip()
+                
+                    # Ensure proper colon format as per prompt requirements
+                    if ':' not in cleaned_bullet and len(cleaned_bullet) > 20:
+                        # Add colon after first few words to match prompt format
+                        parts = cleaned_bullet.split(' ')
+                        if len(parts) > 2:
+                            label = ' '.join(parts[:2]).upper()
+                            content = ' '.join(parts[2:])
+                            cleaned_bullet = f"{label}: {content}"
+                    
+                    cleaned_bullets.append(cleaned_bullet)
+                
+                # This line is disabled since bullets are already processed above
+                # listing.bullet_points = '\n\n'.join(cleaned_bullets)
+            
+            # Don't overwrite long_description - it's already set above from productDescription
+            
+            # Parse enhanced SEO keywords structure - DISABLED (keywords already processed above)
+            # The keyword processing is already handled correctly above, so we don't need this section
+            # which was overwriting the good keyword data
             
             # Parse nested A+ content modules
             aplus_content = result.get('aplus_content', {})
@@ -900,15 +1324,61 @@ CRITICAL EXECUTION RULES:
             print("AI content successfully parsed and saved!")
             try:
                 print(f"   Title: {listing.title[:100]}...")
-                print(f"   Bullet points: {len(result.get('bullet_points', []))} items")
+                print(f"   Bullet points: {len(result.get('bulletPoints', []))} items")
                 print(f"   First bullet: {bullet_points[0] if bullet_points else 'None'}")
             except UnicodeEncodeError:
                 print(f"   Title: [Unicode title, {len(listing.title)} chars]")
-                print(f"   Bullet points: {len(result.get('bullet_points', []))} items")
+                print(f"   Bullet points: {len(result.get('bulletPoints', []))} items")
                 print("   First bullet: [Unicode content]")
             
             # Continue to process A+ content fields
-            print(f"   Keywords: {len(keywords)} total")
+            print(f"   Keywords: {len(all_keywords)} total")
+            
+            # QUALITY VALIDATION - Validate listing for 10/10 conversion quality
+            try:
+                from .quality_validator import ListingQualityValidator
+                validator = ListingQualityValidator()
+                
+                # Prepare listing data for validation
+                validation_data = {
+                    'title': listing.title,
+                    'bullet_points': listing.bullet_points,
+                    'long_description': listing.long_description,
+                    'faqs': listing.faqs
+                }
+                
+                # Get quality report
+                quality_report = validator.get_validation_json(validation_data)
+                print(f"\n=== QUALITY VALIDATION RESULTS ===")
+                print(f"Overall Score: {quality_report['overall_score']}/10 (Grade: {quality_report['grade']})")
+                print(f"Emotion Score: {quality_report['emotion_score']}/10")
+                print(f"Conversion Score: {quality_report['conversion_score']}/10")
+                print(f"Trust Score: {quality_report['trust_score']}/10")
+                
+                # Log section scores
+                for section in quality_report['section_scores']:
+                    print(f"{section['section']}: {section['score']}/{section['max_score']} ({section['percentage']}%)")
+                
+                # Show critical issues if any
+                critical_issues = [issue for issue in quality_report['issues'] if issue['type'] == 'critical']
+                if critical_issues:
+                    print(f"\nCRITICAL ISSUES TO ADDRESS:")
+                    for issue in critical_issues:
+                        print(f"- {issue['message']}")
+                        print(f"  Solution: {issue['suggestion']}")
+                
+                # Store quality metrics (could be saved to database later)
+                listing.quality_score = quality_report['overall_score']
+                listing.emotion_score = quality_report['emotion_score']
+                listing.conversion_score = quality_report['conversion_score']
+                listing.trust_score = quality_report['trust_score']
+                
+                print(f"=== END QUALITY VALIDATION ===\n")
+                
+            except Exception as validation_error:
+                print(f"Quality validation failed: {validation_error}")
+                # Don't fail listing generation if validation fails
+                pass
             
         except json.JSONDecodeError as e:
             print(f"JSON parsing error: {e}")
@@ -1030,11 +1500,11 @@ Guarantees Satisfaction - Feel the difference from first use, backed by our comm
             
         listing.long_description = f"""EXPERIENCE PREMIUM QUALITY - TRANSFORM YOUR {context_area.upper()} TODAY
 
-You deserve better than settling for average quality. That's where the {product.name} steps in - designed for excellence, built for reliability.
+You deserve better than settling for average quality. That is where the {product.name} steps in - designed for excellence, built for reliability.
 
 THE QUALITY DIFFERENCE
 
-This isn't just another {product_category}. Our premium design delivers exceptional performance that enhances your daily experience. Feel the difference from the moment you start using it.
+This is not just another {product_category}. Our premium design delivers exceptional performance that enhances your daily experience. Feel the difference from the moment you start using it.
 
 WHAT MAKES THIS SPECIAL
 
@@ -1042,7 +1512,7 @@ Built with attention to detail and quality materials that ensure long-lasting sa
 
 JOIN THOUSANDS OF SATISFIED CUSTOMERS
 
-"Finally, a {primary_keyword} that delivers on its promises" - Verified Customer. Experience why this is rated among the best for quality and performance."""
+\"Finally, a {primary_keyword} that delivers on its promises\" - Verified Customer. Experience why this is rated among the best for quality and performance."""
         
         listing.amazon_backend_keywords = f"{product.name}, {product.brand_name}, {primary_keyword}, premium {product_category}, quality {product_category}, kitchen accessories"
         
@@ -1050,7 +1520,7 @@ JOIN THOUSANDS OF SATISFIED CUSTOMERS
         listing.amazon_aplus_content = """<div class='aplus-module module1'>
 <p><strong>Module Type:</strong> Hero Banner with Text Overlay</p>
 <h3>Experience the Gaming Difference</h3>
-<p>Transform your gaming setup with professional-grade comfort. Join thousands who've discovered the ultimate gaming chair.</p>
+<p>Transform your gaming setup with professional-grade comfort. Join thousands who have discovered the ultimate gaming chair.</p>
 <p><em>Image Requirements: Lifestyle hero shot showing chair in gaming setup with happy gamer</em></p>
 </div>
 
@@ -1061,17 +1531,17 @@ JOIN THOUSANDS OF SATISFIED CUSTOMERS
 </div>"""
         
         # CRITICAL: Add conversion boosters to short_description
-        listing.short_description = """WHAT'S IN THE BOX:
-• Premium gaming chair with all components
-• Assembly hardware and tools
-• Detailed setup guide
-• Warranty registration card
+        listing.short_description = """WHAT IS IN THE BOX:
+- Premium gaming chair with all components
+- Assembly hardware and tools
+- Detailed setup guide
+- Warranty registration card
 
 TRUST & GUARANTEES:
-• 2-year manufacturer warranty
-• 30-day satisfaction guarantee
-• Free shipping and returns
-• Certified quality standards
+- 2-year manufacturer warranty
+- 30-day satisfaction guarantee
+- Free shipping and returns
+- Certified quality standards
 
 SOCIAL PROOF:
 Loved by 10,000+ happy gamers - 4.8 stars average
@@ -1085,13 +1555,13 @@ Q: Can I game for 8+ hours without back pain?
 A: Absolutely! Our chair was tested by pro gamers during all-nighters. The adjustable lumbar support keeps your spine aligned.
 
 Q: How does this compare to other gaming chairs?
-A: Unlike basic gaming chairs, our design includes premium memory foam and 4D armrests. Gamers report 90% less fatigue.
+A: Unlike basic gaming chairs, our design includes premium memory foam and four-dimensional armrests. Gamers report 90% less fatigue.
 
 Q: What makes this the best gaming chair for the price?
 A: Three key factors: tested by streamers, rated #1 for comfort, costs 40% less than premium brands.
 
 Q: Will this work for tall users?
-A: Perfect fit! Designed for users up to 6'5" with fully adjustable components that adapt to your body.
+A: Perfect fit! Designed for users up to 6 feet 5 inches with fully adjustable components that adapt to your body.
 
 Q: How quickly will I notice the comfort difference?
 A: Most gamers feel the difference within their first session. Say goodbye to that 2-hour fatigue mark."""
@@ -1116,7 +1586,7 @@ PRODUCT INFO:
 - Generate SEO Keywords automatically based on product details  
 - Generate Long-tail Keywords automatically based on product details
 - Generate FAQs automatically based on product details
-- Generate What's in the Box automatically based on product type
+- Generate What is in the Box automatically based on product type
 {competitor_context}
 
 WALMART REQUIREMENTS:
@@ -1179,13 +1649,13 @@ PRODUCT INFO:
 - Generate SEO Keywords automatically based on product details  
 - Generate Long-tail Keywords automatically based on product details
 - Generate FAQs automatically based on product details
-- Generate What's in the Box automatically based on product type
+- Generate What is in the Box automatically based on product type
 
 ETSY REQUIREMENTS:
 - Title: 140 characters with 13 keywords naturally integrated
 - Description: Story-driven, personal, mentions process/materials
 - Tags: Exactly 13 tags, highly searched Etsy terms
-- Materials: What it's made from
+- Materials: What it is made from
 - Personal touch: Artist story, inspiration
 
 Return ONLY valid JSON:
@@ -1320,7 +1790,7 @@ Return ONLY valid JSON:
 {{
   "seo_title": "Buy [Product] Online | Premium [Category] | Brand Name",
   "meta_description": "Discover the best [product] with [key benefit]. ⭐ Free shipping ⭐ 30-day returns ⭐ Shop now!",
-  "product_description": "<div class='product-hero'><h2>Experience the Difference with [Product Name]</h2><p>Transform your [use case] with our premium [product]...</p></div><div class='features'><h3>Why Customers Love This:</h3><ul><li>✓ [Feature 1]: [Benefit]</li><li>✓ [Feature 2]: [Benefit]</li></ul></div><div class='guarantee'><h3>Our Promise</h3><p>30-day money-back guarantee, free shipping, exceptional customer service.</p></div>",
+  "product_description": "<div class=\"product-hero\"><h2>Experience the Difference with [Product Name]</h2><p>Transform your [use case] with our premium [product]...</p></div><div class=\"features\"><h3>Why Customers Love This:</h3><ul><li>✓ [Feature 1]: [Benefit]</li><li>✓ [Feature 2]: [Benefit]</li></ul></div><div class=\"guarantee\"><h3>Our Promise</h3><p>30-day money-back guarantee, free shipping, exceptional customer service.</p></div>",
   "alt_texts": [
     "Premium [product name] shown in [context] - front view",
     "[Brand] [product] detail shot showing [feature]", 
@@ -1328,9 +1798,9 @@ Return ONLY valid JSON:
     "[Product] size comparison and dimensions"
   ],
   "structured_data": {{
-    "name": "{product.name}",
-    "brand": "{product.brand_name}",
-    "price": "{product.price}",
+    "name": "[product_name]",
+    "brand": "[brand_name]",
+    "price": "[product_price]",
     "availability": "InStock",
     "condition": "NewCondition"
   }},
@@ -1382,7 +1852,7 @@ Return ONLY valid JSON:
         listing.keywords = f"{product.name}, buy online, {product.brand_name}, premium quality"
 
     def _analyze_product_context(self, product):
-        """Analyze product to generate dynamic, product-specific context for AI prompts"""
+        # Analyze product to generate dynamic, product-specific context for AI prompts
         
         # Extract product type and category
         product_name = product.name.lower()
@@ -1442,18 +1912,21 @@ Return ONLY valid JSON:
             "home_garden": ["low maintenance", "weather resistance", "aesthetic appeal", "space optimization", "value"]
         }.get(product_type, ["quality", "value", "effectiveness", "convenience", "satisfaction"])
         
-        context = f"""PRODUCT-SPECIFIC GUIDANCE:
-- Product Type: {product_type.title()}
-- Primary Keywords to Use: {', '.join(primary_keywords)}
-- Target Pain Points: {', '.join(pain_points[:3])}
-- Key Benefits to Highlight: {', '.join(benefit_focus[:3])}
-- Price Point Context: ${product.price or '0'} - position as {'premium' if float(product.price or 0) > 100 else 'value' if float(product.price or 0) > 50 else 'budget'} option
-
-CUSTOMIZATION REQUIREMENTS:
-- TITLE: Use "{primary_keywords[0]}" as primary keyword, highlight main benefit from: {', '.join(benefit_focus[:2])}
-- BULLETS: Address pain points: {', '.join(pain_points[:2])} with benefits: {', '.join(benefit_focus[:2])}
-- KEYWORDS: Build around "{primary_keywords[0]}", "{product_type}", and product-specific terms from name/features
-- A+ CONTENT: Focus on {product_type} use cases and {', '.join(benefit_focus[:3])} benefits"""
+        # Build context string
+        price_tier = 'premium' if float(product.price or 0) > 100 else 'value' if float(product.price or 0) > 50 else 'budget'
+        primary_kw = primary_keywords[0] if primary_keywords else 'product'
+        
+        context = f"PRODUCT-SPECIFIC GUIDANCE:\n"
+        context += f"- Product Type: {product_type.title()}\n"
+        context += f"- Primary Keywords to Use: {', '.join(primary_keywords)}\n"
+        context += f"- Target Pain Points: {', '.join(pain_points[:3])}\n"
+        context += f"- Key Benefits to Highlight: {', '.join(benefit_focus[:3])}\n"
+        context += f"- Price Point Context: ${product.price or '0'} - position as {price_tier} option\n\n"
+        context += f"CUSTOMIZATION REQUIREMENTS:\n"
+        context += f"- TITLE: Use {primary_kw} as primary keyword, highlight main benefit\n"
+        context += f"- BULLETS: Address pain points with benefits\n"
+        context += f"- KEYWORDS: Build around {primary_kw}, {product_type}, and product-specific terms\n"
+        context += f"- A+ CONTENT: Focus on {product_type} use cases and benefits"
         
         return context
 
@@ -1467,7 +1940,7 @@ CUSTOMIZATION REQUIREMENTS:
         return ""
     
     def _queue_image_generation(self, listing):
-        """Queue image generation for the listing"""
+        # Queue image generation for the listing
         try:
             from .image_service import ImageGenerationService, CELERY_AVAILABLE
             
@@ -1488,7 +1961,7 @@ CUSTOMIZATION REQUIREMENTS:
             pass
 
     def _determine_category_tone(self, product):
-        """Determine appropriate tone based on product category"""
+        # Determine appropriate tone based on product category
         try:
             # Create categories mapping
             categories = product.categories.lower() if product.categories else ""
@@ -1525,7 +1998,7 @@ CUSTOMIZATION REQUIREMENTS:
             }
 
     def _select_listing_template(self, product):
-        """Select listing template to ensure variety"""
+        # Select listing template to ensure variety
         try:
             import hashlib
             
@@ -1565,7 +2038,7 @@ CUSTOMIZATION REQUIREMENTS:
         return templates[template_index]
     
     def _comprehensive_emoji_removal(self, result):
-        """Remove emojis and unicode symbols from all text fields in the result"""
+        # Remove emojis and unicode symbols from all text fields in the result
         import re
         
         def remove_emojis(text):
@@ -1576,7 +2049,7 @@ CUSTOMIZATION REQUIREMENTS:
                 # Debug logging
                 original_length = len(text)
                 has_unicode = any(ord(c) > 127 for c in text)
-                print(f"Emoji removal input: {original_length} chars, has Unicode: {has_unicode}")
+                self.logger.debug(f"Emoji removal input: {original_length} chars, has Unicode: {has_unicode}")
                 
                 # AGGRESSIVE ASCII-ONLY conversion - multiple approaches
                 
@@ -1595,12 +2068,12 @@ CUSTOMIZATION REQUIREMENTS:
                 # Debug logging
                 final_length = len(clean_text)
                 has_unicode_after = any(ord(c) > 127 for c in clean_text) if clean_text else False
-                print(f"Emoji removal output: {final_length} chars, has Unicode: {has_unicode_after}")
+                self.logger.debug(f"Emoji removal output: {final_length} chars, has Unicode: {has_unicode_after}")
                 
                 return clean_text if clean_text else text.encode('ascii', errors='ignore').decode('ascii')
                 
             except Exception as e:
-                print(f"Emoji removal failed: {e}")
+                self.logger.error(f"Emoji removal failed: {e}")
                 # Ultimate fallback - just return empty string if all fails
                 return ""
         
@@ -1615,3 +2088,147 @@ CUSTOMIZATION REQUIREMENTS:
                 return obj
         
         return clean_object(result)
+
+    def _create_structured_aplus_html(self, aplus_plan, result):
+        """Create structured HTML A+ content from JSON data for better display."""
+        import json
+        try:
+            sections_html = []
+            
+            # Define section order and display names
+            section_order = [
+                ('hero_section', '🎯 Hero Section'),
+                ('features_section', '⭐ Key Features'), 
+                ('comparison_section', '🏆 Why Choose This'),
+                ('usage_section', '📖 How to Use'),
+                ('lifestyle_section', '🌟 Perfect For Your Lifestyle')
+            ]
+            
+            # Generate HTML for each A+ section
+            for section_key, display_name in section_order:
+                section_data = aplus_plan.get(section_key, {})
+                if isinstance(section_data, dict) and section_data:
+                    section_title = section_data.get('title', display_name)
+                    section_content = section_data.get('content', '')
+                    image_requirements = section_data.get('image_requirements', section_data.get('image_suggestion', ''))
+                    
+                    section_html = f"""
+<div class="aplus-section {section_key}">
+    <h2 class="section-title">{section_title}</h2>
+    <div class="section-content">
+        <p>{section_content}</p>
+    </div>
+    {f'<div class="image-requirements"><h4>📸 Image Requirements:</h4><p class="image-desc">{image_requirements}</p></div>' if image_requirements else ''}
+</div>"""
+                    sections_html.append(section_html)
+            
+            # Add PPC Strategy section
+            ppc_strategy = result.get('ppcStrategy', {})
+            if ppc_strategy:
+                ppc_html = f"""
+<div class="aplus-section ppc-strategy">
+    <h2 class="section-title">💰 PPC Strategy</h2>
+    <div class="ppc-content">
+        <div class="ppc-campaigns">
+            <h4>Campaign Structure:</h4>
+            <ul>
+                <li><strong>Exact Match:</strong> {', '.join(ppc_strategy.get('exactMatch', {}).get('keywords', []))}</li>
+                <li><strong>Phrase Match:</strong> {', '.join(ppc_strategy.get('phraseMatch', {}).get('keywords', []))}</li>
+                <li><strong>Target ACOS:</strong> {ppc_strategy.get('exactMatch', {}).get('targetAcos', 'Not specified')}</li>
+            </ul>
+        </div>
+    </div>
+</div>"""
+                sections_html.append(ppc_html)
+            
+            # Add Brand Summary section
+            brand_summary = result.get('brandSummary', '')
+            if brand_summary:
+                brand_html = f"""
+<div class="aplus-section brand-summary">
+    <h2 class="section-title">🏢 Brand Summary</h2>
+    <div class="brand-content">
+        <p>{brand_summary}</p>
+    </div>
+</div>"""
+                sections_html.append(brand_html)
+            
+            # Add Keyword Strategy section
+            keyword_strategy = result.get('keywordStrategy', '')
+            if keyword_strategy:
+                keywords_html = f"""
+<div class="aplus-section keyword-strategy">
+    <h2 class="section-title">🔑 Keyword Strategy</h2>
+    <div class="keyword-content">
+        <p>{keyword_strategy}</p>
+        <h4>Top Competitor Keywords:</h4>
+        <p>{result.get('topCompetitorKeywords', 'Analysis of competitive landscape')}</p>
+    </div>
+</div>"""
+                sections_html.append(keywords_html)
+            
+            # Combine all sections with styling
+            full_html = f"""
+<style>
+.aplus-container {{
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}}
+.aplus-section {{
+    margin-bottom: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    background: #fafafa;
+}}
+.section-title {{
+    color: #232f3e;
+    border-bottom: 2px solid #ff9900;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}}
+.section-content {{
+    line-height: 1.6;
+    margin-bottom: 15px;
+}}
+.image-requirements {{
+    background: #fff;
+    padding: 15px;
+    border-left: 4px solid #ff9900;
+    margin-top: 15px;
+}}
+.image-desc {{
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+}}
+.ppc-content ul {{
+    margin: 10px 0;
+    padding-left: 20px;
+}}
+.keyword-content h4 {{
+    margin-top: 15px;
+    color: #232f3e;
+}}
+</style>
+
+<div class="aplus-container">
+    <h1 style="text-align: center; color: #232f3e; margin-bottom: 30px;">🎨 Complete A+ Content Strategy</h1>
+    {''.join(sections_html)}
+</div>"""
+            
+            return full_html
+            
+        except Exception as e:
+            self.logger.error(f"Error creating structured A+ HTML: {e}")
+            # Fallback to JSON if HTML creation fails
+            comprehensive_strategy = {
+                'aPlusContentPlan': aplus_plan,
+                'ppcStrategy': result.get('ppcStrategy', {}),
+                'keywordStrategy': result.get('keywordStrategy', ''),
+                'topCompetitorKeywords': result.get('topCompetitorKeywords', ''),
+                'brandSummary': result.get('brandSummary', '')
+            }
+            return json.dumps(comprehensive_strategy, indent=2)

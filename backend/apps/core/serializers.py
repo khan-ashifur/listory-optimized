@@ -10,18 +10,32 @@ class ProductSerializer(serializers.ModelSerializer):
         read_only_fields = ('user', 'created_at', 'updated_at')
 
     def create(self, validated_data):
-        # For demo, create or get a default user
+        import sys
+        import io
+        
+        # Redirect stdout/stderr to prevent console Unicode issues during model creation
+        old_stdout = sys.stdout
+        old_stderr = sys.stderr
+        
         try:
+            sys.stdout = io.StringIO()
+            sys.stderr = io.StringIO()
+            
+            # For demo, create or get a default user
             user, created = User.objects.get_or_create(
                 username='demo_user',
                 defaults={'email': 'demo@listory.ai', 'first_name': 'Demo', 'last_name': 'User'}
             )
             validated_data['user'] = user
-            print(f"Creating product with data: {validated_data}")  # Debug log
-            return super().create(validated_data)
-        except Exception as e:
-            print(f"Error creating product: {e}")  # Debug log
-            raise e
+            
+            # Create the product with output redirected
+            product = super().create(validated_data)
+            return product
+            
+        finally:
+            # Always restore stdout/stderr
+            sys.stdout = old_stdout
+            sys.stderr = old_stderr
 
 
 class CompetitorAnalysisSerializer(serializers.ModelSerializer):

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import LandingPage from './pages/LandingPage';
 import ProductForm from './pages/ProductForm';
@@ -16,6 +16,9 @@ function App() {
           <Route path="/create" element={<ProductForm />} />
           <Route path="/results/:listingId" element={<ListingResults />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/login" element={<Navigate to="/" replace />} />
+          <Route path="/register" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </Router>

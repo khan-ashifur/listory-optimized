@@ -2,16 +2,20 @@ import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 
+console.log('API_BASE_URL:', API_BASE_URL);
+console.log('Environment:', process.env.REACT_APP_API_URL);
+
 const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
-// Request interceptor to add auth token and content type
+// Request interceptor to set content type
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('auth_token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  console.log('=== AXIOS REQUEST DEBUG ===');
+  console.log('Full URL:', config.baseURL + config.url);
+  console.log('Method:', config.method);
+  console.log('Request Data:', JSON.stringify(config.data, null, 2));
+  console.log('Request Headers:', JSON.stringify(config.headers.toJSON ? config.headers.toJSON() : config.headers, null, 2));
   
   // Set content type if not FormData (for file uploads)
   if (!config.data || !(config.data instanceof FormData)) {
@@ -25,10 +29,6 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('auth_token');
-      window.location.href = '/login';
-    }
     return Promise.reject(error);
   }
 );
@@ -53,8 +53,5 @@ export const listingAPI = {
   regenerateImages: (id) => api.post(`/listings/generated/${id}/regenerate_images/`),
 };
 
-export const userAPI = {
-  profile: () => api.get('/auth/profile/'),
-};
 
 export default api;

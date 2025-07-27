@@ -25,6 +25,16 @@ class GeneratedListing(models.Model):
     amazon_aplus_content = models.TextField(blank=True, help_text="Amazon A+ content suggestions")
     amazon_backend_keywords = models.TextField(blank=True)
     
+    # A+ Content fields
+    hero_title = models.TextField(blank=True)
+    hero_content = models.TextField(blank=True)
+    features = models.TextField(blank=True)
+    whats_in_box = models.TextField(blank=True)
+    trust_builders = models.TextField(blank=True)
+    faqs = models.TextField(blank=True)
+    social_proof = models.TextField(blank=True)
+    guarantee = models.TextField(blank=True)
+    
     tiktok_video_script = models.TextField(blank=True)
     tiktok_hashtags = models.TextField(blank=True)
     tiktok_hooks = models.TextField(blank=True)
@@ -37,6 +47,12 @@ class GeneratedListing(models.Model):
     
     shopify_seo_title = models.TextField(blank=True)
     shopify_meta_description = models.TextField(blank=True)
+    
+    # Quality validation scores
+    quality_score = models.FloatField(null=True, blank=True, help_text="Overall quality score (0-10)")
+    emotion_score = models.FloatField(null=True, blank=True, help_text="Emotional engagement score (0-10)")
+    conversion_score = models.FloatField(null=True, blank=True, help_text="Conversion optimization score (0-10)")
+    trust_score = models.FloatField(null=True, blank=True, help_text="Trust and credibility score (0-10)")
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

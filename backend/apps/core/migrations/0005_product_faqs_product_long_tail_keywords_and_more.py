@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0004_alter_product_target_keywords'),
+        ('core', '0003_product_product_image'),
     ]
 
     operations = [

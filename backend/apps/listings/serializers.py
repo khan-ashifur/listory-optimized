@@ -27,3 +27,25 @@ class ListingOptimizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = ListingOptimization
         fields = '__all__'
+
+
+class QualityValidationInputSerializer(serializers.Serializer):
+    """Serializer for quality validation input data."""
+    title = serializers.CharField(max_length=500, required=True)
+    bullet_points = serializers.CharField(required=False, allow_blank=True)
+    long_description = serializers.CharField(required=False, allow_blank=True)
+    faqs = serializers.CharField(required=False, allow_blank=True)
+
+
+class QualityValidationOutputSerializer(serializers.Serializer):
+    """Serializer for quality validation output data."""
+    overall_score = serializers.FloatField()
+    max_score = serializers.FloatField()
+    grade = serializers.CharField()
+    emotion_score = serializers.FloatField()
+    conversion_score = serializers.FloatField()
+    trust_score = serializers.FloatField()
+    summary = serializers.CharField()
+    section_scores = serializers.ListField()
+    issues = serializers.ListField()
+    action_items = serializers.ListField()
