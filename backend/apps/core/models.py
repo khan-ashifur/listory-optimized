@@ -31,6 +31,10 @@ class Product(models.Model):
     categories = models.TextField(help_text="Product categories, comma-separated", blank=True, default="")
     features = models.TextField(help_text="Key features, comma-separated", blank=True, default="")
     target_keywords = models.TextField(help_text="Target keywords, comma-separated", blank=True, default="")
+    seo_keywords = models.TextField(help_text="Primary SEO keywords for search optimization", blank=True, default="")
+    long_tail_keywords = models.TextField(help_text="Long-tail keywords for specific searches", blank=True, default="")
+    faqs = models.TextField(help_text="Frequently asked questions and answers", blank=True, default="")
+    whats_in_box = models.TextField(help_text="List of items included in the package", blank=True, default="")
     
     # Product image
     product_image = models.ImageField(upload_to='products/', null=True, blank=True, help_text="Upload your product image")

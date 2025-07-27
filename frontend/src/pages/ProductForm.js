@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Sparkles, Upload, X, Image } from 'lucide-react';
+import { ArrowLeft, Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { productAPI, listingAPI } from '../services/api';
 
@@ -23,8 +23,6 @@ const ProductForm = () => {
   });
   
   const [isLoading, setIsLoading] = useState(false);
-  const [productImage, setProductImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
 
   const brandTones = [
     { value: 'professional', label: 'Professional' },
@@ -43,53 +41,58 @@ const ProductForm = () => {
     }));
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) { // 5MB limit
-        toast.error('Image size should be less than 5MB');
-        return;
-      }
-      
-      setProductImage(file);
-      
-      // Create preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const removeImage = () => {
-    setProductImage(null);
-    setImagePreview(null);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     
+    let productId = null;
+    
     try {
-      // Create FormData for multipart upload
-      const productFormData = new FormData();
+      // Create product data
+      const productData = {
+        ...formData,
+        target_platform: selectedPlatform
+      };
       
-      // Add all text fields
-      Object.keys(formData).forEach(key => {
-        productFormData.append(key, formData[key]);
-      });
-      
-      // Add platform
-      productFormData.append('target_platform', selectedPlatform);
-      
-      // Add image if exists
-      if (productImage) {
-        productFormData.append('product_image', productImage);
+      try {
+        const productResponse = await productAPI.create(productData);
+        productId = productResponse.data.id;
+      } catch (productError) {
+        console.error('Product creation error:', productError);
+        
+        // If product creation fails with 500, it might still be created due to Unicode console error
+        // Try to find the recently created product
+        if (productError.response?.status === 500) {
+          console.log('Attempting to find recently created product...');
+          try {
+            const productsResponse = await productAPI.list();
+            // Find the most recent product that matches our data
+            const recentProduct = productsResponse.data.results?.find(p => 
+              p.name === productData.name && 
+              p.brand_name === productData.brand_name &&
+              p.target_platform === productData.target_platform
+            );
+            
+            if (recentProduct) {
+              productId = recentProduct.id;
+              console.log('Found recently created product:', productId);
+              toast.success('Product created successfully!');
+            } else {
+              throw new Error('Product creation failed and could not locate created product');
+            }
+          } catch (findError) {
+            console.error('Could not find created product:', findError);
+            throw productError; // Re-throw original error
+          }
+        } else {
+          throw productError; // Re-throw non-500 errors
+        }
       }
       
-      const productResponse = await productAPI.create(productFormData);
-      const productId = productResponse.data.id;
+      if (!productId) {
+        throw new Error('No product ID available');
+      }
       
       // Generate listing
       const listingResponse = await listingAPI.generate(productId, selectedPlatform);
@@ -97,10 +100,13 @@ const ProductForm = () => {
       
       toast.success('Listing generated successfully!');
       navigate(`/results/${listingId}`);
+      
     } catch (error) {
-      console.error('Error generating listing:', error);
+      console.error('Error in product form:', error);
       if (error.response?.status === 402) {
         toast.error('No credits remaining. Please upgrade your plan.');
+      } else if (error.message?.includes('Product creation failed')) {
+        toast.error('Failed to create product. Please try again.');
       } else {
         toast.error('Failed to generate listing. Please try again.');
       }
@@ -219,49 +225,6 @@ const ProductForm = () => {
               />
             </div>
 
-            {/* Product Image Upload */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Product Image
-              </label>
-              <div className="mt-1">
-                {!imagePreview ? (
-                  <label className="relative cursor-pointer bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 p-6 hover:border-primary-400 transition-colors">
-                    <div className="text-center">
-                      <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                      <p className="mt-2 text-sm text-gray-600">
-                        Click to upload product image
-                      </p>
-                      <p className="text-xs text-gray-500">PNG, JPG up to 5MB</p>
-                    </div>
-                    <input
-                      type="file"
-                      className="sr-only"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                    />
-                  </label>
-                ) : (
-                  <div className="relative">
-                    <img
-                      src={imagePreview}
-                      alt="Product preview"
-                      className="h-48 w-full object-cover rounded-lg"
-                    />
-                    <button
-                      type="button"
-                      onClick={removeImage}
-                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
-                    >
-                      <X className="h-5 w-5" />
-                    </button>
-                  </div>
-                )}
-              </div>
-              <p className="mt-2 text-xs text-gray-500">
-                Upload a clear image of your product for AI to generate better listing images
-              </p>
-            </div>
 
             <div className="grid md:grid-cols-2 gap-6">
               <div>
@@ -356,6 +319,7 @@ const ProductForm = () => {
                 placeholder="wireless earbuds, bluetooth headphones, noise cancelling"
               />
             </div>
+
 
             <div className="pt-6">
               <button
