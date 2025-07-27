@@ -421,6 +421,13 @@ RANDOMIZATION ELEMENTS FOR TODAY:
 
 YOUR MISSION: Write an Amazon listing that sounds like a real human expert wrote it. Each section should feel completely different from typical Amazon listings.
 
+CRITICAL KEYWORD REQUIREMENTS:
+- Generate EXACTLY 10-12 SHORT keywords (1-2 words): headphones, earbuds, bluetooth, wireless, audio, music, etc.
+- Generate EXACTLY 25 LONG keywords (3+ words): noise cancelling wireless earbuds, bluetooth headphones for exercise, etc.
+- Generate 15+ backend keywords (comprehensive search terms, misspellings, synonyms)
+- Frontend displays keywords ≤2 words as "short-tail" and >2 words as "long-tail"
+- TOTAL TARGET: 35+ keywords (10-12 short + 25 long)
+
 CRITICAL JSON FORMATTING RULES:
 1. ALL JSON field values MUST use double quotes (") not single quotes (')
 2. INSIDE content text, use single quotes for contractions: dont, cant, wont, its  
@@ -433,17 +440,17 @@ CRITICAL JSON FORMATTING RULES:
 RESPONSE FORMAT: Return valid JSON with these fields (note the double quotes around all field names and values):
 
 {{
-  "productTitle": "Write a 160-200 character title using your {chosen_title_approach} approach. MUST be 160+ characters to meet Amazon standards. Make it feel like a human named this product, not a marketing team. Include key search terms naturally but expand to full length.",
+  "productTitle": "Write a title using your {chosen_title_approach} approach. Make it feel like a human named this product, not a marketing team. Include key search terms naturally but avoid the Brand-Specs-Features template.",
   
   "bulletPoints": [
-    "BULLET 1: Write 150-500 characters. Each bullet MUST be minimum 150 characters to meet Amazon standards. Mix different styles but ensure each is detailed enough to reach length requirement.",
-    "BULLET 2: Write 150-500 characters. Try a different approach but maintain minimum length. Add specific details, benefits, or examples to reach character count.",
-    "BULLET 3: Write 150-500 characters. Can be shorter style but still minimum 150 chars. Add context or examples to meet length requirement.", 
-    "BULLET 4: Write 150-500 characters. Could be longer with more detail. Expand with specific benefits, features, or customer outcomes.",
-    "BULLET 5: Write 150-500 characters. Surprise with unique angle but maintain minimum length. Add compelling details to reach character requirement."
+    "EMOTIONAL LABEL: Write 150-500 characters with compelling emotional hook and specific benefit. Use format 'LABEL: detailed explanation with benefits and outcomes.' Must be minimum 150 characters.",
+    "DIFFERENT LABEL: Write 150-500 characters with completely different label style. Mix features with emotional outcomes. Use format 'LABEL: comprehensive details.' Must be minimum 150 characters.",
+    "UNIQUE LABEL: Write 150-500 characters with creative but relevant label. Focus on customer transformation or specific use case. Use format 'LABEL: rich detail with examples.' Must be minimum 150 characters.", 
+    "COMPELLING LABEL: Write 150-500 characters with benefit-focused label. Include specific details, social proof, or technical advantages. Use format 'LABEL: detailed explanation.' Must be minimum 150 characters.",
+    "STANDOUT LABEL: Write 150-500 characters with memorable label that captures attention. Add guarantee, uniqueness, or surprising benefit. Use format 'LABEL: comprehensive detail.' Must be minimum 150 characters."
   ],
   
-  "productDescription": "Write EXACTLY 1600-2000 characters (COUNT YOUR CHARACTERS - must be minimum 1600 to meet Amazon standards). Write this like you're personally recommending it. Start with '{chosen_starter}' and include '{chosen_personality}' naturally. Use the {chosen_structure} approach. Avoid the tired 'Are you tired of...' opening and 'Experience the...' language. Write 5-6 substantial paragraphs with rich detail, personal anecdotes, specific benefits, and compelling reasons to buy. Add concrete examples, usage scenarios, and emotional outcomes to reach the character requirement.",
+  "productDescription": "Write this like you're personally recommending it. Start with '{chosen_starter}' and include '{chosen_personality}' naturally. Use the {chosen_structure} approach. Avoid the tired 'Are you tired of...' opening and 'Experience the...' language. Write 3 paragraphs that flow like human conversation.",
   
   "aPlusContentPlan": {{
     "hero_section": {{
@@ -512,8 +519,8 @@ RESPONSE FORMAT: Return valid JSON with these fields (note the double quotes aro
   }},
   
   "keyword_cluster": {{
-    "primary_keywords": ["Minimum 12 actual primary keywords that people search for this product including brand terms, product type, and main features"],
-    "secondary_keywords": ["Minimum 15 real long-tail keywords with genuine search intent including problem-solving terms and specific use cases"],
+    "primary_keywords": ["Minimum 10 short keywords (1-2 words each) like: earbuds, headphones, bluetooth, wireless, audio, music, plus 2-3 brand/product terms"],
+    "secondary_keywords": ["Generate EXACTLY 25 longer descriptive keywords (3+ words) with genuine search intent including problem-solving terms, specific use cases, detailed product descriptions, competitor alternatives, and niche applications"],
     "backend_search_terms": "240+ characters of comprehensive search terms including misspellings, synonyms, alternative product names, related accessories, and problem keywords",
     "misspellings_and_synonyms": ["Common misspellings and alternative terms customers might use when searching for this product"],
     "ppc_keywords": [
