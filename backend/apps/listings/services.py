@@ -1,6 +1,7 @@
 import json
 import time
 import re
+import logging
 from django.conf import settings
 from .models import GeneratedListing, KeywordResearch
 from apps.core.models import Product
@@ -8,29 +9,30 @@ from apps.core.models import Product
 
 class ListingGeneratorService:
     def __init__(self):
+        self.logger = logging.getLogger(__name__)
         try:
-            print(f"[SERVICE INIT] Checking OpenAI configuration...")
-            print(f"[SERVICE INIT] API Key exists: {bool(settings.OPENAI_API_KEY)}")
+            self.logger.info("Checking OpenAI configuration...")
+            self.logger.info(f"API Key exists: {bool(settings.OPENAI_API_KEY)}")
             
             # Check if OpenAI key is set and valid
             if not settings.OPENAI_API_KEY or settings.OPENAI_API_KEY == "your-openai-api-key-here":
-                print("WARNING: OpenAI API key not properly configured!")
-                print("Please set your real OpenAI API key in the .env file")
+                self.logger.warning("OpenAI API key not properly configured!")
+                self.logger.warning("Please set your real OpenAI API key in the .env file")
                 self.client = None
             elif not settings.OPENAI_API_KEY.startswith('sk-'):
-                print("WARNING: Invalid OpenAI API key format!")
-                print("OpenAI keys should start with 'sk-'")
+                self.logger.warning("Invalid OpenAI API key format!")
+                self.logger.warning("OpenAI keys should start with 'sk-'")
                 self.client = None
             else:
                 # Use new OpenAI client
                 from openai import OpenAI
-                print(f"[SERVICE INIT] Creating OpenAI client with key starting: {settings.OPENAI_API_KEY[:10]}...")
+                self.logger.info(f"Creating OpenAI client with key starting: {settings.OPENAI_API_KEY[:10]}...")
                 self.client = OpenAI(api_key=settings.OPENAI_API_KEY)
-                print("OpenAI client initialized successfully - AI generation enabled!")
+                self.logger.info("OpenAI client initialized successfully - AI generation enabled!")
         except Exception as e:
-            print(f"Error initializing OpenAI client: {e}")
+            self.logger.error(f"Error initializing OpenAI client: {e}")
             import traceback
-            print(f"Traceback: {traceback.format_exc()}")
+            self.logger.error(f"Traceback: {traceback.format_exc()}")
             self.client = None
 
     def generate_listing(self, product_id, platform):
@@ -87,11 +89,34 @@ class ListingGeneratorService:
         # Generate product-specific keywords and context
         product_context = self._analyze_product_context(product)
         
-        # Temporarily use static defaults to avoid OSError
-        category_tone = {
-            'tone': 'Playful & Innovative',
-            'guidelines': 'Fun, confident, slightly cheeky. Personality: Tech-savvy friend who makes complex simple. Use phrases like "Talk like a local", "Say it like you mean it", "Ready to [outcome]". Balance innovation with accessibility.'
+        # Use actual product brand tone
+        brand_tone_mapping = {
+            'professional': {
+                'tone': 'Professional & Authoritative',
+                'guidelines': 'Direct, credible, expertise-focused. Personality: Trusted advisor who builds confidence. Use phrases like "Industry-leading", "Proven results", "Professional grade". Focus on reliability and expertise.'
+            },
+            'casual': {
+                'tone': 'Friendly & Approachable',
+                'guidelines': 'Conversational, warm, relatable. Personality: Helpful friend who makes things easy. Use phrases like "Just what you need", "Makes life easier", "You\'ll love this". Focus on comfort and simplicity.'
+            },
+            'luxury': {
+                'tone': 'Elegant & Premium',
+                'guidelines': 'Sophisticated, aspirational, transformational. Personality: Elevated and inspiring. Use phrases like "Elevate your", "Transform into", "Luxurious experience". Include sensory language and confidence-building.'
+            },
+            'playful': {
+                'tone': 'Playful & Innovative',
+                'guidelines': 'Fun, confident, slightly cheeky. Personality: Tech-savvy friend who makes complex simple. Use phrases like "Talk like a local", "Say it like you mean it", "Ready to [outcome]". Balance innovation with accessibility.'
+            },
+            'minimal': {
+                'tone': 'Clean & Minimal',
+                'guidelines': 'Clear, concise, purposeful. Personality: Thoughtful minimalist who values quality. Use phrases like "Simply better", "Pure performance", "Essential quality". Focus on clarity and purpose.'
+            },
+            'bold': {
+                'tone': 'Bold & Confident',
+                'guidelines': 'Strong, decisive, powerful. Personality: Leader who inspires action. Use phrases like "Dominate your", "Unleash your", "Power through". Focus on strength and transformation.'
+            }
         }
+        category_tone = brand_tone_mapping.get(product.brand_tone, brand_tone_mapping['professional'])
         template_style = {
             'name': 'Story-First Template',
             'brand_placement': 'Integrated naturally in middle of title',
@@ -118,55 +143,67 @@ PRODUCT DETAILS:
 - ASSIGNED TONE: {category_tone['tone']}
 - ASSIGNED TEMPLATE: {template_style['name']}
 
-🎯 CRITICAL ANTI-REPETITION RULES:
+CRITICAL ANTI-REPETITION RULES:
 1. AVOID generic phrases like "Feel Empowered", "Effortless Efficiency", "Experience unparalleled"
 2. NO robotic all-caps headers
 3. VARY sentence structure and length dramatically
 4. Write like a human copywriter, not AI
 5. Brand placement must feel natural, not tacked on
 
-🎯 TONE GUIDELINES:
+TONE GUIDELINES:
 {category_tone['guidelines']}
 
-🎯 TEMPLATE STRUCTURE:
+TEMPLATE STRUCTURE:
 {template_style['structure']}
 
-🎯 TITLE REQUIREMENTS - AMAZON STANDARD:
-- Lead with transformation/energy, NOT product labels
-- Add personality that matches the tone (fun, confident, aspirational)
-- Brand placement: {template_style['brand_placement']}
+TITLE REQUIREMENTS - SEO OPTIMIZED FOR SEARCH:
+- NO EMOJIS - text only for maximum search visibility and professional appearance
+- Lead with benefit or transformation, include primary keywords
+- Brand placement: {template_style['brand_placement']}  
 - Format: {template_style['title_format']}
-- Include hook words: "Talk Like", "Say It Like", "Ready to", "Master"
+- Include search-friendly hook words: "Professional Grade", "Premium Quality", "Advanced Technology"
 - AMAZON LIMIT: Maximum 200 characters total (strictly enforced)
-- Include primary keywords and key benefits within character limit
-- Examples: "🌍 Talk Like a Local", "Say It Like You Mean It", "Ready to [outcome]"
+- Pack with primary keywords and key benefits for search ranking
+- Write for both Amazon search and Google search visibility
+- Examples: "Professional Grade Wireless Earbuds with Active Noise Cancellation", "Premium Gaming Headset with 7.1 Surround Sound Technology"
 
-🎯 BULLET POINTS - AMAZON STANDARD LENGTH:
-- MUST use format: "LABEL: Detailed benefit explanation with comprehensive information"
-- AMAZON LIMIT: Each bullet point maximum 1000 characters (use full length for rich content)
-- Start with powerful benefit labels: "INSTANT CONFIDENCE:", "NO MORE PANIC:", "PERFECT FOR:"
-- Provide comprehensive details, specifications, and emotional benefits
-- Include use cases, technical details, and reassurance within each bullet
-- Add personality that matches assigned tone throughout the full description
-- Include keywords naturally without forced repetition
+BULLET POINTS - OPTIMIZED FOR SEARCH & EMOTION:
+- MUST use format: "BENEFIT LABEL: Detailed explanation with specifications and emotional hook"
+- NO EMOJIS in bullet points - use text only for maximum search visibility
+- Each bullet maximum 1000 characters with comprehensive SEO-optimized content
+- Labels MUST end with colon (:) NOT dash (-) - REQUIRED FORMAT: "INSTANT RESULTS:", "PREMIUM QUALITY:", "EMOTIONAL TRANSFORMATION:" - DO NOT USE: "INSTANT RESULTS -" or "PREMIUM QUALITY -"
+- Include 1-2 emotional hooks per set: "Transform your confidence", "Never worry again", "Feel the difference instantly"
+- Pack with search keywords, technical specs, use cases, and benefits
+- Write for both human readers and search algorithms (AEO optimization)
+- Include question-answer patterns search engines love
 - Examples: 
-  * "SPEAK LIKE A LOCAL: Master all 164 languages from Tokyo to Tuscany with real-time translation that works in crowded markets, business meetings, or romantic dinners. No awkward pauses or robotic voices - just natural conversation that builds confidence whether you're ordering authentic ramen or closing international deals."
-  * "PRACTICE WITHOUT JUDGMENT: AI chat mode provides patient language practice that adapts to your learning pace, corrects pronunciation gently, and celebrates progress. Perfect for building confidence before your trip or improving skills for career advancement."
+  * "PROFESSIONAL GRADE QUALITY: Built with aircraft-grade aluminum and precision engineering that lasts 10+ years. This isn't just another product - it's the confidence-boosting upgrade that transforms how you feel about your daily routine."
+  * "INSTANT RELIEF FROM FRUSTRATION: Solves the #1 problem that 89% of users struggle with in under 30 seconds. No more wasted time, no more headaches - just immediate results that make you wonder how you lived without it."
 
-🎯 DESCRIPTION STRUCTURE - ADD PERSONALITY & STORYTELLING:
+DESCRIPTION STRUCTURE - SEO/AEO OPTIMIZED FOR SEARCH VISIBILITY:
 {template_style['description_approach']}
-- Start with energy: "🌍 Ready to talk to the world?" / "Tired of [problem]?"
-- Tell a story with personality that matches the assigned tone
-- Use conversational language: "It's like having a [metaphor] in your [location]"
-- Add emotional connection and transformation outcomes
-- Break into 3-4 scannable blocks with varied, non-robotic headers
-- Use benefit-led transitions: "No more waiting." "Say it. Mean it."
-- Include confidence-building language and personality
+- NO EMOJIS - use text only for maximum search engine visibility
+- Start with search-friendly hook: "Discover why thousands choose this [product type]" or "Solve [problem] in minutes with this [product]"
+- Include primary keywords naturally in first 160 characters for search snippets
+- Write for featured snippets and voice search with question-answer patterns
+- Break into scannable sections with keyword-rich headers
+- Include semantic keywords and related terms search engines love
+- Add emotional transformation language: "Transform your daily routine", "Experience the confidence boost"
+- Use benefit-driven transitions with search keywords
+- Include numbers, specifications, and concrete benefits for AEO
 - Mobile-optimized with shorter sentences and natural flow
+- End with clear value proposition and call-to-action
 
-🎯 FAQ REQUIREMENTS - NATURAL & FUN TONE:
-- Write like a helpful human, not an instruction manual
-- Match the assigned tone (playful, professional, premium, etc.)
+FAQ REQUIREMENTS - COMPLETE Q&A WITH SEO OPTIMIZATION:
+- Format: "Q: Complete question with keywords? A: Complete detailed answer with benefits and specifications"
+- NO EMOJIS - text only for maximum search visibility  
+- Include search-friendly questions people actually ask
+- Answers must be complete, helpful, and keyword-rich
+- Address common concerns: compatibility, durability, usage, warranty
+- Write for voice search and AEO (Answer Engine Optimization)
+- Examples:
+  * "Q: How long does the battery last on this wireless device? A: The battery provides up to 30 hours of continuous use with the charging case, which is perfect for long flights, work days, or extended gaming sessions without interruption."
+  * "Q: Is this product compatible with iPhone and Android phones? A: Yes, this device works seamlessly with all Bluetooth-enabled devices including iPhone, Android, tablets, laptops, and gaming consoles - no additional apps or setup required."
 - Use conversational language: "Just drop them in the case — no cords, no fuss"
 - Add personality: "They'll be ready before your passport is"
 - Answer real concerns with practical details AND personality
@@ -174,9 +211,9 @@ PRODUCT DETAILS:
 - Questions should match natural search queries and voice patterns
 - Include confidence-building and reassuring language
 
-CRITICAL: Return ONLY valid JSON. Use this EXACT format with comprehensive keyword categories:
+CRITICAL: Return ONLY valid JSON. NO EMOJIS ANYWHERE. Use this EXACT Amazon-optimized format:
 {{
-    "title": "🌍 [Energy Hook] – [Brand] [Product] with [Key Benefit] for [Target Use] - AMAZON STANDARD: Maximum 200 characters total",
+    "title": "[Brand] [Product Type] with [Primary Benefit] for [Target Use] - [Secondary Benefit] and [Technical Spec] - Maximum 200 characters",
     "bullet_points": [
         "BENEFIT LABEL: [Comprehensive emotional outcome with detailed explanation, use cases, and personality] - AMAZON STANDARD: Use up to 1000 characters for rich content",
         "ACTION LABEL: [Detailed capability with confidence-building language, specifications, and practical applications] - AMAZON STANDARD: Maximum 1000 characters with full details", 
@@ -213,18 +250,17 @@ CRITICAL: Return ONLY valid JSON. Use this EXACT format with comprehensive keywo
         "Quality certifications and testing standards - Authority and safety validation"
     ],
     "faqs": [
-        "Q: What is the best [product] for [primary use case]? A: [Conversational answer with personality] - Match assigned tone, add confidence-building elements",
-        "Q: Can I use this [product] for [secondary use case]? A: [Natural spoken answer with metaphor/personality] - Include reassuring and encouraging language",
-        "Q: Is this [product] safe for [safety concern]? A: [Trust-building answer with personality] - Add confidence and practical details with tone-appropriate language",
-        "Q: How do I [maintain/clean/use] this [product]? A: [Step-by-step with personality] - Like 'Just drop them in the case — no cords, no fuss. Ready before your passport is.'",
-        "Q: What makes this [product] better than [competitor type]? A: [Confident answer with personality] - Include unique selling points with assigned tone personality",
-        "Q: Does this [product] work with [related item/compatibility]? A: [Compatibility answer with confidence] - Add cross-selling opportunities with personality"
+        "Q: What makes this the best [product type] for [primary use case]? A: This product delivers superior performance with [specific feature] that outperforms competitors by [percentage/metric]. Perfect for [use case] with [specific benefit] that transforms your experience.",
+        "Q: How long does the [key feature like battery/warranty] last? A: You get [specific duration] of reliable performance, which means [practical benefit]. This covers [specific scenarios] without interruption or concern.",
+        "Q: Is this compatible with [common device/system]? A: Yes, this works seamlessly with [specific compatibility list] including [popular devices]. No additional setup required - just [simple action] and you're ready to go.",
+        "Q: What's included in the package when I order? A: Your complete package includes [specific items] plus [bonus items]. Everything you need to [achieve outcome] right out of the box.",
+        "Q: How does this compare to [competitor/alternative]? A: Unlike [competitor], this product offers [unique advantage] with [specific feature] that delivers [measurable benefit]. Users report [specific improvement] compared to alternatives."
     ],
     "social_proof": "Trusted by [#] globetrotters, language learners, and smooth talkers worldwide - Turn into story/persona with emotional appeal and specific demographics",
-    "guarantee": "✈️ Ready to ditch the subtitles and speak freely? [Time period] guarantee with personality-driven CTA - Match assigned tone with confidence-boosting language"
+    "guarantee": "Ready to experience the difference? [Time period] guarantee with confidence-driven promise - Match assigned tone with professional assurance language"
 }}
 
-🎯 ADVANCED OPTIMIZATION REQUIREMENTS:
+ADVANCED OPTIMIZATION REQUIREMENTS:
 
 SEO + AEO INTEGRATION:
 - Primary keyword density: 2-3% throughout all content
@@ -308,7 +344,7 @@ CRITICAL EXECUTION RULES:
                     response = self.client.chat.completions.create(
                         model="gpt-3.5-turbo",
                         messages=[
-                            {"role": "system", "content": f"You are an Amazon listing writer. Create unique, product-specific content for {product.name}. CRITICAL: Return ONLY valid JSON. All strings must be properly quoted. No syntax errors. Use double quotes only."},
+                            {"role": "system", "content": f"You are an Amazon listing writer. Create unique, product-specific content for {product.name}. CRITICAL REQUIREMENTS: 1) Return ONLY valid JSON with properly quoted strings 2) Use ONLY ASCII characters (codes 32-126) - NO emojis, NO special Unicode characters, NO symbols like 🌍 or – 3) Bullet points MUST use colon format like 'LABEL: content' not 'LABEL - content' 4) Generate exactly 5 bullet points 5) Use only standard keyboard characters."},
                             {"role": "user", "content": prompt}
                         ],
                         functions=[function_schema],
@@ -333,6 +369,8 @@ CRITICAL EXECUTION RULES:
             function_call = response.choices[0].message.function_call
             if function_call and function_call.name == "create_amazon_listing":
                 ai_content = function_call.arguments
+                # Immediately clean content to avoid Unicode errors
+                ai_content = ai_content.encode('ascii', errors='ignore').decode('ascii')
                 print(f"AI Function call received: {len(ai_content)} characters")
                 try:
                     print(f"Function arguments preview: {ai_content[:500]}...")
@@ -342,10 +380,12 @@ CRITICAL EXECUTION RULES:
             else:
                 # Fallback to regular content if function calling failed
                 ai_content = response.choices[0].message.content or "{}"
+                # Immediately clean content to avoid Unicode errors
+                ai_content = ai_content.encode('ascii', errors='ignore').decode('ascii')
                 print(f"AI Response received: {len(ai_content)} characters")
                 # Use safe encoding for Windows
-                safe_preview = ai_content[:300].encode('ascii', errors='ignore').decode('ascii')
-                safe_ending = ai_content[-200:].encode('ascii', errors='ignore').decode('ascii')
+                safe_preview = ai_content[:300]
+                safe_ending = ai_content[-200:]
                 print(f"AI Response preview: {safe_preview}...")
                 print(f"AI Response ending: ...{safe_ending}")
             
@@ -519,14 +559,35 @@ CRITICAL EXECUTION RULES:
                 except Exception as manual_error:
                     raise Exception(f"All JSON parsing methods failed. Manual reconstruction error: {str(manual_error)}. Raw content length: {len(cleaned_content)}")
             
+            # Remove any emojis from all text fields FIRST before any processing
+            print("Before emoji removal - checking title...")
+            try:
+                title_before = result.get('title', '')
+                print(f"Title before cleanup: {len(title_before)} chars, has Unicode: {any(ord(c) > 127 for c in title_before)}")
+            except Exception as e:
+                print(f"Error checking title before: {e}")
+            
+            result = self._comprehensive_emoji_removal(result)
+            
+            print("After emoji removal - checking title...")
+            try:
+                title_after = result.get('title', '')
+                print(f"Title after cleanup: {len(title_after)} chars, has Unicode: {any(ord(c) > 127 for c in title_after)}")
+            except Exception as e:
+                print(f"Error checking title after: {e}")
+            
             # Validate result has required fields
             required_fields = ["title", "bullet_points", "long_description", "seo_keywords", "hero_title", "hero_content", "features", "whats_in_box", "trust_builders", "faqs", "social_proof", "guarantee"]
             missing_fields = [field for field in required_fields if field not in result]
             if missing_fields:
-                print(f"Warning: Missing fields {missing_fields}, adding defaults...")
+                # Safe console output - avoid Unicode errors
+                try:
+                    print(f"Warning: Missing fields {len(missing_fields)} fields, adding defaults...")
+                except UnicodeEncodeError:
+                    print("Warning: Missing fields detected, adding defaults...")
                 defaults = {
                     "title": f"{product.name} - Quality Product",
-                    "bullet_points": ["High quality construction", "Reliable performance", "Great value", "Customer satisfaction", "Easy to use"],
+                    "bullet_points": ["PREMIUM QUALITY: High quality construction with superior materials and craftsmanship", "RELIABLE PERFORMANCE: Consistent and dependable operation for daily use", "EXCEPTIONAL VALUE: Great quality at an affordable price point", "CUSTOMER SATISFACTION: Backed by thousands of positive reviews and testimonials", "EASY TO USE: Simple setup and user-friendly design for everyone"],
                     "long_description": f"The {product.name} by {product.brand_name} offers exceptional quality and performance.",
                     "seo_keywords": {
                         "primary": [product.name.lower(), "quality", "reliable", "performance", "value"],
@@ -548,12 +609,37 @@ CRITICAL EXECUTION RULES:
                 for field in missing_fields:
                     result[field] = defaults.get(field, "Content available")
             
-            # Simple parsing for JSON structure
-            listing.title = result.get('title', '')[:200]  # Amazon allows up to 200 chars
+            # FORCE ASCII-ONLY title regardless of AI output or emoji removal function
+            raw_title = result.get('title', f"{product.name} - Premium Quality")
+            # AGGRESSIVE ASCII conversion with multiple methods
+            ascii_title = raw_title.encode('ascii', errors='ignore').decode('ascii')
+            ascii_title = ''.join(c for c in ascii_title if 32 <= ord(c) <= 126)
+            ascii_title = ascii_title.replace('–', '-').replace('"', '"').replace('"', '"')
+            listing.title = ascii_title.strip()[:200] if ascii_title.strip() else f"{product.name} - Premium Quality"
             
-            # Get bullet points directly (should be clean from AI)
+            # Get bullet points directly (should be clean from AI) and enforce colon format
             bullet_points = result.get('bullet_points', [])
-            listing.bullet_points = '\n\n'.join(bullet_points) if bullet_points else ''
+            if bullet_points:
+                # Post-process to ensure colon format
+                cleaned_bullets = []
+                for bullet in bullet_points:
+                    # Convert format from "LABEL - content" to "LABEL: content"
+                    if ' - ' in bullet and ':' not in bullet:
+                        bullet = bullet.replace(' - ', ': ', 1)  # Only replace first occurrence
+                    elif ' – ' in bullet and ':' not in bullet:  # Handle em-dash
+                        bullet = bullet.replace(' – ', ': ', 1)
+                    # Ensure it starts with uppercase and has colon format
+                    if ':' not in bullet and len(bullet) > 20:
+                        # If no colon found, add one after first word/phrase
+                        words = bullet.split(' ')
+                        if len(words) >= 2:
+                            label = ' '.join(words[:2]).upper()  # Take first 2 words as label
+                            content = ' '.join(words[2:])
+                            bullet = f"{label}: {content}"
+                    cleaned_bullets.append(bullet)
+                listing.bullet_points = '\n\n'.join(cleaned_bullets)
+            else:
+                listing.bullet_points = ''
             
             listing.long_description = result.get('long_description', '')
             
@@ -1206,7 +1292,7 @@ Return ONLY valid JSON:
             listing.tiktok_hooks = '\n'.join(result.get('hooks', []))
             listing.keywords = ', '.join(result.get('hashtags', []))
         except json.JSONDecodeError:
-            listing.title = f"This {product.name} hits different ✨"
+            listing.title = f"This {product.name} hits different"
             listing.long_description = "AI generation failed - please regenerate"
 
     def _generate_shopify_listing(self, product, listing):
@@ -1286,8 +1372,8 @@ Return ONLY valid JSON:
         listing.keywords = f"handmade, {product.name}, artisan, unique, {product.brand_name}"
 
     def _generate_fallback_tiktok(self, product, listing):
-        listing.title = f"This {product.name} hits different ✨"
-        listing.long_description = f"okay but seriously... {product.description} 💅\n\n✨ why you need this:\n• it's actually amazing\n• perfect for daily use\n• great quality\n\n#MustHave #GameChanger"
+        listing.title = f"This {product.name} hits different"
+        listing.long_description = f"okay but seriously... {product.description}\n\nwhy you need this:\n• it's actually amazing\n• perfect for daily use\n• great quality\n\n#MustHave #GameChanger"
         listing.keywords = f"{product.name}, viral, trendy, {product.brand_name}"
 
     def _generate_fallback_shopify(self, product, listing):
@@ -1477,3 +1563,55 @@ CUSTOMIZATION REQUIREMENTS:
         ]
         
         return templates[template_index]
+    
+    def _comprehensive_emoji_removal(self, result):
+        """Remove emojis and unicode symbols from all text fields in the result"""
+        import re
+        
+        def remove_emojis(text):
+            if not isinstance(text, str):
+                return text
+            
+            try:
+                # Debug logging
+                original_length = len(text)
+                has_unicode = any(ord(c) > 127 for c in text)
+                print(f"Emoji removal input: {original_length} chars, has Unicode: {has_unicode}")
+                
+                # AGGRESSIVE ASCII-ONLY conversion - multiple approaches
+                
+                # Method 1: Direct ASCII encoding
+                clean_text = text.encode('ascii', errors='ignore').decode('ascii')
+                
+                # Method 2: Manual character filtering for printable ASCII only
+                clean_text = ''.join(c for c in clean_text if 32 <= ord(c) <= 126)
+                
+                # Method 3: Remove any remaining problematic patterns
+                clean_text = re.sub(r'[^\x20-\x7E]', '', clean_text)
+                
+                # Method 4: Clean up spaces and formatting
+                clean_text = re.sub(r'\s+', ' ', clean_text).strip()
+                
+                # Debug logging
+                final_length = len(clean_text)
+                has_unicode_after = any(ord(c) > 127 for c in clean_text) if clean_text else False
+                print(f"Emoji removal output: {final_length} chars, has Unicode: {has_unicode_after}")
+                
+                return clean_text if clean_text else text.encode('ascii', errors='ignore').decode('ascii')
+                
+            except Exception as e:
+                print(f"Emoji removal failed: {e}")
+                # Ultimate fallback - just return empty string if all fails
+                return ""
+        
+        def clean_object(obj):
+            if isinstance(obj, dict):
+                return {key: clean_object(value) for key, value in obj.items()}
+            elif isinstance(obj, list):
+                return [clean_object(item) for item in obj]
+            elif isinstance(obj, str):
+                return remove_emojis(obj)
+            else:
+                return obj
+        
+        return clean_object(result)
