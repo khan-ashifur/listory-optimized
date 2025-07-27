@@ -30,7 +30,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     categories = models.TextField(help_text="Product categories, comma-separated", blank=True, default="")
     features = models.TextField(help_text="Key features, comma-separated", blank=True, default="")
-    target_keywords = models.TextField(help_text="Target keywords, comma-separated", blank=True)
+    target_keywords = models.TextField(help_text="Target keywords, comma-separated", blank=True, default="")
     
     # Product image
     product_image = models.ImageField(upload_to='products/', null=True, blank=True, help_text="Upload your product image")

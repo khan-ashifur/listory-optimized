@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Copy, Download, Star, Tag, Video, ShoppingCart, Eye, TrendingUp, Image } from 'lucide-react';
+import { ArrowLeft, Copy, Download, Star, Tag, Video, ShoppingCart, Eye, TrendingUp } from 'lucide-react';
 import toast from 'react-hot-toast';
 import PlatformPreview from '../components/PlatformPreview';
 import ListingOptimizationScore from '../components/ListingOptimizationScore';
-import ImageGenerationStatus from '../components/ImageGenerationStatus';
 import { listingAPI } from '../services/api';
 
 const ListingResults = () => {
@@ -23,16 +22,6 @@ const ListingResults = () => {
         setListing(response.data);
         setLoading(false);
         
-        // Check if images exist, if not, trigger generation
-        const hasImages = response.data.images && response.data.images.length > 0;
-        if (!hasImages) {
-          try {
-            await listingAPI.generateImages(listingId);
-            console.log('Image generation triggered');
-          } catch (error) {
-            console.error('Error triggering image generation:', error);
-          }
-        }
       } catch (error) {
         console.error('Error fetching listing:', error);
         setLoading(false);
@@ -73,6 +62,27 @@ const ListingResults = () => {
       'wireless earbuds', 'bluetooth headphones', 'noise cancelling', 'waterproof earbuds', 
       'long battery life', 'premium sound quality', 'workout headphones', 'wireless charging'
     ],
+    whats_in_box: `• 1x Wireless Bluetooth Earbuds (Left & Right)
+• 1x Premium Charging Case with LED Display
+• 3x Sets of Ear Tips (Small, Medium, Large)
+• 1x USB-C Fast Charging Cable (3.3ft/1m)
+• 1x User Manual & Quick Start Guide
+• 1x Warranty Card (24-Month Protection)
+• 1x Premium Travel Pouch`,
+    faqs: `Q: How long does the battery last on a single charge?
+A: The earbuds provide up to 8 hours of continuous playback on a single charge, with an additional 16 hours from the charging case, giving you 24 hours total battery life.
+
+Q: Are these earbuds compatible with iPhone and Android?
+A: Yes! These earbuds are universally compatible with all Bluetooth-enabled devices including iPhone, Android, tablets, laptops, and smart TVs.
+
+Q: Can I use these earbuds for sports and workouts?
+A: Absolutely! With IPX7 waterproof rating, these earbuds are perfect for intense workouts, running in the rain, and all sports activities. The secure fit ensures they stay in place during movement.
+
+Q: Do these earbuds support wireless charging?
+A: Yes, the charging case supports both wireless charging and USB-C fast charging for ultimate convenience.
+
+Q: What's the wireless range?
+A: These earbuds offer a stable connection up to 33 feet (10 meters) from your device, with advanced Bluetooth 5.3 technology ensuring minimal latency and dropouts.`,
     amazonAplusContent: `
     <h2>Why Choose Our Earbuds?</h2>
     <div style="display: flex; justify-content: space-between;">
@@ -246,13 +256,6 @@ const ListingResults = () => {
                 active={activeTab === 'optimization'}
                 onClick={setActiveTab}
               />
-              <TabButton
-                id="images"
-                label="Product Images"
-                icon={Image}
-                active={activeTab === 'images'}
-                onClick={setActiveTab}
-              />
               {currentListing.platform === 'tiktok' && (
                 <TabButton
                   id="video"
@@ -288,6 +291,20 @@ const ListingResults = () => {
                   content={currentListing.long_description || 'No description generated'}
                   isHtml={true}
                 />
+                
+                {currentListing.whats_in_box && (
+                  <CopyableSection
+                    title="What's in the Box"
+                    content={currentListing.whats_in_box}
+                  />
+                )}
+                
+                {currentListing.faqs && (
+                  <CopyableSection
+                    title="Frequently Asked Questions"
+                    content={currentListing.faqs}
+                  />
+                )}
                 
                 {currentListing.short_description && (
                   <div className="bg-gradient-from-blue-50 to-purple-50 rounded-lg p-6 mb-6 border border-blue-200">
@@ -341,27 +358,123 @@ const ListingResults = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
+                className="space-y-6"
               >
-                <div className="bg-gray-50 rounded-lg p-4">
+                {/* Short-tail Keywords Section */}
+                <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-semibold text-gray-900">SEO Keywords</h3>
+                    <h3 className="font-semibold text-blue-900 flex items-center">
+                      🎯 Short-tail Keywords
+                      <span className="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                        High Volume
+                      </span>
+                    </h3>
                     <button
-                      onClick={() => copyToClipboard(currentListing.keywords || '')}
-                      className="flex items-center text-sm text-primary-600 hover:text-primary-700"
+                      onClick={() => {
+                        const shortTail = (currentListing.keywords || '').split(', ').filter(k => k.split(' ').length <= 2);
+                        copyToClipboard(shortTail.join(', '));
+                      }}
+                      className="flex items-center text-sm text-blue-600 hover:text-blue-700"
                     >
                       <Copy className="h-4 w-4 mr-1" />
-                      Copy All
+                      Copy Short-tail
                     </button>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {(currentListing.keywords ? currentListing.keywords.split(', ') : []).map((keyword, index) => (
+                    {(currentListing.keywords || '').split(', ').filter(keyword => keyword.split(' ').length <= 2).map((keyword, index) => (
                       <span
                         key={index}
-                        className="bg-white px-3 py-1 rounded-full text-sm text-gray-700 border border-gray-200"
+                        className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium border border-blue-300"
                       >
                         {keyword}
                       </span>
                     ))}
+                  </div>
+                </div>
+
+                {/* Long-tail Keywords Section */}
+                <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="font-semibold text-green-900 flex items-center">
+                      🔍 Long-tail Keywords
+                      <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                        High Intent
+                      </span>
+                    </h3>
+                    <button
+                      onClick={() => {
+                        const longTail = (currentListing.keywords || '').split(', ').filter(k => k.split(' ').length > 2);
+                        copyToClipboard(longTail.join(', '));
+                      }}
+                      className="flex items-center text-sm text-green-600 hover:text-green-700"
+                    >
+                      <Copy className="h-4 w-4 mr-1" />
+                      Copy Long-tail
+                    </button>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {(currentListing.keywords || '').split(', ').filter(keyword => keyword.split(' ').length > 2).map((keyword, index) => (
+                      <span
+                        key={index}
+                        className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm border border-green-300"
+                      >
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Backend Keywords Section */}
+                <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="font-semibold text-purple-900 flex items-center">
+                      🔑 Amazon Backend Keywords
+                      <span className="ml-2 text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">
+                        Search Terms
+                      </span>
+                    </h3>
+                    <button
+                      onClick={() => copyToClipboard(currentListing.amazon_backend_keywords || '')}
+                      className="flex items-center text-sm text-purple-600 hover:text-purple-700"
+                    >
+                      <Copy className="h-4 w-4 mr-1" />
+                      Copy Backend
+                    </button>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {(currentListing.amazon_backend_keywords || '').split(', ').map((keyword, index) => (
+                      <span
+                        key={index}
+                        className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm border border-purple-300"
+                      >
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Keyword Stats */}
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h4 className="font-semibold text-gray-900 mb-2">📊 Keyword Analysis</h4>
+                  <div className="grid grid-cols-3 gap-4 text-center">
+                    <div>
+                      <div className="text-2xl font-bold text-blue-600">
+                        {(currentListing.keywords || '').split(', ').filter(k => k.split(' ').length <= 2).length}
+                      </div>
+                      <div className="text-sm text-gray-600">Short-tail</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-green-600">
+                        {(currentListing.keywords || '').split(', ').filter(k => k.split(' ').length > 2).length}
+                      </div>
+                      <div className="text-sm text-gray-600">Long-tail</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-purple-600">
+                        {(currentListing.amazon_backend_keywords || '').split(', ').length}
+                      </div>
+                      <div className="text-sm text-gray-600">Backend Terms</div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -390,15 +503,6 @@ const ListingResults = () => {
               </motion.div>
             )}
 
-            {activeTab === 'images' && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                <ImageGenerationStatus listingId={listingId} />
-              </motion.div>
-            )}
 
             {activeTab === 'video' && currentListing.tiktok_video_script && (
               <motion.div
