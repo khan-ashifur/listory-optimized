@@ -440,7 +440,7 @@ CRITICAL JSON FORMATTING RULES:
 RESPONSE FORMAT: Return valid JSON with these fields (note the double quotes around all field names and values):
 
 {{
-  "productTitle": "Write a title using your {chosen_title_approach} approach. Make it feel like a human named this product, not a marketing team. Include key search terms naturally but avoid the Brand-Specs-Features template.",
+  "productTitle": "Write 150-200 character Amazon-optimized title. MUST include: 1) Brand name '{product.brand_name}' at start, 2) Emotional hook or benefit, 3) Primary keywords (product type, main features), 4) Key specifications. Format: '{product.brand_name} [Emotional Hook] [Product Type] [Key Features] [Target Use/Benefit]'. Optimize for both PC and mobile Amazon search. Example: 'AudioMax Premium Wireless Noise Cancelling Bluetooth Headphones - Experience Studio-Quality Sound with 30Hr Battery for Travel, Work & Music'",
   
   "bulletPoints": [
     "EMOTIONAL LABEL: Write 150-500 characters with compelling emotional hook and specific benefit. Use format 'LABEL: detailed explanation with benefits and outcomes.' Must be minimum 150 characters.",
