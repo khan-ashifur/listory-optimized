@@ -1685,9 +1685,9 @@ A: Most gamers feel the difference within their first session. Say goodbye to th
         # Generate category-specific attributes based on product
         category_prompt = self._get_walmart_category_context(product)
         
-        prompt = f"""You are a Walmart marketplace expert. Create a listing that follows Walmart's EXACT requirements and Sparky algorithm preferences.
+        prompt = f"""You are a professional copywriter specializing in Walmart marketplace optimization. Your mission: Create a PREMIUM, PROFESSIONAL listing that sounds like it was written by a product expert, not a generic AI.
 
-PRODUCT INFO:
+PRODUCT ANALYSIS:
 - Product Name: {product.name}
 - Brand: {product.brand_name}
 - Description: {product.description}
@@ -1697,59 +1697,56 @@ PRODUCT INFO:
 - Categories: {product.categories}
 {competitor_context}
 
-WALMART MARKETPLACE REQUIREMENTS (MUST FOLLOW EXACTLY):
+PROFESSIONAL QUALITY STANDARDS:
 
-1. PRODUCT TITLE:
-- 50-75 characters ideal (HARD CAP: 100 characters)
-- Format: Brand + Product Type + Key Feature(s)
-- Natural language only, NO emojis, symbols, or promotional terms
-- NO "Free Shipping", "Best Price", etc.
+1. PRODUCT TITLE (Under 100 chars):
+- Lead with brand credibility: "{product.brand_name}"
+- Include specific product type and ONE standout differentiator
+- Sound premium and professional, never generic
+- Example format: "Brand [Specific Product] with [Key Technology/Benefit]"
 
-2. KEY FEATURES (BULLET POINTS):
-- Provide EXACTLY 5-7 bullet points (Walmart prefers 5-7)
-- Each bullet MAX 80 characters INCLUDING spaces
-- Plain text only - NO emojis, formatting, caps, or promotional claims
-- Focus on tangible differentiators and specific benefits
-- Avoid generic features - include measurable benefits, unique selling points, specific materials/technology
-- Use numbers, measurements, or concrete comparisons when possible
+2. KEY FEATURES (5-7 bullets, max 80 chars each):
+CRITICAL: Write like a product expert, not a marketer. Each bullet must:
+- Start with specific technical details, measurements, or certifications
+- Include concrete benefits with numbers/percentages when possible
+- Use professional terminology that builds credibility
+- Avoid generic words like "great," "perfect," "amazing"
+- Compare to industry standards or competitor weaknesses
+- Include materials, technology names, or patent information if available
 
-3. PRODUCT DESCRIPTION:
-- TARGET: 200-250 words for optimal PC/mobile display (MINIMUM 150 words)
-- Benefits-driven, emotionally engaging NARRATIVE (not HTML)
-- Write as if answering customer questions conversationally
-- Address common concerns like comfort, durability, value, and competitive advantages
-- Weave in specs and features naturally within the story
-- Conversational Q&A tone (Sparky algorithm preference)
-- NO external links, emojis, all caps, or exaggerated claims
-- Include tangible differentiators and unique selling points
-- Include SEO keywords naturally but conversationally
-- Make it personal and relatable (use "you", "your")
-- Add specific use cases and problem-solving benefits
+3. PRODUCT DESCRIPTION (200-250 words):
+Write like an industry expert reviewing this specific product:
+- NEVER use template openings like "In the quest for..." "In the realm of..." "Are you looking for..."
+- Start with a specific technical insight or manufacturing detail unique to this product
+- Explain why this product's approach is superior to typical market alternatives
+- Include specific performance metrics, materials, or engineering details
+- Mention real-world usage scenarios and measurable outcomes
+- Address common failure points in this product category and how this product solves them
+- Include manufacturing standards, certifications, or quality processes
+- End with specific warranty or reliability information
 
-4. SEO INTEGRATION:
-- Keywords must appear naturally in title, bullets, and description
-- Use long-tail keywords conversationally
-- Focus on natural Q&A tone
+QUALITY CONTROL:
+- Every sentence must add unique value
+- No marketing fluff or generic statements
+- Sound like an expert explaining to a peer
+- Include specific technical details that competitors don't mention
+- Build credibility through precision and expertise
 
-{category_prompt}
-
-CRITICAL: Create a COMPLETELY UNIQUE listing based on the specific product. DO NOT use generic templates.
-
-Analyze the product details and create unique content that highlights what makes THIS specific product different from competitors.
+ANALYZE THIS SPECIFIC PRODUCT and create content that an expert would write. Find unique angles others miss.
 
 Return ONLY valid JSON:
 {{
-  "product_title": "Write unique title based on actual product - Brand + specific product type + unique differentiator (under 100 chars)",
+  "product_title": "Write expert-level title with specific differentiator (under 100 chars)",
   "key_features": [
-    "Write 5-7 unique bullets based on actual product features and benefits",
-    "Include specific measurements, materials, or technology differentiators",
-    "Focus on tangible benefits customers can't get elsewhere",
-    "Use specific numbers or comparisons when possible",
-    "Highlight unique selling points and competitive advantages",
-    "Address specific customer pain points this product solves",
-    "Include warranty, certifications, or quality indicators if relevant"
+    "Professional bullet 1 with specific technical detail or measurement",
+    "Professional bullet 2 with unique material or technology advantage", 
+    "Professional bullet 3 with certification or performance standard",
+    "Professional bullet 4 with competitive advantage or user benefit",
+    "Professional bullet 5 with specific use case or problem solved",
+    "Professional bullet 6 with durability or reliability indicator",
+    "Professional bullet 7 with convenience or design advantage"
   ],
-  "description": "WRITE UNIQUE 200-250 WORD NARRATIVE: Create a conversational story specifically about this product. Start with a relatable customer scenario. Explain why THIS specific product is the solution. Include unique features, materials, technology, or benefits. Address specific concerns customers have about this product category. Use natural Q&A style. Include tangible differentiators. Make it personal with 'you' and 'your'. Must be 200-250 words.",
+  "description": "Write 200-250 words as a product expert would explain this item to a discerning customer. Start with specific product insight, not generic template. Include technical details, specific benefits, use cases, and credibility-building information. Sound professional and knowledgeable.",
   "identifiers": {{
     "gtin_upc": "00123456789012",
     "manufacturer_part": "BRAND-MODEL-2024",
