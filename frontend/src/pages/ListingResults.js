@@ -774,15 +774,6 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                   </div>
                 </div>
 
-                {/* Attributes */}
-                {currentListing.walmart_attributes && (
-                  <div className="bg-yellow-50 rounded-lg p-4 border border-yellow-200">
-                    <h3 className="font-semibold text-yellow-900 mb-3">🔧 Product Attributes</h3>
-                    <div className="bg-white p-3 rounded border font-mono text-sm overflow-x-auto">
-                      <pre>{JSON.stringify(JSON.parse(currentListing.walmart_attributes), null, 2)}</pre>
-                    </div>
-                  </div>
-                )}
               </motion.div>
             )}
 
@@ -798,8 +789,22 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                 {currentListing.walmart_warranty_info && (
                   <div className="bg-green-50 rounded-lg p-4 border border-green-200">
                     <h3 className="font-semibold text-green-900 mb-3">🛡️ Warranty Information</h3>
-                    <div className="bg-white p-3 rounded border">
-                      <pre className="text-sm whitespace-pre-wrap">{JSON.stringify(JSON.parse(currentListing.walmart_warranty_info), null, 2)}</pre>
+                    <div className="space-y-3">
+                      {(() => {
+                        try {
+                          const warrantyData = JSON.parse(currentListing.walmart_warranty_info);
+                          return Object.entries(warrantyData).map(([key, value]) => (
+                            <div key={key} className="bg-white p-3 rounded border">
+                              <div className="flex justify-between items-start">
+                                <span className="font-medium text-gray-700 capitalize">{key.replace('_', ' ')}:</span>
+                                <span className="text-gray-900 ml-2 text-right">{Array.isArray(value) ? value.join(', ') : value}</span>
+                              </div>
+                            </div>
+                          ));
+                        } catch (e) {
+                          return <div className="bg-white p-3 rounded border text-sm text-gray-600">{currentListing.walmart_warranty_info}</div>;
+                        }
+                      })()}
                     </div>
                   </div>
                 )}
@@ -865,11 +870,6 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                   )}
                 </div>
 
-                {/* Plain Text Description */}
-                <CopyableSection
-                  title="Walmart Description (Plain Text Narrative)"
-                  content={currentListing.walmart_description || currentListing.long_description}
-                />
               </motion.div>
             )}
           </div>
