@@ -1706,21 +1706,25 @@ WALMART MARKETPLACE REQUIREMENTS (MUST FOLLOW EXACTLY):
 - NO "Free Shipping", "Best Price", etc.
 
 2. KEY FEATURES (BULLET POINTS):
-- Provide 3-10 bullet points
+- Provide EXACTLY 5-7 bullet points (Walmart prefers 5-7)
 - Each bullet MAX 80 characters INCLUDING spaces
 - Plain text only - NO emojis, formatting, caps, or promotional claims
-- Focus on benefits, functionality, and value
+- Focus on tangible differentiators and specific benefits
+- Avoid generic features - include measurable benefits, unique selling points, specific materials/technology
+- Use numbers, measurements, or concrete comparisons when possible
 
 3. PRODUCT DESCRIPTION:
-- MINIMUM 150 words (CRITICAL REQUIREMENT - count carefully)
+- TARGET: 200-250 words for optimal PC/mobile display (MINIMUM 150 words)
 - Benefits-driven, emotionally engaging NARRATIVE (not HTML)
 - Write as if answering customer questions conversationally
-- Address common concerns like comfort, durability, value
+- Address common concerns like comfort, durability, value, and competitive advantages
 - Weave in specs and features naturally within the story
 - Conversational Q&A tone (Sparky algorithm preference)
 - NO external links, emojis, all caps, or exaggerated claims
-- Include SEO keywords naturally
+- Include tangible differentiators and unique selling points
+- Include SEO keywords naturally but conversationally
 - Make it personal and relatable (use "you", "your")
+- Add specific use cases and problem-solving benefits
 
 4. SEO INTEGRATION:
 - Keywords must appear naturally in title, bullets, and description
@@ -1729,15 +1733,23 @@ WALMART MARKETPLACE REQUIREMENTS (MUST FOLLOW EXACTLY):
 
 {category_prompt}
 
+CRITICAL: Create a COMPLETELY UNIQUE listing based on the specific product. DO NOT use generic templates.
+
+Analyze the product details and create unique content that highlights what makes THIS specific product different from competitors.
+
 Return ONLY valid JSON:
 {{
-  "product_title": "Brand ProductType KeyFeature (under 100 chars)",
+  "product_title": "Write unique title based on actual product - Brand + specific product type + unique differentiator (under 100 chars)",
   "key_features": [
-    "Benefit-focused feature under 80 chars",
-    "Another feature under 80 chars",
-    "Third feature under 80 chars"
+    "Write 5-7 unique bullets based on actual product features and benefits",
+    "Include specific measurements, materials, or technology differentiators",
+    "Focus on tangible benefits customers can't get elsewhere",
+    "Use specific numbers or comparisons when possible",
+    "Highlight unique selling points and competitive advantages",
+    "Address specific customer pain points this product solves",
+    "Include warranty, certifications, or quality indicators if relevant"
   ],
-  "description": "WRITE EXACTLY 150+ WORDS: Are you looking for [product type]? This [brand product name] is perfect because [benefits]. Here's why customers love it... [continue conversational narrative addressing concerns about comfort, durability, value, usage scenarios. Include specs naturally. Use 'you' and 'your' throughout. Must be exactly 150+ words]",
+  "description": "WRITE UNIQUE 200-250 WORD NARRATIVE: Create a conversational story specifically about this product. Start with a relatable customer scenario. Explain why THIS specific product is the solution. Include unique features, materials, technology, or benefits. Address specific concerns customers have about this product category. Use natural Q&A style. Include tangible differentiators. Make it personal with 'you' and 'your'. Must be 200-250 words.",
   "identifiers": {{
     "gtin_upc": "00123456789012",
     "manufacturer_part": "BRAND-MODEL-2024",
@@ -1932,10 +1944,22 @@ Return ONLY valid JSON:
             listing.walmart_manufacturer_part = f"{product.brand_name.upper()[:3]}-{product.name[:3].upper()}-2024"
             listing.walmart_sku_id = f"SKU-{product.id:04d}"
             
-            # Basic features from product
+            # Basic features from product (generate 5-7 features for Walmart)
             if product.features:
-                features = product.features.split(',')[:5]
-                listing.walmart_key_features = '\n'.join([f.strip() for f in features])
+                base_features = [f.strip() for f in product.features.split(',')]
+                # Ensure we have 5-7 features for Walmart requirements
+                while len(base_features) < 5:
+                    base_features.extend([
+                        f"Premium {product.name.lower()} construction",
+                        f"Designed for {product.categories.lower() if product.categories else 'everyday'} use",
+                        f"Quality materials ensure lasting durability",
+                        f"Easy to use and maintain design",
+                        f"Trusted {product.brand_name} quality guarantee"
+                    ])
+                
+                # Take exactly 5-7 features as preferred by Walmart
+                walmart_features = base_features[:7]  # Max 7 features
+                listing.walmart_key_features = '\n'.join(walmart_features)
                 # DO NOT SET bullet_points for Walmart - this is Amazon-specific
             
             # Basic specifications
@@ -2008,21 +2032,36 @@ Return ONLY valid JSON:
 """
     
     def _generate_walmart_fallback_description(self, product):
-        """Generate a 150+ word Walmart-compliant description"""
+        """Generate a 200-250 word Walmart-compliant description"""
         description = f"Are you searching for the perfect {product.name.lower()}? Let me tell you why the {product.brand_name} {product.name} stands out from the crowd and why so many customers choose it over the competition. "
         
         if product.description:
             description += f"{product.description} But here's what makes it really special - it's designed with your daily needs in mind, not just as another product on the shelf. "
         
-        description += f"When you're considering a {product.name.lower()}, you want to know it will actually work for your lifestyle. That's exactly what {product.brand_name} delivers. "
+        description += f"When you're considering a {product.name.lower()}, you want to know it will actually work for your lifestyle. That's exactly what {product.brand_name} delivers with this thoughtfully engineered solution. "
         
         if product.features:
             description += f"The key features that customers consistently rave about include {product.features.lower()}. These aren't just fancy add-ons or marketing gimmicks; they're practical solutions to real problems you face every day. "
         
         description += f"What makes this {product.name.lower()} different from others in its category? It's the attention to detail and unwavering commitment to quality that {product.brand_name} brings to every single product they make. "
+        
+        # Add category-specific benefits
+        if product.categories:
+            description += f"As a premium {product.categories.lower()} solution, this product addresses the specific challenges you encounter in this category. "
+        
         description += f"Whether you're looking for durability that stands the test of time, functionality that actually works as promised, or style that complements your space perfectly, this product delivers on all fronts without compromise. "
-        description += f"Many customers tell us they wish they'd found this {product.name.lower()} sooner - it would have saved them from disappointment with other products. It's not just another purchase; it's an investment in better daily experiences and peace of mind. "
-        description += f"Perfect for both everyday use and those special moments when you need something reliable, this {product.name.lower()} adapts to your lifestyle seamlessly. The quality construction and thoughtful design mean you can count on it for years to come, making it an exceptional value for your hard-earned money."
+        
+        # Add price/value proposition
+        if product.price:
+            description += f"At ${product.price}, this represents exceptional value compared to similar products that often cost significantly more while delivering less. "
+        
+        description += f"Many customers tell us they wish they'd found this {product.name.lower()} sooner - it would have saved them from disappointment with other products that promise much but deliver little. "
+        
+        description += f"It's not just another purchase; it's an investment in better daily experiences and genuine peace of mind. The difference becomes apparent from the very first use. "
+        
+        description += f"Perfect for both everyday use and those special moments when you need something reliable, this {product.name.lower()} adapts to your lifestyle seamlessly. The quality construction and thoughtful design mean you can count on it for years to come. "
+        
+        description += f"With {product.brand_name}'s reputation for excellence backing every purchase, you're not just buying a product - you're joining thousands of satisfied customers who made the smart choice."
         
         return description
 
