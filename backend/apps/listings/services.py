@@ -967,14 +967,14 @@ RESPONSE FORMAT: Return valid JSON with these fields (note the double quotes aro
                         print(f"🔍 Found description in alternative field '{alt}': {len(product_description)} chars")
                         break
             
-            # If still no description, generate a comprehensive one
+            # If still no description, generate a professional one
             if not product_description:
-                # Create a detailed fallback description
-                product_description = f"""Are you looking for a reliable and high-quality {product.name}? The {product.brand_name} {product.name} delivers exceptional performance and value that exceeds expectations.
+                # Create a professional fallback description
+                product_description = f"""The {product.brand_name} {product.name} represents advanced engineering in its category, incorporating {product.features if product.features else 'cutting-edge technology and premium materials'} to deliver superior performance. This professional-grade solution addresses the specific challenges users face in this market segment.
 
-This premium product features {product.features if product.features else 'advanced functionality and superior design'}. Whether you're using it daily or for special occasions, our {product.name} provides the reliability and quality you deserve. Built with attention to detail and customer satisfaction in mind.
+Designed with precision manufacturing standards, this product outperforms conventional alternatives through its optimized construction and reliable operation. The engineering team focused on solving common pain points while maintaining the durability and functionality that professionals demand.
 
-What's Included: {product.name}, user manual, warranty information, and customer support. Experience the {product.brand_name} difference today - order now and discover why customers choose quality and performance. Your satisfaction is our guarantee."""
+Technical specifications include comprehensive compatibility, robust build quality, and performance metrics that exceed industry standards. Each unit undergoes rigorous quality testing to ensure consistent results. Backed by {product.brand_name}'s commitment to excellence and comprehensive warranty coverage for complete peace of mind."""
                 
                 print(f"⚠️ No AI description found in any field, generated fallback: {len(product_description)} characters")
                 print(f"⚠️ Fallback preview: {product_description[:150]}...")
@@ -1685,134 +1685,55 @@ A: Most gamers feel the difference within their first session. Say goodbye to th
         # Generate category-specific attributes based on product
         category_prompt = self._get_walmart_category_context(product)
         
-        prompt = f"""You are a professional copywriter specializing in Walmart marketplace optimization. Your mission: Create a PREMIUM, PROFESSIONAL listing that sounds like it was written by a product expert, not a generic AI.
+        prompt = f"""Create a professional Walmart listing for this product. Return ONLY valid JSON with no extra text.
 
-PRODUCT ANALYSIS:
-- Product Name: {product.name}
-- Brand: {product.brand_name}
-- Description: {product.description}
-- Features: {product.features}
-- Price: ${product.price}
-- Brand Tone: {brand_details['tone']} - {brand_details['style']}
-- Categories: {product.categories}
-{competitor_context}
+PRODUCT: {product.name}
+BRAND: {product.brand_name}
+DESCRIPTION: {product.description}  
+FEATURES: {product.features}
+PRICE: ${product.price}
 
-PROFESSIONAL QUALITY STANDARDS:
+Requirements:
+- Title: Under 100 characters with brand and key benefit
+- Features: Exactly 5-7 bullet points, max 80 characters each
+- Description: 200-250 words, professional tone, no generic templates
+- Keywords: 20 diverse SEO terms covering primary, long-tail, technical, brand, competitive, and demographic terms
+- Include specific measurements and technical details
 
-1. PRODUCT TITLE (Under 100 chars):
-- Lead with brand credibility: "{product.brand_name}"
-- Include specific product type and ONE standout differentiator
-- Sound premium and professional, never generic
-- Example format: "Brand [Specific Product] with [Key Technology/Benefit]"
-
-2. KEY FEATURES (5-7 bullets, max 80 chars each):
-CRITICAL: Write like a product expert, not a marketer. Each bullet must:
-- Start with specific technical details, measurements, or certifications
-- Include concrete benefits with numbers/percentages when possible
-- Use professional terminology that builds credibility
-- Avoid generic words like "great," "perfect," "amazing"
-- Compare to industry standards or competitor weaknesses
-- Include materials, technology names, or patent information if available
-
-3. PRODUCT DESCRIPTION (200-250 words):
-Write like an industry expert reviewing this specific product:
-- NEVER use template openings like "In the quest for..." "In the realm of..." "Are you looking for..."
-- Start with a specific technical insight or manufacturing detail unique to this product
-- Explain why this product's approach is superior to typical market alternatives
-- Include specific performance metrics, materials, or engineering details
-- Mention real-world usage scenarios and measurable outcomes
-- Address common failure points in this product category and how this product solves them
-- Include manufacturing standards, certifications, or quality processes
-- End with specific warranty or reliability information
-
-QUALITY CONTROL:
-- Every sentence must add unique value
-- No marketing fluff or generic statements
-- Sound like an expert explaining to a peer
-- Include specific technical details that competitors don't mention
-- Build credibility through precision and expertise
-
-ANALYZE THIS SPECIFIC PRODUCT and create content that an expert would write. Find unique angles others miss.
-
-Return ONLY valid JSON:
 {{
-  "product_title": "Write expert-level title with specific differentiator (under 100 chars)",
+  "product_title": "Professional title under 100 chars with brand and benefit",
   "key_features": [
-    "Professional bullet 1 with specific technical detail or measurement",
-    "Professional bullet 2 with unique material or technology advantage", 
-    "Professional bullet 3 with certification or performance standard",
-    "Professional bullet 4 with competitive advantage or user benefit",
-    "Professional bullet 5 with specific use case or problem solved",
-    "Professional bullet 6 with durability or reliability indicator",
-    "Professional bullet 7 with convenience or design advantage"
+    "Technical detail with measurement (under 80 chars)",
+    "Certification or safety standard included",
+    "Performance metric with specific numbers",
+    "Material advantage or technology feature",
+    "Compatibility or capacity specification",
+    "Design or convenience benefit",
+    "Warranty or reliability information"
   ],
-  "description": "Write 200-250 words as a product expert would explain this item to a discerning customer. Start with specific product insight, not generic template. Include technical details, specific benefits, use cases, and credibility-building information. Sound professional and knowledgeable.",
-  "identifiers": {{
-    "gtin_upc": "00123456789012",
-    "manufacturer_part": "BRAND-MODEL-2024",
-    "sku_id": "SKU-PROD-001"
-  }},
-  "product_type": "Specific product category",
-  "category_path": "Home & Garden > Outdoor > Specific Subcategory",
-  "attributes": {{
-    "color": "Available colors",
-    "size": "Dimensions or sizes",
-    "material": "Primary materials",
-    "features": ["Feature 1", "Feature 2"],
-    "power_source": "If applicable",
-    "intended_use": "Primary use cases"
-  }},
-  "specifications": {{
-    "dimensions": "Length x Width x Height inches",
-    "weight": "X lbs",
-    "material": "Detailed material composition",
-    "capacity": "If applicable",
-    "power": "Electrical specifications if applicable",
-    "certifications": ["Safety cert 1", "Compliance cert 2"],
-    "country_of_origin": "Manufacturing country"
-  }},
-  "shipping": {{
-    "weight": "X.X lbs",
-    "dimensions": "L x W x H inches",
-    "shipping_class": "Standard/Oversized"
-  }},
-  "warranty": {{
-    "duration": "X year limited warranty",
-    "coverage": "What's covered under warranty",
-    "support": "How to get warranty service"
-  }},
-  "assembly": {{
-    "required": true/false,
-    "time": "Estimated assembly time",
-    "tools": "Tools required if any",
-    "difficulty": "Easy/Moderate/Complex"
-  }},
-  "rich_media": {{
-    "main_image": "High-res product shot on white background",
-    "additional_images": [
-      "Lifestyle shot showing product in use",
-      "Size comparison or dimension chart",
-      "Close-up of key features",
-      "Multiple angles/variants",
-      "Packaging shot"
-    ],
-    "videos": [
-      "30-second product overview",
-      "How-to-use demonstration",
-      "Unboxing experience"
-    ],
-    "360_view": "Interactive 360-degree product view"
-  }},
-  "seo_keywords": {{
-    "primary": ["main keyword 1", "main keyword 2"],
-    "long_tail": ["specific use case keyword", "problem-solving keyword"],
-    "category": ["category keyword 1", "category keyword 2"]
-  }},
-  "compliance": {{
-    "age_restriction": "If applicable",
-    "safety_warnings": ["Warning 1 if needed"],
-    "certifications": ["UL Listed", "FDA Approved", "etc."]
-  }}
+  "description": "Write 200-250 word professional description focusing on technical advantages, performance benefits, and product superiority. Include specific details about materials, certifications, and real-world performance. Avoid generic templates.",
+  "seo_keywords": [
+    "primary keyword 1",
+    "primary keyword 2",
+    "primary keyword 3", 
+    "long tail benefit phrase 1",
+    "long tail benefit phrase 2",
+    "problem solving phrase 1",
+    "problem solving phrase 2",
+    "technical specification term 1",
+    "technical specification term 2",
+    "brand specific term 1",
+    "brand specific term 2",
+    "category keyword 1",
+    "category keyword 2",
+    "comparison vs competitor keyword",
+    "use case specific keyword",
+    "feature specific keyword",
+    "price range keyword",
+    "quality indicator keyword",
+    "seasonal/trending keyword",
+    "demographic target keyword"
+  ]
 }}"""
 
         self.logger.info("Calling OpenAI for Walmart listing generation...")
@@ -1914,10 +1835,14 @@ Return ONLY valid JSON:
             listing.walmart_video_urls = json.dumps(rich_media.get('videos', []))
             listing.walmart_swatch_images = json.dumps(rich_media.get('additional_images', []))
             
-            # SEO
-            seo = result.get('seo_keywords', {})
-            all_keywords = seo.get('primary', []) + seo.get('long_tail', []) + seo.get('category', [])
-            listing.keywords = ', '.join(all_keywords[:20])  # Limit to 20 keywords
+            # SEO keywords (simplified format)
+            seo_keywords = result.get('seo_keywords', [])
+            if isinstance(seo_keywords, list):
+                listing.keywords = ', '.join(seo_keywords[:20])  # Limit to 20 keywords
+            else:
+                # Handle old complex format if still present
+                all_keywords = seo_keywords.get('primary', []) + seo_keywords.get('long_tail', []) + seo_keywords.get('category', [])
+                listing.keywords = ', '.join(all_keywords[:20])
             
             # DO NOT SET bullet_points for Walmart - this is Amazon-specific
             
@@ -2030,7 +1955,7 @@ Return ONLY valid JSON:
     
     def _generate_walmart_fallback_description(self, product):
         """Generate a 200-250 word Walmart-compliant description"""
-        description = f"Are you searching for the perfect {product.name.lower()}? Let me tell you why the {product.brand_name} {product.name} stands out from the crowd and why so many customers choose it over the competition. "
+        description = f"The {product.brand_name} {product.name} delivers exceptional performance through advanced engineering and quality construction that sets it apart from standard alternatives in this category. "
         
         if product.description:
             description += f"{product.description} But here's what makes it really special - it's designed with your daily needs in mind, not just as another product on the shelf. "
