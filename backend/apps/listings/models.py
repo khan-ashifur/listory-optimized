@@ -42,8 +42,34 @@ class GeneratedListing(models.Model):
     etsy_tags = models.TextField(blank=True)
     etsy_materials = models.TextField(blank=True)
     
-    walmart_key_features = models.TextField(blank=True)
-    walmart_specifications = models.TextField(blank=True)
+    # Walmart-specific fields (marketplace requirements)
+    walmart_product_title = models.CharField(max_length=100, blank=True, help_text="Walmart product title (100 char hard limit)")
+    walmart_description = models.TextField(blank=True, help_text="Plain text narrative description (min 150 words)")
+    walmart_key_features = models.TextField(blank=True, help_text="3-10 bullet points, max 80 chars each, plain text only")
+    walmart_specifications = models.TextField(blank=True, help_text="Technical specifications JSON")
+    
+    # Walmart identifiers
+    walmart_gtin_upc = models.CharField(max_length=14, blank=True, help_text="GTIN/UPC code")
+    walmart_manufacturer_part = models.CharField(max_length=100, blank=True, help_text="Manufacturer part number")
+    walmart_sku_id = models.CharField(max_length=50, blank=True, help_text="SKU identifier")
+    
+    # Walmart attributes
+    walmart_product_type = models.CharField(max_length=100, blank=True, help_text="Product type/category")
+    walmart_category_path = models.CharField(max_length=500, blank=True, help_text="Category hierarchy")
+    walmart_attributes = models.TextField(blank=True, help_text="Category-specific attributes JSON")
+    
+    # Walmart shipping info
+    walmart_shipping_weight = models.CharField(max_length=50, blank=True, help_text="Shipping weight with unit")
+    walmart_shipping_dimensions = models.TextField(blank=True, help_text="L x W x H dimensions")
+    
+    # Walmart compliance
+    walmart_warranty_info = models.TextField(blank=True, help_text="Warranty details")
+    walmart_compliance_certifications = models.TextField(blank=True, help_text="Safety/compliance certs")
+    walmart_assembly_required = models.BooleanField(default=False, help_text="Assembly required flag")
+    
+    # Walmart rich media
+    walmart_video_urls = models.TextField(blank=True, help_text="Product video URLs")
+    walmart_swatch_images = models.TextField(blank=True, help_text="Swatch/variant images")
     
     shopify_seo_title = models.TextField(blank=True)
     shopify_meta_description = models.TextField(blank=True)

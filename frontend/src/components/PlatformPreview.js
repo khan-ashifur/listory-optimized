@@ -86,26 +86,41 @@ const PlatformPreview = ({ listing, platform }) => {
     <div className="bg-white border rounded-lg p-4 max-w-4xl mx-auto">
       {/* Walmart Header */}
       <div className="border-b pb-3 mb-4">
-        <div className="text-xs text-blue-600">walmart.com</div>
-        <div className="flex items-center space-x-2 mt-1">
-          <span className="bg-blue-600 text-white px-2 py-1 text-xs font-bold">Free shipping</span>
-          <span className="text-xs text-gray-600">arrives in 2 days</span>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <div className="text-2xl font-bold text-blue-600">Walmart</div>
+            <div className="text-xs text-gray-600">walmart.com</div>
+          </div>
+          <div className="flex items-center space-x-2">
+            <span className="bg-blue-600 text-white px-2 py-1 text-xs font-bold rounded">Free shipping</span>
+            <span className="bg-green-100 text-green-700 px-2 py-1 text-xs font-bold rounded">In stock</span>
+          </div>
         </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
         <div className="space-y-4">
-          <div className="bg-gray-50 aspect-square rounded-lg flex items-center justify-center">
+          <div className="bg-gray-50 aspect-square rounded-lg flex items-center justify-center relative">
             <div className="text-center text-gray-400">
               <div className="text-4xl mb-2">📦</div>
               <div className="text-sm">Product Image</div>
             </div>
+            {/* Walmart badges */}
+            <div className="absolute top-2 left-2 space-y-1">
+              <span className="bg-yellow-400 text-black px-2 py-1 text-xs font-bold rounded">ROLLBACK</span>
+              <span className="bg-blue-600 text-white px-2 py-1 text-xs font-bold rounded block">2-day shipping</span>
+            </div>
+          </div>
+          <div className="flex space-x-2">
+            {[1,2,3,4].map(i => (
+              <div key={i} className="w-16 h-16 bg-gray-100 rounded border"></div>
+            ))}
           </div>
         </div>
 
         <div className="space-y-4">
           <h1 className="text-xl font-semibold text-gray-900">
-            {listing.title}
+            {listing.walmart_product_title || listing.title}
           </h1>
           
           <div className="flex items-center space-x-2">
@@ -114,29 +129,80 @@ const PlatformPreview = ({ listing, platform }) => {
                 <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
               ))}
             </div>
-            <span className="text-gray-600 text-sm">(127)</span>
+            <span className="text-blue-600 text-sm font-semibold">4.5</span>
+            <span className="text-gray-600 text-sm">(127 reviews)</span>
           </div>
 
-          <div className="space-y-1">
+          {/* Price section */}
+          <div className="bg-gray-50 p-3 rounded">
             <div className="flex items-baseline space-x-2">
-              <span className="text-3xl font-semibold">${listing.product?.price || '29.98'}</span>
+              <span className="text-xs text-gray-600">Now</span>
+              <span className="text-3xl font-bold text-green-600">${listing.product?.price || '29.98'}</span>
               <span className="text-lg text-gray-500 line-through">$39.98</span>
             </div>
-            <div className="text-sm text-green-600">Save $10.00</div>
+            <div className="text-sm text-green-700 font-semibold">You save $10.00</div>
+            <div className="text-xs text-gray-600 mt-1">Price when purchased online</div>
           </div>
 
-          <div className="bg-blue-50 p-3 rounded">
-            <div className="text-sm font-medium text-blue-900">Key Features:</div>
-            <div className="text-sm text-blue-800 mt-1">
-              {listing.walmart_key_features?.split('\n').slice(0, 3).map((feature, i) => (
-                <div key={i}>• {feature}</div>
+          {/* Key features */}
+          <div className="border-t border-b py-3">
+            <div className="text-sm font-semibold text-gray-900 mb-2">Key Features:</div>
+            <div className="text-sm text-gray-700 space-y-1">
+              {listing.walmart_key_features?.split('\n').slice(0, 4).map((feature, i) => (
+                <div key={i} className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>{feature.replace(/^[A-Z\s]+:/, '').trim()}</span>
+                </div>
               ))}
             </div>
           </div>
 
-          <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded text-sm font-medium">
-            Add to cart
-          </button>
+          {/* Specifications preview */}
+          {listing.walmart_specifications && (
+            <div className="bg-blue-50 p-2 rounded">
+              <div className="text-xs font-semibold text-blue-900 mb-1">Quick Specs:</div>
+              <div className="grid grid-cols-2 gap-1 text-xs">
+                {Object.entries(JSON.parse(listing.walmart_specifications)).slice(0, 4).map(([key, value]) => (
+                  <div key={key}>
+                    <span className="text-gray-600">{key}:</span> <span className="font-medium">{value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Actions */}
+          <div className="space-y-2">
+            <div className="flex items-center space-x-2">
+              <select className="border rounded px-3 py-2 text-sm">
+                <option>Qty: 1</option>
+                <option>Qty: 2</option>
+                <option>Qty: 3</option>
+              </select>
+              <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded text-sm font-semibold">
+                Add to cart
+              </button>
+            </div>
+            
+            <div className="flex items-center justify-center space-x-4 text-sm">
+              <button className="text-blue-600 hover:underline flex items-center">
+                <Heart className="w-4 h-4 mr-1" />
+                Add to list
+              </button>
+              <button className="text-blue-600 hover:underline flex items-center">
+                <Share2 className="w-4 h-4 mr-1" />
+                Share
+              </button>
+            </div>
+          </div>
+
+          {/* Walmart+ benefits */}
+          <div className="bg-purple-50 border border-purple-200 rounded p-2">
+            <div className="flex items-center space-x-2">
+              <span className="text-purple-700 font-bold text-xs">Walmart+</span>
+              <span className="text-xs text-purple-600">Free shipping, no order minimum</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

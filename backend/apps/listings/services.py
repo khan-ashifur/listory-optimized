@@ -443,11 +443,11 @@ RESPONSE FORMAT: Return valid JSON with these fields (note the double quotes aro
   "productTitle": "Write 150-200 character Amazon-optimized title. MUST include: 1) Brand name '{product.brand_name}' at start, 2) Emotional hook or benefit, 3) Primary keywords (product type, main features), 4) Key specifications. Format: '{product.brand_name} [Emotional Hook] [Product Type] [Key Features] [Target Use/Benefit]'. Optimize for both PC and mobile Amazon search. Example: 'AudioMax Premium Wireless Noise Cancelling Bluetooth Headphones - Experience Studio-Quality Sound with 30Hr Battery for Travel, Work & Music'",
   
   "bulletPoints": [
-    "EMOTIONAL LABEL: Write 150-500 characters with compelling emotional hook and specific benefit. Use format 'LABEL: detailed explanation with benefits and outcomes.' Must be minimum 150 characters.",
-    "DIFFERENT LABEL: Write 150-500 characters with completely different label style. Mix features with emotional outcomes. Use format 'LABEL: comprehensive details.' Must be minimum 150 characters.",
-    "UNIQUE LABEL: Write 150-500 characters with creative but relevant label. Focus on customer transformation or specific use case. Use format 'LABEL: rich detail with examples.' Must be minimum 150 characters.", 
-    "COMPELLING LABEL: Write 150-500 characters with benefit-focused label. Include specific details, social proof, or technical advantages. Use format 'LABEL: detailed explanation.' Must be minimum 150 characters.",
-    "STANDOUT LABEL: Write 150-500 characters with memorable label that captures attention. Add guarantee, uniqueness, or surprising benefit. Use format 'LABEL: comprehensive detail.' Must be minimum 150 characters."
+    "EMOTIONAL LABEL: Write 150-500 characters with compelling emotional hook and specific benefit. Use format 'LABEL: detailed explanation with benefits and outcomes.' NO asterisks or bold formatting. Must be minimum 150 characters.",
+    "DIFFERENT LABEL: Write 150-500 characters with completely different label style. Mix features with emotional outcomes. Use format 'LABEL: comprehensive details.' NO asterisks or bold formatting. Must be minimum 150 characters.",
+    "UNIQUE LABEL: Write 150-500 characters with creative but relevant label. Focus on customer transformation or specific use case. Use format 'LABEL: rich detail with examples.' NO asterisks or bold formatting. Must be minimum 150 characters.", 
+    "COMPELLING LABEL: Write 150-500 characters with benefit-focused label. Include specific details, social proof, or technical advantages. Use format 'LABEL: detailed explanation.' NO asterisks or bold formatting. Must be minimum 150 characters.",
+    "STANDOUT LABEL: Write 150-500 characters with memorable label that captures attention. Add guarantee, uniqueness, or surprising benefit. Use format 'LABEL: comprehensive detail.' NO asterisks or bold formatting. Must be minimum 150 characters."
   ],
   
   "productDescription": "Write this like you're personally recommending it. Start with '{chosen_starter}' and include '{chosen_personality}' naturally. Use the {chosen_structure} approach. Avoid the tired 'Are you tired of...' opening and 'Experience the...' language. Write 3 paragraphs that flow like human conversation.",
@@ -816,11 +816,11 @@ RESPONSE FORMAT: Return valid JSON with these fields (note the double quotes aro
                     result = {
                         "productTitle": f"{product.brand_name} {product.name} - Premium Quality Product",
                         "bulletPoints": [
-                            "**PREMIUM QUALITY:** Exceptional construction with superior materials and craftsmanship for lasting performance",
-                            "**RELIABLE PERFORMANCE:** Consistent operation designed for daily use with professional-grade standards", 
-                            "**USER FRIENDLY:** Simple setup and intuitive design makes this perfect for everyone to use",
-                            "**GREAT VALUE:** Outstanding quality at an affordable price point with excellent customer satisfaction",
-                            "**SATISFACTION GUARANTEED:** Backed by quality assurance and dedicated customer support team"
+                            "PREMIUM QUALITY: Exceptional construction with superior materials and craftsmanship for lasting performance and durability",
+                            "RELIABLE PERFORMANCE: Consistent operation designed for daily use with professional-grade standards and proven results", 
+                            "USER FRIENDLY: Simple setup and intuitive design makes this perfect for everyone to use regardless of experience level",
+                            "GREAT VALUE: Outstanding quality at an affordable price point with excellent customer satisfaction and long-term reliability",
+                            "SATISFACTION GUARANTEED: Backed by quality assurance and dedicated customer support team with fast response times"
                         ],
                         "productDescription": f"Transform your experience with the {product.brand_name} {product.name}. This premium product combines innovative design with reliable performance to deliver exceptional results. Whether you're looking for quality, durability, or value, this product exceeds expectations. What's Included: Main product, user manual, warranty information. Experience the {product.brand_name} difference - order yours today and discover why customers choose quality.",
                         "keyword_cluster": {
@@ -883,7 +883,7 @@ RESPONSE FORMAT: Return valid JSON with these fields (note the double quotes aro
                     print("Warning: Missing fields detected, adding defaults...")
                 defaults = {
                     "productTitle": f"{product.brand_name} {product.name} - Quality Product",
-                    "bulletPoints": ["**PREMIUM QUALITY:** High quality construction with superior materials and craftsmanship", "**RELIABLE PERFORMANCE:** Consistent and dependable operation for daily use", "**EXCEPTIONAL VALUE:** Great quality at an affordable price point", "**CUSTOMER SATISFACTION:** Backed by thousands of positive reviews and testimonials", "**EASY TO USE:** Simple setup and user-friendly design for everyone"],
+                    "bulletPoints": ["PREMIUM QUALITY: High quality construction with superior materials and craftsmanship for lasting durability and exceptional performance", "RELIABLE PERFORMANCE: Consistent and dependable operation designed for daily use with proven results and customer satisfaction", "EXCEPTIONAL VALUE: Great quality at an affordable price point offering the perfect balance of performance and cost-effectiveness", "CUSTOMER SATISFACTION: Backed by thousands of positive reviews and testimonials from happy customers who love this product", "EASY TO USE: Simple setup and user-friendly design makes this perfect for everyone regardless of technical experience"],
                     "productDescription": f"The {product.name} by {product.brand_name} offers exceptional quality and performance.",
                     "keyword_cluster": {
                         "primary_keywords": [product.name.lower(), "quality", "reliable", "performance", "value"],
@@ -1660,65 +1660,371 @@ A: Most gamers feel the difference within their first session. Say goodbye to th
             
         competitor_context = self._get_competitor_context(product)
         
-        prompt = f"""You are a Walmart marketplace expert. Create a conversion-optimized Walmart product listing.
+        # Extract brand tone details
+        brand_tone_mapping = {
+            'professional': {
+                'tone': 'Professional & Authoritative',
+                'style': 'Focus on specifications, certifications, and professional benefits'
+            },
+            'casual': {
+                'tone': 'Friendly & Approachable', 
+                'style': 'Conversational, relatable, emphasize everyday benefits'
+            },
+            'luxury': {
+                'tone': 'Premium & Sophisticated',
+                'style': 'Emphasize quality, exclusivity, and superior craftsmanship'
+            },
+            'trendy': {
+                'tone': 'Modern & Dynamic',
+                'style': 'Highlight innovation, trending features, and contemporary design'
+            }
+        }
+        
+        brand_details = brand_tone_mapping.get(product.brand_tone, brand_tone_mapping['professional'])
+        
+        # Generate category-specific attributes based on product
+        category_prompt = self._get_walmart_category_context(product)
+        
+        prompt = f"""You are a Walmart marketplace expert. Create a listing that follows Walmart's EXACT requirements and Sparky algorithm preferences.
 
 PRODUCT INFO:
-- Name: {product.name}
+- Product Name: {product.name}
 - Brand: {product.brand_name}
-- Description: {product.description} 
-- Brand Tone: {product.brand_tone}
+- Description: {product.description}
 - Features: {product.features}
 - Price: ${product.price}
-- Generate SEO Keywords automatically based on product details  
-- Generate Long-tail Keywords automatically based on product details
-- Generate FAQs automatically based on product details
-- Generate What is in the Box automatically based on product type
+- Brand Tone: {brand_details['tone']} - {brand_details['style']}
+- Categories: {product.categories}
 {competitor_context}
 
-WALMART REQUIREMENTS:
-- Title: 75 characters max, brand + key features
-- Short description: 4000 chars, rich HTML allowed
-- Key features: Bullet list of specifications
-- Rich media: Video and image suggestions
+WALMART MARKETPLACE REQUIREMENTS (MUST FOLLOW EXACTLY):
+
+1. PRODUCT TITLE:
+- 50-75 characters ideal (HARD CAP: 100 characters)
+- Format: Brand + Product Type + Key Feature(s)
+- Natural language only, NO emojis, symbols, or promotional terms
+- NO "Free Shipping", "Best Price", etc.
+
+2. KEY FEATURES (BULLET POINTS):
+- Provide 3-10 bullet points
+- Each bullet MAX 80 characters INCLUDING spaces
+- Plain text only - NO emojis, formatting, caps, or promotional claims
+- Focus on benefits, functionality, and value
+
+3. PRODUCT DESCRIPTION:
+- MINIMUM 150 words (CRITICAL REQUIREMENT - count carefully)
+- Benefits-driven, emotionally engaging NARRATIVE (not HTML)
+- Write as if answering customer questions conversationally
+- Address common concerns like comfort, durability, value
+- Weave in specs and features naturally within the story
+- Conversational Q&A tone (Sparky algorithm preference)
+- NO external links, emojis, all caps, or exaggerated claims
+- Include SEO keywords naturally
+- Make it personal and relatable (use "you", "your")
+
+4. SEO INTEGRATION:
+- Keywords must appear naturally in title, bullets, and description
+- Use long-tail keywords conversationally
+- Focus on natural Q&A tone
+
+{category_prompt}
 
 Return ONLY valid JSON:
 {{
-  "title": "Brand Name Product Name - Key Feature (under 75 chars)",
-  "short_description": "<p>Compelling opening paragraph that hooks the customer...</p><ul><li>Key benefit 1</li><li>Key benefit 2</li></ul>",
+  "product_title": "Brand ProductType KeyFeature (under 100 chars)",
   "key_features": [
-    "Dimension: X x Y x Z inches",
-    "Material: Premium grade materials", 
-    "Warranty: X year manufacturer warranty",
-    "Certification: Relevant safety certifications"
+    "Benefit-focused feature under 80 chars",
+    "Another feature under 80 chars",
+    "Third feature under 80 chars"
   ],
-  "specifications": {{
-    "Brand": "{product.brand_name}",
-    "Model": "Product model number",
-    "Color": "Available colors",
-    "Size": "Dimensions and weight"
+  "description": "WRITE EXACTLY 150+ WORDS: Are you looking for [product type]? This [brand product name] is perfect because [benefits]. Here's why customers love it... [continue conversational narrative addressing concerns about comfort, durability, value, usage scenarios. Include specs naturally. Use 'you' and 'your' throughout. Must be exactly 150+ words]",
+  "identifiers": {{
+    "gtin_upc": "00123456789012",
+    "manufacturer_part": "BRAND-MODEL-2024",
+    "sku_id": "SKU-PROD-001"
   }},
-  "rich_media_suggestions": "360-degree product view, unboxing video, lifestyle shots, size comparison",
-  "seo_keywords": ["primary keyword", "secondary keyword", "long tail keyword"]
+  "product_type": "Specific product category",
+  "category_path": "Home & Garden > Outdoor > Specific Subcategory",
+  "attributes": {{
+    "color": "Available colors",
+    "size": "Dimensions or sizes",
+    "material": "Primary materials",
+    "features": ["Feature 1", "Feature 2"],
+    "power_source": "If applicable",
+    "intended_use": "Primary use cases"
+  }},
+  "specifications": {{
+    "dimensions": "Length x Width x Height inches",
+    "weight": "X lbs",
+    "material": "Detailed material composition",
+    "capacity": "If applicable",
+    "power": "Electrical specifications if applicable",
+    "certifications": ["Safety cert 1", "Compliance cert 2"],
+    "country_of_origin": "Manufacturing country"
+  }},
+  "shipping": {{
+    "weight": "X.X lbs",
+    "dimensions": "L x W x H inches",
+    "shipping_class": "Standard/Oversized"
+  }},
+  "warranty": {{
+    "duration": "X year limited warranty",
+    "coverage": "What's covered under warranty",
+    "support": "How to get warranty service"
+  }},
+  "assembly": {{
+    "required": true/false,
+    "time": "Estimated assembly time",
+    "tools": "Tools required if any",
+    "difficulty": "Easy/Moderate/Complex"
+  }},
+  "rich_media": {{
+    "main_image": "High-res product shot on white background",
+    "additional_images": [
+      "Lifestyle shot showing product in use",
+      "Size comparison or dimension chart",
+      "Close-up of key features",
+      "Multiple angles/variants",
+      "Packaging shot"
+    ],
+    "videos": [
+      "30-second product overview",
+      "How-to-use demonstration",
+      "Unboxing experience"
+    ],
+    "360_view": "Interactive 360-degree product view"
+  }},
+  "seo_keywords": {{
+    "primary": ["main keyword 1", "main keyword 2"],
+    "long_tail": ["specific use case keyword", "problem-solving keyword"],
+    "category": ["category keyword 1", "category keyword 2"]
+  }},
+  "compliance": {{
+    "age_restriction": "If applicable",
+    "safety_warnings": ["Warning 1 if needed"],
+    "certifications": ["UL Listed", "FDA Approved", "etc."]
+  }}
 }}"""
 
+        self.logger.info("Calling OpenAI for Walmart listing generation...")
         response = self.client.chat.completions.create(
             model="gpt-4o",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7,
-            max_tokens=1500
+            max_tokens=3000
         )
         
         try:
-            result = json.loads(response.choices[0].message.content)
-            listing.title = result.get('title', '')[:500]
-            listing.short_description = result.get('short_description', '')
-            listing.long_description = result.get('short_description', '')
-            listing.walmart_key_features = '\n'.join(result.get('key_features', []))
-            listing.walmart_specifications = json.dumps(result.get('specifications', {}))
-            listing.keywords = ', '.join(result.get('seo_keywords', []))
-        except json.JSONDecodeError:
-            listing.title = f"{product.brand_name} {product.name}"
-            listing.short_description = "AI generation failed - please regenerate"
+            response_content = response.choices[0].message.content
+            self.logger.info(f"Walmart AI Response received: {len(response_content)} characters")
+            self.logger.info(f"Walmart Response preview: {response_content[:200]}...")
+            
+            # Try to parse JSON
+            if not response_content.strip():
+                raise ValueError("Empty response from AI")
+            
+            # Strip markdown code blocks if present
+            if response_content.strip().startswith('```'):
+                # Remove ```json from start and ``` from end
+                response_content = response_content.strip()
+                if response_content.startswith('```json'):
+                    response_content = response_content[7:]
+                elif response_content.startswith('```'):
+                    response_content = response_content[3:]
+                if response_content.endswith('```'):
+                    response_content = response_content[:-3]
+                response_content = response_content.strip()
+                
+            result = json.loads(response_content)
+            
+            # Validate and process Walmart-specific fields
+            product_title = result.get('product_title', '')[:100]  # Hard cap at 100 chars
+            description = result.get('description', '')
+            key_features = result.get('key_features', [])
+            
+            # Validate description word count (minimum 150 words)
+            word_count = len(description.split()) if description else 0
+            if word_count < 150:
+                self.logger.warning(f"Walmart description only has {word_count} words, minimum is 150")
+                # Use enhanced fallback description that meets requirements
+                description = self._generate_walmart_fallback_description(product)
+            
+            # Validate and truncate key features (max 80 chars each)
+            validated_features = []
+            for feature in key_features[:10]:  # Max 10 features
+                if len(feature) > 80:
+                    self.logger.warning(f"Feature truncated from {len(feature)} to 80 chars: {feature[:80]}")
+                    validated_features.append(feature[:80])
+                else:
+                    validated_features.append(feature)
+            
+            # Core Walmart content (platform-specific fields only)
+            listing.walmart_product_title = product_title
+            listing.walmart_description = description
+            listing.walmart_key_features = '\n'.join(validated_features)
+            
+            # General fields for all platforms (NOT platform-specific content)
+            listing.title = product_title
+            listing.short_description = description[:200] + "..." if len(description) > 200 else description
+            listing.long_description = description
+            # DO NOT SET bullet_points for Walmart - this is Amazon-specific
+            
+            # Identifiers
+            identifiers = result.get('identifiers', {})
+            listing.walmart_gtin_upc = identifiers.get('gtin_upc', '')
+            listing.walmart_manufacturer_part = identifiers.get('manufacturer_part', '')
+            listing.walmart_sku_id = identifiers.get('sku_id', '')
+            
+            # Category and attributes
+            listing.walmart_product_type = result.get('product_type', '')
+            listing.walmart_category_path = result.get('category_path', '')
+            listing.walmart_attributes = json.dumps(result.get('attributes', {}))
+            
+            # Specifications
+            specs = result.get('specifications', {})
+            listing.walmart_specifications = json.dumps(specs)
+            
+            # Shipping
+            shipping = result.get('shipping', {})
+            listing.walmart_shipping_weight = shipping.get('weight', '')
+            listing.walmart_shipping_dimensions = shipping.get('dimensions', '')
+            
+            # Warranty and compliance
+            warranty = result.get('warranty', {})
+            listing.walmart_warranty_info = json.dumps(warranty)
+            
+            compliance = result.get('compliance', {})
+            listing.walmart_compliance_certifications = json.dumps(compliance.get('certifications', []))
+            
+            # Assembly
+            assembly = result.get('assembly', {})
+            listing.walmart_assembly_required = assembly.get('required', False)
+            
+            # Rich media
+            rich_media = result.get('rich_media', {})
+            listing.walmart_video_urls = json.dumps(rich_media.get('videos', []))
+            listing.walmart_swatch_images = json.dumps(rich_media.get('additional_images', []))
+            
+            # SEO
+            seo = result.get('seo_keywords', {})
+            all_keywords = seo.get('primary', []) + seo.get('long_tail', []) + seo.get('category', [])
+            listing.keywords = ', '.join(all_keywords[:20])  # Limit to 20 keywords
+            
+            # DO NOT SET bullet_points for Walmart - this is Amazon-specific
+            
+        except (json.JSONDecodeError, ValueError) as e:
+            self.logger.error(f"Failed to parse Walmart AI response: {e}")
+            self.logger.error(f"Response content: {response_content[:500] if 'response_content' in locals() else 'No content'}")
+            
+            # Generate fallback content based on product data (following Walmart requirements)
+            listing.walmart_product_title = f"{product.brand_name} {product.name}"[:100]  # 100 char limit
+            listing.title = listing.walmart_product_title
+            
+            # Generate fallback description
+            fallback_desc = self._generate_walmart_fallback_description(product)
+            listing.walmart_description = fallback_desc
+            listing.short_description = fallback_desc[:200] + "..." if len(fallback_desc) > 200 else fallback_desc
+            listing.long_description = fallback_desc
+            
+            # Generate basic identifiers
+            import random
+            listing.walmart_gtin_upc = f"{random.randint(100000000000, 999999999999):012d}"
+            listing.walmart_manufacturer_part = f"{product.brand_name.upper()[:3]}-{product.name[:3].upper()}-2024"
+            listing.walmart_sku_id = f"SKU-{product.id:04d}"
+            
+            # Basic features from product
+            if product.features:
+                features = product.features.split(',')[:5]
+                listing.walmart_key_features = '\n'.join([f.strip() for f in features])
+                # DO NOT SET bullet_points for Walmart - this is Amazon-specific
+            
+            # Basic specifications
+            listing.walmart_specifications = json.dumps({
+                "Brand": product.brand_name,
+                "Price": str(product.price),
+                "Category": product.categories if product.categories else "General"
+            })
+            
+            # Basic category info
+            listing.walmart_product_type = product.categories.split(',')[0] if product.categories else "General Product"
+            listing.walmart_category_path = product.categories.replace(',', ' > ') if product.categories else "Home > General"
+            
+            # Basic attributes
+            listing.walmart_attributes = json.dumps({
+                "brand": product.brand_name,
+                "price": str(product.price)
+            })
+            
+            # Keywords from product
+            if product.seo_keywords or product.long_tail_keywords:
+                all_keywords = []
+                if product.seo_keywords:
+                    all_keywords.extend(product.seo_keywords.split(','))
+                if product.long_tail_keywords:
+                    all_keywords.extend(product.long_tail_keywords.split(','))
+                listing.keywords = ', '.join([k.strip() for k in all_keywords[:20]])
+            
+    def _get_walmart_category_context(self, product):
+        """Generate category-specific context for Walmart listings"""
+        category_contexts = {
+            'electronics': """
+- Product Type: Consumer Electronics
+- Required Attributes: Screen size, resolution, connectivity, power consumption
+- Certifications: FCC, UL, Energy Star
+""",
+            'home': """
+- Product Type: Home & Garden
+- Required Attributes: Room type, style, assembly required, care instructions
+- Certifications: Safety standards, material certifications
+""",
+            'beauty': """
+- Product Type: Beauty & Personal Care
+- Required Attributes: Skin type, ingredients, volume/size, scent
+- Certifications: FDA compliance, cruelty-free, organic certifications
+""",
+            'sports': """
+- Product Type: Sports & Outdoors
+- Required Attributes: Activity type, skill level, age range, weather resistance
+- Certifications: Safety standards, performance ratings
+""",
+            'toys': """
+- Product Type: Toys & Games
+- Required Attributes: Age range, number of players, educational value, choking hazards
+- Certifications: CPSC, ASTM, age appropriate ratings
+"""
+        }
+        
+        # Try to match category
+        product_categories = product.categories.lower() if product.categories else ''
+        for key, context in category_contexts.items():
+            if key in product_categories:
+                return context
+                
+        # Default context
+        return """
+- Product Type: General Merchandise
+- Required Attributes: Size, color, material, intended use
+- Certifications: Relevant safety and quality standards
+"""
+    
+    def _generate_walmart_fallback_description(self, product):
+        """Generate a 150+ word Walmart-compliant description"""
+        description = f"Are you searching for the perfect {product.name.lower()}? Let me tell you why the {product.brand_name} {product.name} stands out from the crowd and why so many customers choose it over the competition. "
+        
+        if product.description:
+            description += f"{product.description} But here's what makes it really special - it's designed with your daily needs in mind, not just as another product on the shelf. "
+        
+        description += f"When you're considering a {product.name.lower()}, you want to know it will actually work for your lifestyle. That's exactly what {product.brand_name} delivers. "
+        
+        if product.features:
+            description += f"The key features that customers consistently rave about include {product.features.lower()}. These aren't just fancy add-ons or marketing gimmicks; they're practical solutions to real problems you face every day. "
+        
+        description += f"What makes this {product.name.lower()} different from others in its category? It's the attention to detail and unwavering commitment to quality that {product.brand_name} brings to every single product they make. "
+        description += f"Whether you're looking for durability that stands the test of time, functionality that actually works as promised, or style that complements your space perfectly, this product delivers on all fronts without compromise. "
+        description += f"Many customers tell us they wish they'd found this {product.name.lower()} sooner - it would have saved them from disappointment with other products. It's not just another purchase; it's an investment in better daily experiences and peace of mind. "
+        description += f"Perfect for both everyday use and those special moments when you need something reliable, this {product.name.lower()} adapts to your lifestyle seamlessly. The quality construction and thoughtful design mean you can count on it for years to come, making it an exceptional value for your hard-earned money."
+        
+        return description
 
     def _generate_etsy_listing(self, product, listing):
         if not self.client:
