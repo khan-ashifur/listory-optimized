@@ -523,6 +523,7 @@ CRITICAL CONTENT REQUIREMENTS - GENERATE MAXIMUM CONTENT:
 ✅ Bullet Points: 5 bullets, each 200+ characters with unique emotional labels and proper contractions
 ✅ Product Description: 1500-2000 characters (comprehensive, natural language with proper grammar)
 ✅ A+ Content: 5 complete sections with unique focus, no duplication between sections, mobile-responsive
+✅ Visual Templates: GENERATE ACTUAL CONTENT for each template field - no instruction text, only real content
 ✅ Backend Keywords: 249 characters (use every character)
 ✅ SEO Keywords: 80+ comprehensive keywords across 5 categories
 ✅ Brand Story: 250-400 character detailed brand narrative with proper punctuation
@@ -531,6 +532,13 @@ CRITICAL CONTENT REQUIREMENTS - GENERATE MAXIMUM CONTENT:
 ✅ What's in Box: Complete unboxing experience
 ✅ Trust Builders: Multiple guarantees and certifications
 ✅ Social Proof: Detailed customer satisfaction claims
+
+🎨 VISUAL TEMPLATE CRITICAL REQUIREMENTS:
+- Generate ACTUAL content for imageTitle, suggestedScene, overlayText, styleGuide, layoutStructure, colorScheme
+- Do NOT write instructions like "Write actual..." - provide the actual content
+- Base all visual content on the specific product information provided
+- Make each template unique and product-specific
+- Provide ready-to-use design briefs that can be immediately implemented
 
 KEYWORD STRATEGY FOR MAXIMUM VISIBILITY:
 - Primary Keywords (15+): Direct product terms, brand + product, category terms
@@ -593,13 +601,13 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
       "cardColor": "blue",
       "visualTemplate": {{
         "templateType": "lifestyle",
-        "imageTitle": "Create compelling lifestyle title based on main product benefit",
-        "suggestedScene": "Describe specific lifestyle scene: person using product in realistic setting with emotional context",
-        "overlayText": "Write 3-7 word overlay text highlighting key benefit or transformation",
-        "styleGuide": "Modern, aspirational, clean background, natural lighting, authentic moment",
-        "layoutStructure": "Main product prominently featured, person interaction, benefit visualization, minimal text overlay",
-        "colorScheme": "Warm, inviting colors that match brand personality",
-        "designElements": ["Product hero shot", "Lifestyle context", "Benefit callout", "Brand consistency"]
+        "imageTitle": "Write actual compelling title for this specific product's main benefit (e.g., 'Experience Effortless Daily Productivity', 'Transform Your Morning Routine')",
+        "suggestedScene": "Write actual scene description: specific person (age/context) using this exact product in realistic setting with emotional outcome based on the product details provided",
+        "overlayText": "Write actual 3-7 word overlay text for this specific product (e.g., 'Wireless Freedom Everywhere', '50-Hour Battery Life', 'Crystal Clear Calls')",
+        "styleGuide": "Write actual style direction: specify lighting (natural/studio), mood (energetic/calm), background (home/office/outdoor), and aesthetic (modern/minimalist/premium) based on this product and brand",
+        "layoutStructure": "Write actual layout: specify exact product placement, person positioning, text overlay location, and visual hierarchy for this specific product type",
+        "colorScheme": "Write actual color palette: specify 3-4 colors that match this product and brand personality (e.g., 'Soft blues and whites with navy accents', 'Warm grays with orange highlights')",
+        "designElements": ["Write", "actual", "design", "elements", "needed", "for", "this", "specific", "product"]
       }}
     }},
     "section2_features": {{
@@ -612,13 +620,13 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
       "cardColor": "green",
       "visualTemplate": {{
         "templateType": "infographic",
-        "imageTitle": "Create technical title highlighting key specifications or features",
-        "suggestedScene": "Product close-up with 4-5 feature callouts, technical diagrams, or specification highlights",
-        "overlayText": "List 3-5 key specs or features separated by bullets or icons",
-        "styleGuide": "Clean, technical, professional, high-contrast text, precise callouts",
-        "layoutStructure": "Central product image with numbered callouts, specification boxes, technical details",
-        "colorScheme": "Professional blues/grays with accent colors for callouts",
-        "designElements": ["Product detail shots", "Feature callouts", "Technical icons", "Specification boxes"]
+        "imageTitle": "Write actual technical title for this specific product's features (e.g., 'Advanced Audio Technology', 'Premium Build Quality Features', 'Smart Connectivity Options')",
+        "suggestedScene": "Write actual scene: this specific product photographed with 4-5 numbered callouts pointing to actual features mentioned in the product details",
+        "overlayText": "Write actual 3-5 key specifications for this product separated by bullets (e.g., '• Bluetooth 5.3 • 30ft Range • Touch Controls • IPX7 Waterproof • USB-C Fast Charging')",
+        "styleGuide": "Write actual style for this product: specify photography style (clean white background/lifestyle setting), text treatment (bold/minimal), and technical aesthetic that fits the brand tone",
+        "layoutStructure": "Write actual layout: specify where product should be positioned, how callouts should be arranged, text placement, and visual flow for this specific product type",
+        "colorScheme": "Write actual color scheme: specify exact colors for backgrounds, callout boxes, and text that complement this product and brand (e.g., 'White background with dark gray product, green accent callouts, black text')",
+        "designElements": ["Write", "actual", "elements", "needed", "for", "this", "product's", "technical", "showcase"]
       }}
     }},
     "section3_usage": {{
@@ -631,13 +639,13 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
       "cardColor": "purple",
       "visualTemplate": {{
         "templateType": "multi-scene",
-        "imageTitle": "Create usage-focused title showing versatility or applications",
-        "suggestedScene": "Split-screen or multi-panel showing 3-4 different usage scenarios or environments",
-        "overlayText": "Label each scenario with 2-3 words describing the use case",
-        "styleGuide": "Dynamic, energetic, real-world settings, diverse scenarios, active usage",
-        "layoutStructure": "Grid layout with multiple scenes, consistent product placement, scenario labels",
-        "colorScheme": "Vibrant, diverse colors reflecting different environments and moods",
-        "designElements": ["Multiple usage scenes", "Scenario labels", "Product consistency", "Environment variety"]
+        "imageTitle": "Write actual usage title for this specific product (e.g., 'Perfect for Every Lifestyle', 'Versatile Performance Anywhere', 'From Work to Workout')",
+        "suggestedScene": "Write actual multi-scene layout: describe 3-4 specific environments where this exact product would be used based on its features and target audience",
+        "overlayText": "Write actual 2-3 word labels for each usage scenario specific to this product (e.g., 'Home Office', 'Daily Commute', 'Weekend Travel', 'Gym Sessions')",
+        "styleGuide": "Write actual style direction: specify the energy level (dynamic/calm), photography style (candid/staged), and overall mood that fits this product and target audience",
+        "layoutStructure": "Write actual layout: specify how to arrange the multiple scenes (grid/split-screen/timeline), product visibility in each scene, and text overlay placement",
+        "colorScheme": "Write actual colors: specify color palette that works across different environments while maintaining brand consistency (e.g., 'Natural earth tones with bright accent colors for energy')",
+        "designElements": ["Write", "actual", "elements", "for", "this", "product's", "usage", "showcase"]
       }}
     }},
     "section4_quality": {{
@@ -650,13 +658,13 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
       "cardColor": "orange",
       "visualTemplate": {{
         "templateType": "certification",
-        "imageTitle": "Create quality-focused title emphasizing standards, testing, or certifications",
-        "suggestedScene": "Professional testing environment, certification badges, quality control process, or manufacturing precision",
-        "overlayText": "Display certification names, quality standards, or testing achievements",
-        "styleGuide": "Professional, trustworthy, clean, authoritative, industry-standard imagery",
-        "layoutStructure": "Certification badges or testing imagery with quality indicators, professional layout",
-        "colorScheme": "Trust-building colors: blues, greens, with gold/silver accents for certifications",
-        "designElements": ["Certification badges", "Testing imagery", "Quality indicators", "Professional aesthetics"]
+        "imageTitle": "Write actual quality title for this specific product (e.g., 'Rigorously Tested for Excellence', 'Certified Premium Quality', 'Laboratory Verified Performance')",
+        "suggestedScene": "Write actual scene: describe specific quality testing relevant to this product type, actual certification badges that would apply, or manufacturing process shots",
+        "overlayText": "Write actual certifications/standards that apply to this product (e.g., 'CE Certified • FCC Approved • 18-Month Warranty • 99.9% Quality Rating • ISO 9001 Manufacturing')",
+        "styleGuide": "Write actual professional style: specify lighting (clinical/warm professional), setting (lab/manufacturing/office), and authoritative aesthetic that builds trust for this product category",
+        "layoutStructure": "Write actual layout: specify badge placement, product positioning, certification hierarchy, and trust-building visual flow",
+        "colorScheme": "Write actual trust colors: specify exact professional color palette with metallic accents for certifications (e.g., 'Clean white background, deep blue headers, gold certification seals, silver product accents')",
+        "designElements": ["Write", "actual", "quality", "elements", "for", "this", "specific", "product", "category"]
       }}
     }},
     "section5_guarantee": {{
@@ -669,13 +677,13 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
       "cardColor": "teal",
       "visualTemplate": {{
         "templateType": "comparison",
-        "imageTitle": "Create trust-building title about warranty, guarantee, or customer support",
-        "suggestedScene": "Comparison table, warranty timeline, customer service team, or before/after scenarios",
-        "overlayText": "Highlight warranty duration, support benefits, or competitive advantages",
-        "styleGuide": "Trustworthy, professional, reassuring, clear communication, customer-focused",
-        "layoutStructure": "Side-by-side comparison, warranty timeline, or customer service showcase",
-        "colorScheme": "Trust-inspiring teals/blues with green checkmarks and clear contrasts",
-        "designElements": ["Comparison tables", "Warranty details", "Customer service", "Trust indicators"]
+        "imageTitle": "Write actual trust title for this specific product (e.g., 'Why Choose [Brand Name]', 'Unmatched Customer Support', '360-Day Guarantee Included')",
+        "suggestedScene": "Write actual comparison scene: describe specific comparison table showing this product/brand vs competitors, warranty timeline, or customer service advantages relevant to this product",
+        "overlayText": "Write actual competitive advantages for this product (e.g., '2-Year Warranty vs 1-Year • 24/7 Support • Free Replacements • Money-Back Guarantee')",
+        "styleGuide": "Write actual trustworthy style: specify professional tone (approachable/authoritative), visual treatment (clean/detailed), and reassuring aesthetic for this brand personality",
+        "layoutStructure": "Write actual comparison layout: specify table structure, timeline format, or side-by-side presentation that best showcases this product's advantages",
+        "colorScheme": "Write actual trust colors: specify color scheme that conveys reliability and confidence for this brand (e.g., 'Professional navy background, white comparison boxes, green checkmarks, gold premium accents')",
+        "designElements": ["Write", "actual", "trust", "elements", "for", "this", "specific", "product", "guarantee"]
       }}
     }},
     "overallStrategy": "Write 200-300 characters explaining the overall A+ content strategy and customer journey from awareness to purchase decision. Include how each section works together cohesively."
@@ -794,6 +802,16 @@ Your mission is to break every predictable Amazon listing pattern and create con
 - Sound like different real people wrote different sections
 - AVOID overly promotional language that sounds like advertising copy
 - Focus on factual benefits rather than emotional manipulation
+
+🎨 VISUAL TEMPLATE REQUIREMENTS:
+- For ALL visualTemplate fields, generate ACTUAL CONTENT specific to the product provided
+- imageTitle: Write the actual title (e.g., "Wireless Freedom Everywhere")
+- suggestedScene: Describe the actual scene (e.g., "Professional woman at airport using earbuds while working on laptop")
+- overlayText: Write the actual text (e.g., "144 Languages • Real-Time Translation • 12-Hour Battery")
+- styleGuide: Specify actual style (e.g., "Natural lighting, modern minimalist, professional setting")
+- layoutStructure: Describe actual layout (e.g., "Product centered left, person right side, overlay text top")
+- colorScheme: Name actual colors (e.g., "Soft blues and whites with navy text accents")
+- NEVER write instruction text - only generate ready-to-use content
 
 Write each section in a completely different style and tone. Use unexpected but authentic language that fits the product. Vary everything - sentence length, structure, personality, approach. Sound like a real person who genuinely knows and likes this product. Include human quirks and conversational elements. Your goal is to create listings so human and varied that customers feel like they're talking to a real expert, not reading marketing copy."""
                     
