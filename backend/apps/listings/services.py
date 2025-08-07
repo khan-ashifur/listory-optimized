@@ -411,10 +411,10 @@ DESCRIPTION VARIATION: Show conviction through evidence and specific benefits
             "Use proper contractions with apostrophes (don't, can't, it's, you're) for natural human language",
             "Include mild imperfections or honest limitations to build trust",
             "Reference real customer experiences or relatable scenarios",
-            "Tell a mini-story about how this product fits into someones day",
+            "Tell a mini-story about how this product fits into someone's day",
             "Use relatable comparisons to familiar objects or experiences",
             "Include genuine enthusiasm without sounding like a robot",
-            "Admit when something might not be perfect but explain why its still worth it",
+            "Admit when something might not be perfect but explain why it's still worth it",
             "Use practical tips or insider knowledge about using the product",
             "Include honest comparisons to alternatives when appropriate",
             "Write like someone who actually owns and loves the product",
@@ -519,15 +519,15 @@ Amazon's Rufus AI assistant helps customers find products through conversational
 YOUR MISSION: Create a COMPREHENSIVE, MAXIMUM-LENGTH Amazon listing optimized for both traditional search AND Rufus AI conversations.
 
 CRITICAL CONTENT REQUIREMENTS - GENERATE MAXIMUM CONTENT:
-✅ Title: 150-200 characters (use every character available)
-✅ Bullet Points: 5 bullets, each 250+ characters (maximum length allowed)
-✅ Product Description: 2000+ characters (comprehensive, detailed)
-✅ A+ Content: Complete sections with detailed content
+✅ Title: 150-190 characters (Amazon recommends under 200, avoid keyword stuffing)
+✅ Bullet Points: 5 bullets, each 200+ characters with unique emotional labels
+✅ Product Description: 1500-2000 characters (comprehensive, natural language)
+✅ A+ Content: 5 complete sections with unique focus, no duplication between sections
 ✅ Backend Keywords: 249 characters (use every character)
-✅ SEO Keywords: 50+ comprehensive keywords covering all variations
-✅ Brand Story: 300+ character detailed brand narrative
-✅ FAQs: 5+ detailed Q&As addressing real customer concerns
-✅ Features: 8+ specific product features
+✅ SEO Keywords: 80+ comprehensive keywords across 5 categories
+✅ Brand Story: 250-400 character detailed brand narrative
+✅ FAQs: 5+ detailed Q&As with proper grammar and complete sentences
+✅ Features: 5+ specific product features
 ✅ What's in Box: Complete unboxing experience
 ✅ Trust Builders: Multiple guarantees and certifications
 ✅ Social Proof: Detailed customer satisfaction claims
@@ -560,7 +560,7 @@ KEYWORD GENERATION RULES:
 RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMUM-LENGTH content:
 
 {{
-  "productTitle": "Write 180-200 character title with brand '{product.brand_name}', emotional hook, keywords, and benefits. Format: '{product.brand_name} [Transformation Promise] [Product Type] [Key Features] [Use Case] [Benefit]'",
+  "productTitle": "Write 150-190 character title (Amazon recommends under 200) with brand '{product.brand_name}', emotional hook, keywords, and benefits. Format: '{product.brand_name} [Product Type] [Key Features] [Use Case/Benefit]'",
   
   "bulletPoints": [
     "BULLET 1: Use format 'EMOTIONAL LABEL: benefit explanation'. Make the label compelling (e.g. INSTANT RELIEF, STRESS SAVER, CONFIDENCE BOOST). Write 200+ characters with proper grammar and apostrophes (don't, can't, it's). Avoid hype words.",
@@ -584,41 +584,51 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
   
   "aPlusContentPlan": {{
     "section1_hero": {{
-      "title": "Write compelling 50-100 character headline about main product benefit (avoid hype words like 'amazing', 'revolutionary')",
-      "content": "Write 200-400 character clear, factual description explaining key value proposition. Focus on specific benefits and outcomes. Use proper contractions with apostrophes (it's, you're, don't).",
-      "keywords": ["List 3-5 relevant keywords for this section"],
-      "imageDescription": "Describe specific lifestyle image showing product in actual use - include setting details",
-      "seoOptimization": "Explain SEO focus for this section"
+      "title": "Write compelling 40-80 character headline about main product benefit (avoid hype words)",
+      "content": "Write 200-350 character clear, complete sentences explaining key value proposition. Focus on unique selling points and customer outcomes. Use proper grammar and apostrophes (it's, you're, don't). End with complete thoughts.",
+      "keywords": ["List 3-5 hero-focused keywords like brand name, product type, main benefit"],
+      "imageDescription": "Hero lifestyle image: product in use, specific setting (home/office/outdoor), mood/lighting, customer interaction",
+      "seoOptimization": "Hero section SEO strategy: brand authority and primary product keywords",
+      "cardType": "hero",
+      "cardColor": "blue"
     }},
     "section2_features": {{
-      "title": "Key Features & Benefits", 
-      "content": "Write 300-500 characters describing 3-4 main features with factual benefits. Avoid emotional language like 'you'll love' or 'amazing'. Use proper grammar with apostrophes.",
-      "keywords": ["List 3-5 feature-related keywords"],
-      "imageDescription": "Describe technical or feature-focused images showing product capabilities",
-      "seoOptimization": "Feature-based keyword strategy"
+      "title": "Technical Specifications & Features",
+      "content": "Write 300-450 characters with complete sentences describing 3-4 technical features. Include specific measurements, materials, or capabilities. Avoid repeating hero section content. Use proper grammar and contractions (don't, can't, won't).",
+      "keywords": ["List 3-5 technical keywords like dimensions, materials, specifications, performance"],
+      "imageDescription": "Technical showcase: close-up product shots, feature callouts, dimension diagrams, material details",
+      "seoOptimization": "Technical SEO: specification keywords and feature-based search terms",
+      "cardType": "features",
+      "cardColor": "green"
     }},
     "section3_usage": {{
-      "title": "Practical Applications",
-      "content": "Write 250-400 characters describing 3-4 specific use cases. Be factual about scenarios. Avoid promotional language like 'perfect for' or 'ideal choice'.",
-      "keywords": ["List 3-5 usage-related keywords"],
-      "imageDescription": "Show product in different real-world usage scenarios",
-      "seoOptimization": "Use-case based search terms"
+      "title": "Real-World Applications",
+      "content": "Write 250-380 characters with complete sentences describing specific usage scenarios. Include different environments or contexts where this product excels. Avoid repeating features from section 2. Use proper grammar and complete thoughts.",
+      "keywords": ["List 3-5 usage keywords like applications, environments, contexts, situations"],
+      "imageDescription": "Usage scenarios: product in different environments, various applications, real customer settings",
+      "seoOptimization": "Application-based SEO: use-case and scenario keywords",
+      "cardType": "usage",
+      "cardColor": "purple"
     }},
     "section4_quality": {{
-      "title": "Quality & Specifications",
-      "content": "Write 200-350 characters about materials, construction, testing, or certifications. Focus on facts and specifications rather than emotional claims.",
-      "keywords": ["List 3-5 quality/technical keywords"],
-      "imageDescription": "Show quality details, certifications, or construction materials",
-      "seoOptimization": "Quality and specification keywords"
+      "title": "Quality Assurance & Testing",
+      "content": "Write 200-320 characters with complete sentences about quality control, testing standards, certifications, or manufacturing processes. Include specific quality metrics or standards. Different focus from sections 1-3. Use proper grammar.",
+      "keywords": ["List 3-5 quality keywords like certifications, testing, standards, manufacturing, compliance"],
+      "imageDescription": "Quality verification: testing labs, certifications, manufacturing process, quality control images",
+      "seoOptimization": "Quality SEO: certification and compliance keywords",
+      "cardType": "quality",
+      "cardColor": "orange"
     }},
     "section5_guarantee": {{
-      "title": "Purchase Confidence", 
-      "content": "Write 150-300 characters about warranty, return policy, or customer service. Keep factual - avoid hype like 'satisfaction guaranteed' unless literally true.",
-      "keywords": ["List 3-5 trust/service keywords"],
-      "imageDescription": "Show warranty information, customer service, or company reliability indicators",
-      "seoOptimization": "Trust and service-related terms"
+      "title": "Warranty & Customer Support",
+      "content": "Write 150-280 characters with complete sentences about specific warranty terms, return policies, or customer support services. Include timeframes and coverage details. Keep factual and avoid repeating other sections. Use proper grammar.",
+      "keywords": ["List 3-5 trust keywords like warranty, support, guarantee, service, return policy"],
+      "imageDescription": "Trust indicators: warranty documents, customer service team, support channels, company badges",
+      "seoOptimization": "Trust SEO: warranty and service keywords",
+      "cardType": "trust",
+      "cardColor": "teal"
     }},
-    "overallStrategy": "Explain overall A+ content approach and customer journey from awareness to purchase"
+    "overallStrategy": "Write 200-300 characters explaining the overall A+ content strategy and customer journey from awareness to purchase decision. Include how each section works together cohesively."
   }},
   
   "brandSummary": "Write 250-400 character detailed brand story including: company background, mission, what makes the brand unique, customer focus, quality commitment, and competitive advantages. Make it feel authentic and substantial, not generic marketing speak.",
@@ -735,7 +745,7 @@ Your mission is to break every predictable Amazon listing pattern and create con
 - AVOID overly promotional language that sounds like advertising copy
 - Focus on factual benefits rather than emotional manipulation
 
-Write each section in a completely different style and tone. Use unexpected but authentic language that fits the product. Vary everything - sentence length, structure, personality, approach. Sound like a real person who genuinely knows and likes this product. Include human quirks and conversational elements. Your goal is to create listings so human and varied that customers feel like theyre talking to a real expert, not reading marketing copy."""
+Write each section in a completely different style and tone. Use unexpected but authentic language that fits the product. Vary everything - sentence length, structure, personality, approach. Sound like a real person who genuinely knows and likes this product. Include human quirks and conversational elements. Your goal is to create listings so human and varied that customers feel like they're talking to a real expert, not reading marketing copy."""
                     
                     # Prepend language requirement to system message if not English
                     if marketplace_lang and marketplace_lang != 'en':
@@ -1282,7 +1292,7 @@ Technical specifications include comprehensive compatibility, robust build quali
             # Build comprehensive A+ content HTML from the plan
             sections_html = []
             
-            # Generate HTML for each A+ section
+            # Generate HTML for each A+ section with dynamic card types and colors
             for section_key, section_data in aplus_plan.items():
                 if section_key.startswith('section') and isinstance(section_data, dict):
                     section_title = section_data.get('title', '')
@@ -1290,15 +1300,60 @@ Technical specifications include comprehensive compatibility, robust build quali
                     section_keywords = ', '.join(section_data.get('keywords', []))
                     image_desc = section_data.get('imageDescription', '')
                     seo_note = section_data.get('seoOptimization', '')
+                    card_type = section_data.get('cardType', 'default')
+                    card_color = section_data.get('cardColor', 'gray')
+                    
+                    # Define color schemes for different card types
+                    color_schemes = {
+                        'blue': {'bg': 'bg-blue-50', 'border': 'border-blue-200', 'title': 'text-blue-900', 'badge': 'bg-blue-100 text-blue-800'},
+                        'green': {'bg': 'bg-green-50', 'border': 'border-green-200', 'title': 'text-green-900', 'badge': 'bg-green-100 text-green-800'},
+                        'purple': {'bg': 'bg-purple-50', 'border': 'border-purple-200', 'title': 'text-purple-900', 'badge': 'bg-purple-100 text-purple-800'},
+                        'orange': {'bg': 'bg-orange-50', 'border': 'border-orange-200', 'title': 'text-orange-900', 'badge': 'bg-orange-100 text-orange-800'},
+                        'teal': {'bg': 'bg-teal-50', 'border': 'border-teal-200', 'title': 'text-teal-900', 'badge': 'bg-teal-100 text-teal-800'},
+                        'gray': {'bg': 'bg-gray-50', 'border': 'border-gray-200', 'title': 'text-gray-900', 'badge': 'bg-gray-100 text-gray-800'}
+                    }
+                    
+                    colors = color_schemes.get(card_color, color_schemes['gray'])
+                    
+                    # Card type icons
+                    card_icons = {
+                        'hero': '🎯',
+                        'features': '⚙️', 
+                        'usage': '🔧',
+                        'quality': '✅',
+                        'trust': '🛡️',
+                        'default': '📄'
+                    }
+                    
+                    icon = card_icons.get(card_type, card_icons['default'])
                     
                     section_html = f"""
-    <div class="aplus-section">
-        <h3>{section_title}</h3>
-        <p>{section_content}</p>
-        <div class="seo-info">
-            <small><strong>Keywords:</strong> {section_keywords}</small><br>
-            <small><strong>Image:</strong> {image_desc}</small><br>
-            <small><strong>SEO Focus:</strong> {seo_note}</small>
+    <div class="aplus-section-card {colors['bg']} {colors['border']} border-2 rounded-lg p-6 mb-4">
+        <div class="flex items-center mb-3">
+            <span class="text-2xl mr-3">{icon}</span>
+            <div>
+                <h3 class="{colors['title']} text-xl font-semibold">{section_title}</h3>
+                <span class="{colors['badge']} px-2 py-1 rounded text-xs font-medium uppercase">{card_type}</span>
+            </div>
+        </div>
+        <div class="content-section mb-4">
+            <p class="text-gray-700 leading-relaxed">{section_content}</p>
+        </div>
+        <div class="seo-details {colors['bg']} rounded p-3 mt-4">
+            <div class="grid md:grid-cols-3 gap-3 text-sm">
+                <div>
+                    <strong class="{colors['title']}">Keywords:</strong>
+                    <p class="text-gray-600 mt-1">{section_keywords}</p>
+                </div>
+                <div>
+                    <strong class="{colors['title']}">Image Strategy:</strong>
+                    <p class="text-gray-600 mt-1">{image_desc}</p>
+                </div>
+                <div>
+                    <strong class="{colors['title']}">SEO Focus:</strong>
+                    <p class="text-gray-600 mt-1">{seo_note}</p>
+                </div>
+            </div>
         </div>
     </div>"""
                     sections_html.append(section_html)
