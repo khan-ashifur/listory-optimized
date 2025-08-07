@@ -590,7 +590,17 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
       "imageDescription": "Hero lifestyle image: product in use, specific setting (home/office/outdoor), mood/lighting, customer interaction",
       "seoOptimization": "Hero section SEO strategy: brand authority and primary product keywords",
       "cardType": "hero",
-      "cardColor": "blue"
+      "cardColor": "blue",
+      "visualTemplate": {{
+        "templateType": "lifestyle",
+        "imageTitle": "Create compelling lifestyle title based on main product benefit",
+        "suggestedScene": "Describe specific lifestyle scene: person using product in realistic setting with emotional context",
+        "overlayText": "Write 3-7 word overlay text highlighting key benefit or transformation",
+        "styleGuide": "Modern, aspirational, clean background, natural lighting, authentic moment",
+        "layoutStructure": "Main product prominently featured, person interaction, benefit visualization, minimal text overlay",
+        "colorScheme": "Warm, inviting colors that match brand personality",
+        "designElements": ["Product hero shot", "Lifestyle context", "Benefit callout", "Brand consistency"]
+      }}
     }},
     "section2_features": {{
       "title": "Technical Specifications & Features",
@@ -599,7 +609,17 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
       "imageDescription": "Technical showcase: close-up product shots, feature callouts, dimension diagrams, material details",
       "seoOptimization": "Technical SEO: specification keywords and feature-based search terms",
       "cardType": "features",
-      "cardColor": "green"
+      "cardColor": "green",
+      "visualTemplate": {{
+        "templateType": "infographic",
+        "imageTitle": "Create technical title highlighting key specifications or features",
+        "suggestedScene": "Product close-up with 4-5 feature callouts, technical diagrams, or specification highlights",
+        "overlayText": "List 3-5 key specs or features separated by bullets or icons",
+        "styleGuide": "Clean, technical, professional, high-contrast text, precise callouts",
+        "layoutStructure": "Central product image with numbered callouts, specification boxes, technical details",
+        "colorScheme": "Professional blues/grays with accent colors for callouts",
+        "designElements": ["Product detail shots", "Feature callouts", "Technical icons", "Specification boxes"]
+      }}
     }},
     "section3_usage": {{
       "title": "Real-World Applications",
@@ -608,7 +628,17 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
       "imageDescription": "Usage scenarios: product in different environments, various applications, real customer settings",
       "seoOptimization": "Application-based SEO: use-case and scenario keywords",
       "cardType": "usage",
-      "cardColor": "purple"
+      "cardColor": "purple",
+      "visualTemplate": {{
+        "templateType": "multi-scene",
+        "imageTitle": "Create usage-focused title showing versatility or applications",
+        "suggestedScene": "Split-screen or multi-panel showing 3-4 different usage scenarios or environments",
+        "overlayText": "Label each scenario with 2-3 words describing the use case",
+        "styleGuide": "Dynamic, energetic, real-world settings, diverse scenarios, active usage",
+        "layoutStructure": "Grid layout with multiple scenes, consistent product placement, scenario labels",
+        "colorScheme": "Vibrant, diverse colors reflecting different environments and moods",
+        "designElements": ["Multiple usage scenes", "Scenario labels", "Product consistency", "Environment variety"]
+      }}
     }},
     "section4_quality": {{
       "title": "Quality Assurance & Testing",
@@ -617,7 +647,17 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
       "imageDescription": "Quality verification: testing labs, certifications, manufacturing process, quality control images",
       "seoOptimization": "Quality SEO: certification and compliance keywords",
       "cardType": "quality",
-      "cardColor": "orange"
+      "cardColor": "orange",
+      "visualTemplate": {{
+        "templateType": "certification",
+        "imageTitle": "Create quality-focused title emphasizing standards, testing, or certifications",
+        "suggestedScene": "Professional testing environment, certification badges, quality control process, or manufacturing precision",
+        "overlayText": "Display certification names, quality standards, or testing achievements",
+        "styleGuide": "Professional, trustworthy, clean, authoritative, industry-standard imagery",
+        "layoutStructure": "Certification badges or testing imagery with quality indicators, professional layout",
+        "colorScheme": "Trust-building colors: blues, greens, with gold/silver accents for certifications",
+        "designElements": ["Certification badges", "Testing imagery", "Quality indicators", "Professional aesthetics"]
+      }}
     }},
     "section5_guarantee": {{
       "title": "Warranty & Customer Support",
@@ -626,7 +666,17 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
       "imageDescription": "Trust indicators: warranty documents, customer service team, support channels, company badges",
       "seoOptimization": "Trust SEO: warranty and service keywords",
       "cardType": "trust",
-      "cardColor": "teal"
+      "cardColor": "teal",
+      "visualTemplate": {{
+        "templateType": "comparison",
+        "imageTitle": "Create trust-building title about warranty, guarantee, or customer support",
+        "suggestedScene": "Comparison table, warranty timeline, customer service team, or before/after scenarios",
+        "overlayText": "Highlight warranty duration, support benefits, or competitive advantages",
+        "styleGuide": "Trustworthy, professional, reassuring, clear communication, customer-focused",
+        "layoutStructure": "Side-by-side comparison, warranty timeline, or customer service showcase",
+        "colorScheme": "Trust-inspiring teals/blues with green checkmarks and clear contrasts",
+        "designElements": ["Comparison tables", "Warranty details", "Customer service", "Trust indicators"]
+      }}
     }},
     "overallStrategy": "Write 200-300 characters explaining the overall A+ content strategy and customer journey from awareness to purchase decision. Include how each section works together cohesively."
   }},
@@ -1302,6 +1352,7 @@ Technical specifications include comprehensive compatibility, robust build quali
                     seo_note = section_data.get('seoOptimization', '')
                     card_type = section_data.get('cardType', 'default')
                     card_color = section_data.get('cardColor', 'gray')
+                    visual_template = section_data.get('visualTemplate', {})
                     
                     # Define color schemes for different card types
                     color_schemes = {
@@ -1327,6 +1378,60 @@ Technical specifications include comprehensive compatibility, robust build quali
                     
                     icon = card_icons.get(card_type, card_icons['default'])
                     
+                    # Generate visual template HTML if available
+                    visual_template_html = ""
+                    if visual_template:
+                        template_type = visual_template.get('templateType', 'standard')
+                        image_title = visual_template.get('imageTitle', '')
+                        suggested_scene = visual_template.get('suggestedScene', '')
+                        overlay_text = visual_template.get('overlayText', '')
+                        style_guide = visual_template.get('styleGuide', '')
+                        layout_structure = visual_template.get('layoutStructure', '')
+                        color_scheme = visual_template.get('colorScheme', '')
+                        design_elements = visual_template.get('designElements', [])
+                        
+                        visual_template_html = f"""
+        <div class="visual-template-generator bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-lg p-4 mt-4">
+            <div class="flex items-center mb-3">
+                <span class="text-2xl mr-2">🎨</span>
+                <h4 class="text-indigo-900 font-semibold text-lg">A+ Visual Template Generator</h4>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="template-brief bg-white p-3 rounded border">
+                    <h5 class="font-semibold text-gray-900 mb-2">📸 {template_type.title()} Image Brief</h5>
+                    <div class="text-sm space-y-2">
+                        <div><strong>Title:</strong> {image_title}</div>
+                        <div><strong>Scene:</strong> {suggested_scene}</div>
+                        <div><strong>Overlay Text:</strong> "{overlay_text}"</div>
+                    </div>
+                </div>
+                
+                <div class="style-guide bg-white p-3 rounded border">
+                    <h5 class="font-semibold text-gray-900 mb-2">🎯 Design Guidelines</h5>
+                    <div class="text-sm space-y-2">
+                        <div><strong>Style:</strong> {style_guide}</div>
+                        <div><strong>Layout:</strong> {layout_structure}</div>
+                        <div><strong>Colors:</strong> {color_scheme}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="design-elements bg-white p-3 rounded border">
+                <h5 class="font-semibold text-gray-900 mb-2">🔧 Required Elements</h5>
+                <div class="flex flex-wrap gap-2">
+                    {' '.join([f'<span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-xs">{element}</span>' for element in design_elements])}
+                </div>
+            </div>
+            
+            <div class="template-download mt-4 text-center">
+                <p class="text-xs text-gray-600 mb-2">💡 Copy this brief to Canva, Figma, or share with your designer</p>
+                <button class="bg-indigo-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-indigo-700 transition-colors">
+                    📄 Download PDF Brief
+                </button>
+            </div>
+        </div>"""
+
                     section_html = f"""
     <div class="aplus-section-card {colors['bg']} {colors['border']} border-2 rounded-lg p-4 sm:p-6 mb-4 mx-2 sm:mx-0">
         <div class="flex flex-col sm:flex-row sm:items-center mb-3">
@@ -1341,6 +1446,7 @@ Technical specifications include comprehensive compatibility, robust build quali
         <div class="content-section mb-4">
             <p class="text-gray-700 leading-relaxed text-sm sm:text-base">{section_content}</p>
         </div>
+        {visual_template_html}
         <div class="seo-details {colors['bg']} rounded p-3 mt-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
                 <div class="mb-3 sm:mb-0">
@@ -1404,8 +1510,41 @@ Technical specifications include comprehensive compatibility, robust build quali
 </div>"""
 
             # Generate comprehensive A+ content plan with mobile-responsive structure
-            aplus_html = f"""<div class="aplus-hero bg-gradient-to-r from-blue-50 to-indigo-50 p-4 sm:p-6 rounded-lg mb-6">
-    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3">{listing.hero_title}</h2>
+            aplus_html = f"""<div class="aplus-introduction bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 p-4 sm:p-6 rounded-lg mb-6">
+    <div class="flex items-center mb-4">
+        <span class="text-3xl mr-3">🚀</span>
+        <div>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900">Complete A+ Content Strategy with Visual Templates</h2>
+            <p class="text-purple-700 text-sm">Don't just imagine A+ content. We show you exactly what it should look like.</p>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+        <div class="bg-white p-3 rounded border">
+            <div class="flex items-center mb-2">
+                <span class="mr-2">🧠</span>
+                <strong class="text-gray-900">AI-Generated Briefs</strong>
+            </div>
+            <p class="text-gray-600">Complete image concepts with titles, scenes, and overlay text</p>
+        </div>
+        <div class="bg-white p-3 rounded border">
+            <div class="flex items-center mb-2">
+                <span class="mr-2">🎯</span>
+                <strong class="text-gray-900">Design Guidelines</strong>
+            </div>
+            <p class="text-gray-600">Style guides, color schemes, and layout specifications</p>
+        </div>
+        <div class="bg-white p-3 rounded border">
+            <div class="flex items-center mb-2">
+                <span class="mr-2">📤</span>
+                <strong class="text-gray-900">Ready for Production</strong>
+            </div>
+            <p class="text-gray-600">Copy briefs to Canva, Figma, or share with designers</p>
+        </div>
+    </div>
+</div>
+
+<div class="aplus-hero bg-gradient-to-r from-blue-50 to-indigo-50 p-4 sm:p-6 rounded-lg mb-6">
+    <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3">{listing.hero_title}</h3>
     <p class="text-gray-700 text-sm sm:text-base leading-relaxed">{listing.hero_content}</p>
 </div>
 
