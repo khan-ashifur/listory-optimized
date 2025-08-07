@@ -519,13 +519,13 @@ Amazon's Rufus AI assistant helps customers find products through conversational
 YOUR MISSION: Create a COMPREHENSIVE, MAXIMUM-LENGTH Amazon listing optimized for both traditional search AND Rufus AI conversations.
 
 CRITICAL CONTENT REQUIREMENTS - GENERATE MAXIMUM CONTENT:
-✅ Title: 150-190 characters (Amazon recommends under 200, avoid keyword stuffing)
-✅ Bullet Points: 5 bullets, each 200+ characters with unique emotional labels
-✅ Product Description: 1500-2000 characters (comprehensive, natural language)
-✅ A+ Content: 5 complete sections with unique focus, no duplication between sections
+✅ Title: 160-195 characters (optimize for SEO while staying under 200, include primary keywords)
+✅ Bullet Points: 5 bullets, each 200+ characters with unique emotional labels and proper contractions
+✅ Product Description: 1500-2000 characters (comprehensive, natural language with proper grammar)
+✅ A+ Content: 5 complete sections with unique focus, no duplication between sections, mobile-responsive
 ✅ Backend Keywords: 249 characters (use every character)
 ✅ SEO Keywords: 80+ comprehensive keywords across 5 categories
-✅ Brand Story: 250-400 character detailed brand narrative
+✅ Brand Story: 250-400 character detailed brand narrative with proper punctuation
 ✅ FAQs: 5+ detailed Q&As with proper grammar and complete sentences
 ✅ Features: 5+ specific product features
 ✅ What's in Box: Complete unboxing experience
@@ -560,7 +560,7 @@ KEYWORD GENERATION RULES:
 RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMUM-LENGTH content:
 
 {{
-  "productTitle": "Write 150-190 character title (Amazon recommends under 200) with brand '{product.brand_name}', emotional hook, keywords, and benefits. Format: '{product.brand_name} [Product Type] [Key Features] [Use Case/Benefit]'",
+  "productTitle": "Write 160-195 character SEO-optimized title (Amazon recommends under 200) with brand '{product.brand_name}', primary keywords, and key benefits. Maximize SEO value while staying readable. Format: '{product.brand_name} [Product Type] [2-3 Key Features] [Main Benefit] [Target Use]'. Include top search terms but avoid keyword stuffing.",
   
   "bulletPoints": [
     "BULLET 1: Use format 'EMOTIONAL LABEL: benefit explanation'. Make the label compelling (e.g. INSTANT RELIEF, STRESS SAVER, CONFIDENCE BOOST). Write 200+ characters with proper grammar and apostrophes (don't, can't, it's). Avoid hype words.",
@@ -570,7 +570,7 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
     "BULLET 5: Memorable emotional label (e.g. SMART INVESTMENT, CUSTOMER FAVORITE, HONESTLY IMPRESSED). End strong with factual guarantee info. 200+ characters, proper contractions."
   ],
   
-  "productDescription": "Write 1500-2000 character natural, conversational product description with proper grammar and apostrophes (don't, can't, it's, you're). Start uniquely based on the product - no template openings like 'Can we talk about...' or 'Let me tell you...' Instead, dive into the product's main benefit or tell a brief story. Use Problem-Agitation-Solution naturally. Be genuinely helpful and specific to this exact product. Avoid promotional hype.",
+  "productDescription": "Write 1500-2000 character natural, conversational product description with proper contractions and apostrophes (don't, can't, it's, you're, we're, they're). Start uniquely based on the product - no template openings like 'Can we talk about...' or 'Let me tell you...' Instead, dive into the product's main benefit or tell a brief story. Use Problem-Agitation-Solution naturally. Write in complete sentences with proper punctuation. Be genuinely helpful and specific to this exact product. Avoid promotional hype and ensure all contractions are properly formed.",
   
   "seoKeywords": {{
     "primary": ["{product.name.lower().replace(' ', '_')}", "{product.brand_name.lower()}", "THEN_ADD_13_MORE: category, color, size, material, feature1, feature2, use1, use2, style, type, model, variant, application"],
@@ -1328,30 +1328,32 @@ Technical specifications include comprehensive compatibility, robust build quali
                     icon = card_icons.get(card_type, card_icons['default'])
                     
                     section_html = f"""
-    <div class="aplus-section-card {colors['bg']} {colors['border']} border-2 rounded-lg p-6 mb-4">
-        <div class="flex items-center mb-3">
-            <span class="text-2xl mr-3">{icon}</span>
-            <div>
-                <h3 class="{colors['title']} text-xl font-semibold">{section_title}</h3>
-                <span class="{colors['badge']} px-2 py-1 rounded text-xs font-medium uppercase">{card_type}</span>
+    <div class="aplus-section-card {colors['bg']} {colors['border']} border-2 rounded-lg p-4 sm:p-6 mb-4 mx-2 sm:mx-0">
+        <div class="flex flex-col sm:flex-row sm:items-center mb-3">
+            <div class="flex items-center mb-2 sm:mb-0">
+                <span class="text-xl sm:text-2xl mr-3">{icon}</span>
+                <div class="flex-1">
+                    <h3 class="{colors['title']} text-lg sm:text-xl font-semibold">{section_title}</h3>
+                    <span class="{colors['badge']} px-2 py-1 rounded text-xs font-medium uppercase mt-1 inline-block">{card_type}</span>
+                </div>
             </div>
         </div>
         <div class="content-section mb-4">
-            <p class="text-gray-700 leading-relaxed">{section_content}</p>
+            <p class="text-gray-700 leading-relaxed text-sm sm:text-base">{section_content}</p>
         </div>
         <div class="seo-details {colors['bg']} rounded p-3 mt-4">
-            <div class="grid md:grid-cols-3 gap-3 text-sm">
-                <div>
-                    <strong class="{colors['title']}">Keywords:</strong>
-                    <p class="text-gray-600 mt-1">{section_keywords}</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+                <div class="mb-3 sm:mb-0">
+                    <strong class="{colors['title']} block mb-1">Keywords:</strong>
+                    <p class="text-gray-600 text-xs sm:text-sm">{section_keywords}</p>
+                </div>
+                <div class="mb-3 sm:mb-0">
+                    <strong class="{colors['title']} block mb-1">Image Strategy:</strong>
+                    <p class="text-gray-600 text-xs sm:text-sm">{image_desc}</p>
                 </div>
                 <div>
-                    <strong class="{colors['title']}">Image Strategy:</strong>
-                    <p class="text-gray-600 mt-1">{image_desc}</p>
-                </div>
-                <div>
-                    <strong class="{colors['title']}">SEO Focus:</strong>
-                    <p class="text-gray-600 mt-1">{seo_note}</p>
+                    <strong class="{colors['title']} block mb-1">SEO Focus:</strong>
+                    <p class="text-gray-600 text-xs sm:text-sm">{seo_note}</p>
                 </div>
             </div>
         </div>
@@ -1401,61 +1403,67 @@ Technical specifications include comprehensive compatibility, robust build quali
     </div>
 </div>"""
 
-            # Generate comprehensive A+ content plan
-            aplus_html = f"""<div class="aplus-hero">
-    <h2>{listing.hero_title}</h2>
-    <p>{listing.hero_content}</p>
+            # Generate comprehensive A+ content plan with mobile-responsive structure
+            aplus_html = f"""<div class="aplus-hero bg-gradient-to-r from-blue-50 to-indigo-50 p-4 sm:p-6 rounded-lg mb-6">
+    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-3">{listing.hero_title}</h2>
+    <p class="text-gray-700 text-sm sm:text-base leading-relaxed">{listing.hero_content}</p>
 </div>
 
 <div class="aplus-comprehensive-plan">
-    <h2>Complete A+ Content Strategy</h2>
-    {''.join(sections_html)}
+    <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 px-2 sm:px-0">Complete A+ Content Strategy</h2>
+    <div class="space-y-4 sm:space-y-6">
+        {''.join(sections_html)}
+    </div>
 </div>
 
-<div class="aplus-strategy-summary">
-    <h3>Overall A+ Strategy</h3>
-    <p>{aplus_plan.get('overallStrategy', 'Complete A+ content plan designed to guide customers from awareness to purchase')}</p>
+<div class="aplus-strategy-summary bg-gray-50 p-4 sm:p-6 rounded-lg mt-6 mx-2 sm:mx-0">
+    <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-3">Overall A+ Strategy</h3>
+    <p class="text-gray-700 text-sm sm:text-base leading-relaxed">{aplus_plan.get('overallStrategy', 'Complete A+ content plan designed to guide customers from awareness to purchase')}</p>
 </div>
 
-{ppc_html}
-
-<div class="keyword-strategy">
-    <h3>Keyword Strategy</h3>
-    <p>{result.get('keywordStrategy', 'Strategic keyword placement for maximum SEO impact')}</p>
-    <h4>Competitor Keywords</h4>
-    <p>{result.get('topCompetitorKeywords', 'Analysis of competitive landscape for positioning')}</p>
+<div class="mobile-responsive-content">
+    {ppc_html}
 </div>
 
-<div class="aplus-features">
-    <h3>Key Features & Benefits</h3>
-    <ul>
+<div class="keyword-strategy bg-white border border-gray-200 p-4 sm:p-6 rounded-lg mt-6 mx-2 sm:mx-0">
+    <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-3">Keyword Strategy</h3>
+    <p class="text-gray-700 text-sm sm:text-base mb-4">{result.get('keywordStrategy', 'Strategic keyword placement for maximum SEO impact')}</p>
+    <h4 class="text-md sm:text-lg font-medium text-gray-800 mb-2">Competitor Keywords</h4>
+    <p class="text-gray-600 text-sm sm:text-base">{result.get('topCompetitorKeywords', 'Analysis of competitive landscape for positioning')}</p>
+</div>
+
+<div class="aplus-features bg-green-50 border border-green-200 p-4 sm:p-6 rounded-lg mt-6 mx-2 sm:mx-0">
+    <h3 class="text-lg sm:text-xl font-semibold text-green-900 mb-3">Key Features & Benefits</h3>
+    <ul class="space-y-1 sm:space-y-2 text-sm sm:text-base">
 {features_html}
     </ul>
 </div>
 
-<div class="aplus-whats-in-box">
-    <h3>What is in the Box</h3>
-    <ul>
+<div class="aplus-whats-in-box bg-purple-50 border border-purple-200 p-4 sm:p-6 rounded-lg mt-6 mx-2 sm:mx-0">
+    <h3 class="text-lg sm:text-xl font-semibold text-purple-900 mb-3">What's in the Box</h3>
+    <ul class="space-y-1 sm:space-y-2 text-sm sm:text-base text-gray-700">
 {whats_in_box_html}
     </ul>
 </div>
 
-<div class="aplus-trust">
-    <h3>Trust & Quality</h3>
-    <ul>
+<div class="aplus-trust bg-orange-50 border border-orange-200 p-4 sm:p-6 rounded-lg mt-6 mx-2 sm:mx-0">
+    <h3 class="text-lg sm:text-xl font-semibold text-orange-900 mb-3">Trust & Quality Assurance</h3>
+    <ul class="space-y-1 sm:space-y-2 text-sm sm:text-base text-gray-700">
 {trust_html}
     </ul>
 </div>
 
-<div class="aplus-testimonials">
-    <h3>Customer Satisfaction</h3>
-    <p>{result.get('social_proof', '')}</p>
-    <p><strong>Our Guarantee:</strong> {result.get('guarantee', '')}</p>
+<div class="aplus-testimonials bg-teal-50 border border-teal-200 p-4 sm:p-6 rounded-lg mt-6 mx-2 sm:mx-0">
+    <h3 class="text-lg sm:text-xl font-semibold text-teal-900 mb-3">Customer Satisfaction</h3>
+    <p class="text-gray-700 text-sm sm:text-base mb-3">{result.get('social_proof', '')}</p>
+    <p class="text-gray-800 text-sm sm:text-base font-medium"><strong>Our Guarantee:</strong> {result.get('guarantee', '')}</p>
 </div>
 
-<div class="aplus-faqs">
-    <h3>Frequently Asked Questions</h3>
+<div class="aplus-faqs bg-indigo-50 border border-indigo-200 p-4 sm:p-6 rounded-lg mt-6 mx-2 sm:mx-0">
+    <h3 class="text-lg sm:text-xl font-semibold text-indigo-900 mb-4">Frequently Asked Questions</h3>
+    <div class="space-y-3 text-sm sm:text-base">
 {faqs_html}
+    </div>
 </div>"""
             # Save the A+ content HTML to the listing
             listing.amazon_aplus_content = aplus_html
