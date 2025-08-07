@@ -35,6 +35,49 @@ class ListingGeneratorService:
             self.logger.error(f"Traceback: {traceback.format_exc()}")
             self.client = None
 
+    def get_marketplace_language_instruction(self, marketplace, language):
+        """Get language-specific instructions for the marketplace"""
+        language_map = {
+            'de': ('German', 'Deutschland', 'deutschen'),
+            'fr': ('French', 'France', 'français'),
+            'it': ('Italian', 'Italia', 'italiano'),
+            'es': ('Spanish', 'España', 'español'),
+            'nl': ('Dutch', 'Nederland', 'Nederlands'),
+            'sv': ('Swedish', 'Sverige', 'svenska'),
+            'pl': ('Polish', 'Polska', 'polski'),
+            'ja': ('Japanese', '日本', '日本語'),
+            'pt': ('Portuguese', 'Brasil', 'português brasileiro'),
+            'ar': ('Arabic', 'العربية', 'عربي'),
+            'tr': ('Turkish', 'Türkiye', 'Türkçe'),
+            'en': ('English', 'United States', 'English')
+        }
+        
+        lang_name, country, native = language_map.get(language, language_map['en'])
+        
+        if language == 'en':
+            return ""
+        
+        return f"""
+🚨🚨🚨 CRITICAL LANGUAGE REQUIREMENT 🚨🚨🚨
+YOU MUST WRITE EVERYTHING IN {lang_name.upper()} ({native})!
+NOT A SINGLE WORD IN ENGLISH!
+
+LANGUAGE: {lang_name} for {country}
+TARGET MARKET: Amazon.{marketplace}
+
+ALL CONTENT MUST BE IN {lang_name.upper()}:
+- Title: COMPLETELY in {lang_name}
+- Bullet Points: COMPLETELY in {lang_name}  
+- Description: COMPLETELY in {lang_name}
+- FAQs: COMPLETELY in {lang_name}
+- Keywords: COMPLETELY in {lang_name}
+- EVERYTHING: COMPLETELY in {lang_name}
+
+DO NOT TRANSLATE BRAND NAME, but everything else MUST be in {lang_name}.
+Use culturally appropriate phrases and expressions for {country} shoppers.
+🚨🚨🚨 END CRITICAL LANGUAGE REQUIREMENT 🚨🚨🚨
+"""
+    
     def generate_listing(self, product_id, platform):
         try:
             product = Product.objects.get(id=product_id)
@@ -76,6 +119,7 @@ class ListingGeneratorService:
         import re
         self.logger.info(f"GENERATING AMAZON LISTING FOR {product.name}")
         self.logger.info(f"OpenAI client status: {'AVAILABLE' if self.client else 'NOT AVAILABLE'}")
+        self.logger.info(f"Marketplace: {getattr(product, 'marketplace', 'us')} | Language: {getattr(product, 'marketplace_language', 'en')}")
         
         if not self.client:
             self.logger.error("OpenAI client is None - using fallback content")
@@ -143,16 +187,10 @@ class ListingGeneratorService:
             "Picture this: it's six months from now and you're wondering why you waited so long"
         ]
         
-        # Random conversation starters (completely different each time)
-        conversation_starters = [
-            "Let me tell you why this caught my attention",
-            "So here's what makes this different from everything else",
-            "I'll be honest - I was skeptical at first, but",
-            "You know what surprised me most about this",
-            "Can we talk about something for a minute",
-            "I've been thinking about this lately",
-            "Here's something interesting I discovered",
-            "Want to know what changed my mind about these"
+        # Natural description approaches (avoid repetitive starters)  
+        description_approaches = [
+            "product_focused", "benefit_focused", "problem_solution", "story_narrative", 
+            "feature_highlight", "customer_outcome", "technical_explanation", "lifestyle_integration"
         ]
         
         # Random personality quirks (inject humanity)
@@ -176,8 +214,7 @@ class ListingGeneratorService:
         
         # Randomly select elements to inject variety
         chosen_hook = random.choice(emotional_hooks)
-        chosen_starter = random.choice(conversation_starters)
-        chosen_personality = random.choice(personality_elements)
+        chosen_approach = random.choice(description_approaches)
         chosen_structure = random.choice(structure_variants)
         
         # Anti-template instructions based on tone
@@ -204,9 +241,8 @@ HUMAN WRITING APPROACH:
 ✅ Vary sentence structure dramatically - mix very short and longer explanations
 ✅ Use unexpected but professional language
 
-TODAY'S EMOTIONAL HOOK: "{chosen_hook}"
-TODAY'S CONVERSATION STARTER: "{chosen_starter}"
-PERSONALITY ELEMENT TO INCLUDE: "{chosen_personality}"
+TODAY'S EMOTIONAL APPROACH: "{chosen_hook}"
+DESCRIPTION STYLE: "{chosen_approach}"  
 STRUCTURAL APPROACH: "{chosen_structure}"
 
 TITLE VARIATION: Create something that sounds like a professional wrote it, not a marketing team
@@ -233,9 +269,8 @@ HUMAN FRIEND APPROACH:
 ✅ Share it like you'd tell a story to a friend
 ✅ Use casual language that doesn't sound forced
 
-TODAY'S EMOTIONAL HOOK: "{chosen_hook}"
-TODAY'S CONVERSATION STARTER: "{chosen_starter}"
-PERSONALITY ELEMENT TO INCLUDE: "{chosen_personality}"
+TODAY'S EMOTIONAL APPROACH: "{chosen_hook}"
+DESCRIPTION STYLE: "{chosen_approach}"  
 STRUCTURAL APPROACH: "{chosen_structure}"
 
 TITLE VARIATION: Write it like a casual recommendation, not marketing copy
@@ -262,9 +297,8 @@ SOPHISTICATED HUMAN APPROACH:
 ✅ Let the quality speak for itself without shouting about it
 ✅ Use refined but not pretentious language
 
-TODAY'S EMOTIONAL HOOK: "{chosen_hook}"
-TODAY'S CONVERSATION STARTER: "{chosen_starter}"
-PERSONALITY ELEMENT TO INCLUDE: "{chosen_personality}"
+TODAY'S EMOTIONAL APPROACH: "{chosen_hook}"
+DESCRIPTION STYLE: "{chosen_approach}"  
 STRUCTURAL APPROACH: "{chosen_structure}"
 
 TITLE VARIATION: Something that quietly suggests quality without screaming luxury
@@ -291,9 +325,8 @@ GENUINELY CREATIVE APPROACH:
 ✅ Let your natural creativity show without forcing it
 ✅ Write with energy that feels authentic
 
-TODAY'S EMOTIONAL HOOK: "{chosen_hook}"
-TODAY'S CONVERSATION STARTER: "{chosen_starter}"
-PERSONALITY ELEMENT TO INCLUDE: "{chosen_personality}"
+TODAY'S EMOTIONAL APPROACH: "{chosen_hook}"
+DESCRIPTION STYLE: "{chosen_approach}"  
 STRUCTURAL APPROACH: "{chosen_structure}"
 
 TITLE VARIATION: Something creative that fits the product naturally
@@ -320,9 +353,8 @@ THOUGHTFUL SIMPLICITY APPROACH:
 ✅ Let simplicity emerge from clarity, not force it
 ✅ Write with calm confidence in the essentials
 
-TODAY'S EMOTIONAL HOOK: "{chosen_hook}"
-TODAY'S CONVERSATION STARTER: "{chosen_starter}"
-PERSONALITY ELEMENT TO INCLUDE: "{chosen_personality}"
+TODAY'S EMOTIONAL APPROACH: "{chosen_hook}"
+DESCRIPTION STYLE: "{chosen_approach}"  
 STRUCTURAL APPROACH: "{chosen_structure}"
 
 TITLE VARIATION: Clear and direct without unnecessary words
@@ -349,9 +381,8 @@ GENUINELY CONFIDENT APPROACH:
 ✅ Let your conviction show through substance, not adjectives
 ✅ Write with power that comes from genuine belief
 
-TODAY'S EMOTIONAL HOOK: "{chosen_hook}"
-TODAY'S CONVERSATION STARTER: "{chosen_starter}"
-PERSONALITY ELEMENT TO INCLUDE: "{chosen_personality}"
+TODAY'S EMOTIONAL APPROACH: "{chosen_hook}"
+DESCRIPTION STYLE: "{chosen_approach}"  
 STRUCTURAL APPROACH: "{chosen_structure}"
 
 TITLE VARIATION: Confident but specific, not generically bold
@@ -366,11 +397,29 @@ DESCRIPTION VARIATION: Show conviction through evidence and specific benefits
         # Add variety through randomization techniques
         import random
         variety_elements = [
-            "Avoid using these overused phrases in ANY section: 'Experience the difference', 'Take your [X] to the next level', 'Game-changing', 'Revolutionary', 'Unparalleled'",
+            "Avoid using these overused phrases in ANY section: 'Experience the difference', 'Take your [X] to the next level', 'Game-changing', 'Revolutionary', 'Unparalleled', 'Amazing', 'Incredible', 'You'll wonder how you managed without it', 'Trust me', 'You'll be the hero', 'Your new best friend'",
             "Use unexpected analogies and comparisons that fit the brand tone",
             "Vary sentence length dramatically - mix very short punchy sentences with longer flowing ones",
             "Start with a completely different hook approach than typical Amazon listings",
-            "Include specific numbers and metrics that feel authentic to this product category"
+            "Include specific numbers and metrics that feel authentic to this product category",
+            "Write as if youre personally recommending to a friend, not selling",
+            "Include subtle humor or personality quirks that match the brand tone",
+            "Use specific, concrete details instead of generic superlatives", 
+            "Write in a conversational tone with natural word choices and rhythm",
+            "Avoid marketing buzzwords - use everyday language customers understand",
+            "Include sensory details or vivid descriptions when appropriate",
+            "Use proper contractions with apostrophes (don't, can't, it's, you're) for natural human language",
+            "Include mild imperfections or honest limitations to build trust",
+            "Reference real customer experiences or relatable scenarios",
+            "Tell a mini-story about how this product fits into someones day",
+            "Use relatable comparisons to familiar objects or experiences",
+            "Include genuine enthusiasm without sounding like a robot",
+            "Admit when something might not be perfect but explain why its still worth it",
+            "Use practical tips or insider knowledge about using the product",
+            "Include honest comparisons to alternatives when appropriate",
+            "Write like someone who actually owns and loves the product",
+            "Use unexpected but fitting metaphors or creative descriptions",
+            "Include authentic details that only someone familiar with the product would know"
         ]
         random.shuffle(variety_elements)
         
@@ -401,17 +450,58 @@ DESCRIPTION VARIATION: Show conviction through evidence and specific benefits
         ]
         chosen_faq_style = random.choice(faq_styles)
 
+        # Get language instruction if not English
+        language_instruction = ""
+        language_reminder = ""
+        marketplace_lang = getattr(product, 'marketplace_language', 'en')
+        
+        if marketplace_lang and marketplace_lang != 'en':
+            language_instruction = self.get_marketplace_language_instruction(
+                getattr(product, 'marketplace', 'com'), 
+                marketplace_lang
+            )
+            # Add language reminder at the end too
+            language_name = {
+                'de': 'GERMAN', 'fr': 'FRENCH', 'it': 'ITALIAN', 'es': 'SPANISH',
+                'nl': 'DUTCH', 'sv': 'SWEDISH', 'pl': 'POLISH', 'ja': 'JAPANESE',
+                'pt': 'PORTUGUESE', 'ar': 'ARABIC', 'tr': 'TURKISH'
+            }.get(marketplace_lang, 'ENGLISH')
+            language_reminder = f"\n\n⚠️ FINAL REMINDER: ALL CONTENT MUST BE IN {language_name}! ⚠️"
+        
+        # Add brand persona and target audience if provided
+        brand_context = ""
+        if hasattr(product, 'brand_persona') and product.brand_persona:
+            brand_context += f"\nBRAND PERSONA: {product.brand_persona}"
+        if hasattr(product, 'target_audience') and product.target_audience:
+            brand_context += f"\nTARGET AUDIENCE: {product.target_audience}"
+        
         # Now create the completely new human-focused prompt
         prompt = f"""
+{language_instruction}
 {base_prompt}
+CRITICAL: USE ONLY THE FOLLOWING INFORMATION - NO GENERIC CONTENT!
+DO NOT MAKE UP FEATURES OR BENEFITS NOT PROVIDED BELOW!
 
-PRODUCT INFORMATION:
+PRODUCT INFORMATION (USE ALL OF THIS):
 - Product: {product.name}
-- Brand: {product.brand_name}
+- Brand: {product.brand_name} (MUST appear in title and throughout listing)
 - Category: {product_category}
 - Description: {product.description}
-- Features: {', '.join(features_list) if features_list else 'Not specified'}
-- Price: ${product.price if product.price else 'Not specified'}
+- Features: {', '.join(features_list) if features_list else 'Focus on description details'}
+- Price: ${product.price if product.price else '29.99'}
+- ASIN: {product.asin if hasattr(product, 'asin') and product.asin else 'New Product'}
+- Marketplace: {product.get_marketplace_display() if hasattr(product, 'marketplace') else 'United States'}
+{brand_context}
+
+COMPETITOR INSIGHTS TO LEVERAGE:
+- Competitor ASINs: {getattr(product, 'competitor_asins', 'None provided')}
+- Competitor URLs: {getattr(product, 'competitor_urls', 'None provided')}
+
+REQUIRED ELEMENTS (MUST USE):
+- Target Keywords: {getattr(product, 'target_keywords', 'Generate based on product description')}
+- Categories for Context: {product.categories if product.categories else 'Use product description to determine'}
+
+⚠️ IMPORTANT: Base EVERYTHING on the actual product information above. Do not use generic placeholder content. If a detail isn't provided, extract it from the description or features given.
 
 RANDOMIZATION ELEMENTS FOR TODAY:
 - Content Focus: {chosen_focus}
@@ -419,14 +509,36 @@ RANDOMIZATION ELEMENTS FOR TODAY:
 - FAQ Style: {chosen_faq_style}
 - Variety Emphasis: {variety_elements[0]}
 
-YOUR MISSION: Write an Amazon listing that sounds like a real human expert wrote it. Each section should feel completely different from typical Amazon listings.
+AMAZON RUFUS AI OPTIMIZATION STRATEGY:
+Amazon's Rufus AI assistant helps customers find products through conversational queries. Your listing must be optimized for:
+- Natural language questions ("What's the best bluetooth headphone for working out?")
+- Comparison queries ("How is this different from other brands?") 
+- Use case scenarios ("Good for traveling?", "Will this work for gaming?")
+- Problem-solving language ("Stops hurting my ears", "Finally doesn't fall out")
 
-CRITICAL KEYWORD REQUIREMENTS:
-- Generate EXACTLY 10-12 SHORT keywords (1-2 words): headphones, earbuds, bluetooth, wireless, audio, music, etc.
-- Generate EXACTLY 25 LONG keywords (3+ words): noise cancelling wireless earbuds, bluetooth headphones for exercise, etc.
-- Generate 15+ backend keywords (comprehensive search terms, misspellings, synonyms)
-- Frontend displays keywords ≤2 words as "short-tail" and >2 words as "long-tail"
-- TOTAL TARGET: 35+ keywords (10-12 short + 25 long)
+YOUR MISSION: Create a COMPREHENSIVE, MAXIMUM-LENGTH Amazon listing optimized for both traditional search AND Rufus AI conversations.
+
+CRITICAL CONTENT REQUIREMENTS - GENERATE MAXIMUM CONTENT:
+✅ Title: 150-200 characters (use every character available)
+✅ Bullet Points: 5 bullets, each 250+ characters (maximum length allowed)
+✅ Product Description: 2000+ characters (comprehensive, detailed)
+✅ A+ Content: Complete sections with detailed content
+✅ Backend Keywords: 249 characters (use every character)
+✅ SEO Keywords: 50+ comprehensive keywords covering all variations
+✅ Brand Story: 300+ character detailed brand narrative
+✅ FAQs: 5+ detailed Q&As addressing real customer concerns
+✅ Features: 8+ specific product features
+✅ What's in Box: Complete unboxing experience
+✅ Trust Builders: Multiple guarantees and certifications
+✅ Social Proof: Detailed customer satisfaction claims
+
+KEYWORD STRATEGY FOR MAXIMUM VISIBILITY:
+- Primary Keywords (15+): Direct product terms, brand + product, category terms
+- Long-tail Keywords (25+): 3-7 word phrases, natural questions, use cases
+- Problem-solving Keywords (15+): Pain points, solutions, comparisons  
+- Rufus Conversation Keywords (15+): "best for", "good for", "works with", "better than"
+- Semantic Keywords (10+): Related terms, synonyms, variations
+- TOTAL TARGET: 80+ keywords covering every possible search angle
 
 CRITICAL JSON FORMATTING RULES:
 1. ALL JSON field values MUST use double quotes (") not single quotes (')
@@ -437,145 +549,139 @@ CRITICAL JSON FORMATTING RULES:
 6. CORRECT: {{"title": "This is Johns favorite product"}}
 7. WRONG: {{'title': 'This is Johns favorite product'}}
 
-RESPONSE FORMAT: Return valid JSON with these fields (note the double quotes around all field names and values):
+KEYWORD GENERATION RULES:
+1. For "primary" keywords: ALWAYS start with product name and brand name, then add 13+ related single/double words
+2. For "longTail": Create 25+ actual phrases (3-7 words), not instruction text
+3. For all keyword arrays: Generate actual keywords, NOT instruction text or examples
+4. Replace template phrases like [actual use case] with real use cases based on the product
+5. EXAMPLE GOOD: ["wireless earbuds", "bluetooth headphones", "noise cancelling"] 
+6. EXAMPLE BAD: ["Generate 15+ short keywords based on..."]
+
+RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMUM-LENGTH content:
 
 {{
-  "productTitle": "Write 150-200 character Amazon-optimized title. MUST include: 1) Brand name '{product.brand_name}' at start, 2) Emotional hook or benefit, 3) Primary keywords (product type, main features), 4) Key specifications. Format: '{product.brand_name} [Emotional Hook] [Product Type] [Key Features] [Target Use/Benefit]'. Optimize for both PC and mobile Amazon search. Example: 'AudioMax Premium Wireless Noise Cancelling Bluetooth Headphones - Experience Studio-Quality Sound with 30Hr Battery for Travel, Work & Music'",
+  "productTitle": "Write 180-200 character title with brand '{product.brand_name}', emotional hook, keywords, and benefits. Format: '{product.brand_name} [Transformation Promise] [Product Type] [Key Features] [Use Case] [Benefit]'",
   
   "bulletPoints": [
-    "EMOTIONAL LABEL: Write 150-500 characters with compelling emotional hook and specific benefit. Use format 'LABEL: detailed explanation with benefits and outcomes.' NO asterisks or bold formatting. Must be minimum 150 characters.",
-    "DIFFERENT LABEL: Write 150-500 characters with completely different label style. Mix features with emotional outcomes. Use format 'LABEL: comprehensive details.' NO asterisks or bold formatting. Must be minimum 150 characters.",
-    "UNIQUE LABEL: Write 150-500 characters with creative but relevant label. Focus on customer transformation or specific use case. Use format 'LABEL: rich detail with examples.' NO asterisks or bold formatting. Must be minimum 150 characters.", 
-    "COMPELLING LABEL: Write 150-500 characters with benefit-focused label. Include specific details, social proof, or technical advantages. Use format 'LABEL: detailed explanation.' NO asterisks or bold formatting. Must be minimum 150 characters.",
-    "STANDOUT LABEL: Write 150-500 characters with memorable label that captures attention. Add guarantee, uniqueness, or surprising benefit. Use format 'LABEL: comprehensive detail.' NO asterisks or bold formatting. Must be minimum 150 characters."
+    "BULLET 1: Use format 'EMOTIONAL LABEL: benefit explanation'. Make the label compelling (e.g. INSTANT RELIEF, STRESS SAVER, CONFIDENCE BOOST). Write 200+ characters with proper grammar and apostrophes (don't, can't, it's). Avoid hype words.",
+    "BULLET 2: Different emotional label (e.g. PEACE OF MIND, SURPRISINGLY EASY, WORTH EVERY PENNY, FINALLY WORKS). Focus on different product aspect. 200+ characters, use proper contractions like you're and won't.", 
+    "BULLET 3: Another unique emotional label (e.g. WORKS PERFECTLY, EXCEEDED EXPECTATIONS, PROBLEM SOLVED). Different writing style - factual benefits with proper apostrophes. 200+ characters.",
+    "BULLET 4: Creative emotional label (e.g. BUILT TO LAST, THOUGHTFUL DESIGN, JUST WORKS). Focus on quality/performance with proper grammar (they're, we're, I'm). 200+ characters.",
+    "BULLET 5: Memorable emotional label (e.g. SMART INVESTMENT, CUSTOMER FAVORITE, HONESTLY IMPRESSED). End strong with factual guarantee info. 200+ characters, proper contractions."
   ],
   
-  "productDescription": "Write this like you're personally recommending it. Start with '{chosen_starter}' and include '{chosen_personality}' naturally. Use the {chosen_structure} approach. Avoid the tired 'Are you tired of...' opening and 'Experience the...' language. Write 3 paragraphs that flow like human conversation.",
+  "productDescription": "Write 1500-2000 character natural, conversational product description with proper grammar and apostrophes (don't, can't, it's, you're). Start uniquely based on the product - no template openings like 'Can we talk about...' or 'Let me tell you...' Instead, dive into the product's main benefit or tell a brief story. Use Problem-Agitation-Solution naturally. Be genuinely helpful and specific to this exact product. Avoid promotional hype.",
   
-  "aPlusContentPlan": {{
-    "hero_section": {{
-      "title": "Write a compelling headline that fits the product naturally",
-      "content": "2-3 sentences that feel authentic to your tone",
-      "image_requirements": "Describe what image would genuinely help sell this product. Be specific about composition, setting, and mood but let it flow from the product's actual use case."
-    }},
-    "features_section": {{
-      "title": "Create your own section title - doesn't have to be 'Key Features'",
-      "content": "Explain the most important aspects in your authentic voice",
-      "image_requirements": "Describe visual elements that would actually be helpful for this specific product. Focus on what customers really need to see."
-    }},
-    "comparison_section": {{
-      "title": "Your comparison title that fits the product",
-      "content": "Natural comparison in your voice",
-      "image_requirements": "What visual comparison would actually help customers choose this product over alternatives?"
-    }},
-    "usage_section": {{
-      "title": "Usage section title in your style",
-      "content": "How to use/when to use in natural language",
-      "image_requirements": "What images would actually help someone use this product successfully?"
-    }},
-    "lifestyle_section": {{
-      "title": "Lifestyle section that fits the product's actual use",
-      "content": "How this fits into real life, not forced lifestyle marketing",
-      "image_requirements": "Real lifestyle scenarios where this product actually makes sense, not stock photo situations."
-    }},
-    "aplus_content_suggestions": {{
-      "title": "Content Enhancement Suggestions",
-      "content": "Specific suggestions for additional A+ content that would enhance this listing, including video content, comparison charts, technical specifications, customer testimonials integration, seasonal use cases, and maintenance/care instructions that would genuinely help customers.",
-      "image_requirements": "Additional image types that would complete the customer's understanding of this product - technical diagrams, size comparisons, packaging contents, warranty information visuals, or instructional graphics."
-    }}
+  "seoKeywords": {{
+    "primary": ["{product.name.lower().replace(' ', '_')}", "{product.brand_name.lower()}", "THEN_ADD_13_MORE: category, color, size, material, feature1, feature2, use1, use2, style, type, model, variant, application"],
+    "longTail": ["GENERATE_25_PHRASES: best [product] for [use]", "[brand] [product] with [feature]", "[product] that [solves problem]", "professional [product] for [application]", "high quality [product] [benefit]", "etc"],
+    "problemSolving": ["GENERATE_15_PROBLEM_KEYWORDS: based on what issues this product solves from description"],
+    "rufusConversational": ["GENERATE_15_RUFUS_PHRASES: good for [real use]", "works with [compatible items]", "perfect for [scenarios]", "better than [alternatives]", "ideal for [situations]"],
+    "semantic": ["GENERATE_10_RELATED: synonyms, variations, related terms, technical terms, informal names"]
   }},
   
-  "brandSummary": "Write 200-400 characters about the brand like you actually know something about them. Include brand history, values, customer focus, product quality commitment, and what makes {product.brand_name} different from competitors. Make it feel authentic and detailed, not generic brand-speak.",
+  "backendKeywords": "Write exactly 249 characters of comprehensive search terms including: product variations, synonyms, competitor terms, misspellings, related categories, use cases, customer language, technical terms, seasonal terms, gift occasions, target demographics, problem keywords, solution keywords, benefit terms, feature variations, brand alternatives, size variations, color terms, material types, style descriptors, application areas, compatibility terms, professional vs consumer terms, and industry jargon.",
   
-  "backendKeywords": "Write 240+ characters of actual search terms people might use. Include synonyms, related products, problem keywords, and variations. Make it comprehensive but real.",
+  "aPlusContentPlan": {{
+    "section1_hero": {{
+      "title": "Write compelling 50-100 character headline about main product benefit (avoid hype words like 'amazing', 'revolutionary')",
+      "content": "Write 200-400 character clear, factual description explaining key value proposition. Focus on specific benefits and outcomes. Use proper contractions with apostrophes (it's, you're, don't).",
+      "keywords": ["List 3-5 relevant keywords for this section"],
+      "imageDescription": "Describe specific lifestyle image showing product in actual use - include setting details",
+      "seoOptimization": "Explain SEO focus for this section"
+    }},
+    "section2_features": {{
+      "title": "Key Features & Benefits", 
+      "content": "Write 300-500 characters describing 3-4 main features with factual benefits. Avoid emotional language like 'you'll love' or 'amazing'. Use proper grammar with apostrophes.",
+      "keywords": ["List 3-5 feature-related keywords"],
+      "imageDescription": "Describe technical or feature-focused images showing product capabilities",
+      "seoOptimization": "Feature-based keyword strategy"
+    }},
+    "section3_usage": {{
+      "title": "Practical Applications",
+      "content": "Write 250-400 characters describing 3-4 specific use cases. Be factual about scenarios. Avoid promotional language like 'perfect for' or 'ideal choice'.",
+      "keywords": ["List 3-5 usage-related keywords"],
+      "imageDescription": "Show product in different real-world usage scenarios",
+      "seoOptimization": "Use-case based search terms"
+    }},
+    "section4_quality": {{
+      "title": "Quality & Specifications",
+      "content": "Write 200-350 characters about materials, construction, testing, or certifications. Focus on facts and specifications rather than emotional claims.",
+      "keywords": ["List 3-5 quality/technical keywords"],
+      "imageDescription": "Show quality details, certifications, or construction materials",
+      "seoOptimization": "Quality and specification keywords"
+    }},
+    "section5_guarantee": {{
+      "title": "Purchase Confidence", 
+      "content": "Write 150-300 characters about warranty, return policy, or customer service. Keep factual - avoid hype like 'satisfaction guaranteed' unless literally true.",
+      "keywords": ["List 3-5 trust/service keywords"],
+      "imageDescription": "Show warranty information, customer service, or company reliability indicators",
+      "seoOptimization": "Trust and service-related terms"
+    }},
+    "overallStrategy": "Explain overall A+ content approach and customer journey from awareness to purchase"
+  }},
   
-  "topCompetitorKeywords": "What keywords would actually compete with this product?",
+  "brandSummary": "Write 250-400 character detailed brand story including: company background, mission, what makes the brand unique, customer focus, quality commitment, and competitive advantages. Make it feel authentic and substantial, not generic marketing speak.",
   
-  "keywordStrategy": "Explain your keyword approach like you're talking to someone who knows marketing.",
+  "whatsInBox": [
+    "Main product with detailed description",
+    "Essential accessory 1 with purpose",
+    "Essential accessory 2 with purpose", 
+    "Documentation and warranty information",
+    "Additional items or bonuses included"
+  ],
+  
+  "trustBuilders": [
+    "Specific guarantee or warranty details",
+    "Certification or testing information", 
+    "Company reliability factors",
+    "Customer service commitments",
+    "Quality assurance details"
+  ],
+  
+  "faqs": [
+    "Q: Ask realistic customer question about compatibility, usage, or concerns? A: Write detailed, helpful answer with proper grammar and contractions (don't, can't, it's) that builds confidence and addresses the specific concern thoroughly.",
+    "Q: Ask different realistic question about product benefits, comparison, or technical specs? A: Provide comprehensive answer with proper apostrophes (you're, we're, they're) that demonstrates expertise and helps customer decision-making.",
+    "Q: Ask practical question about setup, maintenance, or common issues? A: Give specific, actionable answer with correct grammar (won't, shouldn't, isn't) that reduces customer anxiety and shows product knowledge.",
+    "Q: Ask comparison question about this vs alternatives or competitors? A: Answer diplomatically with proper contractions while highlighting unique advantages and value proposition.",
+    "Q: Ask about return policy, shipping, or purchasing concerns? A: Address practical concerns with correct grammar and confidence-building information and clear policies."
+  ],
+  
+  "socialProof": "Write 150-300 characters describing customer satisfaction, ratings, testimonials, or usage statistics. Make it credible and specific without making unverifiable claims.",
+  
+  "guarantee": "Write 100-200 characters describing specific guarantee, warranty, or risk-free offer. Include timeframe and what's covered. Make it compelling but honest.",
   
   "ppcStrategy": {{
-    "campaign_structure": "Detailed campaign organization with Auto, Exact, Phrase, and Broad campaigns for this specific product category",
+    "campaignStructure": "Detailed 3-tier campaign setup: Auto Discovery (broad targeting), Manual Exact (high-intent keywords), Manual Broad (category expansion)",
     "exactMatch": {{
-      "keywords": ["Minimum 8 actual exact match keywords for this specific product including brand + product type, specific model names, and high-intent terms"],
-      "bidRange": "$0.75-1.25",
-      "targetAcos": "20%",
-      "dailyBudget": "$25-50"
+      "keywords": ["15+ exact match keywords including: brand + product name, specific model numbers, high-intent purchase terms, competitor + alternative terms"],
+      "bidRange": "$0.50-1.50",
+      "targetAcos": "15-25%",
+      "dailyBudget": "$20-40"
     }},
     "phraseMatch": {{
-      "keywords": ["Minimum 10 real phrase match keywords that make sense for this product category and target audience"],
-      "bidRange": "$0.50-0.85", 
-      "targetAcos": "30%",
+      "keywords": ["20+ phrase match keywords including: problem solution phrases, use case terms, benefit-focused phrases, comparison terms"],
+      "bidRange": "$0.35-1.00",
+      "targetAcos": "25-35%", 
       "dailyBudget": "$15-30"
     }},
     "broadMatch": {{
-      "keywords": ["5-8 broad match keywords for discovery and reaching new customers"],
-      "bidRange": "$0.30-0.65",
-      "targetAcos": "35%",
-      "dailyBudget": "$10-20"
-    }},
-    "negativeKeywords": ["Comprehensive list of negative keywords specific to this product category to avoid irrelevant traffic"],
-    "targeting_strategy": "Detailed explanation of audience targeting, competitor targeting, and ASIN targeting specific to this product",
-    "optimization_schedule": "Specific timeline for bid adjustments, keyword harvesting, and performance optimization"
-  }},
-  
-  "keyword_cluster": {{
-    "primary_keywords": ["Minimum 10 short keywords (1-2 words each) like: earbuds, headphones, bluetooth, wireless, audio, music, plus 2-3 brand/product terms"],
-    "secondary_keywords": ["Generate EXACTLY 25 longer descriptive keywords (3+ words) with genuine search intent including problem-solving terms, specific use cases, detailed product descriptions, competitor alternatives, and niche applications"],
-    "backend_search_terms": "240+ characters of comprehensive search terms including misspellings, synonyms, alternative product names, related accessories, and problem keywords",
-    "misspellings_and_synonyms": ["Common misspellings and alternative terms customers might use when searching for this product"],
-    "ppc_keywords": [
-      {{"keyword": "real high-volume keyword", "match_type": "Exact", "bid": "0.75"}},
-      {{"keyword": "another high-intent keyword", "match_type": "Phrase", "bid": "0.65"}},
-      {{"keyword": "broad discovery keyword", "match_type": "Broad", "bid": "0.45"}},
-      {{"keyword": "brand + product keyword", "match_type": "Exact", "bid": "0.80"}},
-      {{"keyword": "problem-solving keyword", "match_type": "Phrase", "bid": "0.60"}},
-      {{"keyword": "competitor alternative keyword", "match_type": "Phrase", "bid": "0.70"}},
-      {{"keyword": "feature-specific keyword", "match_type": "Exact", "bid": "0.85"}},
-      {{"keyword": "use-case keyword", "match_type": "Broad", "bid": "0.50"}}
-    ]
+      "keywords": ["15+ broad match keywords for discovery: category terms, related products, lifestyle keywords, seasonal terms"],
+      "bidRange": "$0.25-0.75",
+      "targetAcos": "30-45%",
+      "dailyBudget": "$10-25"
+    }}
   }}
-}}"""        
+}}
+{language_reminder}"""        
         self.logger.info("OpenAI client is available - proceeding with AI generation")
         try:
             self.logger.info(f"Generating AI content for {product.name} on Amazon...")
             self.logger.info(f"Product details: Name={product.name}, Brand={product.brand_name}, Categories={product.categories}")
             self.logger.info(f"Using product context: {product_context[:200]}...")
             
-            # Use OpenAI Function Calling to enforce JSON schema
-            function_schema = {
-                "name": "create_amazon_listing",
-                "description": f"Create an Amazon listing for {product.name}",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "title": {"type": "string", "description": "SEO title under 200 chars"},
-                        "bullet_points": {"type": "array", "items": {"type": "string"}, "description": "5 bullet points"},
-                        "long_description": {"type": "string", "description": "Detailed description"},
-                        "seo_keywords": {
-                            "type": "object", 
-                            "description": "Comprehensive keyword categories for SEO",
-                            "properties": {
-                                "primary": {"type": "array", "items": {"type": "string"}, "description": "5 primary short-tail keywords"},
-                                "long_tail": {"type": "array", "items": {"type": "string"}, "description": "10 long-tail keyword phrases"},
-                                "pain_point": {"type": "array", "items": {"type": "string"}, "description": "5 problem-solving keywords"},
-                                "high_intent": {"type": "array", "items": {"type": "string"}, "description": "5 high commercial intent keywords"},
-                                "demographic": {"type": "array", "items": {"type": "string"}, "description": "5 target audience keywords"},
-                                "brand_terms": {"type": "array", "items": {"type": "string"}, "description": "3 brand-related keywords"}
-                            },
-                            "required": ["primary", "long_tail", "pain_point", "high_intent", "demographic", "brand_terms"]
-                        },
-                        "hero_title": {"type": "string", "description": "Main benefit headline"},
-                        "hero_content": {"type": "string", "description": "Hero description"},
-                        "features": {"type": "array", "items": {"type": "string"}, "description": "4 features"},
-                        "whats_in_box": {"type": "array", "items": {"type": "string"}, "description": "4 items"},
-                        "trust_builders": {"type": "array", "items": {"type": "string"}, "description": "3 trust elements"},
-                        "faqs": {"type": "array", "items": {"type": "string"}, "description": "3 FAQ strings, each formatted as 'Q: question? A: answer'"},
-                        "social_proof": {"type": "string", "description": "Customer satisfaction text"},
-                        "guarantee": {"type": "string", "description": "Guarantee text"}
-                    },
-                    "required": ["title", "bullet_points", "long_description", "seo_keywords", "hero_title", "hero_content", "features", "whats_in_box", "trust_builders", "faqs", "social_proof", "guarantee"]
-                }
-            }
+            # Don't use function calling - use direct JSON generation for maximum content
+            # This ensures we get comprehensive content without schema limitations
             
             # Retry logic for robust AI generation
             max_retries = 3
@@ -585,10 +691,65 @@ RESPONSE FORMAT: Return valid JSON with these fields (note the double quotes aro
             while retry_count < max_retries:
                 try:
                     print(f"AI generation attempt {retry_count + 1}/{max_retries}")
+                    # Add language-specific system message if needed
+                    system_content = """You are a creative copywriting expert who writes like a real human, not a marketing robot. 
+
+CRITICAL: Return ONLY valid JSON - no markdown, no explanations, just pure JSON that parses correctly. 
+
+JSON RULES: All field names and values must use double quotes, inside content use proper apostrophes for contractions (don't, can't, won't, it's), never use unescaped double quotes in content. CORRECT FORMAT: {\"field\": \"content with proper apostrophes like don't and can't\"}.
+
+🚨 KEYWORD GENERATION CRITICAL RULES:
+- For seoKeywords arrays: Generate ACTUAL keywords/phrases, NOT instruction text
+- Do NOT include text like "Generate 15+ keywords..." - that's instruction, not content
+- Primary keywords: Start with product name, brand name, then add 13+ real keywords
+- Long-tail: Create 25+ actual 3-7 word phrases customers would search
+- Problem-solving: List 15+ actual problems this product solves as keywords
+- Rufus conversational: List 15+ actual questions/phrases people ask
+- Semantic: List 10+ actual related terms and synonyms
+
+📝 GRAMMAR & LANGUAGE CRITICAL RULES:
+- ALWAYS use proper apostrophes in contractions: it's, you're, don't, can't, won't, they're
+- NEVER write: its, youre, dont, cant, wont, theyre (without apostrophes)
+- AVOID overly emotional/promotional phrases: "you'll wonder how you managed without it", "trust me", "you'll be the hero", "your new best friend"
+- AVOID hype words: "amazing", "revolutionary", "game-changing", "life-changing", "incredible"
+- USE factual, professional language that focuses on specific benefits and features
+- REPLACE promotional claims with specific, measurable benefits
+
+EXAMPLE CORRECT seoKeywords:
+{"primary": ["wireless earbuds", "acme", "bluetooth", "headphones", "waterproof", "gaming", "sports"], "longTail": ["best wireless earbuds for running", "acme bluetooth headphones noise cancelling", "waterproof earbuds for swimming"]}
+
+EXAMPLE WRONG seoKeywords:
+{"primary": ["Generate 15+ short keywords based on..."]} - THIS IS INSTRUCTION TEXT, NOT KEYWORDS!
+
+Your mission is to break every predictable Amazon listing pattern and create content that sounds genuinely human and emotionally varied while maintaining perfect JSON formatting. 
+
+🎯 HUMAN WRITING REQUIREMENTS:
+- Write like you personally own and recommend this product to friends
+- Include natural imperfections, honest opinions, and authentic enthusiasm
+- Use conversational language with proper contractions (don't, can't, you'll, it's)
+- Vary personality across sections - be enthusiastic in bullets, practical in descriptions, helpful in FAQs
+- Include specific details that show real product knowledge
+- Admit limitations honestly while explaining why the product is still great
+- Use relatable comparisons and mini-stories
+- Sound like different real people wrote different sections
+- AVOID overly promotional language that sounds like advertising copy
+- Focus on factual benefits rather than emotional manipulation
+
+Write each section in a completely different style and tone. Use unexpected but authentic language that fits the product. Vary everything - sentence length, structure, personality, approach. Sound like a real person who genuinely knows and likes this product. Include human quirks and conversational elements. Your goal is to create listings so human and varied that customers feel like theyre talking to a real expert, not reading marketing copy."""
+                    
+                    # Prepend language requirement to system message if not English
+                    if marketplace_lang and marketplace_lang != 'en':
+                        language_name = {
+                            'de': 'GERMAN', 'fr': 'FRENCH', 'it': 'ITALIAN', 'es': 'SPANISH',
+                            'nl': 'DUTCH', 'sv': 'SWEDISH', 'pl': 'POLISH', 'ja': 'JAPANESE',
+                            'pt': 'PORTUGUESE', 'ar': 'ARABIC', 'tr': 'TURKISH'
+                        }.get(marketplace_lang, 'ENGLISH')
+                        system_content = f"YOU MUST WRITE EVERYTHING IN {language_name}! NOT A SINGLE WORD IN ENGLISH! " + system_content
+                    
                     response = self.client.chat.completions.create(
                         model="gpt-4o-mini",  # Use a model capable of JSON output
                         messages=[
-                            {"role": "system", "content": "You are a creative copywriting expert who writes like a real human, not a marketing robot. CRITICAL: Return ONLY valid JSON - no markdown, no explanations, just pure JSON that parses correctly. JSON RULES: All field names and values must use double quotes, inside content use single quotes for contractions (dont, cant, wont, its), never use unescaped double quotes in content. CORRECT FORMAT: {\"field\": \"content with 'single quotes' inside\"}. Your mission is to break every predictable Amazon listing pattern and create content that sounds genuinely human and emotionally varied while maintaining perfect JSON formatting. Write each section in a completely different style and tone. Use unexpected but authentic language that fits the product. Vary everything - sentence length, structure, personality, approach. Sound like a real person who genuinely knows and likes this product. Include human quirks and conversational elements. Your goal is to create listings so human and varied that customers feel like theyre talking to a real expert, not reading marketing copy."},
+                            {"role": "system", "content": system_content},
                             {"role": "user", "content": prompt}
                         ],
                         max_tokens=4000,  # Increased max_tokens to accommodate detailed JSON output
@@ -1046,71 +1207,77 @@ Technical specifications include comprehensive compatibility, robust build quali
             # Parse A+ content from comprehensive new structure
             aplus_plan = result.get('aPlusContentPlan', {})
             
-            # Extract hero section from simplified structure
-            hero_section = aplus_plan.get('hero_section', {}) or aplus_plan.get('section1_hero', {})
-            listing.hero_title = hero_section.get('title', result.get('brandSummary', '').split('##')[1].strip() if '##' in result.get('brandSummary', '') else 'Premium Quality')
-            listing.hero_content = hero_section.get('content', result.get('brandSummary', ''))
+            # Extract hero section from new comprehensive structure
+            hero_section = aplus_plan.get('heroSection', {}) or aplus_plan.get('hero_section', {})
+            listing.hero_title = hero_section.get('title', result.get('brandSummary', '').split('.')[0] if result.get('brandSummary') else f'{product.brand_name} Quality Excellence')[:100]
+            listing.hero_content = hero_section.get('content', result.get('brandSummary', f'Experience premium quality with {product.brand_name} - trusted by customers worldwide for reliability and performance.'))
             
-            # Extract features from A+ plan (handle both old and new structure)
-            features_section = aplus_plan.get('features_section', {}) or aplus_plan.get('section2_features', {})
-            features_content = features_section.get('content', '')
-            if features_content:
-                # Extract feature points from the content or use keywords as features
-                feature_keywords = features_section.get('keywords', [])
-                features_list = feature_keywords if feature_keywords else [
-                    "Premium quality construction",
-                    "Reliable performance", 
-                    "User-friendly design",
-                    "Exceptional value"
-                ]
-            else:
+            # Extract features from comprehensive new structure  
+            features_section = aplus_plan.get('featuresSection', {}) or aplus_plan.get('features_section', {})
+            features_list = features_section.get('features', result.get('whatsInBox', []))
+            if not features_list:
                 features_list = [
-                    "Premium quality construction",
-                    "Reliable performance",
-                    "User-friendly design", 
-                    "Exceptional value"
+                    f"Premium {product.name.lower()} construction",
+                    f"Reliable {product.brand_name} performance", 
+                    "User-friendly design and operation",
+                    "Exceptional value and durability",
+                    "Professional-grade quality standards"
                 ]
             listing.features = '\n'.join(features_list)
             
-            # Create whats in box from usage section or defaults
-            usage_section = aplus_plan.get('section4_usage', {})
-            whats_in_box_list = [
-                "Main product",
-                "User manual", 
-                "Warranty information",
-                "Quick start guide"
-            ]
-            listing.whats_in_box = '\n'.join(whats_in_box_list)
+            # Save comprehensive content from new structure
+            listing.whats_in_box = '\n'.join(result.get('whatsInBox', [f'{product.name}', 'User manual', 'Warranty information', 'Quality assurance certificate']))
+            listing.trust_builders = '\n'.join(result.get('trustBuilders', ['30-day satisfaction guarantee', 'Quality tested and certified', '24/7 customer support', 'Manufacturer warranty included']))
+            listing.social_proof = result.get('socialProof', f'Thousands of satisfied customers choose {product.brand_name} for quality and reliability.')
+            listing.guarantee = result.get('guarantee', f'100% satisfaction guarantee - if you are not completely satisfied, return within 30 days for full refund.')
             
-            # Extract trust builders from social proof and guarantee sections
-            social_section = aplus_plan.get('section5_social_proof', {})
-            guarantee_section = aplus_plan.get('section6_guarantee', {})
-            trust_list = [
-                "Quality tested and verified",
-                "Trusted by thousands of customers",
-                "Satisfaction guaranteed",
-                "Backed by manufacturer warranty"
-            ]
-            listing.trust_builders = '\n'.join(trust_list)
+            # Parse comprehensive FAQ structure
+            faqs_list = result.get('faqs', [])
+            if faqs_list:
+                listing.faqs = '\n\n'.join(faqs_list)
+            else:
+                # Create default FAQs if none provided
+                default_faqs = [
+                    f"Q: Is this {product.name.lower()} compatible with my needs? A: Yes, this {product.name.lower()} is designed to work with a wide variety of applications and requirements.",
+                    f"Q: What makes {product.brand_name} different from other brands? A: {product.brand_name} focuses on quality, reliability, and customer satisfaction with rigorous testing and premium materials.",
+                    f"Q: What is included with my purchase? A: You receive the complete {product.name.lower()}, comprehensive documentation, warranty coverage, and dedicated customer support."
+                ]
+                listing.faqs = '\n\n'.join(default_faqs)
             
-            # Create comprehensive FAQs based on A+ sections
-            faq_strings = [
-                "Q: What makes this product different from competitors? A: Our unique features and superior quality set us apart from generic alternatives.",
-                "Q: How do I use this product effectively? A: Follow the included quick start guide for optimal results and performance.", 
-                "Q: What's included in the package? A: Complete kit with main product, user manual, warranty information, and quick start guide.",
-                "Q: Is there a warranty or guarantee? A: Yes, backed by manufacturer warranty and 100% satisfaction guarantee.",
-                "Q: How long does shipping take? A: Fast and reliable shipping with tracking information provided."
-            ]
-            listing.faqs = '\n'.join(faq_strings)
-            listing.social_proof = social_section.get('content', "Join thousands of satisfied customers who trust our products for quality and performance")
-            listing.guarantee = guarantee_section.get('content', "100% satisfaction guarantee - if you're not completely happy, we'll make it right")
+            # Enhanced SEO keyword processing from comprehensive structure
+            seo_keywords = result.get('seoKeywords', {})
+            primary_keywords = seo_keywords.get('primary', [])
+            long_tail_keywords = seo_keywords.get('longTail', [])
+            problem_solving_keywords = seo_keywords.get('problemSolving', [])
+            rufus_keywords = seo_keywords.get('rufusConversational', [])
+            semantic_keywords = seo_keywords.get('semantic', [])
             
-            # Create structured HTML A+ content from the JSON data
-            aplus_html = self._create_structured_aplus_html(aplus_plan, result)
-            listing.amazon_aplus_content = aplus_html
+            # Combine all keywords for comprehensive SEO coverage
+            all_seo_keywords = primary_keywords + long_tail_keywords + problem_solving_keywords + rufus_keywords + semantic_keywords
+            if all_seo_keywords:
+                listing.keywords = ', '.join(all_seo_keywords)
+                print(f"✅ Comprehensive SEO keywords saved: {len(all_seo_keywords)} total keywords")
             
-            # Create formatted A+ content HTML for display
-            # Use the result values directly since listing fields aren't saved yet
+            # Enhanced backend keywords from comprehensive structure
+            backend_keywords = result.get('backendKeywords', '')
+            if not backend_keywords:
+                # Generate comprehensive backend keywords if AI didn't provide them
+                backend_keywords = f"{product.name.lower()}, {product.brand_name.lower()}, premium quality, reliable performance, customer satisfaction, professional grade, exceptional value, trusted brand, high quality materials, superior design, innovative features, user friendly, long lasting, industry leading, best in class, top rated, highly recommended, outstanding quality, proven results, customer favorite"[:249]
+            listing.amazon_backend_keywords = backend_keywords[:249]  # Amazon limit is 249 characters
+            
+            # Save brand summary for A+ content
+            brand_summary = result.get('brandSummary', f'{product.brand_name} is committed to delivering exceptional quality and customer satisfaction. With years of experience and innovation, we create products that exceed expectations and provide lasting value for our customers.')
+            # Add brand summary to hero content if not already substantial
+            if len(listing.hero_content) < 200:
+                listing.hero_content = f"{listing.hero_content}\n\n{brand_summary}"[:500]
+                
+            print(f"✅ Comprehensive listing content generated:")
+            print(f"   - Title: {len(listing.title)} characters")
+            print(f"   - Description: {len(listing.long_description)} characters")
+            print(f"   - Keywords: {len(all_seo_keywords) if all_seo_keywords else 0} total")
+            print(f"   - Backend Keywords: {len(listing.amazon_backend_keywords)} characters")
+            print(f"   - A+ Content: Hero, Features, FAQs, Trust Builders")
+            print(f"   - Brand Summary integrated into content")
             self.logger.info("Generating A+ content HTML...")
             # Build comprehensive A+ content HTML from the plan
             sections_html = []
@@ -1136,18 +1303,21 @@ Technical specifications include comprehensive compatibility, robust build quali
     </div>"""
                     sections_html.append(section_html)
             
-            # Traditional content as fallback
+            # Generate HTML from saved listing data
             features_html = '\n'.join([f"        <li>{feature}</li>" for feature in features_list])
-            whats_in_box_html = '\n'.join([f"        <li>{item}</li>" for item in whats_in_box_list])
-            trust_html = '\n'.join([f"        <li>{trust}</li>" for trust in trust_list])
-            faqs_html = '\n'.join([f"    <p><strong>{faq}</strong></p>" for faq in faq_strings])
+            whats_in_box_items = result.get('whatsInBox', [f'{product.name}', 'User manual', 'Warranty information'])
+            whats_in_box_html = '\n'.join([f"        <li>{item}</li>" for item in whats_in_box_items])
+            trust_items = result.get('trustBuilders', ['Quality guaranteed', '30-day satisfaction', 'Customer support'])
+            trust_html = '\n'.join([f"        <li>{trust}</li>" for trust in trust_items])
+            faq_items = result.get('faqs', [])
+            faqs_html = '\n'.join([f"    <p><strong>{faq}</strong></p>" for faq in faq_items])
             
             # Generate PPC strategy HTML
             ppc_strategy = result.get('ppcStrategy', {})
             campaign_structure = ppc_strategy.get('campaignStructure', {})
             ppc_html = ""
             
-            if campaign_structure:
+            if isinstance(campaign_structure, dict) and campaign_structure:
                 ppc_sections = []
                 for campaign_type, campaign_data in campaign_structure.items():
                     if isinstance(campaign_data, dict):
@@ -1232,10 +1402,9 @@ Technical specifications include comprehensive compatibility, robust build quali
     <h3>Frequently Asked Questions</h3>
 {faqs_html}
 </div>"""
-            # Keep the JSON data instead of overwriting with HTML
-            # The HTML is nice but we want to preserve the structured data with image suggestions
-            # listing.amazon_aplus_content = aplus_html  # Disabled to preserve JSON structure
-            self.logger.info(f"A+ content HTML set: {len(aplus_html)} characters")
+            # Save the A+ content HTML to the listing
+            listing.amazon_aplus_content = aplus_html
+            self.logger.info(f"A+ content HTML saved: {len(aplus_html)} characters")
             
             # Parse conversion elements (only if they exist and have content)
             conversion_elements = result.get('conversion_elements', {})

@@ -4,6 +4,17 @@ from .models import Product, CompetitorAnalysis
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    competitor_urls = serializers.ListField(
+        child=serializers.URLField(allow_blank=True),
+        required=False,
+        write_only=True
+    )
+    competitor_asins = serializers.ListField(
+        child=serializers.CharField(max_length=20, allow_blank=True),
+        required=False,
+        write_only=True
+    )
+    
     class Meta:
         model = Product
         fields = '__all__'
@@ -20,6 +31,16 @@ class ProductSerializer(serializers.ModelSerializer):
         try:
             sys.stdout = io.StringIO()
             sys.stderr = io.StringIO()
+            
+            # Handle list fields
+            competitor_urls_list = validated_data.pop('competitor_urls', [])
+            competitor_asins_list = validated_data.pop('competitor_asins', [])
+            
+            # Convert lists to comma-separated strings for storage
+            if competitor_urls_list:
+                validated_data['competitor_urls'] = ','.join(filter(None, competitor_urls_list))
+            if competitor_asins_list:
+                validated_data['competitor_asins'] = ','.join(filter(None, competitor_asins_list))
             
             # For demo, create or get a default user
             user, created = User.objects.get_or_create(

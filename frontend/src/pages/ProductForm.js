@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Sparkles } from 'lucide-react';
+import { ArrowLeft, Sparkles, Plus, X, Globe, Info } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { productAPI, listingAPI } from '../services/api';
 
@@ -11,18 +11,26 @@ const ProductForm = () => {
   const selectedPlatform = location.state?.platform || 'amazon';
   
   const [formData, setFormData] = useState({
+    // Required fields
     name: '',
     description: '',
     brand_name: '',
-    brand_tone: 'professional',
+    asin: '',
+    marketplace: 'us',
     price: '',
     categories: '',
     features: '',
-    competitor_urls: '',
+    // Optional fields
+    brand_tone: 'professional',
+    brand_persona: '',
+    target_audience: '',
+    competitor_urls: [''],
+    competitor_asins: [''],
     target_keywords: ''
   });
   
   const [isLoading, setIsLoading] = useState(false);
+  const [showOptionalFields, setShowOptionalFields] = useState(false);
 
   const brandTones = [
     { value: 'professional', label: 'Professional' },
@@ -33,12 +41,61 @@ const ProductForm = () => {
     { value: 'bold', label: 'Bold' }
   ];
 
+  const amazonMarketplaces = [
+    { value: 'us', label: 'United States', flag: '🇺🇸', language: 'en', domain: 'amazon.com' },
+    { value: 'ca', label: 'Canada', flag: '🇨🇦', language: 'en', domain: 'amazon.ca' },
+    { value: 'mx', label: 'Mexico', flag: '🇲🇽', language: 'es', domain: 'amazon.com.mx' },
+    { value: 'uk', label: 'United Kingdom', flag: '🇬🇧', language: 'en', domain: 'amazon.co.uk' },
+    { value: 'de', label: 'Germany', flag: '🇩🇪', language: 'de', domain: 'amazon.de' },
+    { value: 'fr', label: 'France', flag: '🇫🇷', language: 'fr', domain: 'amazon.fr' },
+    { value: 'it', label: 'Italy', flag: '🇮🇹', language: 'it', domain: 'amazon.it' },
+    { value: 'es', label: 'Spain', flag: '🇪🇸', language: 'es', domain: 'amazon.es' },
+    { value: 'nl', label: 'Netherlands', flag: '🇳🇱', language: 'nl', domain: 'amazon.nl' },
+    { value: 'se', label: 'Sweden', flag: '🇸🇪', language: 'sv', domain: 'amazon.se' },
+    { value: 'pl', label: 'Poland', flag: '🇵🇱', language: 'pl', domain: 'amazon.pl' },
+    { value: 'be', label: 'Belgium', flag: '🇧🇪', language: 'fr', domain: 'amazon.com.be' },
+    { value: 'jp', label: 'Japan', flag: '🇯🇵', language: 'ja', domain: 'amazon.co.jp' },
+    { value: 'in', label: 'India', flag: '🇮🇳', language: 'en', domain: 'amazon.in' },
+    { value: 'sg', label: 'Singapore', flag: '🇸🇬', language: 'en', domain: 'amazon.sg' },
+    { value: 'ae', label: 'UAE', flag: '🇦🇪', language: 'en', domain: 'amazon.ae' },
+    { value: 'sa', label: 'Saudi Arabia', flag: '🇸🇦', language: 'ar', domain: 'amazon.sa' },
+    { value: 'br', label: 'Brazil', flag: '🇧🇷', language: 'pt', domain: 'amazon.com.br' },
+    { value: 'au', label: 'Australia', flag: '🇦🇺', language: 'en', domain: 'amazon.com.au' },
+    { value: 'tr', label: 'Turkey', flag: '🇹🇷', language: 'tr', domain: 'amazon.com.tr' },
+    { value: 'eg', label: 'Egypt', flag: '🇪🇬', language: 'ar', domain: 'amazon.eg' }
+  ];
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
+  };
+
+  const handleArrayInputChange = (field, index, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: prev[field].map((item, i) => i === index ? value : item)
+    }));
+  };
+
+  const addArrayField = (field) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: [...prev[field], '']
+    }));
+  };
+
+  const removeArrayField = (field, index) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: prev[field].filter((_, i) => i !== index)
+    }));
+  };
+
+  const getSelectedMarketplace = () => {
+    return amazonMarketplaces.find(m => m.value === formData.marketplace);
   };
 
 
@@ -50,9 +107,14 @@ const ProductForm = () => {
     
     try {
       // Create product data
+      const selectedMarketplace = getSelectedMarketplace();
       const productData = {
         ...formData,
-        target_platform: selectedPlatform
+        target_platform: selectedPlatform,
+        marketplace: formData.marketplace,
+        marketplace_language: selectedMarketplace?.language || 'en',
+        competitor_urls: formData.competitor_urls.filter(url => url.trim()),
+        competitor_asins: formData.competitor_asins.filter(asin => asin.trim())
       };
       
       try {
@@ -178,146 +240,323 @@ const ProductForm = () => {
           className="bg-white rounded-lg shadow-sm border border-gray-200"
         >
           <form onSubmit={handleSubmit} className="p-8 space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
+            {/* Amazon Marketplace Selection - Only for Amazon */}
+            {selectedPlatform === 'amazon' && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Product Name *
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="form-input"
-                  placeholder="Enter your product name"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Brand Name *
-                </label>
-                <input
-                  type="text"
-                  name="brand_name"
-                  value={formData.brand_name}
-                  onChange={handleInputChange}
-                  className="form-input"
-                  placeholder="Your brand name"
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Product Description *
-              </label>
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                rows="4"
-                className="form-input"
-                placeholder="Describe your product in detail..."
-                required
-              />
-            </div>
-
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Brand Tone
+                  <Globe className="inline h-4 w-4 mr-1" />
+                  Amazon Marketplace *
                 </label>
                 <select
-                  name="brand_tone"
-                  value={formData.brand_tone}
+                  name="marketplace"
+                  value={formData.marketplace}
                   onChange={handleInputChange}
                   className="form-input"
+                  required
                 >
-                  {brandTones.map(tone => (
-                    <option key={tone.value} value={tone.value}>
-                      {tone.label}
+                  {amazonMarketplaces.map(market => (
+                    <option key={market.value} value={market.value}>
+                      {market.flag} {market.label} ({market.domain})
                     </option>
                   ))}
                 </select>
+                {formData.marketplace && (
+                  <p className="text-sm text-blue-600 mt-2">
+                    <Info className="inline h-3 w-3 mr-1" />
+                    Listing will be generated in {getSelectedMarketplace()?.language === 'en' ? 'English' : 
+                      `${getSelectedMarketplace()?.label}'s local language`}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Required Fields Section */}
+            <div className="border-b pb-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Required Information</h3>
+              
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Product Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="Enter your product name"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Brand Name *
+                  </label>
+                  <input
+                    type="text"
+                    name="brand_name"
+                    value={formData.brand_name}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="Your brand name"
+                    required
+                  />
+                </div>
               </div>
 
-              <div>
+              {selectedPlatform === 'amazon' && (
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Product ASIN (if existing product)
+                  </label>
+                  <input
+                    type="text"
+                    name="asin"
+                    value={formData.asin}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="B08N5WRWNW"
+                  />
+                  <p className="text-sm text-gray-500 mt-1">
+                    Enter ASIN if updating an existing Amazon listing
+                  </p>
+                </div>
+              )}
+
+              <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Price ($)
+                  Product Description *
                 </label>
-                <input
-                  type="number"
-                  name="price"
-                  value={formData.price}
+                <textarea
+                  name="description"
+                  value={formData.description}
                   onChange={handleInputChange}
+                  rows="4"
                   className="form-input"
-                  placeholder="Product price"
-                  step="0.01"
+                  placeholder="Describe your product in detail..."
+                  required
+                />
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Price * ($)
+                  </label>
+                  <input
+                    type="number"
+                    name="price"
+                    value={formData.price}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="29.99"
+                    step="0.01"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Categories *
+                  </label>
+                  <input
+                    type="text"
+                    name="categories"
+                    value={formData.categories}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    placeholder="Electronics, Home & Garden"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Key Features *
+                </label>
+                <textarea
+                  name="features"
+                  value={formData.features}
+                  onChange={handleInputChange}
+                  rows="3"
+                  className="form-input"
+                  placeholder="List your product's key features (one per line)"
+                  required
                 />
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Categories
-              </label>
-              <input
-                type="text"
-                name="categories"
-                value={formData.categories}
-                onChange={handleInputChange}
-                className="form-input"
-                placeholder="Electronics, Home & Garden, Fashion (comma-separated)"
-              />
-            </div>
+            {/* Optional Fields Section */}
+            <div className="pt-6">
+              <button
+                type="button"
+                onClick={() => setShowOptionalFields(!showOptionalFields)}
+                className="flex items-center text-primary-600 hover:text-primary-700 font-medium mb-4"
+              >
+                {showOptionalFields ? (
+                  <>
+                    <X className="h-4 w-4 mr-2" />
+                    Hide Optional Fields
+                  </>
+                ) : (
+                  <>
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Optional Information (Recommended for Better Results)
+                  </>
+                )}
+              </button>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Key Features
-              </label>
-              <textarea
-                name="features"
-                value={formData.features}
-                onChange={handleInputChange}
-                rows="3"
-                className="form-input"
-                placeholder="List your product's key features (comma-separated)"
-              />
-            </div>
+              {showOptionalFields && (
+                <div className="space-y-6 pt-4 border-t">
+                  <h3 className="text-lg font-semibold text-gray-900">Optional Information</h3>
+                  
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Brand Tone
+                      </label>
+                      <select
+                        name="brand_tone"
+                        value={formData.brand_tone}
+                        onChange={handleInputChange}
+                        className="form-input"
+                      >
+                        {brandTones.map(tone => (
+                          <option key={tone.value} value={tone.value}>
+                            {tone.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Competitor URLs
-              </label>
-              <textarea
-                name="competitor_urls"
-                value={formData.competitor_urls}
-                onChange={handleInputChange}
-                rows="2"
-                className="form-input"
-                placeholder="Paste competitor product URLs (one per line)"
-              />
-              <p className="text-sm text-gray-500 mt-1">
-                We'll analyze these to help optimize your listing
-              </p>
-            </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Target Keywords
+                      </label>
+                      <input
+                        type="text"
+                        name="target_keywords"
+                        value={formData.target_keywords}
+                        onChange={handleInputChange}
+                        className="form-input"
+                        placeholder="wireless earbuds, bluetooth headphones"
+                      />
+                    </div>
+                  </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Target Keywords (Optional)
-              </label>
-              <input
-                type="text"
-                name="target_keywords"
-                value={formData.target_keywords}
-                onChange={handleInputChange}
-                className="form-input"
-                placeholder="wireless earbuds, bluetooth headphones, noise cancelling"
-              />
+                  {selectedPlatform === 'amazon' && (
+                    <>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Brand Persona
+                        </label>
+                        <textarea
+                          name="brand_persona"
+                          value={formData.brand_persona}
+                          onChange={handleInputChange}
+                          rows="3"
+                          className="form-input"
+                          placeholder="Describe your brand's personality, values, and voice. E.g., 'Innovative tech company focused on simplifying daily life through intuitive design and reliable performance.'"
+                        />
+                        <p className="text-sm text-gray-500 mt-1">
+                          This helps create a consistent brand voice across your listing
+                        </p>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Target Audience
+                        </label>
+                        <textarea
+                          name="target_audience"
+                          value={formData.target_audience}
+                          onChange={handleInputChange}
+                          rows="3"
+                          className="form-input"
+                          placeholder="Describe your ideal customer. E.g., 'Tech-savvy professionals aged 25-45 who value productivity and efficiency in their daily workflow.'"
+                        />
+                        <p className="text-sm text-gray-500 mt-1">
+                          Understanding your audience helps tailor the listing's messaging
+                        </p>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Competitor URLs
+                        </label>
+                        {formData.competitor_urls.map((url, index) => (
+                          <div key={index} className="flex mb-2">
+                            <input
+                              type="url"
+                              value={url}
+                              onChange={(e) => handleArrayInputChange('competitor_urls', index, e.target.value)}
+                              className="form-input flex-1"
+                              placeholder="https://amazon.com/dp/B08N5WRWNW"
+                            />
+                            {formData.competitor_urls.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => removeArrayField('competitor_urls', index)}
+                                className="ml-2 text-red-600 hover:text-red-700"
+                              >
+                                <X className="h-5 w-5" />
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                        <button
+                          type="button"
+                          onClick={() => addArrayField('competitor_urls')}
+                          className="text-sm text-primary-600 hover:text-primary-700 flex items-center"
+                        >
+                          <Plus className="h-4 w-4 mr-1" />
+                          Add Another Competitor URL
+                        </button>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Competitor ASINs
+                        </label>
+                        {formData.competitor_asins.map((asin, index) => (
+                          <div key={index} className="flex mb-2">
+                            <input
+                              type="text"
+                              value={asin}
+                              onChange={(e) => handleArrayInputChange('competitor_asins', index, e.target.value)}
+                              className="form-input flex-1"
+                              placeholder="B08N5WRWNW"
+                            />
+                            {formData.competitor_asins.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => removeArrayField('competitor_asins', index)}
+                                className="ml-2 text-red-600 hover:text-red-700"
+                              >
+                                <X className="h-5 w-5" />
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                        <button
+                          type="button"
+                          onClick={() => addArrayField('competitor_asins')}
+                          className="text-sm text-primary-600 hover:text-primary-700 flex items-center"
+                        >
+                          <Plus className="h-4 w-4 mr-1" />
+                          Add Another Competitor ASIN
+                        </button>
+                        <p className="text-sm text-gray-500 mt-1">
+                          We'll analyze these competitors to optimize your listing
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
             </div>
 
 

@@ -19,6 +19,30 @@ class Product(models.Model):
         ('minimal', 'Minimal'),
         ('bold', 'Bold'),
     ]
+    
+    AMAZON_MARKETPLACES = [
+        ('us', 'United States'),
+        ('ca', 'Canada'),
+        ('mx', 'Mexico'),
+        ('uk', 'United Kingdom'),
+        ('de', 'Germany'),
+        ('fr', 'France'),
+        ('it', 'Italy'),
+        ('es', 'Spain'),
+        ('nl', 'Netherlands'),
+        ('se', 'Sweden'),
+        ('pl', 'Poland'),
+        ('be', 'Belgium'),
+        ('jp', 'Japan'),
+        ('in', 'India'),
+        ('sg', 'Singapore'),
+        ('ae', 'UAE'),
+        ('sa', 'Saudi Arabia'),
+        ('br', 'Brazil'),
+        ('au', 'Australia'),
+        ('tr', 'Turkey'),
+        ('eg', 'Egypt'),
+    ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
@@ -26,6 +50,15 @@ class Product(models.Model):
     brand_name = models.CharField(max_length=100)
     brand_tone = models.CharField(max_length=20, choices=BRAND_TONES)
     target_platform = models.CharField(max_length=20, choices=PLATFORMS)
+    
+    # Amazon-specific fields
+    asin = models.CharField(max_length=20, blank=True, default="", help_text="Amazon Standard Identification Number")
+    marketplace = models.CharField(max_length=5, choices=AMAZON_MARKETPLACES, default='us', help_text="Amazon marketplace/country")
+    marketplace_language = models.CharField(max_length=10, blank=True, default="en", help_text="Language for the selected marketplace")
+    brand_persona = models.TextField(blank=True, default="", help_text="Brand personality, values, and voice")
+    target_audience = models.TextField(blank=True, default="", help_text="Description of ideal customer demographics and psychographics")
+    competitor_asins = models.TextField(help_text="Comma-separated competitor ASINs", blank=True, default="")
+    
     competitor_urls = models.TextField(help_text="Comma-separated competitor URLs", blank=True, default="")
     price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     categories = models.TextField(help_text="Product categories, comma-separated", blank=True, default="")
