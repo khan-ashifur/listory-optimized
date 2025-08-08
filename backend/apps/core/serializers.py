@@ -4,6 +4,11 @@ from .models import Product, CompetitorAnalysis
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    product_urls = serializers.ListField(
+        child=serializers.URLField(allow_blank=True),
+        required=False,
+        write_only=True
+    )
     competitor_urls = serializers.ListField(
         child=serializers.URLField(allow_blank=True),
         required=False,
@@ -33,10 +38,13 @@ class ProductSerializer(serializers.ModelSerializer):
             sys.stderr = io.StringIO()
             
             # Handle list fields
+            product_urls_list = validated_data.pop('product_urls', [])
             competitor_urls_list = validated_data.pop('competitor_urls', [])
             competitor_asins_list = validated_data.pop('competitor_asins', [])
             
             # Convert lists to comma-separated strings for storage
+            if product_urls_list:
+                validated_data['product_urls'] = ','.join(filter(None, product_urls_list))
             if competitor_urls_list:
                 validated_data['competitor_urls'] = ','.join(filter(None, competitor_urls_list))
             if competitor_asins_list:

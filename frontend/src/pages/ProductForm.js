@@ -24,13 +24,16 @@ const ProductForm = () => {
     brand_tone: 'professional',
     brand_persona: '',
     target_audience: '',
+    product_urls: [''],
     competitor_urls: [''],
     competitor_asins: [''],
-    target_keywords: ''
+    target_keywords: '',
+    occasion: ''
   });
   
   const [isLoading, setIsLoading] = useState(false);
   const [showOptionalFields, setShowOptionalFields] = useState(false);
+  const [customOccasion, setCustomOccasion] = useState('');
 
   const brandTones = [
     { value: 'professional', label: 'Professional' },
@@ -39,6 +42,26 @@ const ProductForm = () => {
     { value: 'playful', label: 'Playful' },
     { value: 'minimal', label: 'Minimal' },
     { value: 'bold', label: 'Bold' }
+  ];
+
+  const occasions = [
+    { value: '', label: 'Select an Occasion (Optional)' },
+    { value: 'christmas', label: '🎄 Christmas' },
+    { value: 'valentines', label: '💝 Valentine\'s Day' },
+    { value: 'mothers_day', label: '🌸 Mother\'s Day' },
+    { value: 'fathers_day', label: '👔 Father\'s Day' },
+    { value: 'halloween', label: '🎃 Halloween' },
+    { value: 'thanksgiving', label: '🦃 Thanksgiving' },
+    { value: 'easter', label: '🐰 Easter' },
+    { value: 'birthday', label: '🎂 Birthday' },
+    { value: 'graduation', label: '🎓 Graduation' },
+    { value: 'wedding', label: '💍 Wedding' },
+    { value: 'anniversary', label: '💕 Anniversary' },
+    { value: 'new_year', label: '🎉 New Year' },
+    { value: 'back_to_school', label: '📚 Back to School' },
+    { value: 'black_friday', label: '🛍️ Black Friday' },
+    { value: 'cyber_monday', label: '💻 Cyber Monday' },
+    { value: 'custom', label: '✏️ Other (Custom)' }
   ];
 
   const amazonMarketplaces = [
@@ -113,8 +136,11 @@ const ProductForm = () => {
         target_platform: selectedPlatform,
         marketplace: formData.marketplace,
         marketplace_language: selectedMarketplace?.language || 'en',
+        product_urls: formData.product_urls.filter(url => url.trim()),
         competitor_urls: formData.competitor_urls.filter(url => url.trim()),
-        competitor_asins: formData.competitor_asins.filter(asin => asin.trim())
+        competitor_asins: formData.competitor_asins.filter(asin => asin.trim()),
+        // Handle occasion - use custom input if 'custom' is selected, otherwise use selected value
+        occasion: formData.occasion === 'custom' ? customOccasion : formData.occasion
       };
       
       try {
@@ -447,6 +473,46 @@ const ProductForm = () => {
                     </div>
                   </div>
 
+                  {/* Occasion Selection */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Special Occasion
+                    </label>
+                    <select
+                      name="occasion"
+                      value={formData.occasion}
+                      onChange={(e) => {
+                        handleInputChange(e);
+                        if (e.target.value !== 'custom') {
+                          setCustomOccasion('');
+                        }
+                      }}
+                      className="form-input"
+                    >
+                      {occasions.map(occasion => (
+                        <option key={occasion.value} value={occasion.value}>
+                          {occasion.label}
+                        </option>
+                      ))}
+                    </select>
+                    
+                    {formData.occasion === 'custom' && (
+                      <div className="mt-3">
+                        <input
+                          type="text"
+                          value={customOccasion}
+                          onChange={(e) => setCustomOccasion(e.target.value)}
+                          className="form-input"
+                          placeholder="Enter custom occasion (e.g., Baby Shower, Housewarming)"
+                        />
+                      </div>
+                    )}
+                    
+                    <p className="text-sm text-gray-500 mt-1">
+                      Select an occasion to generate themed content and keywords
+                    </p>
+                  </div>
+
                   {selectedPlatform === 'amazon' && (
                     <>
                       <div>
@@ -480,6 +546,45 @@ const ProductForm = () => {
                         />
                         <p className="text-sm text-gray-500 mt-1">
                           Understanding your audience helps tailor the listing's messaging
+                        </p>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Product URLs (Reference Links)
+                        </label>
+                        {formData.product_urls.map((url, index) => (
+                          <div key={index} className="flex mb-2">
+                            <input
+                              type="url"
+                              value={url}
+                              onChange={(e) => handleArrayInputChange('product_urls', index, e.target.value)}
+                              className="form-input flex-1"
+                              placeholder="https://www.example.com/product"
+                            />
+                            {formData.product_urls.length > 1 && (
+                              <button
+                                type="button"
+                                onClick={() => removeArrayField('product_urls', index)}
+                                className="ml-2 text-red-600 hover:text-red-700"
+                              >
+                                <X className="h-5 w-5" />
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                        {formData.product_urls.length < 3 && (
+                          <button
+                            type="button"
+                            onClick={() => addArrayField('product_urls')}
+                            className="text-sm text-primary-600 hover:text-primary-700 flex items-center"
+                          >
+                            <Plus className="h-4 w-4 mr-1" />
+                            Add Another Product URL (Max 3)
+                          </button>
+                        )}
+                        <p className="text-sm text-gray-500 mt-1">
+                          Add up to 3 product reference URLs for better content generation
                         </p>
                       </div>
 

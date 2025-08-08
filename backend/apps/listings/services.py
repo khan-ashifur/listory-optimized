@@ -500,6 +500,16 @@ COMPETITOR INSIGHTS TO LEVERAGE:
 REQUIRED ELEMENTS (MUST USE):
 - Target Keywords: {getattr(product, 'target_keywords', 'Generate based on product description')}
 - Categories for Context: {product.categories if product.categories else 'Use product description to determine'}
+- Special Occasion: {getattr(product, 'occasion', 'None - general purpose listing')}
+
+🎄 SPECIAL OCCASION OPTIMIZATION:
+If Special Occasion is specified, incorporate occasion-specific elements throughout the listing:
+- Title: Include occasion keywords naturally (e.g., "Perfect Christmas Gift", "Valentine's Day Special")
+- Keywords: Add 10+ occasion-specific search terms (e.g., "christmas gifts for dad", "valentine day present", "mothers day gift ideas")
+- Description: Reference gifting, seasonal use, or occasion-specific benefits
+- Bullet Points: Include gift-worthiness, seasonal appeal, or occasion-specific use cases
+- A+ Content: Create occasion-themed sections when relevant
+- SEO: Target holiday/occasion shopping patterns and gift-related searches
 
 ⚠️ IMPORTANT: Base EVERYTHING on the actual product information above. Do not use generic placeholder content. If a detail isn't provided, extract it from the description or features given.
 
@@ -519,7 +529,7 @@ Amazon's Rufus AI assistant helps customers find products through conversational
 YOUR MISSION: Create a COMPREHENSIVE, MAXIMUM-LENGTH Amazon listing optimized for both traditional search AND Rufus AI conversations.
 
 CRITICAL CONTENT REQUIREMENTS - GENERATE MAXIMUM CONTENT:
-✅ Title: 160-195 characters (optimize for SEO while staying under 200, include primary keywords)
+✅ Title: 120-145 characters (CRITICAL: mobile optimization requires under 150 chars, include primary keywords)
 ✅ Bullet Points: 5 bullets, each 200+ characters with unique emotional labels and proper contractions
 ✅ Product Description: 1500-2000 characters (comprehensive, natural language with proper grammar)
 ✅ A+ Content: 5 complete sections with unique focus, no duplication between sections, mobile-responsive
@@ -825,22 +835,42 @@ Write each section in a completely different style and tone. Use unexpected but 
                         system_content = f"YOU MUST WRITE EVERYTHING IN {language_name}! NOT A SINGLE WORD IN ENGLISH! " + system_content
                     
                     response = self.client.chat.completions.create(
-                        model="gpt-4o-mini",  # Use a model capable of JSON output
+                        model="gpt-4o",  # Premium model for maximum quality
                         messages=[
                             {"role": "system", "content": system_content},
                             {"role": "user", "content": prompt}
                         ],
                         max_tokens=4000,  # Increased max_tokens to accommodate detailed JSON output
-                        temperature=0.7,
+                        temperature=0.7,  # Optimal balance of creativity and consistency
                     )
                     print(f"OpenAI API call successful on attempt {retry_count + 1}")
                     break
                 except Exception as api_error:
                     retry_count += 1
-                    print(f"OpenAI API error on attempt {retry_count}: {str(api_error)}")
+                    error_type = type(api_error).__name__
+                    error_message = str(api_error)
+                    
+                    print(f"🚨 OpenAI API error on attempt {retry_count}/{max_retries}")
+                    print(f"Error type: {error_type}")
+                    print(f"Error message: {error_message}")
+                    
+                    # Enhanced error handling based on error types
+                    if "rate_limit" in error_message.lower() or "429" in error_message:
+                        print("⏱️ Rate limit detected, using exponential backoff")
+                        time.sleep(2 ** retry_count)  # Exponential backoff for rate limits
+                    elif "insufficient_quota" in error_message.lower() or "billing" in error_message.lower():
+                        print("💳 Billing/quota issue detected")
+                        raise Exception(f"OpenAI API quota/billing error: {error_message}")
+                    elif "invalid_request_error" in error_message.lower():
+                        print("📝 Request format error detected")
+                        raise Exception(f"OpenAI API request error: {error_message}")
+                    else:
+                        print(f"🔄 Generic error, retrying in {retry_count} seconds")
+                        time.sleep(retry_count)  # Progressive delay
+                    
                     if retry_count >= max_retries:
-                        raise Exception(f"Failed to generate content after {max_retries} attempts: {str(api_error)}")
-                    time.sleep(1)  # Brief pause before retry
+                        print(f"❌ All {max_retries} attempts failed")
+                        raise Exception(f"Failed to generate content after {max_retries} attempts. Final error: {error_type}: {error_message}")
             
             if response is None:
                 raise Exception("Failed to get response from OpenAI API")
@@ -856,37 +886,96 @@ Write each section in a completely different style and tone. Use unexpected but 
             print(f"AI Response preview: {safe_preview}...")
             print(f"AI Response ending: ...{safe_ending}")
             
-            # Try to parse the JSON response directly
+            # Enhanced multi-fallback JSON parsing (inspired by GlowReader 3.0)
             result = None
+            parsing_attempts = 0
+            
+            # Attempt 1: Direct parsing
             try:
-                # Clean the content first
-                cleaned_content = ai_content.strip()
-                # Remove markdown code blocks if present
-                if cleaned_content.startswith('```json'):
-                    cleaned_content = cleaned_content[7:]
-                if cleaned_content.endswith('```'):
-                    cleaned_content = cleaned_content[:-3]
-                cleaned_content = cleaned_content.strip()
+                parsing_attempts += 1
+                print(f"JSON Parsing Attempt {parsing_attempts}: Direct parsing")
+                result = json.loads(ai_content.strip())
+                print("✅ Direct JSON parsing successful!")
+            except json.JSONDecodeError:
+                pass
+            
+            # Attempt 2: Remove markdown code blocks
+            if result is None:
+                try:
+                    parsing_attempts += 1
+                    print(f"JSON Parsing Attempt {parsing_attempts}: Markdown cleanup")
+                    cleaned_content = ai_content.strip()
+                    
+                    # Handle various markdown patterns
+                    json_patterns = [
+                        (r'```json\s*(.*?)\s*```', 1),  # ```json content ```
+                        (r'```\s*(.*?)\s*```', 1),     # ``` content ```
+                        (r'`(.*?)`', 1),               # `content`
+                    ]
+                    
+                    for pattern, group in json_patterns:
+                        import re
+                        match = re.search(pattern, cleaned_content, re.DOTALL)
+                        if match:
+                            cleaned_content = match.group(group).strip()
+                            break
+                    
+                    result = json.loads(cleaned_content)
+                    print("✅ Markdown cleanup parsing successful!")
+                except (json.JSONDecodeError, AttributeError):
+                    pass
+            
+            # Attempt 3: Find JSON object boundaries
+            if result is None:
+                try:
+                    parsing_attempts += 1
+                    print(f"JSON Parsing Attempt {parsing_attempts}: JSON boundary detection")
+                    
+                    # Find the first { and last }
+                    start = ai_content.find('{')
+                    end = ai_content.rfind('}')
+                    
+                    if start != -1 and end != -1 and end > start:
+                        json_content = ai_content[start:end+1]
+                        result = json.loads(json_content)
+                        print("✅ JSON boundary detection successful!")
+                except (json.JSONDecodeError, ValueError):
+                    pass
+            
+            # Attempt 4: Character-by-character cleanup
+            if result is None:
+                try:
+                    parsing_attempts += 1
+                    print(f"JSON Parsing Attempt {parsing_attempts}: Character cleanup")
+                    
+                    # Remove common problematic characters
+                    cleaned = ai_content.replace('\n', ' ').replace('\r', ' ').replace('\t', ' ')
+                    cleaned = ' '.join(cleaned.split())  # Normalize whitespace
+                    
+                    # Try to fix common JSON issues
+                    cleaned = cleaned.replace("'", '"')  # Fix single quotes
+                    cleaned = re.sub(r'(\w+):', r'"\1":', cleaned)  # Add quotes to keys
+                    
+                    result = json.loads(cleaned)
+                    print("✅ Character cleanup parsing successful!")
+                except (json.JSONDecodeError, AttributeError):
+                    pass
+            
+            # Final validation and logging
+            if result:
+                print(f"🎉 JSON parsing successful after {parsing_attempts} attempts!")
+                print(f"🔍 AI response contains {len(result.keys())} fields: {list(result.keys())}")
                 
-                result = json.loads(cleaned_content)
-                print("Direct JSON parsing successful!")
-                print(f"🔍 AI response fields: {list(result.keys())}")
-                print(f"🔍 Has productDescription: {'productDescription' in result}")
-                if 'productDescription' in result:
-                    desc_length = len(result['productDescription']) if result['productDescription'] else 0
-                    print(f"🔍 Description length: {desc_length} characters")
-                    if result['productDescription']:
-                        print(f"🔍 Description preview: {result['productDescription'][:200]}...")
+                # Validate critical fields
+                critical_fields = ['productDescription', 'bulletPoints', 'amazonTitle']
+                for field in critical_fields:
+                    if field in result:
+                        field_length = len(str(result[field])) if result[field] else 0
+                        print(f"✅ {field}: {field_length} characters")
                     else:
-                        print(f"🔍 productDescription field exists but is empty!")
-                else:
-                    print(f"🔍 productDescription field missing from AI response!")
-                    # Check what description-related fields exist
-                    desc_fields = [k for k in result.keys() if 'desc' in k.lower()]
-                    print(f"🔍 Description-related fields found: {desc_fields}")
-                
-            except json.JSONDecodeError as e:
-                print(f"Direct parsing failed: {e}, falling back to aggressive cleaning")
+                        print(f"⚠️ Missing critical field: {field}")
+            else:
+                print("❌ All JSON parsing attempts failed!")
                 cleaned_content = ai_content.strip()
                 
                 # More aggressive JSON cleaning for complex responses
@@ -2081,6 +2170,13 @@ BRAND: {product.brand_name}
 DESCRIPTION: {product.description}  
 FEATURES: {product.features}
 PRICE: ${product.price}
+SPECIAL OCCASION: {getattr(product, 'occasion', 'None - general purpose listing')}
+
+🎁 OCCASION OPTIMIZATION: If Special Occasion is provided, incorporate:
+- Title: Add occasion appeal naturally (e.g., "Perfect for Christmas", "Great Valentine's Gift")
+- Keywords: Include 5+ occasion-specific terms (e.g., "christmas gift", "holiday present", "valentine gift")
+- Description: Mention gift-worthiness, seasonal use, or occasion benefits
+- Features: Highlight occasion-relevant aspects when applicable
 
 Requirements:
 - Title: Under 100 characters with brand and key benefit
