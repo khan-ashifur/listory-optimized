@@ -137,27 +137,27 @@ Use culturally appropriate phrases and expressions for {country} shoppers.
         brand_tone_mapping = {
             'professional': {
                 'tone': 'Professional & Authoritative',
-                'guidelines': 'Direct, credible, expertise-focused. Personality: Trusted advisor who builds confidence. Use phrases like "Industry-leading", "Proven results", "Professional grade". Focus on reliability and expertise.'
+                'guidelines': 'Direct, credible, expertise-focused. Personality: Trusted advisor who builds confidence. Use phrases like "Industry-leading", "Proven results", "Professional grade". Focus on reliability and expertise. TITLE RULE: Always merge an emotional hook with a high-intent keyword in the first 4 words - no clickbait, must feel authentic and aligned with product strengths.'
             },
             'casual': {
                 'tone': 'Friendly & Approachable',
-                'guidelines': 'Conversational, warm, relatable. Personality: Helpful friend who makes things easy. Use phrases like "Just what you need", "Makes life easier", "You\'ll love this". Focus on comfort and simplicity.'
+                'guidelines': 'Conversational, warm, relatable. Personality: Helpful friend who makes things easy. Use phrases like "Just what you need", "Makes life easier", "You\'ll love this". Focus on comfort and simplicity. TITLE RULE: Always merge an emotional hook with a high-intent keyword in the first 4 words - no clickbait, must feel authentic and aligned with product strengths.'
             },
             'luxury': {
                 'tone': 'Elegant & Premium',
-                'guidelines': 'Sophisticated, aspirational, transformational. Personality: Elevated and inspiring. Use phrases like "Elevate your", "Transform into", "Luxurious experience". Include sensory language and confidence-building.'
+                'guidelines': 'Sophisticated, aspirational, transformational. Personality: Elevated and inspiring. Use phrases like "Elevate your", "Transform into", "Luxurious experience". Include sensory language and confidence-building. TITLE RULE: Always merge an emotional hook with a high-intent keyword in the first 4 words - no clickbait, must feel authentic and aligned with product strengths.'
             },
             'playful': {
                 'tone': 'Playful & Innovative',
-                'guidelines': 'Fun, confident, slightly cheeky. Personality: Tech-savvy friend who makes complex simple. Use phrases like "Talk like a local", "Say it like you mean it", "Ready to [outcome]". Balance innovation with accessibility.'
+                'guidelines': 'Fun, confident, slightly cheeky. Personality: Tech-savvy friend who makes complex simple. Use phrases like "Talk like a local", "Say it like you mean it", "Ready to [outcome]". Balance innovation with accessibility. TITLE RULE: Always merge an emotional hook with a high-intent keyword in the first 4 words - no clickbait, must feel authentic and aligned with product strengths.'
             },
             'minimal': {
                 'tone': 'Clean & Minimal',
-                'guidelines': 'Clear, concise, purposeful. Personality: Thoughtful minimalist who values quality. Use phrases like "Simply better", "Pure performance", "Essential quality". Focus on clarity and purpose.'
+                'guidelines': 'Clear, concise, purposeful. Personality: Thoughtful minimalist who values quality. Use phrases like "Simply better", "Pure performance", "Essential quality". Focus on clarity and purpose. TITLE RULE: Always merge an emotional hook with a high-intent keyword in the first 4 words - no clickbait, must feel authentic and aligned with product strengths.'
             },
             'bold': {
                 'tone': 'Bold & Confident',
-                'guidelines': 'Strong, decisive, powerful. Personality: Leader who inspires action. Use phrases like "Dominate your", "Unleash your", "Power through". Focus on strength and transformation.'
+                'guidelines': 'Strong, decisive, powerful. Personality: Leader who inspires action. Use phrases like "Dominate your", "Unleash your", "Power through". Focus on strength and transformation. TITLE RULE: Always merge an emotional hook with a high-intent keyword in the first 4 words - no clickbait, must feel authentic and aligned with product strengths.'
             }
         }
         category_tone = brand_tone_mapping.get(product.brand_tone, brand_tone_mapping['professional'])
@@ -419,7 +419,9 @@ DESCRIPTION VARIATION: Show conviction through evidence and specific benefits
             "Include honest comparisons to alternatives when appropriate",
             "Write like someone who actually owns and loves the product",
             "Use unexpected but fitting metaphors or creative descriptions",
-            "Include authentic details that only someone familiar with the product would know"
+            "Include authentic details that only someone familiar with the product would know",
+            "MOBILE SCAN-FIRST BULLETS RULE: The first 6-8 words of each bullet must serve as a micro-headline (main benefit or emotional payoff), followed by supportive detail",
+            "BENEFIT STACKING: At least 2 bullets should combine feature + emotional benefit + trust element in a single flow (e.g., 'LOCKS IN COLD — Double-wall insulation keeps water icy fresh, giving you confidence on long commutes')"
         ]
         random.shuffle(variety_elements)
         
@@ -533,25 +535,25 @@ From GPT-4 strengths: emotional storytelling, vivid scenarios, problem-solving b
 From GPT-5 strengths: short, mobile-friendly bullet points, gifting/lifestyle positioning, broad keyword coverage, and strong trust signals (like warranties and guarantees).
 
 MERGED STYLE RULES:
-• Title: Under 115 characters for mobile optimization
-• Bullet Points: 5 maximum, each 1–2 short sentences, starting with a bold benefit phrase
-• Description: 2–3 short paragraphs mixing emotion and factual details
+• Title: Mobile-first priority - impactful and fully scannable within 110-125 characters (up to 140 max if brand name is long). Start with hook + primary keyword
+• Bullet Points: 5 maximum, each 200+ chars. Each begins with a strong 6-8 word benefit phrase (micro-headline) before detailed explanation. Must have bold-style micro-headlines (Amazon strips HTML bold but wording must read like strong lead)
+• Description: 1500-2000 chars, broken into short 2-3 sentence chunks with line breaks for mobile readability. Each chunk ends with a soft benefit-driven hook
 • FAQ: Address common objections, warranty info, and gifting appeal
 • A+ Content: Combine lifestyle briefs, technical infographic briefs, and warranty comparisons
 • Keywords: Naturally integrate both short-tail and long-tail keywords throughout
-• Backend Keywords: Include all provided search terms exactly
+• Backend Keywords: 249 max chars, must not duplicate exact words from title/bullets, instead target complementary indexing terms
 • No Repetition: Do not repeat identical sentences across sections
 
 YOUR MISSION: Create a COMPREHENSIVE, MAXIMUM-LENGTH Amazon listing optimized for both traditional search AND Rufus AI conversations using the MERGED STYLE approach.
 
 CRITICAL CONTENT REQUIREMENTS - GENERATE MAXIMUM CONTENT:
-✅ Title: 120-145 characters (CRITICAL: mobile optimization requires under 150 chars, include primary keywords)
-✅ Bullet Points: 5 bullets, each 200+ characters with unique emotional labels and proper contractions
-✅ Product Description: 1500-2000 characters (comprehensive, natural language with proper grammar)
+✅ Title: 110-125 chars ideal (up to 140 max). Start with hook + primary keyword. Mobile-first priority for scanability
+✅ Bullet Points: 5 bullets, each 200+ chars. Each begins with strong 6-8 word benefit phrase before detailed explanation
+✅ Product Description: 1500-2000 chars, broken into short readable chunks, each ending with soft benefit-driven hook
 ✅ A+ Content: 5 complete sections with unique focus, no duplication between sections, mobile-responsive
 ✅ Visual Templates: GENERATE ACTUAL CONTENT for each template field - no instruction text, only real content
-✅ Backend Keywords: 249 characters (use every character)
-✅ SEO Keywords: 80+ comprehensive keywords across 5 categories
+✅ Backend Keywords: 249 max chars, must not duplicate exact words from title/bullets, target complementary indexing terms
+✅ SEO Keywords: 80+ total (short + long-tail), ensuring no overstuffing; distribute naturally across listing
 ✅ Brand Story: 250-400 character detailed brand narrative with proper punctuation
 ✅ FAQs: 5+ detailed Q&As with proper grammar and complete sentences
 ✅ Features: 5+ specific product features
