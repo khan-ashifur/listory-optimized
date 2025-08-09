@@ -526,7 +526,23 @@ Amazon's Rufus AI assistant helps customers find products through conversational
 - Use case scenarios ("Good for traveling?", "Will this work for gaming?")
 - Problem-solving language ("Stops hurting my ears", "Finally doesn't fall out")
 
-YOUR MISSION: Create a COMPREHENSIVE, MAXIMUM-LENGTH Amazon listing optimized for both traditional search AND Rufus AI conversations.
+📝 MERGED STYLE APPROACH (GPT-4 + GPT-5 BEST PRACTICES):
+Merge two proven approaches into one powerful listing:
+
+From GPT-4 strengths: emotional storytelling, vivid scenarios, problem-solving benefits, and strong feature-to-benefit connections.
+From GPT-5 strengths: short, mobile-friendly bullet points, gifting/lifestyle positioning, broad keyword coverage, and strong trust signals (like warranties and guarantees).
+
+MERGED STYLE RULES:
+• Title: Under 115 characters for mobile optimization
+• Bullet Points: 5 maximum, each 1–2 short sentences, starting with a bold benefit phrase
+• Description: 2–3 short paragraphs mixing emotion and factual details
+• FAQ: Address common objections, warranty info, and gifting appeal
+• A+ Content: Combine lifestyle briefs, technical infographic briefs, and warranty comparisons
+• Keywords: Naturally integrate both short-tail and long-tail keywords throughout
+• Backend Keywords: Include all provided search terms exactly
+• No Repetition: Do not repeat identical sentences across sections
+
+YOUR MISSION: Create a COMPREHENSIVE, MAXIMUM-LENGTH Amazon listing optimized for both traditional search AND Rufus AI conversations using the MERGED STYLE approach.
 
 CRITICAL CONTENT REQUIREMENTS - GENERATE MAXIMUM CONTENT:
 ✅ Title: 120-145 characters (CRITICAL: mobile optimization requires under 150 chars, include primary keywords)
@@ -835,13 +851,13 @@ Write each section in a completely different style and tone. Use unexpected but 
                         system_content = f"YOU MUST WRITE EVERYTHING IN {language_name}! NOT A SINGLE WORD IN ENGLISH! " + system_content
                     
                     response = self.client.chat.completions.create(
-                        model="gpt-4o",  # Premium model for maximum quality
+                        model="gpt-5-chat-latest",  # Using GPT-5 for superior quality
                         messages=[
                             {"role": "system", "content": system_content},
                             {"role": "user", "content": prompt}
                         ],
-                        max_tokens=4000,  # Increased max_tokens to accommodate detailed JSON output
-                        temperature=0.7,  # Optimal balance of creativity and consistency
+                        max_completion_tokens=4000,  # GPT-5 uses max_completion_tokens
+                        temperature=1,  # GPT-5 requires temperature to be 1
                     )
                     print(f"OpenAI API call successful on attempt {retry_count + 1}")
                     break
@@ -2223,10 +2239,10 @@ Requirements:
 
         self.logger.info("Calling OpenAI for Walmart listing generation...")
         response = self.client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-5-chat-latest",
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.7,
-            max_tokens=3000
+            temperature=1,
+            max_completion_tokens=3000
         )
         
         try:
@@ -2512,10 +2528,10 @@ Return ONLY valid JSON:
 }}"""
 
         response = self.client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-5-chat-latest",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.8,
-            max_tokens=1500
+            max_completion_tokens=1500
         )
         
         try:
@@ -2581,10 +2597,10 @@ Return ONLY valid JSON:
 }}"""
 
         response = self.client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-5-chat-latest",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.9,
-            max_tokens=2000
+            max_completion_tokens=2000
         )
         
         try:
@@ -2651,10 +2667,10 @@ Return ONLY valid JSON:
 }}"""
 
         response = self.client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-5-chat-latest",
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.7,
-            max_tokens=1500
+            temperature=1,
+            max_completion_tokens=1500
         )
         
         try:
