@@ -2,6 +2,7 @@ import json
 import time
 import re
 import logging
+import random
 from django.conf import settings
 from .models import GeneratedListing, KeywordResearch
 from apps.core.models import Product
@@ -117,9 +118,14 @@ Use culturally appropriate phrases and expressions for {country} shoppers.
     def _generate_amazon_listing(self, product, listing):
         import json
         import re
+        from .services_occasion_enhanced import OccasionOptimizer
+        from .brand_tone_optimizer import BrandToneOptimizer
+        
         self.logger.info(f"GENERATING AMAZON LISTING FOR {product.name}")
         self.logger.info(f"OpenAI client status: {'AVAILABLE' if self.client else 'NOT AVAILABLE'}")
         self.logger.info(f"Marketplace: {getattr(product, 'marketplace', 'us')} | Language: {getattr(product, 'marketplace_language', 'en')}")
+        self.logger.info(f"Occasion: {getattr(product, 'occasion', 'None')}")
+        self.logger.info(f"Brand Tone: {getattr(product, 'brand_tone', 'professional')}")
         
         if not self.client:
             self.logger.error("OpenAI client is None - using fallback content")
@@ -128,6 +134,10 @@ Use culturally appropriate phrases and expressions for {country} shoppers.
                 self.logger.error(f"API Key starts with 'sk-': {settings.OPENAI_API_KEY.startswith('sk-') if settings.OPENAI_API_KEY else False}")
             raise Exception("OpenAI API key not configured. Please set your OPENAI_API_KEY in the .env file to generate AI content.")
             
+        # Initialize optimizers
+        occasion_optimizer = OccasionOptimizer()
+        brand_tone_optimizer = BrandToneOptimizer()
+        
         competitor_context = self._get_competitor_context(product)
         
         # Generate product-specific keywords and context
@@ -477,9 +487,23 @@ DESCRIPTION VARIATION: Show conviction through evidence and specific benefits
         if hasattr(product, 'target_audience') and product.target_audience:
             brand_context += f"\nTARGET AUDIENCE: {product.target_audience}"
         
+        # Get occasion-specific enhancements if applicable
+        occasion = getattr(product, 'occasion', None)
+        occasion_enhancement = ""
+        if occasion and occasion != 'None':
+            occasion_enhancement = occasion_optimizer.get_occasion_prompt_enhancement(occasion)
+            self.logger.info(f"Applied occasion enhancement for: {occasion}")
+        
+        # Get brand tone-specific enhancements
+        brand_tone = getattr(product, 'brand_tone', 'professional')
+        brand_tone_enhancement = brand_tone_optimizer.get_brand_tone_enhancement(brand_tone)
+        self.logger.info(f"Applied brand tone enhancement for: {brand_tone}")
+        
         # Now create the completely new human-focused prompt
         prompt = f"""
 {language_instruction}
+{brand_tone_enhancement}
+{occasion_enhancement}
 {base_prompt}
 CRITICAL: USE ONLY THE FOLLOWING INFORMATION - NO GENERIC CONTENT!
 DO NOT MAKE UP FEATURES OR BENEFITS NOT PROVIDED BELOW!
@@ -503,15 +527,6 @@ REQUIRED ELEMENTS (MUST USE):
 - Target Keywords: {getattr(product, 'target_keywords', 'Generate based on product description')}
 - Categories for Context: {product.categories if product.categories else 'Use product description to determine'}
 - Special Occasion: {getattr(product, 'occasion', 'None - general purpose listing')}
-
-🎄 SPECIAL OCCASION OPTIMIZATION:
-If Special Occasion is specified, incorporate occasion-specific elements throughout the listing:
-- Title: Include occasion keywords naturally (e.g., "Perfect Christmas Gift", "Valentine's Day Special")
-- Keywords: Add 10+ occasion-specific search terms (e.g., "christmas gifts for dad", "valentine day present", "mothers day gift ideas")
-- Description: Reference gifting, seasonal use, or occasion-specific benefits
-- Bullet Points: Include gift-worthiness, seasonal appeal, or occasion-specific use cases
-- A+ Content: Create occasion-themed sections when relevant
-- SEO: Target holiday/occasion shopping patterns and gift-related searches
 
 ⚠️ IMPORTANT: Base EVERYTHING on the actual product information above. Do not use generic placeholder content. If a detail isn't provided, extract it from the description or features given.
 
@@ -596,17 +611,17 @@ KEYWORD GENERATION RULES:
 RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMUM-LENGTH content:
 
 {{
-  "productTitle": "Write 160-195 character SEO-optimized title (Amazon recommends under 200) with brand '{product.brand_name}', primary keywords, and key benefits. Maximize SEO value while staying readable. Format: '{product.brand_name} [Product Type] [2-3 Key Features] [Main Benefit] [Target Use]'. Include top search terms but avoid keyword stuffing.",
+  "productTitle": "Write 160-195 character SEO-optimized title that MUST reflect {brand_tone} brand tone. Use {brand_tone}-specific vocabulary and style. Include brand '{product.brand_name}', primary keywords, and key benefits. For {brand_tone} tone, use appropriate power words and avoid generic language. Sound distinctly {brand_tone}, not generic.",
   
   "bulletPoints": [
-    "BULLET 1: Use format 'EMOTIONAL LABEL: benefit explanation'. Make the label compelling (e.g. INSTANT RELIEF, STRESS SAVER, CONFIDENCE BOOST). Write 200+ characters with proper grammar and apostrophes (don't, can't, it's). Avoid hype words.",
-    "BULLET 2: Different emotional label (e.g. PEACE OF MIND, SURPRISINGLY EASY, WORTH EVERY PENNY, FINALLY WORKS). Focus on different product aspect. 200+ characters, use proper contractions like you're and won't.", 
-    "BULLET 3: Another unique emotional label (e.g. WORKS PERFECTLY, EXCEEDED EXPECTATIONS, PROBLEM SOLVED). Different writing style - factual benefits with proper apostrophes. 200+ characters.",
-    "BULLET 4: Creative emotional label (e.g. BUILT TO LAST, THOUGHTFUL DESIGN, JUST WORKS). Focus on quality/performance with proper grammar (they're, we're, I'm). 200+ characters.",
-    "BULLET 5: Memorable emotional label (e.g. SMART INVESTMENT, CUSTOMER FAVORITE, HONESTLY IMPRESSED). End strong with factual guarantee info. 200+ characters, proper contractions."
+    "BULLET 1: Use {brand_tone}-specific label format. For {brand_tone} tone, use appropriate style and vocabulary. Include occasion/gift context when applicable. Write 200+ characters reflecting {brand_tone} personality throughout. Use proper grammar and apostrophes (don't, can't, it's). Must sound distinctly {brand_tone}.",
+    "BULLET 2: Different {brand_tone} label style. Maintain {brand_tone} voice consistently. For occasions, focus on gift-giving benefits in {brand_tone} manner. 200+ characters, use {brand_tone}-appropriate language and contractions.", 
+    "BULLET 3: Another unique {brand_tone}-styled label. Emphasize benefits using {brand_tone} vocabulary and approach. Different writing style but maintain {brand_tone} personality. 200+ characters with proper apostrophes.",
+    "BULLET 4: Creative {brand_tone} label focusing on quality/performance. Use {brand_tone}-specific power words and approach. Maintain {brand_tone} voice throughout. 200+ characters with proper grammar.",
+    "BULLET 5: Final {brand_tone} label that ends strong. Use {brand_tone} vocabulary for guarantee/confidence information. Must sound distinctly {brand_tone}, not generic. 200+ characters, proper contractions."
   ],
   
-  "productDescription": "Write 1500-2000 character natural, conversational product description with proper contractions and apostrophes (don't, can't, it's, you're, we're, they're). Start uniquely based on the product - no template openings like 'Can we talk about...' or 'Let me tell you...' Instead, dive into the product's main benefit or tell a brief story. Use Problem-Agitation-Solution naturally. Write in complete sentences with proper punctuation. Be genuinely helpful and specific to this exact product. Avoid promotional hype and ensure all contractions are properly formed.",
+  "productDescription": "Write 1500-2000 character {brand_tone} product description that MUST reflect {brand_tone} personality throughout. Use {brand_tone}-specific vocabulary, style, and approach consistently. Start with {brand_tone}-appropriate opening and maintain voice. Include proper contractions and apostrophes. Use {brand_tone} power words and avoid generic language. Must sound distinctly {brand_tone}, not generic marketing copy.",
   
   "seoKeywords": {{
     "primary": ["{product.name.lower().replace(' ', '_')}", "{product.brand_name.lower()}", "THEN_ADD_13_MORE: category, color, size, material, feature1, feature2, use1, use2, style, type, model, variant, application"],
@@ -616,15 +631,15 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
     "semantic": ["GENERATE_10_RELATED: synonyms, variations, related terms, technical terms, informal names"]
   }},
   
-  "backendKeywords": "Write exactly 249 characters of comprehensive search terms including: product variations, synonyms, competitor terms, misspellings, related categories, use cases, customer language, technical terms, seasonal terms, gift occasions, target demographics, problem keywords, solution keywords, benefit terms, feature variations, brand alternatives, size variations, color terms, material types, style descriptors, application areas, compatibility terms, professional vs consumer terms, and industry jargon.",
+  "backendKeywords": "Write exactly 249 characters of comprehensive search terms. CRITICAL: For occasions, prioritize occasion-specific terms first (e.g., 'christmas gift for him', 'valentine present ideas', 'mothers day gift'). Then include: product variations, synonyms, competitor terms, misspellings, related categories, use cases, customer language, technical terms, seasonal terms, gift occasions, target demographics, problem keywords, solution keywords, benefit terms, feature variations, brand alternatives, size variations, color terms, material types, style descriptors, application areas, compatibility terms, professional vs consumer terms, and industry jargon.",
   
   "aPlusContentPlan": {{
     "section1_hero": {{
-      "title": "Write compelling 40-80 character headline about main product benefit (avoid hype words)",
-      "content": "Write 200-350 character clear, complete sentences explaining key value proposition. Focus on unique selling points and customer outcomes. Use proper grammar and apostrophes (it's, you're, don't). End with complete thoughts.",
-      "keywords": ["List 3-5 hero-focused keywords like brand name, product type, main benefit"],
-      "imageDescription": "Hero lifestyle image: product in use, specific setting (home/office/outdoor), mood/lighting, customer interaction",
-      "seoOptimization": "Hero section SEO strategy: brand authority and primary product keywords",
+      "title": "Write compelling 40-80 character headline that includes occasion/gift theme when applicable (e.g., 'Perfect Christmas Gift', 'Valentine's Day Special')",
+      "content": "Write 200-350 character clear, complete sentences explaining key value proposition with occasion context when relevant. Include gift-giving benefits and occasion-specific use cases. Use proper grammar and apostrophes (it's, you're, don't). End with complete thoughts.",
+      "keywords": ["List 3-5 hero-focused keywords including occasion/gift terms when applicable"],
+      "imageDescription": "Hero lifestyle image: product in use with occasion context when relevant (gift giving, seasonal setting, celebration)",
+      "seoOptimization": "Hero section SEO strategy: brand authority, primary product keywords, and occasion/gift terms",
       "cardType": "hero",
       "cardColor": "blue",
       "visualTemplate": {{
@@ -639,9 +654,9 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
       }}
     }},
     "section2_features": {{
-      "title": "Technical Specifications & Features",
-      "content": "Write 300-450 characters with complete sentences describing 3-4 technical features. Include specific measurements, materials, or capabilities. Avoid repeating hero section content. Use proper grammar and contractions (don't, can't, won't).",
-      "keywords": ["List 3-5 technical keywords like dimensions, materials, specifications, performance"],
+      "title": "Perfect for [Occasion] - Key Features & Benefits" if occasion specified, otherwise "Technical Specifications & Features",
+      "content": "Write 300-450 characters with complete sentences describing 3-4 technical features with occasion-specific benefits when applicable. For gifts, mention why these features make it perfect for [occasion]. Include specific measurements, materials, or capabilities. Use proper grammar and contractions (don't, can't, won't).",
+      "keywords": ["List 3-5 technical + occasion keywords when applicable like dimensions, materials, specifications, performance, gift, [occasion]"],
       "imageDescription": "Technical showcase: close-up product shots, feature callouts, dimension diagrams, material details",
       "seoOptimization": "Technical SEO: specification keywords and feature-based search terms",
       "cardType": "features",
@@ -728,16 +743,16 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
   ],
   
   "trustBuilders": [
-    "Specific guarantee or warranty details",
+    "Specific guarantee or warranty details (include gift return policies if occasion is specified)",
     "Certification or testing information", 
     "Company reliability factors",
-    "Customer service commitments",
-    "Quality assurance details"
+    "Customer service commitments (mention gift wrapping/message services if occasion-focused)",
+    "Quality assurance details (include testimonials mentioning occasion/gift use when applicable)"
   ],
   
   "faqs": [
-    "Q: Ask realistic customer question about compatibility, usage, or concerns? A: Write detailed, helpful answer with proper grammar and contractions (don't, can't, it's) that builds confidence and addresses the specific concern thoroughly.",
-    "Q: Ask different realistic question about product benefits, comparison, or technical specs? A: Provide comprehensive answer with proper apostrophes (you're, we're, they're) that demonstrates expertise and helps customer decision-making.",
+    "Q: Ask realistic customer question about compatibility, usage, or concerns (for occasions, include delivery timing, gift wrapping, or recipient suitability)? A: Write detailed, helpful answer with proper grammar and contractions (don't, can't, it's) that builds confidence and addresses the specific concern thoroughly.",
+    "Q: Ask different realistic question about product benefits, comparison, or technical specs (for occasions, focus on gift-worthiness, why it makes a great [occasion] gift)? A: Provide comprehensive answer with proper apostrophes (you're, we're, they're) that demonstrates expertise and helps customer decision-making.",
     "Q: Ask practical question about setup, maintenance, or common issues? A: Give specific, actionable answer with correct grammar (won't, shouldn't, isn't) that reduces customer anxiety and shows product knowledge.",
     "Q: Ask comparison question about this vs alternatives or competitors? A: Answer diplomatically with proper contractions while highlighting unique advantages and value proposition.",
     "Q: Ask about return policy, shipping, or purchasing concerns? A: Address practical concerns with correct grammar and confidence-building information and clear policies."
@@ -2151,8 +2166,13 @@ A: Most gamers feel the difference within their first session. Say goodbye to th
         listing.keywords = f"gaming chair, ergonomic chair, gaming chair with footrest for tall users, best gaming chair under $200, gaming chair for back pain relief, comfortable chair for long gaming sessions, gaming chair with lumbar support, {product.brand_name}"
 
     def _generate_walmart_listing(self, product, listing):
+        from .services_occasion_enhanced import OccasionOptimizer
+        
         if not self.client:
             raise Exception("OpenAI API key not configured. Please set a valid OpenAI API key to generate Walmart listings.")
+            
+        # Initialize occasion optimizer for Walmart too
+        occasion_optimizer = OccasionOptimizer()
             
         competitor_context = self._get_competitor_context(product)
         
@@ -2181,7 +2201,16 @@ A: Most gamers feel the difference within their first session. Say goodbye to th
         # Generate category-specific attributes based on product
         category_prompt = self._get_walmart_category_context(product)
         
+        # Get occasion-specific enhancements if applicable
+        occasion = getattr(product, 'occasion', None)
+        occasion_enhancement = ""
+        if occasion and occasion != 'None':
+            occasion_enhancement = occasion_optimizer.get_occasion_prompt_enhancement(occasion)
+            self.logger.info(f"Applied Walmart occasion enhancement for: {occasion}")
+        
         prompt = f"""Create a professional Walmart listing for this product. Return ONLY valid JSON with no extra text.
+
+{occasion_enhancement}
 
 PRODUCT: {product.name}
 BRAND: {product.brand_name}
@@ -2189,12 +2218,6 @@ DESCRIPTION: {product.description}
 FEATURES: {product.features}
 PRICE: ${product.price}
 SPECIAL OCCASION: {getattr(product, 'occasion', 'None - general purpose listing')}
-
-🎁 OCCASION OPTIMIZATION: If Special Occasion is provided, incorporate:
-- Title: Add occasion appeal naturally (e.g., "Perfect for Christmas", "Great Valentine's Gift")
-- Keywords: Include 5+ occasion-specific terms (e.g., "christmas gift", "holiday present", "valentine gift")
-- Description: Mention gift-worthiness, seasonal use, or occasion benefits
-- Features: Highlight occasion-relevant aspects when applicable
 
 Requirements:
 - Title: Under 100 characters with brand and key benefit
