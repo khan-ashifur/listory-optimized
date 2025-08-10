@@ -76,32 +76,53 @@ class InternationalLocalizationOptimizer:
                 "currency": "EUR",
                 "language_code": "fr",
                 
+                # Essential French words
                 "essential_words": [
                     "le", "la", "les", "et", "avec", "pour", "de", "du", "des", "est",
-                    "avoir", "être", "faire", "aller", "venir", "voir", "savoir"
+                    "avoir", "être", "faire", "aller", "venir", "voir", "savoir", "très", "bien", "tout"
                 ],
                 
+                # Sophisticated French power words for luxury market
                 "power_words": [
-                    "qualité", "élégant", "raffinement", "sophistiqué", "excellence",
-                    "performance", "innovation", "fiabilité", "précision", "efficace",
-                    "supérieur", "exceptionnel", "pratique", "moderne"
+                    "qualité", "élégant", "raffinement", "sophistiqué", "excellence", "luxueux",
+                    "performance", "innovation", "fiabilité", "précision", "efficace", "distingué",
+                    "supérieur", "exceptionnel", "pratique", "moderne", "prestigieux", "exclusif",
+                    "artisanal", "français", "authentique", "noble", "délicat", "harmonieux"
                 ],
                 
+                # French lifestyle and cultural elements
                 "cultural_elements": [
-                    "qualité française", "raffinement élégant", "sophistication",
-                    "excellence artisanale", "finition soignée", "style français"
+                    "Enfin le confort à la française",
+                    "L'élégance pratique du quotidien", 
+                    "Savourer chaque moment de fraîcheur",
+                    "Qualité française authentique",
+                    "Raffinement discret et efficace",
+                    "Art de vivre français moderne",
+                    "Sophistication naturelle"
                 ],
                 
+                # Natural French expressions
                 "formality_words": [
-                    "vous", "votre", "excellence", "raffinement", "prestigieux",
-                    "certifié", "garanti", "professionnel"
+                    "Savourez", "Découvrez", "Profitez de", "Laissez-vous séduire par",
+                    "Offrez-vous", "Adoptez", "Choisissez l'excellence",
+                    "Vivez l'expérience", "Ressentez la différence", "Appréciez le raffinement"
                 ],
                 
+                # French copywriting rules - OPTIMIZED FOR 10/10 QUALITY
                 "enforcement_rules": [
-                    "ALL content MUST be in French - no English words allowed",
-                    "Use proper French grammar and accents",
-                    "Include French cultural sophistication",
-                    "Maintain elegant French style"
+                    "🚨 CRITICAL: You MUST use proper French accents é, è, à, ç, ù, â, ê, î, ô, û in ALL words",
+                    "ACCENT EXAMPLES: qualité NOT qualite, élégant NOT elegant, français NOT francais, très NOT tres, être NOT etre, première NOT premiere",
+                    "MANDATORY ACCENTS: raffinement, précision, efficacité, sécurité, créé, conçu, développé, intégré",
+                    "🔥 FRENCH SOPHISTICATION FORMULA - FIRST BULLET MUST START WITH:",
+                    "Pattern: '[BENEFIT RAFFINÉ] à la française – sans [INCONVÉNIENT] ni [PROBLÈME].'",
+                    "Examples: 'Rafraîchissement élégant à la française – sans bruit excessif ni consommation.'",
+                    "Examples: 'Confort authentique à la française – sans complications ni encombrement.'",
+                    "🔧 BULLET STRUCTURE OPTIMIZATION:",
+                    "Split sophisticated bullets into 2-3 scannable sentences with French flair",
+                    "Example: 'Première phrase avec bénéfice sophistiqué. Deuxième phrase avec application pratique.'",
+                    "BALANCE: 70% lifestyle sophistication, 30% technical specs",
+                    "INCLUDE: 'Cadeau parfait pour la Saint-Valentin' or seasonal French elegance",
+                    "WRITE sophisticated French - maintain refinement without being pretentious"
                 ],
                 
                 "avoid_words": ["the", "and", "with", "for", "is", "quality", "professional"]
@@ -481,6 +502,25 @@ JSON CONTENT OVERRIDE FOR {config['language'].upper()}:
 {'• "BEWÄHRTE QUALITÄT: Hygienisch schneiden wie ein Profi – ganz ohne Geschmacksübertragung."' if market_code == 'de' else ''}
 {'• "ZERTIFIZIERTE KÜHLUNG: Perfekte Abkühlung wie ein Profi – ganz ohne teure Klimaanlage."' if market_code == 'de' else ''}
 {'MANDATORY: Each bullet MUST start with German brand tone label + emotional hook formula' if market_code == 'de' else ''}
+
+{'🔥 FRENCH 10/10 BULLET OPTIMIZATION WITH SOPHISTICATED LABELS 🔥' if market_code == 'fr' else ''}
+{'CRITICAL: Include French brand tone labels with sophisticated elegance + French hooks:' if market_code == 'fr' else ''}
+{'• "EXCELLENCE FRANÇAISE: Rafraîchissement élégant à la française – sans bruit excessif ni consommation."' if market_code == 'fr' else ''}
+{'• "QUALITÉ SUPÉRIEURE: Confort authentique à la française – sans complications ni encombrement."' if market_code == 'fr' else ''}
+{'• "RAFFINEMENT MODERNE: Performance sophistiquée à la française – sans compromis ni contraintes."' if market_code == 'fr' else ''}
+{'MANDATORY: Each bullet MUST start with French brand tone label + "à la française" sophistication formula' if market_code == 'fr' else ''}
+{'' if market_code == 'fr' else ''}
+{'BULLET STRUCTURE - FRENCH SOPHISTICATION OPTIMIZED (2-3 SENTENCES):' if market_code == 'fr' else ''}
+{'✅ Sentence 1: Sophisticated benefit with French flair (15-20 words)' if market_code == 'fr' else ''}
+{'✅ Sentence 2: Elegant technical detail (12-18 words)' if market_code == 'fr' else ''}
+{'✅ Sentence 3 (optional): Refined application/lifestyle (10-15 words)' if market_code == 'fr' else ''}
+{'📱 FRENCH MOBILE: Each sentence sophisticated yet scannable, refined but accessible' if market_code == 'fr' else ''}
+{'❌ AVOID: Overly pretentious language OR casual American-style copy' if market_code == 'fr' else ''}
+{'' if market_code == 'fr' else ''}
+{'FRENCH ACCENT PERFECTION CHECKLIST:' if market_code == 'fr' else ''}
+{'✅ qualité (not qualite), élégant (not elegant), précision (not precision), efficacité (not efficacite)' if market_code == 'fr' else ''}
+{'✅ français (not francais), être (not etre), première (not premiere), créé (not cree), développé (not developpe)' if market_code == 'fr' else ''}
+{'✅ raffinement (not raffinement), intégré (not integre), sécurité (not securite), conçu (not concu)' if market_code == 'fr' else ''}
 {'' if market_code == 'de' else ''}
 {'BULLET STRUCTURE - MOBILE SCAN-ABILITY OPTIMIZED (2-3 SENTENCES):' if market_code == 'de' else ''}
 {'✅ Sentence 1: Emotional hook/core benefit (15-20 words)' if market_code == 'de' else ''}
