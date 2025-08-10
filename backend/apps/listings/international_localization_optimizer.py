@@ -114,9 +114,12 @@ class InternationalLocalizationOptimizer:
                     "ACCENT EXAMPLES: qualité NOT qualite, élégant NOT elegant, français NOT francais, très NOT tres, être NOT etre, première NOT premiere",
                     "MANDATORY ACCENTS: raffinement, précision, efficacité, sécurité, créé, conçu, développé, intégré",
                     "🔥 FRENCH SOPHISTICATION FORMULA - FIRST BULLET MUST START WITH:",
-                    "Pattern: '[BENEFIT RAFFINÉ] à la française – sans [INCONVÉNIENT] ni [PROBLÈME].'",
+                    "PATTERN 1: '[BENEFIT RAFFINÉ] à la française – sans [INCONVÉNIENT] ni [PROBLÈME].' (Use ONLY in 1st bullet)",
+                    "PATTERN 2: '[BENEFIT] avec [SOPHISTICATION] française pour [RÉSULTAT].' (2nd bullet)",
+                    "PATTERN 3: '[FEATURE] qui garantit [BENEFIT] et assure [SATISFACTION].' (3rd bullet)",
                     "Examples: 'Rafraîchissement élégant à la française – sans bruit excessif ni consommation.'",
-                    "Examples: 'Confort authentique à la française – sans complications ni encombrement.'",
+                    "Examples: 'Performance avec raffinement français pour un confort optimal.'",
+                    "Examples: 'Design pliable qui garantit praticité et assure élégance quotidienne.'",
                     "🔧 BULLET STRUCTURE OPTIMIZATION:",
                     "Split sophisticated bullets into 2-3 scannable sentences with French flair",
                     "Example: 'Première phrase avec bénéfice sophistiqué. Deuxième phrase avec application pratique.'",
@@ -505,9 +508,9 @@ JSON CONTENT OVERRIDE FOR {config['language'].upper()}:
 
 {'🔥 FRENCH 10/10 BULLET OPTIMIZATION WITH SOPHISTICATED LABELS 🔥' if market_code == 'fr' else ''}
 {'CRITICAL: Include French brand tone labels with sophisticated elegance + French hooks:' if market_code == 'fr' else ''}
-{'• "EXCELLENCE FRANÇAISE: Rafraîchissement élégant à la française – sans bruit excessif ni consommation."' if market_code == 'fr' else ''}
-{'• "QUALITÉ SUPÉRIEURE: Confort authentique à la française – sans complications ni encombrement."' if market_code == 'fr' else ''}
-{'• "RAFFINEMENT MODERNE: Performance sophistiquée à la française – sans compromis ni contraintes."' if market_code == 'fr' else ''}
+{'• "EXCELLENCE FRANÇAISE: Rafraîchissement élégant à la française – sans bruit excessif ni consommation." (PATTERN 1 - Use ONLY once)' if market_code == 'fr' else ''}
+{'• "QUALITÉ SUPÉRIEURE: Performance avec raffinement français pour un confort optimal et une satisfaction durable." (PATTERN 2)' if market_code == 'fr' else ''}
+{'• "RAFFINEMENT MODERNE: Design innovant qui garantit praticité élégante et assure distinction quotidienne." (PATTERN 3)' if market_code == 'fr' else ''}
 {'MANDATORY: Each bullet MUST start with French brand tone label + "à la française" sophistication formula' if market_code == 'fr' else ''}
 {'' if market_code == 'fr' else ''}
 {'BULLET STRUCTURE - FRENCH SOPHISTICATION OPTIMIZED (2-3 SENTENCES):' if market_code == 'fr' else ''}

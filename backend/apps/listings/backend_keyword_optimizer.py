@@ -201,7 +201,7 @@ class BackendKeywordOptimizer:
         enhanced.update(self.french_patterns['materials'])  # Use all materials for max conquest
         
         # Add seasonal keywords (limited set to save space)
-        seasonal_priority = ['cadeau noël', 'cadeau noel', 'cadeau', 'idée cadeau', 'idee cadeau', 'cadeau cuisine', 'fête', 'noël']
+        seasonal_priority = ['cadeau noël', 'cadeau noel', 'cadeau', 'idée cadeau', 'idee cadeau', 'cadeau cuisine', 'fête', 'noël', 'pas cher', 'bon']
         enhanced.update(seasonal_priority)
         
         # Add high-volume phrases (limited)

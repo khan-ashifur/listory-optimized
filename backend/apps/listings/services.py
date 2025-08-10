@@ -1849,7 +1849,7 @@ Technical specifications include comprehensive compatibility, robust build quali
     <div class="aplus-module section3_trust sm:px-4">
         <div class="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-4 sm:p-6">
             <div class="content-section">
-                <h3 class="text-xl sm:text-2xl font-bold text-purple-900 mb-3">Why Trust {product.brand_name}</h3>
+                <h3 class="text-xl sm:text-2xl font-bold text-purple-900 mb-3">Why Trust This Product</h3>
                 <ul class="text-gray-700 text-sm sm:text-base list-disc pl-5 mb-4">
                     {trust_items}
                 </ul>
