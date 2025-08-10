@@ -2,7 +2,6 @@ import json
 import time
 import re
 import logging
-import random
 from django.conf import settings
 from .models import GeneratedListing, KeywordResearch
 from apps.core.models import Product
@@ -118,15 +117,9 @@ Use culturally appropriate phrases and expressions for {country} shoppers.
     def _generate_amazon_listing(self, product, listing):
         import json
         import re
-        from .services_occasion_enhanced import OccasionOptimizer
-        from .brand_tone_optimizer import BrandToneOptimizer
-        from .international_localization_optimizer import InternationalLocalizationOptimizer
-        
         self.logger.info(f"GENERATING AMAZON LISTING FOR {product.name}")
         self.logger.info(f"OpenAI client status: {'AVAILABLE' if self.client else 'NOT AVAILABLE'}")
         self.logger.info(f"Marketplace: {getattr(product, 'marketplace', 'us')} | Language: {getattr(product, 'marketplace_language', 'en')}")
-        self.logger.info(f"Occasion: {getattr(product, 'occasion', 'None')}")
-        self.logger.info(f"Brand Tone: {getattr(product, 'brand_tone', 'professional')}")
         
         if not self.client:
             self.logger.error("OpenAI client is None - using fallback content")
@@ -135,11 +128,6 @@ Use culturally appropriate phrases and expressions for {country} shoppers.
                 self.logger.error(f"API Key starts with 'sk-': {settings.OPENAI_API_KEY.startswith('sk-') if settings.OPENAI_API_KEY else False}")
             raise Exception("OpenAI API key not configured. Please set your OPENAI_API_KEY in the .env file to generate AI content.")
             
-        # Initialize optimizers
-        occasion_optimizer = OccasionOptimizer()
-        brand_tone_optimizer = BrandToneOptimizer()
-        international_optimizer = InternationalLocalizationOptimizer()
-        
         competitor_context = self._get_competitor_context(product)
         
         # Generate product-specific keywords and context
@@ -149,27 +137,27 @@ Use culturally appropriate phrases and expressions for {country} shoppers.
         brand_tone_mapping = {
             'professional': {
                 'tone': 'Professional & Authoritative',
-                'guidelines': 'Direct, credible, expertise-focused. Personality: Trusted advisor who builds confidence. Use phrases like "Industry-leading", "Proven results", "Professional grade". Focus on reliability and expertise. TITLE RULE: Always merge an emotional hook with a high-intent keyword in the first 4 words - no clickbait, must feel authentic and aligned with product strengths.'
+                'guidelines': 'Direct, credible, expertise-focused. Personality: Trusted advisor who builds confidence. Use phrases like "Industry-leading", "Proven results", "Professional grade". Focus on reliability and expertise.'
             },
             'casual': {
                 'tone': 'Friendly & Approachable',
-                'guidelines': 'Conversational, warm, relatable. Personality: Helpful friend who makes things easy. Use phrases like "Just what you need", "Makes life easier", "You\'ll love this". Focus on comfort and simplicity. TITLE RULE: Always merge an emotional hook with a high-intent keyword in the first 4 words - no clickbait, must feel authentic and aligned with product strengths.'
+                'guidelines': 'Conversational, warm, relatable. Personality: Helpful friend who makes things easy. Use phrases like "Just what you need", "Makes life easier", "You\'ll love this". Focus on comfort and simplicity.'
             },
             'luxury': {
                 'tone': 'Elegant & Premium',
-                'guidelines': 'Sophisticated, aspirational, transformational. Personality: Elevated and inspiring. Use phrases like "Elevate your", "Transform into", "Luxurious experience". Include sensory language and confidence-building. TITLE RULE: Always merge an emotional hook with a high-intent keyword in the first 4 words - no clickbait, must feel authentic and aligned with product strengths.'
+                'guidelines': 'Sophisticated, aspirational, transformational. Personality: Elevated and inspiring. Use phrases like "Elevate your", "Transform into", "Luxurious experience". Include sensory language and confidence-building.'
             },
             'playful': {
                 'tone': 'Playful & Innovative',
-                'guidelines': 'Fun, confident, slightly cheeky. Personality: Tech-savvy friend who makes complex simple. Use phrases like "Talk like a local", "Say it like you mean it", "Ready to [outcome]". Balance innovation with accessibility. TITLE RULE: Always merge an emotional hook with a high-intent keyword in the first 4 words - no clickbait, must feel authentic and aligned with product strengths.'
+                'guidelines': 'Fun, confident, slightly cheeky. Personality: Tech-savvy friend who makes complex simple. Use phrases like "Talk like a local", "Say it like you mean it", "Ready to [outcome]". Balance innovation with accessibility.'
             },
             'minimal': {
                 'tone': 'Clean & Minimal',
-                'guidelines': 'Clear, concise, purposeful. Personality: Thoughtful minimalist who values quality. Use phrases like "Simply better", "Pure performance", "Essential quality". Focus on clarity and purpose. TITLE RULE: Always merge an emotional hook with a high-intent keyword in the first 4 words - no clickbait, must feel authentic and aligned with product strengths.'
+                'guidelines': 'Clear, concise, purposeful. Personality: Thoughtful minimalist who values quality. Use phrases like "Simply better", "Pure performance", "Essential quality". Focus on clarity and purpose.'
             },
             'bold': {
                 'tone': 'Bold & Confident',
-                'guidelines': 'Strong, decisive, powerful. Personality: Leader who inspires action. Use phrases like "Dominate your", "Unleash your", "Power through". Focus on strength and transformation. TITLE RULE: Always merge an emotional hook with a high-intent keyword in the first 4 words - no clickbait, must feel authentic and aligned with product strengths.'
+                'guidelines': 'Strong, decisive, powerful. Personality: Leader who inspires action. Use phrases like "Dominate your", "Unleash your", "Power through". Focus on strength and transformation.'
             }
         }
         category_tone = brand_tone_mapping.get(product.brand_tone, brand_tone_mapping['professional'])
@@ -431,9 +419,7 @@ DESCRIPTION VARIATION: Show conviction through evidence and specific benefits
             "Include honest comparisons to alternatives when appropriate",
             "Write like someone who actually owns and loves the product",
             "Use unexpected but fitting metaphors or creative descriptions",
-            "Include authentic details that only someone familiar with the product would know",
-            "MOBILE SCAN-FIRST BULLETS RULE: The first 6-8 words of each bullet must serve as a micro-headline (main benefit or emotional payoff), followed by supportive detail",
-            "BENEFIT STACKING: At least 2 bullets should combine feature + emotional benefit + trust element in a single flow (e.g., 'LOCKS IN COLD — Double-wall insulation keeps water icy fresh, giving you confidence on long commutes')"
+            "Include authentic details that only someone familiar with the product would know"
         ]
         random.shuffle(variety_elements)
         
@@ -489,35 +475,9 @@ DESCRIPTION VARIATION: Show conviction through evidence and specific benefits
         if hasattr(product, 'target_audience') and product.target_audience:
             brand_context += f"\nTARGET AUDIENCE: {product.target_audience}"
         
-        # Get occasion-specific enhancements if applicable
-        occasion = getattr(product, 'occasion', None)
-        occasion_enhancement = ""
-        if occasion and occasion != 'None':
-            occasion_enhancement = occasion_optimizer.get_occasion_prompt_enhancement(occasion)
-            self.logger.info(f"Applied occasion enhancement for: {occasion}")
-        
-        # Get brand tone-specific enhancements
-        brand_tone = getattr(product, 'brand_tone', 'professional')
-        brand_tone_enhancement = brand_tone_optimizer.get_brand_tone_enhancement(brand_tone)
-        self.logger.info(f"Applied brand tone enhancement for: {brand_tone}")
-        
-        # Get international localization enhancements if applicable
-        marketplace = getattr(product, 'marketplace', 'com')
-        localization_enhancement = ""
-        aplus_enhancement = ""
-        if marketplace_lang and marketplace_lang != 'en':
-            localization_enhancement = international_optimizer.get_localization_enhancement(marketplace, marketplace_lang)
-            aplus_enhancement = international_optimizer.get_aplus_content_enhancement(marketplace, marketplace_lang)
-            self.logger.info(f"Applied international localization for: {marketplace} ({marketplace_lang})")
-            self.logger.info(f"Applied A+ content international enhancement for: {marketplace} ({marketplace_lang})")
-        
         # Now create the completely new human-focused prompt
         prompt = f"""
 {language_instruction}
-{localization_enhancement}
-{aplus_enhancement}
-{brand_tone_enhancement}
-{occasion_enhancement}
 {base_prompt}
 CRITICAL: USE ONLY THE FOLLOWING INFORMATION - NO GENERIC CONTENT!
 DO NOT MAKE UP FEATURES OR BENEFITS NOT PROVIDED BELOW!
@@ -542,6 +502,15 @@ REQUIRED ELEMENTS (MUST USE):
 - Categories for Context: {product.categories if product.categories else 'Use product description to determine'}
 - Special Occasion: {getattr(product, 'occasion', 'None - general purpose listing')}
 
+🎄 SPECIAL OCCASION OPTIMIZATION:
+If Special Occasion is specified, incorporate occasion-specific elements throughout the listing:
+- Title: Include occasion keywords naturally (e.g., "Perfect Christmas Gift", "Valentine's Day Special")
+- Keywords: Add 10+ occasion-specific search terms (e.g., "christmas gifts for dad", "valentine day present", "mothers day gift ideas")
+- Description: Reference gifting, seasonal use, or occasion-specific benefits
+- Bullet Points: Include gift-worthiness, seasonal appeal, or occasion-specific use cases
+- A+ Content: Create occasion-themed sections when relevant
+- SEO: Target holiday/occasion shopping patterns and gift-related searches
+
 ⚠️ IMPORTANT: Base EVERYTHING on the actual product information above. Do not use generic placeholder content. If a detail isn't provided, extract it from the description or features given.
 
 RANDOMIZATION ELEMENTS FOR TODAY:
@@ -557,32 +526,16 @@ Amazon's Rufus AI assistant helps customers find products through conversational
 - Use case scenarios ("Good for traveling?", "Will this work for gaming?")
 - Problem-solving language ("Stops hurting my ears", "Finally doesn't fall out")
 
-📝 MERGED STYLE APPROACH (GPT-4 + GPT-5 BEST PRACTICES):
-Merge two proven approaches into one powerful listing:
-
-From GPT-4 strengths: emotional storytelling, vivid scenarios, problem-solving benefits, and strong feature-to-benefit connections.
-From GPT-5 strengths: short, mobile-friendly bullet points, gifting/lifestyle positioning, broad keyword coverage, and strong trust signals (like warranties and guarantees).
-
-MERGED STYLE RULES:
-• Title: Mobile-first priority - impactful and fully scannable within 110-125 characters (up to 140 max if brand name is long). Start with hook + primary keyword
-• Bullet Points: 5 maximum, each 200+ chars. Each begins with a strong 6-8 word benefit phrase (micro-headline) before detailed explanation. Must have bold-style micro-headlines (Amazon strips HTML bold but wording must read like strong lead)
-• Description: 1500-2000 chars, broken into short 2-3 sentence chunks with line breaks for mobile readability. Each chunk ends with a soft benefit-driven hook
-• FAQ: Address common objections, warranty info, and gifting appeal
-• A+ Content: Combine lifestyle briefs, technical infographic briefs, and warranty comparisons
-• Keywords: Naturally integrate both short-tail and long-tail keywords throughout
-• Backend Keywords: 249 max chars, must not duplicate exact words from title/bullets, instead target complementary indexing terms
-• No Repetition: Do not repeat identical sentences across sections
-
-YOUR MISSION: Create a COMPREHENSIVE, MAXIMUM-LENGTH Amazon listing optimized for both traditional search AND Rufus AI conversations using the MERGED STYLE approach.
+YOUR MISSION: Create a COMPREHENSIVE, MAXIMUM-LENGTH Amazon listing optimized for both traditional search AND Rufus AI conversations.
 
 CRITICAL CONTENT REQUIREMENTS - GENERATE MAXIMUM CONTENT:
-✅ Title: 110-125 chars ideal (up to 140 max). Start with hook + primary keyword. Mobile-first priority for scanability
-✅ Bullet Points: 5 bullets, each 200+ chars. Each begins with strong 6-8 word benefit phrase before detailed explanation
-✅ Product Description: 1500-2000 chars, broken into short readable chunks, each ending with soft benefit-driven hook
+✅ Title: 120-145 characters (CRITICAL: mobile optimization requires under 150 chars, include primary keywords)
+✅ Bullet Points: 5 bullets, each 200+ characters with unique emotional labels and proper contractions
+✅ Product Description: 1500-2000 characters (comprehensive, natural language with proper grammar)
 ✅ A+ Content: 5 complete sections with unique focus, no duplication between sections, mobile-responsive
 ✅ Visual Templates: GENERATE ACTUAL CONTENT for each template field - no instruction text, only real content
-✅ Backend Keywords: 249 max chars, must not duplicate exact words from title/bullets, target complementary indexing terms
-✅ SEO Keywords: 80+ total (short + long-tail), ensuring no overstuffing; distribute naturally across listing
+✅ Backend Keywords: 249 characters (use every character)
+✅ SEO Keywords: 80+ comprehensive keywords across 5 categories
 ✅ Brand Story: 250-400 character detailed brand narrative with proper punctuation
 ✅ FAQs: 5+ detailed Q&As with proper grammar and complete sentences
 ✅ Features: 5+ specific product features
@@ -625,17 +578,17 @@ KEYWORD GENERATION RULES:
 RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMUM-LENGTH content:
 
 {{
-  "productTitle": "Write 160-195 character SEO-optimized title that MUST reflect {brand_tone} brand tone. Use {brand_tone}-specific vocabulary and style. Include brand '{product.brand_name}', primary keywords, and key benefits. For {brand_tone} tone, use appropriate power words and avoid generic language. Sound distinctly {brand_tone}, not generic.",
+  "productTitle": "Write 160-195 character SEO-optimized title (Amazon recommends under 200) with brand '{product.brand_name}', primary keywords, and key benefits. Maximize SEO value while staying readable. Format: '{product.brand_name} [Product Type] [2-3 Key Features] [Main Benefit] [Target Use]'. Include top search terms but avoid keyword stuffing.",
   
   "bulletPoints": [
-    "BULLET 1: Use {brand_tone}-specific label format. For {brand_tone} tone, use appropriate style and vocabulary. Include occasion/gift context when applicable. Write 200+ characters reflecting {brand_tone} personality throughout. Use proper grammar and apostrophes (don't, can't, it's). Must sound distinctly {brand_tone}.",
-    "BULLET 2: Different {brand_tone} label style. Maintain {brand_tone} voice consistently. For occasions, focus on gift-giving benefits in {brand_tone} manner. 200+ characters, use {brand_tone}-appropriate language and contractions.", 
-    "BULLET 3: Another unique {brand_tone}-styled label. Emphasize benefits using {brand_tone} vocabulary and approach. Different writing style but maintain {brand_tone} personality. 200+ characters with proper apostrophes.",
-    "BULLET 4: Creative {brand_tone} label focusing on quality/performance. Use {brand_tone}-specific power words and approach. Maintain {brand_tone} voice throughout. 200+ characters with proper grammar.",
-    "BULLET 5: Final {brand_tone} label that ends strong. Use {brand_tone} vocabulary for guarantee/confidence information. Must sound distinctly {brand_tone}, not generic. 200+ characters, proper contractions."
+    "BULLET 1: Use format 'EMOTIONAL LABEL: benefit explanation'. Make the label compelling (e.g. INSTANT RELIEF, STRESS SAVER, CONFIDENCE BOOST). Write 200+ characters with proper grammar and apostrophes (don't, can't, it's). Avoid hype words.",
+    "BULLET 2: Different emotional label (e.g. PEACE OF MIND, SURPRISINGLY EASY, WORTH EVERY PENNY, FINALLY WORKS). Focus on different product aspect. 200+ characters, use proper contractions like you're and won't.", 
+    "BULLET 3: Another unique emotional label (e.g. WORKS PERFECTLY, EXCEEDED EXPECTATIONS, PROBLEM SOLVED). Different writing style - factual benefits with proper apostrophes. 200+ characters.",
+    "BULLET 4: Creative emotional label (e.g. BUILT TO LAST, THOUGHTFUL DESIGN, JUST WORKS). Focus on quality/performance with proper grammar (they're, we're, I'm). 200+ characters.",
+    "BULLET 5: Memorable emotional label (e.g. SMART INVESTMENT, CUSTOMER FAVORITE, HONESTLY IMPRESSED). End strong with factual guarantee info. 200+ characters, proper contractions."
   ],
   
-  "productDescription": "Write 1500-2000 character {brand_tone} product description that MUST reflect {brand_tone} personality throughout. Use {brand_tone}-specific vocabulary, style, and approach consistently. Start with {brand_tone}-appropriate opening and maintain voice. Include proper contractions and apostrophes. Use {brand_tone} power words and avoid generic language. Must sound distinctly {brand_tone}, not generic marketing copy.",
+  "productDescription": "Write 1500-2000 character natural, conversational product description with proper contractions and apostrophes (don't, can't, it's, you're, we're, they're). Start uniquely based on the product - no template openings like 'Can we talk about...' or 'Let me tell you...' Instead, dive into the product's main benefit or tell a brief story. Use Problem-Agitation-Solution naturally. Write in complete sentences with proper punctuation. Be genuinely helpful and specific to this exact product. Avoid promotional hype and ensure all contractions are properly formed.",
   
   "seoKeywords": {{
     "primary": ["{product.name.lower().replace(' ', '_')}", "{product.brand_name.lower()}", "THEN_ADD_13_MORE: category, color, size, material, feature1, feature2, use1, use2, style, type, model, variant, application"],
@@ -645,15 +598,15 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
     "semantic": ["GENERATE_10_RELATED: synonyms, variations, related terms, technical terms, informal names"]
   }},
   
-  "backendKeywords": "Write exactly 249 characters of comprehensive search terms. CRITICAL: For occasions, prioritize occasion-specific terms first (e.g., 'christmas gift for him', 'valentine present ideas', 'mothers day gift'). Then include: product variations, synonyms, competitor terms, misspellings, related categories, use cases, customer language, technical terms, seasonal terms, gift occasions, target demographics, problem keywords, solution keywords, benefit terms, feature variations, brand alternatives, size variations, color terms, material types, style descriptors, application areas, compatibility terms, professional vs consumer terms, and industry jargon.",
+  "backendKeywords": "Write exactly 249 characters of comprehensive search terms including: product variations, synonyms, competitor terms, misspellings, related categories, use cases, customer language, technical terms, seasonal terms, gift occasions, target demographics, problem keywords, solution keywords, benefit terms, feature variations, brand alternatives, size variations, color terms, material types, style descriptors, application areas, compatibility terms, professional vs consumer terms, and industry jargon.",
   
   "aPlusContentPlan": {{
     "section1_hero": {{
-      "title": "Write compelling 40-80 character headline that includes occasion/gift theme when applicable (e.g., 'Perfect Christmas Gift', 'Valentine's Day Special')",
-      "content": "Write 200-350 character clear, complete sentences explaining key value proposition with occasion context when relevant. Include gift-giving benefits and occasion-specific use cases. Use proper grammar and apostrophes (it's, you're, don't). End with complete thoughts.",
-      "keywords": ["List 3-5 hero-focused keywords including occasion/gift terms when applicable"],
-      "imageDescription": "Hero lifestyle image: product in use with occasion context when relevant (gift giving, seasonal setting, celebration)",
-      "seoOptimization": "Hero section SEO strategy: brand authority, primary product keywords, and occasion/gift terms",
+      "title": "Write compelling 40-80 character headline about main product benefit (avoid hype words)",
+      "content": "Write 200-350 character clear, complete sentences explaining key value proposition. Focus on unique selling points and customer outcomes. Use proper grammar and apostrophes (it's, you're, don't). End with complete thoughts.",
+      "keywords": ["List 3-5 hero-focused keywords like brand name, product type, main benefit"],
+      "imageDescription": "Hero lifestyle image: product in use, specific setting (home/office/outdoor), mood/lighting, customer interaction",
+      "seoOptimization": "Hero section SEO strategy: brand authority and primary product keywords",
       "cardType": "hero",
       "cardColor": "blue",
       "visualTemplate": {{
@@ -668,9 +621,9 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
       }}
     }},
     "section2_features": {{
-      "title": "Perfect for [Occasion] - Key Features & Benefits" if occasion specified, otherwise "Technical Specifications & Features",
-      "content": "Write 300-450 characters with complete sentences describing 3-4 technical features with occasion-specific benefits when applicable. For gifts, mention why these features make it perfect for [occasion]. Include specific measurements, materials, or capabilities. Use proper grammar and contractions (don't, can't, won't).",
-      "keywords": ["List 3-5 technical + occasion keywords when applicable like dimensions, materials, specifications, performance, gift, [occasion]"],
+      "title": "Technical Specifications & Features",
+      "content": "Write 300-450 characters with complete sentences describing 3-4 technical features. Include specific measurements, materials, or capabilities. Avoid repeating hero section content. Use proper grammar and contractions (don't, can't, won't).",
+      "keywords": ["List 3-5 technical keywords like dimensions, materials, specifications, performance"],
       "imageDescription": "Technical showcase: close-up product shots, feature callouts, dimension diagrams, material details",
       "seoOptimization": "Technical SEO: specification keywords and feature-based search terms",
       "cardType": "features",
@@ -757,16 +710,16 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
   ],
   
   "trustBuilders": [
-    "Specific guarantee or warranty details (include gift return policies if occasion is specified)",
+    "Specific guarantee or warranty details",
     "Certification or testing information", 
     "Company reliability factors",
-    "Customer service commitments (mention gift wrapping/message services if occasion-focused)",
-    "Quality assurance details (include testimonials mentioning occasion/gift use when applicable)"
+    "Customer service commitments",
+    "Quality assurance details"
   ],
   
   "faqs": [
-    "Q: Ask realistic customer question about compatibility, usage, or concerns (for occasions, include delivery timing, gift wrapping, or recipient suitability)? A: Write detailed, helpful answer with proper grammar and contractions (don't, can't, it's) that builds confidence and addresses the specific concern thoroughly.",
-    "Q: Ask different realistic question about product benefits, comparison, or technical specs (for occasions, focus on gift-worthiness, why it makes a great [occasion] gift)? A: Provide comprehensive answer with proper apostrophes (you're, we're, they're) that demonstrates expertise and helps customer decision-making.",
+    "Q: Ask realistic customer question about compatibility, usage, or concerns? A: Write detailed, helpful answer with proper grammar and contractions (don't, can't, it's) that builds confidence and addresses the specific concern thoroughly.",
+    "Q: Ask different realistic question about product benefits, comparison, or technical specs? A: Provide comprehensive answer with proper apostrophes (you're, we're, they're) that demonstrates expertise and helps customer decision-making.",
     "Q: Ask practical question about setup, maintenance, or common issues? A: Give specific, actionable answer with correct grammar (won't, shouldn't, isn't) that reduces customer anxiety and shows product knowledge.",
     "Q: Ask comparison question about this vs alternatives or competitors? A: Answer diplomatically with proper contractions while highlighting unique advantages and value proposition.",
     "Q: Ask about return policy, shipping, or purchasing concerns? A: Address practical concerns with correct grammar and confidence-building information and clear policies."
@@ -876,7 +829,7 @@ Write each section in a completely different style and tone. Use unexpected but 
                     if marketplace_lang and marketplace_lang != 'en':
                         language_name = {
                             'de': 'GERMAN', 'fr': 'FRENCH', 'it': 'ITALIAN', 'es': 'SPANISH',
-                            'nl': 'DUTCH', 'pl': 'POLISH', 'ja': 'JAPANESE',
+                            'nl': 'DUTCH', 'sv': 'SWEDISH', 'pl': 'POLISH', 'ja': 'JAPANESE',
                             'pt': 'PORTUGUESE', 'ar': 'ARABIC', 'tr': 'TURKISH'
                         }.get(marketplace_lang, 'ENGLISH')
                         system_content = f"YOU MUST WRITE EVERYTHING IN {language_name}! NOT A SINGLE WORD IN ENGLISH! " + system_content
@@ -887,22 +840,10 @@ Write each section in a completely different style and tone. Use unexpected but 
                             {"role": "system", "content": system_content},
                             {"role": "user", "content": prompt}
                         ],
-                        max_tokens=4000,  # Standard max_tokens parameter
+                        max_completion_tokens=4000,  # GPT-5 uses max_completion_tokens
                         temperature=1,  # GPT-5 requires temperature to be 1
                     )
                     print(f"OpenAI API call successful on attempt {retry_count + 1}")
-                    
-                    # Debug: Check if response contains umlauts
-                    response_text = response.choices[0].message.content if response.choices else ""
-                    if marketplace_lang == 'de':
-                        print(f"🔍 AI RESPONSE UMLAUT CHECK:")
-                        print(f"   Response contains ü: {'ü' in response_text}")
-                        print(f"   Response contains ä: {'ä' in response_text}")
-                        print(f"   Response contains ö: {'ö' in response_text}")
-                        print(f"   Response contains ß: {'ß' in response_text}")
-                        # Show sample of response
-                        sample = response_text[:200] if response_text else ""
-                        print(f"   Response sample: {sample}...")
                     break
                 except Exception as api_error:
                     retry_count += 1
@@ -936,15 +877,9 @@ Write each section in a completely different style and tone. Use unexpected but 
             
             # Extract regular message content (JSON response)
             ai_content = response.choices[0].message.content or "{}"
-            
-            # For international markets, preserve ALL characters including umlauts
-            if marketplace_lang and marketplace_lang != 'en':
-                # Keep original content with umlauts for international markets
-                print(f"AI Response received: {len(ai_content)} characters (preserving international characters)")
-            else:
-                # For US market, clean to ASCII to avoid issues
-                ai_content = ai_content.encode('ascii', errors='ignore').decode('ascii')
-                print(f"AI Response received: {len(ai_content)} characters (ASCII cleaned)")
+            # Immediately clean content to avoid Unicode errors
+            ai_content = ai_content.encode('ascii', errors='ignore').decode('ascii')
+            print(f"AI Response received: {len(ai_content)} characters")
             # Use safe encoding for Windows
             safe_preview = ai_content[:300]
             safe_ending = ai_content[-200:]
@@ -955,29 +890,12 @@ Write each section in a completely different style and tone. Use unexpected but 
             result = None
             parsing_attempts = 0
             
-            # Attempt 1: Direct parsing with UTF-8 handling for German umlauts
+            # Attempt 1: Direct parsing
             try:
                 parsing_attempts += 1
                 print(f"JSON Parsing Attempt {parsing_attempts}: Direct parsing")
-                
-                # For German content, ensure proper UTF-8 handling
-                content_to_parse = ai_content.strip()
-                if marketplace_lang == 'de':
-                    print(f"🔍 German JSON parsing - checking for umlauts in source:")
-                    print(f"   Source contains ü: {'ü' in content_to_parse}")
-                    print(f"   Source contains ä: {'ä' in content_to_parse}")
-                    print(f"   Source contains ö: {'ö' in content_to_parse}")
-                    print(f"   Source contains ß: {'ß' in content_to_parse}")
-                
-                result = json.loads(content_to_parse)
+                result = json.loads(ai_content.strip())
                 print("✅ Direct JSON parsing successful!")
-                
-                # Verify umlauts are preserved in parsed result
-                if marketplace_lang == 'de' and result:
-                    title = result.get('productTitle', '')
-                    print(f"🔍 Parsed JSON title: {title[:80]}...")
-                    print(f"   Parsed title has umlauts: {any(c in title for c in 'äöüßÄÖÜ')}")
-                
             except json.JSONDecodeError:
                 pass
             
@@ -1176,14 +1094,11 @@ Write each section in a completely different style and tone. Use unexpected but 
             
             # Multiple JSON parsing attempts with different strategies (only if we don't have result yet)
             if result is None:
-                # Enhanced JSON parsing specifically for international markets
                 parse_attempts = [
                     ("Direct parsing", lambda x: json.loads(x.strip())),
                     ("Strip and parse", lambda x: json.loads(x.strip().replace('\n', ' ').replace('\t', ' '))),
                     ("Extra cleanup", lambda x: json.loads(re.sub(r'\s+', ' ', x.strip()))),
-                    ("International chars", lambda x: json.loads(x.strip(), strict=False)),
-                    ("UTF-8 fix", lambda x: json.loads(x.encode('utf-8').decode('utf-8'), strict=False)),
-                    ("Escape fix", lambda x: json.loads(x.replace('\\"', '"').replace('\\n', '\n'), strict=False))
+                    ("Final fallback", lambda x: json.loads(re.sub(r'[^\x20-\x7E]', '', x).strip()))
                 ]
                 
                 for attempt_name, parse_func in parse_attempts:
@@ -1198,118 +1113,75 @@ Write each section in a completely different style and tone. Use unexpected but 
             
                 if result is None:
                     print("All JSON parsing attempts failed, trying manual reconstruction...")
+                # Last resort: try to extract key information manually
+                try:
+                    # Basic pattern matching to extract essential fields
+                    title_match = re.search(r'"title":\s*"([^"]*)"', cleaned_content)
+                    desc_match = re.search(r'"long_description":\s*"([^"]*)"', cleaned_content)
                     
-                    # For international markets, use the specialized content extractor
-                    marketplace_lang = getattr(product, 'marketplace_language', 'en')
-                    if marketplace_lang and marketplace_lang != 'en':
-                        print(f"🌍 Using InternationalContentExtractor for {marketplace_lang} market...")
-                        from .international_content_extractor import InternationalContentExtractor
-                        
-                        extractor = InternationalContentExtractor()
-                        extracted_result = extractor.extract_international_content(ai_content, marketplace_lang)
-                        
-                        if extracted_result:
-                            print(f"✅ InternationalContentExtractor succeeded for {marketplace_lang} market!")
-                            result = extracted_result
-                        else:
-                            print(f"⚠️ InternationalContentExtractor failed, falling back to manual reconstruction...")
-                
-                # Last resort: try to extract key information manually  
-                if result is None:
-                    try:
-                        # Enhanced pattern matching for international content (handles special chars and longer content)
-                        title_match = re.search(r'"productTitle":\s*"(.*?)"(?=\s*[,}])', cleaned_content, re.DOTALL)
-                        desc_match = re.search(r'"productDescription":\s*"(.*?)"(?=\s*[,}])', cleaned_content, re.DOTALL)
-                        bullets_match = re.search(r'"bulletPoints":\s*\[\s*(.*?)\s*\]', cleaned_content, re.DOTALL)
-                        
-                        if title_match:
-                            reconstructed_bullets = ["Generated international content", "Please retry if needed"]
-                            if bullets_match:
-                                # Extract bullet points (enhanced for international content with special chars)
-                                bullets_text = bullets_match.group(1)
-                                # Multiple extraction attempts for robustness
-                                bullet_matches = re.findall(r'"([^"]*(?:\\.[^"]*)*)"', bullets_text)
-                                if not bullet_matches:
-                                    bullet_matches = re.findall(r'"(.*?)"(?=\s*[,\]])', bullets_text, re.DOTALL)
-                                if bullet_matches:
-                                    reconstructed_bullets = [bullet.replace('\\"', '"') for bullet in bullet_matches[:5]]
-                                    print(f"✅ Extracted {len(reconstructed_bullets)} international bullets")
-                                    for i, bullet in enumerate(reconstructed_bullets[:2]):
-                                        print(f"   Sample bullet {i+1}: {bullet[:80]}...")
-                            
-                            print(f"✅ International title extracted: {title_match.group(1)[:100]}...")
-                            if bullets_match:
-                                print(f"✅ International bullets matched, raw text: {bullets_match.group(1)[:150]}...")
-                                print(f"✅ International bullets extracted: {len(reconstructed_bullets)} bullets")
-                                for i, bullet in enumerate(reconstructed_bullets[:3]):
-                                    print(f"   Bullet {i+1}: {bullet[:80]}...")
-                            else:
-                                print("❌ No bullets match found")
-                            if desc_match:
-                                print(f"✅ International description extracted: {desc_match.group(1)[:100]}...")
-                            
-                            result = {
-                                "productTitle": title_match.group(1),
-                                "bulletPoints": reconstructed_bullets,
-                                "productDescription": desc_match.group(1) if desc_match else "International product description available",
-                                "keywords": ["product", "listing"],
-                                "hero_title": "Product Benefits",
-                                "hero_content": "Quality product for your needs",
-                                "features": ["Quality construction", "Reliable performance"],
-                                "whats_in_box": ["Main product", "Documentation"],
-                                "trust_builders": ["Quality assured", "Customer satisfaction"],
-                                "faqs": ["Q: Is this reliable? A: Yes, very reliable"],
-                                "social_proof": "Customers love this product",
-                                "guarantee": "Satisfaction guaranteed"
-                            }
-                            print("Manual JSON reconstruction successful")
-                        else:
-                            raise Exception("Could not extract essential fields from malformed JSON")
-                    except Exception as manual_error:
-                        print(f"⚠️ Manual reconstruction also failed: {manual_error}")
-                        # Create minimal valid structure as absolute fallback
-                        print("🔧 Creating minimal fallback JSON structure...")
+                    if title_match and desc_match:
                         result = {
-                            "productTitle": f"{product.brand_name} {product.name} - Premium Quality Product",
-                            "bulletPoints": [
-                                "PREMIUM QUALITY: Exceptional construction with superior materials and craftsmanship for lasting performance and durability",
-                                "RELIABLE PERFORMANCE: Consistent operation designed for daily use with professional-grade standards and proven results", 
-                                "USER FRIENDLY: Simple setup and intuitive design makes this perfect for everyone to use regardless of experience level",
-                                "GREAT VALUE: Outstanding quality at an affordable price point with excellent customer satisfaction and long-term reliability",
-                                "SATISFACTION GUARANTEED: Backed by quality assurance and dedicated customer support team with fast response times"
-                            ],
-                            "productDescription": f"Transform your experience with the {product.brand_name} {product.name}. This premium product combines innovative design with reliable performance to deliver exceptional results. Whether you're looking for quality, durability, or value, this product exceeds expectations. What's Included: Main product, user manual, warranty information. Experience the {product.brand_name} difference - order yours today and discover why customers choose quality.",
-                            "keyword_cluster": {
-                                "primary_keywords": [product.name.lower(), "premium quality", "reliable performance", "great value"],
-                                "secondary_keywords": [f"best {product.name.lower()}", f"premium {product.name.lower()}", f"quality {product.name.lower()}"],
-                                "backend_search_terms": f"quality reliable premium value {product.name.lower()} {product.brand_name.lower()}",
-                                "misspellings_and_synonyms": [product.name.lower()],
-                                "ppc_keywords": [{"keyword": product.name.lower(), "match_type": "Exact", "goal": "Conversion", "bid_suggestion": "0.75", "target_acos": "20%"}]
+                            "title": title_match.group(1),
+                            "bullet_points": ["Generated content available", "Please retry if needed"],
+                            "long_description": desc_match.group(1),
+                            "keywords": ["product", "listing"],
+                            "hero_title": "Product Benefits",
+                            "hero_content": "Quality product for your needs",
+                            "features": ["Quality construction", "Reliable performance"],
+                            "whats_in_box": ["Main product", "Documentation"],
+                            "trust_builders": ["Quality assured", "Customer satisfaction"],
+                            "faqs": ["Q: Is this reliable? A: Yes, very reliable"],
+                            "social_proof": "Customers love this product",
+                            "guarantee": "Satisfaction guaranteed"
+                        }
+                        print("Manual JSON reconstruction successful")
+                    else:
+                        raise Exception("Could not extract essential fields from malformed JSON")
+                except Exception as manual_error:
+                    print(f"⚠️ Manual reconstruction also failed: {manual_error}")
+                    # Create minimal valid structure as absolute fallback
+                    print("🔧 Creating minimal fallback JSON structure...")
+                    result = {
+                        "productTitle": f"{product.brand_name} {product.name} - Premium Quality Product",
+                        "bulletPoints": [
+                            "PREMIUM QUALITY: Exceptional construction with superior materials and craftsmanship for lasting performance and durability",
+                            "RELIABLE PERFORMANCE: Consistent operation designed for daily use with professional-grade standards and proven results", 
+                            "USER FRIENDLY: Simple setup and intuitive design makes this perfect for everyone to use regardless of experience level",
+                            "GREAT VALUE: Outstanding quality at an affordable price point with excellent customer satisfaction and long-term reliability",
+                            "SATISFACTION GUARANTEED: Backed by quality assurance and dedicated customer support team with fast response times"
+                        ],
+                        "productDescription": f"Transform your experience with the {product.brand_name} {product.name}. This premium product combines innovative design with reliable performance to deliver exceptional results. Whether you're looking for quality, durability, or value, this product exceeds expectations. What's Included: Main product, user manual, warranty information. Experience the {product.brand_name} difference - order yours today and discover why customers choose quality.",
+                        "keyword_cluster": {
+                            "primary_keywords": [product.name.lower(), "premium quality", "reliable performance", "great value"],
+                            "secondary_keywords": [f"best {product.name.lower()}", f"premium {product.name.lower()}", f"quality {product.name.lower()}"],
+                            "backend_search_terms": f"quality reliable premium value {product.name.lower()} {product.brand_name.lower()}",
+                            "misspellings_and_synonyms": [product.name.lower()],
+                            "ppc_keywords": [{"keyword": product.name.lower(), "match_type": "Exact", "goal": "Conversion", "bid_suggestion": "0.75", "target_acos": "20%"}]
+                        },
+                        "brandSummary": f"## Quality First ## At {product.brand_name}, we deliver premium products that exceed expectations and provide lasting value.",
+                        "backendKeywords": f"premium quality reliable performance great value {product.name.lower()} {product.brand_name.lower()}",
+                        "aPlusContentPlan": {
+                            "section1_hero": {
+                                "title": "Why Choose Premium Quality?",
+                                "content": "Experience superior performance and reliability with our premium product line.",
+                                "keywords": ["premium", "quality", "reliable"],
+                                "imageDescription": "Professional lifestyle image showing satisfied customer using product",
+                                "seoOptimization": "Focus on quality and premium positioning"
                             },
-                            "brandSummary": f"## Quality First ## At {product.brand_name}, we deliver premium products that exceed expectations and provide lasting value.",
-                            "backendKeywords": f"premium quality reliable performance great value {product.name.lower()} {product.brand_name.lower()}",
-                            "aPlusContentPlan": {
-                                "section1_hero": {
-                                    "title": "Why Choose Premium Quality?",
-                                    "content": "Experience superior performance and reliability with our premium product line.",
-                                    "keywords": ["premium", "quality", "reliable"],
-                                    "imageDescription": "Professional lifestyle image showing satisfied customer using product",
-                                    "seoOptimization": "Focus on quality and premium positioning"
-                                },
-                                "overallStrategy": "Premium positioning with quality focus"
-                            },
-                            "ppcStrategy": {
-                                "campaignStructure": {
-                                    "exactMatchCampaign": {
-                                        "keywords": [product.name.lower()],
-                                        "bidStrategy": "Fixed bids starting at $0.75",
-                                        "dailyBudget": "$30",
-                                        "targetAcos": "20%"
-                                    }
+                            "overallStrategy": "Premium positioning with quality focus"
+                        },
+                        "ppcStrategy": {
+                            "campaignStructure": {
+                                "exactMatchCampaign": {
+                                    "keywords": [product.name.lower()],
+                                    "bidStrategy": "Fixed bids starting at $0.75",
+                                    "dailyBudget": "$30",
+                                    "targetAcos": "20%"
                                 }
                             }
                         }
-                        print("✅ Fallback JSON structure created successfully")
+                    }
+                    print("✅ Fallback JSON structure created successfully")
             
             # Remove any emojis from all text fields FIRST before any processing
             print("Before emoji removal - checking title...")
@@ -1385,31 +1257,13 @@ Write each section in a completely different style and tone. Use unexpected but 
                 for field in missing_fields:
                     result[field] = defaults.get(field, "Content available")
             
-            # Get title and preserve international characters (umlauts, accents, etc.)
+            # FORCE ASCII-ONLY title regardless of AI output or emoji removal function
             raw_title = result.get('productTitle', f"{product.name} - Premium Quality")
-            
-            # Debug logging for umlaut preservation
-            print(f"🔍 TITLE PROCESSING DEBUG:")
-            print(f"   Raw title from AI: {raw_title[:80]}...")
-            print(f"   Contains ü: {'ü' in raw_title}")
-            print(f"   Contains ä: {'ä' in raw_title}")
-            print(f"   Contains ö: {'ö' in raw_title}")
-            print(f"   Contains ß: {'ß' in raw_title}")
-            
-            # For international markets, preserve ALL characters including umlauts
-            if marketplace_lang and marketplace_lang != 'en':
-                # Keep all international characters - only remove actual control characters
-                clean_title = ''.join(c for c in raw_title if ord(c) >= 32 or c == '\n')
-                clean_title = clean_title.replace('–', '-').replace('"', '"').replace('"', '"')
-                print(f"   Clean title after processing: {clean_title[:80]}...")
-                print(f"   Clean title has umlauts: {any(c in clean_title for c in 'äöüßÄÖÜ')}")
-                listing.title = clean_title.strip()[:200] if clean_title.strip() else f"{product.name} - Premium Quality"
-            else:
-                # For US market, use ASCII-only
-                ascii_title = raw_title.encode('ascii', errors='ignore').decode('ascii')
-                ascii_title = ''.join(c for c in ascii_title if 32 <= ord(c) <= 126)
-                ascii_title = ascii_title.replace('–', '-').replace('"', '"').replace('"', '"')
-                listing.title = ascii_title.strip()[:200] if ascii_title.strip() else f"{product.name} - Premium Quality"
+            # AGGRESSIVE ASCII conversion with multiple methods
+            ascii_title = raw_title.encode('ascii', errors='ignore').decode('ascii')
+            ascii_title = ''.join(c for c in ascii_title if 32 <= ord(c) <= 126)
+            ascii_title = ascii_title.replace('–', '-').replace('"', '"').replace('"', '"')
+            listing.title = ascii_title.strip()[:200] if ascii_title.strip() else f"{product.name} - Premium Quality"
             
             # Get bullet points from new structure
             bullet_points = result.get('bulletPoints', [])
@@ -1417,15 +1271,9 @@ Write each section in a completely different style and tone. Use unexpected but 
                 # Clean bullet points and ensure proper format
                 cleaned_bullets = []
                 for bullet in bullet_points:
-                    # For international markets, preserve umlauts and special characters
-                    if marketplace_lang and marketplace_lang != 'en':
-                        # Keep international characters, only remove control characters
-                        clean_bullet = ''.join(c for c in bullet if ord(c) >= 32 or c == '\n')
-                        clean_bullet = clean_bullet.replace('–', '-').replace('"', '"').replace('"', '"')
-                    else:
-                        # For US market, clean to ASCII 
-                        clean_bullet = bullet.encode('ascii', errors='ignore').decode('ascii')
-                        clean_bullet = ''.join(c for c in clean_bullet if 32 <= ord(c) <= 126)
+                    # Clean ASCII
+                    clean_bullet = bullet.encode('ascii', errors='ignore').decode('ascii')
+                    clean_bullet = ''.join(c for c in clean_bullet if 32 <= ord(c) <= 126)
                     cleaned_bullets.append(clean_bullet)
                 listing.bullet_points = '\n\n'.join(cleaned_bullets)
             else:
@@ -1526,41 +1374,14 @@ Technical specifications include comprehensive compatibility, robust build quali
             # Parse A+ content from comprehensive new structure
             aplus_plan = result.get('aPlusContentPlan', {})
             
-            # Extract hero section from new comprehensive structure (handle both old and new formats)
-            hero_section = (aplus_plan.get('heroSection', {}) or 
-                           aplus_plan.get('hero_section', {}) or 
-                           aplus_plan.get('section1_hero', {}))
+            # Extract hero section from new comprehensive structure
+            hero_section = aplus_plan.get('heroSection', {}) or aplus_plan.get('hero_section', {})
+            listing.hero_title = hero_section.get('title', result.get('brandSummary', '').split('.')[0] if result.get('brandSummary') else f'{product.brand_name} Quality Excellence')[:100]
+            listing.hero_content = hero_section.get('content', result.get('brandSummary', f'Experience premium quality with {product.brand_name} - trusted by customers worldwide for reliability and performance.'))
             
-            # Get hero title and content with improved fallbacks
-            if hero_section:
-                listing.hero_title = hero_section.get('title', hero_section.get('content', ''))[:100]
-                listing.hero_content = hero_section.get('content', hero_section.get('title', ''))
-            else:
-                # Fallback to brand summary or default
-                brand_summary = result.get('brandSummary', '')
-                listing.hero_title = (brand_summary.split('.')[0] if brand_summary else 
-                                    f'{product.brand_name} Quality Excellence')[:100]
-                listing.hero_content = brand_summary or f'Experience premium quality with {product.brand_name} - trusted by customers worldwide for reliability and performance.'
-            
-            # Extract features from comprehensive new structure (handle both old and new formats)
-            features_section = (aplus_plan.get('featuresSection', {}) or 
-                              aplus_plan.get('features_section', {}) or 
-                              aplus_plan.get('section2_features', {}))
-            features_list = features_section.get('features', features_section.get('content', []))
-            
-            # Ensure features_list is actually a list, not a string
-            if isinstance(features_list, str):
-                features_list = [features_list]  # Convert single string to list
-            elif not isinstance(features_list, list):
-                features_list = []  # Ensure it's a list
-            
-            # If no features from A+ plan, try direct extraction
-            if not features_list:
-                whats_in_box = result.get('whatsInBox', [])
-                if isinstance(whats_in_box, list):
-                    features_list = whats_in_box
-                else:
-                    features_list = []
+            # Extract features from comprehensive new structure  
+            features_section = aplus_plan.get('featuresSection', {}) or aplus_plan.get('features_section', {})
+            features_list = features_section.get('features', result.get('whatsInBox', []))
             if not features_list:
                 features_list = [
                     f"Premium {product.name.lower()} construction",
@@ -1571,15 +1392,9 @@ Technical specifications include comprehensive compatibility, robust build quali
                 ]
             listing.features = '\n'.join(features_list)
             
-            # Save comprehensive content from new structure with A+ plan priority
+            # Save comprehensive content from new structure
             listing.whats_in_box = '\n'.join(result.get('whatsInBox', [f'{product.name}', 'User manual', 'Warranty information', 'Quality assurance certificate']))
-            
-            # Extract trust builders from A+ plan or fallback to direct result
-            trust_section = aplus_plan.get('section3_trust', {}) or aplus_plan.get('trustSection', {})
-            trust_content = trust_section.get('content', []) or trust_section.get('trust_builders', [])
-            if not trust_content:
-                trust_content = result.get('trustBuilders', ['30-day satisfaction guarantee', 'Quality tested and certified', '24/7 customer support', 'Manufacturer warranty included'])
-            listing.trust_builders = '\n'.join(trust_content)
+            listing.trust_builders = '\n'.join(result.get('trustBuilders', ['30-day satisfaction guarantee', 'Quality tested and certified', '24/7 customer support', 'Manufacturer warranty included']))
             listing.social_proof = result.get('socialProof', f'Thousands of satisfied customers choose {product.brand_name} for quality and reliability.')
             listing.guarantee = result.get('guarantee', f'100% satisfaction guarantee - if you are not completely satisfied, return within 30 days for full refund.')
             
@@ -1634,13 +1449,9 @@ Technical specifications include comprehensive compatibility, robust build quali
             # Build comprehensive A+ content HTML from the plan
             sections_html = []
             
-            # For international markets, ensure we use actual content even if structure is different
-            marketplace_lang = getattr(product, 'marketplace_language', 'en')
-            
             # Generate HTML for each A+ section with dynamic card types and colors
-            # Check for both 'section' prefix and 'section1_hero' style keys
             for section_key, section_data in aplus_plan.items():
-                if (section_key.startswith('section') or '_' in section_key) and isinstance(section_data, dict):
+                if section_key.startswith('section') and isinstance(section_data, dict):
                     section_title = section_data.get('title', '')
                     section_content = section_data.get('content', '')
                     section_keywords = ', '.join(section_data.get('keywords', []))
@@ -1761,89 +1572,6 @@ Technical specifications include comprehensive compatibility, robust build quali
         </div>
     </div>"""
                     sections_html.append(section_html)
-            
-            # If no sections were generated (common for international markets), create them from actual content
-            if not sections_html and (listing.hero_title or listing.features or listing.trust_builders):
-                self.logger.info("Creating A+ sections from extracted content for international market")
-                
-                # Create hero section from actual hero content
-                if listing.hero_title and listing.hero_content:
-                    hero_html = f"""
-    <div class="aplus-module section1_hero sm:px-4">
-        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 sm:p-6">
-            <div class="content-section">
-                <h3 class="text-xl sm:text-2xl font-bold text-blue-900 mb-3">{listing.hero_title}</h3>
-                <p class="text-gray-700 text-sm sm:text-base leading-relaxed mb-4">{listing.hero_content}</p>
-                <div class="image-placeholder bg-white border-2 border-dashed border-blue-300 rounded-lg p-4 sm:p-8 text-center">
-                    <span class="text-4xl mb-2 block">🖼️</span>
-                    <p class="text-blue-700 font-medium mb-2">Hero Lifestyle Image</p>
-                    <p class="text-gray-600 text-xs sm:text-sm">Professional lifestyle shot showing product in use with {marketplace_lang if marketplace_lang != 'en' else 'lifestyle'} context</p>
-                </div>
-            </div>
-        </div>
-    </div>"""
-                    sections_html.append(hero_html)
-                
-                # Create features section from actual features
-                if listing.features:
-                    features_list = listing.features.split('\n') if isinstance(listing.features, str) else listing.features
-                    features_items = '\n'.join([f"<li class='mb-2'>{feature}</li>" for feature in features_list[:6]])
-                    features_html = f"""
-    <div class="aplus-module section2_features sm:px-4">
-        <div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4 sm:p-6">
-            <div class="content-section">
-                <h3 class="text-xl sm:text-2xl font-bold text-green-900 mb-3">Key Features & Benefits</h3>
-                <ul class="text-gray-700 text-sm sm:text-base list-disc pl-5 mb-4">
-                    {features_items}
-                </ul>
-                <div class="image-placeholder bg-white border-2 border-dashed border-green-300 rounded-lg p-4 sm:p-8 text-center">
-                    <span class="text-4xl mb-2 block">📊</span>
-                    <p class="text-green-700 font-medium mb-2">Feature Callout Grid</p>
-                    <p class="text-gray-600 text-xs sm:text-sm">4-panel grid showcasing key features with icons and brief descriptions</p>
-                </div>
-            </div>
-        </div>
-    </div>"""
-                    sections_html.append(features_html)
-                
-                # Create trust section from actual trust builders
-                if listing.trust_builders:
-                    trust_list = listing.trust_builders.split('\n') if isinstance(listing.trust_builders, str) else listing.trust_builders
-                    trust_items = '\n'.join([f"<li class='mb-2'>{trust}</li>" for trust in trust_list[:5]])
-                    trust_html = f"""
-    <div class="aplus-module section3_trust sm:px-4">
-        <div class="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-4 sm:p-6">
-            <div class="content-section">
-                <h3 class="text-xl sm:text-2xl font-bold text-purple-900 mb-3">Why Trust {product.brand_name}</h3>
-                <ul class="text-gray-700 text-sm sm:text-base list-disc pl-5 mb-4">
-                    {trust_items}
-                </ul>
-                <div class="image-placeholder bg-white border-2 border-dashed border-purple-300 rounded-lg p-4 sm:p-8 text-center">
-                    <span class="text-4xl mb-2 block">🏆</span>
-                    <p class="text-purple-700 font-medium mb-2">Trust & Certification Badges</p>
-                    <p class="text-gray-600 text-xs sm:text-sm">Display of certifications, awards, and trust indicators relevant to {marketplace_lang if marketplace_lang != 'en' else 'your'} market</p>
-                </div>
-            </div>
-        </div>
-    </div>"""
-                    sections_html.append(trust_html)
-                
-                # Create FAQ section from actual FAQs
-                if listing.faqs:
-                    faq_list = listing.faqs.split('\n') if isinstance(listing.faqs, str) else listing.faqs
-                    faq_items = '\n'.join([f"<div class='mb-3'><p class='font-semibold'>{faq}</p></div>" for faq in faq_list[:5]])
-                    faq_html = f"""
-    <div class="aplus-module section4_faqs sm:px-4">
-        <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg p-4 sm:p-6">
-            <div class="content-section">
-                <h3 class="text-xl sm:text-2xl font-bold text-yellow-900 mb-3">Frequently Asked Questions</h3>
-                <div class="text-gray-700 text-sm sm:text-base">
-                    {faq_items}
-                </div>
-            </div>
-        </div>
-    </div>"""
-                    sections_html.append(faq_html)
             
             # Generate HTML from saved listing data
             features_html = '\n'.join([f"        <li>{feature}</li>" for feature in features_list])
@@ -2405,13 +2133,8 @@ A: Most gamers feel the difference within their first session. Say goodbye to th
         listing.keywords = f"gaming chair, ergonomic chair, gaming chair with footrest for tall users, best gaming chair under $200, gaming chair for back pain relief, comfortable chair for long gaming sessions, gaming chair with lumbar support, {product.brand_name}"
 
     def _generate_walmart_listing(self, product, listing):
-        from .services_occasion_enhanced import OccasionOptimizer
-        
         if not self.client:
             raise Exception("OpenAI API key not configured. Please set a valid OpenAI API key to generate Walmart listings.")
-            
-        # Initialize occasion optimizer for Walmart too
-        occasion_optimizer = OccasionOptimizer()
             
         competitor_context = self._get_competitor_context(product)
         
@@ -2440,16 +2163,7 @@ A: Most gamers feel the difference within their first session. Say goodbye to th
         # Generate category-specific attributes based on product
         category_prompt = self._get_walmart_category_context(product)
         
-        # Get occasion-specific enhancements if applicable
-        occasion = getattr(product, 'occasion', None)
-        occasion_enhancement = ""
-        if occasion and occasion != 'None':
-            occasion_enhancement = occasion_optimizer.get_occasion_prompt_enhancement(occasion)
-            self.logger.info(f"Applied Walmart occasion enhancement for: {occasion}")
-        
         prompt = f"""Create a professional Walmart listing for this product. Return ONLY valid JSON with no extra text.
-
-{occasion_enhancement}
 
 PRODUCT: {product.name}
 BRAND: {product.brand_name}
@@ -2457,6 +2171,12 @@ DESCRIPTION: {product.description}
 FEATURES: {product.features}
 PRICE: ${product.price}
 SPECIAL OCCASION: {getattr(product, 'occasion', 'None - general purpose listing')}
+
+🎁 OCCASION OPTIMIZATION: If Special Occasion is provided, incorporate:
+- Title: Add occasion appeal naturally (e.g., "Perfect for Christmas", "Great Valentine's Gift")
+- Keywords: Include 5+ occasion-specific terms (e.g., "christmas gift", "holiday present", "valentine gift")
+- Description: Mention gift-worthiness, seasonal use, or occasion benefits
+- Features: Highlight occasion-relevant aspects when applicable
 
 Requirements:
 - Title: Under 100 characters with brand and key benefit
@@ -3169,27 +2889,18 @@ Return ONLY valid JSON:
                 has_unicode = any(ord(c) > 127 for c in text)
                 self.logger.debug(f"Emoji removal input: {original_length} chars, has Unicode: {has_unicode}")
                 
-                # INTERNATIONAL CHARACTER PRESERVING emoji removal
-                # Only remove actual emojis, keep international letters (ä, ö, ü, ß, é, ñ, etc.)
+                # AGGRESSIVE ASCII-ONLY conversion - multiple approaches
                 
-                # Define emoji ranges to remove while preserving international letters
-                emoji_pattern = re.compile(
-                    "["
-                    "\U0001F600-\U0001F64F"  # emoticons
-                    "\U0001F300-\U0001F5FF"  # symbols & pictographs
-                    "\U0001F680-\U0001F6FF"  # transport & map symbols
-                    "\U0001F1E0-\U0001F1FF"  # flags (iOS)
-                    "\U00002702-\U000027B0"  # dingbats
-                    "\U000024C2-\U0001F251"  # enclosed characters
-                    "\U0001F900-\U0001F9FF"  # supplemental symbols
-                    "\U00002600-\U000026FF"  # miscellaneous symbols
-                    "\U00002700-\U000027BF"  # dingbats
-                    "]+", flags=re.UNICODE)
+                # Method 1: Direct ASCII encoding
+                clean_text = text.encode('ascii', errors='ignore').decode('ascii')
                 
-                # Remove only emojis, preserve international characters
-                clean_text = emoji_pattern.sub('', text)
+                # Method 2: Manual character filtering for printable ASCII only
+                clean_text = ''.join(c for c in clean_text if 32 <= ord(c) <= 126)
                 
-                # Clean up multiple spaces but preserve all text characters
+                # Method 3: Remove any remaining problematic patterns
+                clean_text = re.sub(r'[^\x20-\x7E]', '', clean_text)
+                
+                # Method 4: Clean up spaces and formatting
                 clean_text = re.sub(r'\s+', ' ', clean_text).strip()
                 
                 # Debug logging
@@ -3197,12 +2908,12 @@ Return ONLY valid JSON:
                 has_unicode_after = any(ord(c) > 127 for c in clean_text) if clean_text else False
                 self.logger.debug(f"Emoji removal output: {final_length} chars, has Unicode: {has_unicode_after}")
                 
-                return clean_text if clean_text else text
+                return clean_text if clean_text else text.encode('ascii', errors='ignore').decode('ascii')
                 
             except Exception as e:
                 self.logger.error(f"Emoji removal failed: {e}")
-                # Fallback - return original text to preserve international content
-                return text
+                # Ultimate fallback - just return empty string if all fails
+                return ""
         
         def clean_object(obj):
             if isinstance(obj, dict):

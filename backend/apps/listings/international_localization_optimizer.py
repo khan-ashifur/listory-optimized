@@ -49,12 +49,18 @@ class InternationalLocalizationOptimizer:
                     "sparen Sie Zeit", "verbessern Sie", "optimieren Sie"
                 ],
                 
-                # Native German copywriting rules
+                # Native German copywriting rules - OPTIMIZED FOR 10/10 QUALITY
                 "enforcement_rules": [
-                    "🚨 CRITICAL: You MUST include German umlauts ä, ö, ü, ß in ALL appropriate words",
-                    "Examples: für NOT fr, größer NOT grosser, Abkühlung NOT Abkuhlung, heißesten NOT heissesten",
-                    "WRITE emotional hooks: 'Endlich ohne Rückenschmerzen' or 'Genießen Sie endlich...'",
-                    "USE these words WITH umlauts: müheloser, größer, für, natürlich, Qualität, zuverlässig",
+                    "🚨 CRITICAL: You MUST include German umlauts ä, ö, ü, ß in ALL appropriate words - NO EXCEPTIONS",
+                    "UMLAUT EXAMPLES: für NOT fr, größer NOT grosser, Abkühlung NOT Abkuhlung, heißesten NOT heissesten, Oberfläche NOT Oberflache, Qualität NOT Qualitat, zuverlässig NOT zuverlas, müheloser NOT muhelos",
+                    "COMMON UMLAUT WORDS: Größe, Höhe, Kühlung, Küche, hören, fühlen, natürlich, schön, größer, wärmer, kälter, Wärme",
+                    "🔥 EMOTIONAL HOOK FORMULA - FIRST BULLET MUST START WITH:",
+                    "Pattern: '[EMOTIONAL BENEFIT] wie ein Profi – ganz ohne [PROBLEM] oder [FRUSTRATION].'",
+                    "Examples: 'Hygienisch schneiden wie ein Profi – ganz ohne Geschmacksübertragung oder Küchenchaos.'",
+                    "Examples: 'Endlich erfrischende Abkühlung wie ein Profi – ganz ohne schwere Geräte oder laute Ventilatoren.'",
+                    "🔧 BULLET STRUCTURE OPTIMIZATION:",
+                    "Split long bullets into 2 clear sentences: 1st = core benefit, 2nd = scenario/feature",
+                    "Example: 'Erste kurze Benefit-Aussage mit Emotion. Zweite Aussage erklärt zusätzliche Features oder Anwendung.'",
                     "BALANCE: 60% lifestyle benefits, 40% technical specs",
                     "INCLUDE: 'Perfektes Geschenk für Weihnachten' or seasonal hooks",
                     "WRITE warm, conversational German - avoid stiff bureaucratic language"
@@ -214,6 +220,58 @@ class InternationalLocalizationOptimizer:
                 "rtl": True
             },
             
+            "pl": {
+                "market_name": "Poland",
+                "marketplace": "pl", 
+                "language": "Polish",
+                "currency": "PLN",
+                "language_code": "pl",
+                
+                # Essential Polish words
+                "essential_words": [
+                    "i", "w", "na", "z", "do", "że", "się", "nie", "to", "ale",
+                    "być", "mieć", "móc", "jak", "czy", "który", "bardzo", "już"
+                ],
+                
+                # Emotional power words for Polish consumers
+                "power_words": [
+                    "wreszcie", "idealny", "wygodny", "łatwy", "skuteczny", "niezawodny",
+                    "wysokiej jakości", "praktyczny", "doskonały", "niezbędny", "wyjątkowy",
+                    "komfortowy", "oszczędny", "profesjonalny", "trwały", "elegancki"
+                ],
+                
+                # Polish lifestyle and emotional elements
+                "cultural_elements": [
+                    "Wreszcie bez bólu pleców i szyi", 
+                    "Idealny do domu i biura",
+                    "Doskonały prezent na każdą okazję",
+                    "Więcej komfortu w codziennym życiu",
+                    "Zaoszczędź czas i ciesz się życiem",
+                    "Poczuj różnicę już dziś",
+                    "Zainwestuj w swoją wygodę"
+                ],
+                
+                # Natural Polish phrases
+                "formality_words": [
+                    "Ciesz się", "Doświadcz", "Odkryj", "Skorzystaj z",
+                    "Pozwól sobie na", "Wypróbuj", "Zainwestuj w",
+                    "Poczuj różnicę", "Zyskaj więcej", "Zadbaj o siebie"
+                ],
+                
+                # Polish copywriting rules
+                "enforcement_rules": [
+                    "🚨 CRITICAL: Use proper Polish characters ą, ć, ę, ł, ń, ó, ś, ź, ż in ALL words",
+                    "Examples: więcej NOT wiecej, łatwy NOT latwy, jakość NOT jakosc, już NOT juz",
+                    "WRITE emotional hooks: 'Wreszcie bez [PROBLEM]' or 'Ciesz się [BENEFIT]'", 
+                    "USE Polish power words: wreszcie, idealny, wygodny, łatwy, doskonały",
+                    "BALANCE: 60% lifestyle benefits, 40% technical specs",
+                    "INCLUDE: 'Idealny prezent na Boże Narodzenie' or gift angles",
+                    "WRITE warm, conversational Polish - avoid overly formal language"
+                ],
+                
+                "avoid_words": ["the", "and", "with", "for", "is", "quality", "professional"]
+            },
+            
             "nl": {
                 "market_name": "Netherlands",
                 "marketplace": "nl",
@@ -308,6 +366,8 @@ class InternationalLocalizationOptimizer:
             market_code = "ar"
         elif marketplace == "nl" or language == "nl":
             market_code = "nl"
+        elif marketplace == "pl" or language == "pl":
+            market_code = "pl"
         elif marketplace in ["co.jp", "jp"] or language == "ja":
             market_code = "ja"
         
@@ -354,11 +414,12 @@ AMAZON.{marketplace.upper()} MARKETPLACE - {config['language'].upper()} LANGUAGE
 • {'Include gift hook if relevant' if market_code == 'de' else 'Use proper grammar'}
 • {'150-200 chars with proper umlauts (ä,ö,ü,ß)' if market_code == 'de' else '150-200 characters'}
 
-{'📌 GERMAN BULLET POINTS:' if market_code == 'de' else f'BULLETS FOR {config["language"].upper()}:'}
-• {'1st: Problem-solving hook (Endlich ohne...)' if market_code == 'de' else f'Each bullet in {config["language"]}'}
-• {'2nd-3rd: Lifestyle benefits + specs' if market_code == 'de' else 'Start with benefits'}
-• {'4th: Gift idea or seasonal use' if market_code == 'de' else 'Include cultural elements'}
-• {'5th: Trust/guarantee with emotion' if market_code == 'de' else 'Natural native expressions'}
+{'📌 GERMAN BULLET POINTS - 10/10 QUALITY STRUCTURE:' if market_code == 'de' else f'BULLETS FOR {config["language"].upper()}:'}
+• {'1st BULLET = EMOTIONAL HOOK: "[BENEFIT] wie ein Profi – ganz ohne [PROBLEM]."' if market_code == 'de' else f'Each bullet in {config["language"]}'}
+• {'2nd BULLET: Split into 2 sentences. 1st = core benefit. 2nd = scenario/feature.' if market_code == 'de' else 'Start with benefits'}
+• {'3rd BULLET: Split into 2 sentences. Technical specs + lifestyle application.' if market_code == 'de' else 'Include cultural elements'}
+• {'4th BULLET: Gift idea or seasonal use with emotional appeal.' if market_code == 'de' else 'Natural native expressions'}
+• {'5th BULLET: Trust/guarantee with specific benefit. Two sentences format.' if market_code == 'de' else 'Trust elements'}
 
 {'📝 GERMAN DESCRIPTION (LIFESTYLE-DRIVEN):' if market_code == 'de' else f'DESCRIPTION FOR {config["language"].upper()}:'}
 • {'Open with emotional story/scenario' if market_code == 'de' else f'Complete {config["language"]} language'}
@@ -413,6 +474,22 @@ JSON CONTENT OVERRIDE FOR {config['language'].upper()}:
 • bulletPoints: All 5 bullets must be {config['language']} with these phrases: {', '.join(cultural_elements)}
 • productDescription: Complete {config['language']} description with cultural adaptation
 • All other content fields: 100% {config['language']} language only
+
+{'🔥 GERMAN 10/10 BULLET OPTIMIZATION FORMULA 🔥' if market_code == 'de' else ''}
+{'BULLET 1 EMOTIONAL HOOK EXAMPLES:' if market_code == 'de' else ''}
+{'• "Erfrischende Abkühlung wie ein Profi – ganz ohne schwere Geräte oder laute Ventilatoren."' if market_code == 'de' else ''}
+{'• "Hygienisch schneiden wie ein Profi – ganz ohne Geschmacksübertragung oder Küchenchaos."' if market_code == 'de' else ''}
+{'• "Perfekte Kühlung wie ein Profi – ganz ohne teure Klimaanlage oder sperrige Ventilatoren."' if market_code == 'de' else ''}
+{'' if market_code == 'de' else ''}
+{'BULLET STRUCTURE - MOBILE OPTIMIZED (2 SENTENCES MAX):' if market_code == 'de' else ''}
+{'✅ Sentence 1: Core emotional benefit (20-30 words)' if market_code == 'de' else ''}
+{'✅ Sentence 2: Scenario/feature explanation (15-25 words)' if market_code == 'de' else ''}
+{'❌ AVOID: Single 60+ word monster sentences that are hard to read on mobile' if market_code == 'de' else ''}
+{'' if market_code == 'de' else ''}
+{'UMLAUT PERFECTION CHECKLIST:' if market_code == 'de' else ''}
+{'✅ für (not fr), größer (not grosser), Kühlung (not Kuhlung), Qualität (not Qualitat)' if market_code == 'de' else ''}
+{'✅ müheloser (not muheloser), hören (not horen), schön (not schon), natürlich (not naturlich)' if market_code == 'de' else ''}
+{'✅ Oberfläche (not Oberflache), wärmer (not warmer), Wärme (not Warme), Größe (not Grosse)' if market_code == 'de' else ''}
 
 🚨 EMERGENCY TEMPLATE OVERRIDE 🚨
 Any English template instructions below are INVALID for international markets.
@@ -497,6 +574,8 @@ The entire listing must read as if written by a native {config['language']} spea
             market_code = "ar"
         elif marketplace == "nl" or language == "nl":
             market_code = "nl"
+        elif marketplace == "pl" or language == "pl":
+            market_code = "pl"
         elif marketplace in ["co.jp", "jp"] or language == "ja":
             market_code = "ja"
         
