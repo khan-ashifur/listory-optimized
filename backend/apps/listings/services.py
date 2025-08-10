@@ -38,6 +38,29 @@ class ListingGeneratorService:
             self.logger.error(f"Traceback: {traceback.format_exc()}")
             self.client = None
 
+    def get_spanish_industry_keywords(self, product):
+        """Get Spanish industry-specific high-intent keywords"""
+        category = product.categories.lower() if product.categories else ""
+        
+        # Industry-specific Spanish keywords by category
+        industry_keywords = {
+            "electronics": "mejor, original, certificado CE, profesional, premium, oferta España, 2024, garantía, compatible, inalámbrico",
+            "audio": "cancelación ruido, bluetooth 5.3, HiFi, auriculares gaming, estéreo, micrófono, manos libres, envío España, calidad europea",
+            "headphones": "cancelación ruido activa, bluetooth 5.3, auriculares gaming, estéreo premium, micrófono ENC, envío España 24h",
+            "home": "ahorro energético, silencioso, portátil, diseño moderno, fácil limpieza, sin cables, inteligente, eco, sostenible España",
+            "kitchen": "acero inoxidable, antiadherente, apto lavavajillas, BPA free, resistente calor, profesional cocina, envío España",
+            "sports": "impermeable IPX7, transpirable, ergonómico, ultraligero, resistente, fitness, gimnasio, running, envío España",
+            "office": "productividad, escritorio, teletrabajo, organizador, ajustable, profesional, premium business, envío España"
+        }
+        
+        # Find matching category keywords
+        for key, keywords in industry_keywords.items():
+            if key in category:
+                return keywords
+        
+        # Default high-intent Spanish keywords
+        return "mejor, original, profesional, certificado CE, garantía 2 años, premium, oferta España, envío España 24h, calidad europea"
+    
     def get_marketplace_title_format(self, marketplace, brand_name):
         """Get marketplace-specific title formatting instructions"""
         
@@ -77,32 +100,27 @@ class ListingGeneratorService:
             150-190 chars max with Italian formatting."""
             
         elif marketplace == 'es':
-            return f"""🚨 CRITICAL AMAZON SPAIN TITLE FORMAT: Spanish passion meets authenticity: '[Beneficio Emocional] [Tipo de Producto] {brand_name} - [Especificación Clave] - [Ventajas Familiares]'.
+            return f"""🚨 SEO-OPTIMIZED SPANISH TITLE FOR AMAZON.ES TOP RANKING:
             
-            Spanish customers prioritize EMOTIONAL CONNECTION and FAMILY VALUES. Lead with benefits that resonate personally.
+            FORMAT (MAX 200 CHARS): [{brand_name}] [Producto+Keyword] [Spec#] - [Beneficio] | [Uso] [2024]
             
-            GOOD: 'Tranquilidad Familiar Auriculares Bluetooth {brand_name} - Batería 30h - Momentos Sin Interrupciones'
-            BAD: 'Auriculares Bluetooth Batería 30h {brand_name} - Inalámbricos con Cancelación de Ruido'
+            KEYWORD ORDER FOR ALGORITHM:
+            1. Brand FIRST for trust
+            2. Product + main keyword (Auriculares Bluetooth)
+            3. Number spec (30H, 20000mAh)
+            4. Key benefit short (Cancelación Ruido)
+            5. Use/Season (Deporte 2024)
             
-            PRIORITY ORDER FOR SPANISH MARKET:
-            1. Emotional family benefit (Tranquilidad Familiar, Momentos Especiales, Calidad de Vida, Confianza Total)
-            2. Product type in Spanish with proper gender agreements (los/las, del/de la)
-            3. Brand placement for authenticity and trust (marca española preferred)
-            4. Key specification that impacts daily family life
-            5. Additional benefits that enhance family moments
+            HIGH-INTENT KEYWORDS:
+            ✓ "Mejor" "Original" "Profesional" "Premium"
+            ✓ Numbers always (30H not "larga duración")
+            ✓ Year/Season for freshness
             
-            SPANISH CULTURAL VALUES:
-            - Family comes first (familia, hogar, momentos especiales)
-            - Personal relationships matter (confianza, cariño, cercanía)
-            - Quality over quantity (calidad auténtica, duradero, resistente)
-            - Practical benefits for daily life (vida diaria, día a día, cotidiano)
-            - Use proper Spanish accents (á, é, í, ó, ú, ñ)
-            - Warm, personal tone but professional quality
+            EXAMPLES:
+            ✅ "{brand_name} Auriculares Bluetooth Inalámbricos 30H - Cancelación Ruido ANC | Deporte 2024"
+            ✅ "{brand_name} Powerbank 20000mAh Carga Rápida - USB-C PD | Viaje iPhone Samsung"
             
-            EMOTIONAL HOOKS FOR SPAIN:
-            "Tranquilidad Familiar", "Momentos Especiales", "Calidad de Vida", "Confianza Total", "Para Toda la Familia", "Vida Más Cómoda", "Experiencia Auténtica"
-            
-            150-190 chars max. Must sound like written by Spanish native speaker."""
+            MOBILE: First 80 chars must have complete value proposition."""
         
         else:  # USA and other markets
             return f"""🚨 CRITICAL AMAZON USA TITLE FORMAT: Start with EXACT high-intent keywords customers type: '[Main Product Type] [Key Feature/USP] - [Brand] [Model/Size] - [Secondary Benefits]'. Front-load searchable terms, NOT marketing taglines. Example: 'Neck Fan Portable Hands Free - {brand_name} 4000mAh Battery - Bladeless Personal Cooling USB Rechargeable 3 Speeds'. Keywords FIRST, brand in middle, benefits last. 150-190 chars max."""
@@ -134,14 +152,14 @@ class ListingGeneratorService:
             
         elif marketplace == 'es':
             bullet_examples = {
-                1: "DURACIÓN EXCEPCIONAL DE BATERÍA: Disfruta hasta 12 horas de enfriamiento continuo con una sola carga gracias a nuestra batería 4000mAh - 3x más duración que la competencia. Carga rápida USB-C te lleva al 100% en solo 2 horas.",
-                2: "DISEÑO ULTRALIGERO: Solo 193g descansa cómodamente en tu cuello todo el día - más ligero que tu smartphone. Banda ajustable se adapta a cuellos de 12-18cm con almohadillas de silicona suave.",
-                3: "REFRIGERACIÓN SILENCIOSA POTENTE: 3 velocidades (2800/3600/4400 RPM) ofrecen flujo de aire fuerte manteniendo operación silenciosa bajo 32dB - más silencioso que una biblioteca.",
-                4: "COMODIDAD MANOS LIBRES: Flujo de aire 360° te mantiene fresco durante cualquier actividad - trabajar, ejercitarse, viajar. Diseño sin aspas es seguro para cabello y niños.",
-                5: "CALIDAD PREMIUM GARANTIZADA: Construido con materiales ABS+PC, resistente al sudor IPX4, certificado CE/FCC. Incluye garantía 18 meses y devolución 30 días. Más de 50.000 clientes satisfechos."
+                1: "🔋 BATERÍA 30H: Libertad sin cables. USB-C 2h carga completa. Compatible iPhone/Android. Perfecto viajes largos.",
+                2: "🎧 CANCELACIÓN RUIDO: -35dB silencio total. Modo ambiente seguro. Certificado laboratorio. Ideal oficina/avión.",
+                3: "💪 ULTRALIGERO 180G: Memory foam premium. Diadema acero ajustable. IPX5 sudor. 10.000 flexiones probadas.",
+                4: "📱 BLUETOOTH 5.3: Alcance 15m. Multipoint 2 dispositivos. Latencia <40ms gaming. Micrófono ENC cristalino.",
+                5: "✅ GARANTÍA 2 AÑOS: Soporte 24/7 español. Devolución 30 días. CE/FCC certificado. Envío desde España."
             }
             
-            return f"MANDATORY SPANISH FORMAT: Start with 'SPANISH ALL CAPS LABEL:' then benefit, then specs. Keep under 200 chars for Spanish scannability. Example: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
+            return f"🚀 MOBILE-OPTIMIZED SPANISH BULLETS (MAX 150 CHARS): [EMOJI] [2-3 WORD LABEL]: [Benefit <10 words]. [Spec]. [Use case]. Bullet {bullet_number}: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
             
         else:  # USA and other markets
             bullet_examples = {
@@ -191,33 +209,63 @@ Paragraph 4 (300-350 chars): Customer satisfaction and Italian quality assurance
 Focus on style, design, and Italian craftsmanship."""
 
         elif marketplace == 'es':
-            return f"""🚨 CRITICAL SPANISH DESCRIPTION: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). 
+            return f"""🚀 AMAZON MOBILE-FIRST SPANISH DESCRIPTION (10/10 SEO + READABILITY):
 
-STRUCTURE FOR SPANISH MARKET:
-Paragraph 1 (300-350 chars): Conexión emocional española - family first, quality matters, personal trust
-Paragraph 2 (350-400 chars): Beneficios familiares con énfasis en vida diaria y momentos especiales
-Paragraph 3 (350-400 chars): Integración en el hogar español y escenarios de vida cotidiana
-Paragraph 4 (300-350 chars): Confianza, garantía, satisfacción familiar y compromiso duradero
+MANDATORY STRUCTURE (1200-1500 chars total):
 
-MANDATORY SPANISH CULTURAL ELEMENTS:
-- FAMILY VALUES: "familia", "hogar", "seres queridos", "momentos especiales", "para toda la familia"
-- PERSONAL CONNECTION: "confianza", "cariño", "cercanía", "acompañarte", "estar ahí"
-- QUALITY EMPHASIS: "calidad auténtica", "duradero", "resistente", "que perdure", "inversión inteligente"
-- DAILY LIFE: "día a día", "vida diaria", "cotidiano", "cada momento", "rutina familiar"
-- EMOTIONAL BONDS: "tranquilidad", "comodidad", "bienestar", "satisfacción", "alegría"
+🎯 PÁRRAFO 1 - BUYER HOOK + KEYWORDS (250 chars):
+[PROBLEMA DEL COMPRADOR] + [SOLUCIÓN INMEDIATA] + [BENEFICIO PRINCIPAL]
+KEYWORDS: Include category + use-case + emotional benefit
+Example: "¿Cansado de tablas que huelen mal después de cortar carne? TABLAS DE CORTAR DOBLE CARA eliminan olores y bacterias para siempre. Acero inoxidable + superficie antibacteriana = COCINA MÁS LIMPIA cada día."
 
-SPANISH TONE REQUIREMENTS:
-- Use warm "tú" address (not formal "usted") for connection
-- Include proper Spanish accents (á, é, í, ó, ú, ñ)
-- Sound like conversation with trusted friend/family
-- Emphasize how product fits into Spanish family life
-- Reference Spanish lifestyle (siesta, familia, hogar, tradición)
-- Use natural Spanish expressions, not direct translations
+🔥 PÁRRAFO 2 - SPECS + USO REAL (400 chars):
+PERFECTO PARA TU COCINA DIARIA:
+• MEAL PREP DOMINICAL: Corta todo sin mezclar sabores
+• COCINA FAMILIAR: Una tabla carnes, otra verduras  
+• LIMPIEZA RÁPIDA: Lavavajillas + superficie no porosa
+• ESPACIO OPTIMIZADO: 42x29cm cabe en cualquier cocina
+• DURABILIDAD: Acero inoxidable resiste años de uso
+[Include BUYER USE KEYWORDS: "meal prep", "cocina familiar", "limpieza fácil"]
 
-NO English words allowed. Must sound like written by Spanish native speaker who understands family values."""
+⭐ PÁRRAFO 3 - POR QUÉ ELEGIR ESTA (400 chars):
+LO QUE OTROS NO TIENEN:
+✅ DOBLE SUPERFICIE = Sin contaminación cruzada nunca
+✅ BORDES ANTIDESLIZANTES = No se mueve mientras cocinas
+✅ ASA INTEGRADA = Fácil de colgar y guardar
+✅ ANTIBACTERIANO REAL = Acero inoxidable grado médico
+✅ FABRICADO EN EUROPA = Calidad garantizada 
+[Include "mejor que", "superior a", "único en Amazon"]
+
+🛒 PÁRRAFO 4 - CTA CONVERSION (250 chars):
+RESULTADOS DESDE EL PRIMER USO:
+Cocina más limpia ✅ Meal prep más rápido ✅ Sin olores ✅ Sin bacterias ✅
+ENVÍO DESDE ESPAÑA 24H. Garantía 2 años. Miles de familias españolas ya cocinan más seguro.
+➤ AÑADIR AL CARRITO - Stock limitado
+[Include "familia española", "resultados inmediatos", social proof]
+
+🎯 CRITICAL SEO + CONVERSION RULES:
+1. BUYER PROBLEM HOOK: Start with relatable pain point question
+2. USE-CASE KEYWORDS: "meal prep", "cocina familiar", "limpieza fácil", "uso diario"
+3. MOBILE SCANNING: CAPS headers + bullet points + short sentences  
+4. EMOTIONAL BENEFITS: "más limpia", "más seguro", "más rápido", "sin estrés"
+5. SOCIAL PROOF: "miles de familias", "ya usan", "confían en"
+6. COMPARISON LANGUAGE: "mejor que", "superior a", "único", "otros no tienen"
+7. IMMEDIATE RESULTS: "desde el primer uso", "resultados inmediatos"
+8. SPANISH TRUST: "envío España", "garantía", "fabricado Europa"
+9. URGENCY WITHOUT SPAM: "stock limitado", not "oferta limitada"
+10. CONVERSATIONAL TONE: Use "tú" + questions + natural Spanish
+
+🇪🇸 SPANISH MARKET OPTIMIZATION:
+- Use "tú" for personal connection
+- Include Spanish accents naturally (á, é, í, ó, ú, ñ)
+- Add Spain-specific terms: "envío España", "soporte español"
+- Local trust signals: "certificado CE", "garantía europea"
+- Mobile buying behavior: Clear price/shipping/warranty info
+
+RESULT: Amazon algorithm-friendly + mobile-scannable + conversion-optimized Spanish description."""
 
         else:  # USA and other markets
-            return f"""🚨 CRITICAL STRUCTURE: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). 
+            return f"""CRITICAL STRUCTURE: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). 
 
 STRUCTURE:
 Paragraph 1 (300-350 chars): Compelling opening hook
@@ -865,11 +913,11 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
   "productDescription": "{self.get_marketplace_description_format(product.marketplace, product.brand_tone)}",
   
   "seoKeywords": {{
-    "primary": ["{product.name.lower().replace(' ', '_')}", "{product.brand_name.lower()}", "THEN_ADD_13_MORE: category, color, size, material, feature1, feature2, use1, use2, style, type, model, variant, application"],
-    "longTail": ["GENERATE_25_PHRASES: best [product] for [use]", "[brand] [product] with [feature]", "[product] that [solves problem]", "professional [product] for [application]", "high quality [product] [benefit]", "etc"],
-    "problemSolving": ["GENERATE_15_PROBLEM_KEYWORDS: based on what issues this product solves from description"],
-    "rufusConversational": ["GENERATE_15_RUFUS_PHRASES: good for [real use]", "works with [compatible items]", "perfect for [scenarios]", "better than [alternatives]", "ideal for [situations]"],
-    "semantic": ["GENERATE_10_RELATED: synonyms, variations, related terms, technical terms, informal names"]
+    "primary": ["{product.name.lower().replace(' ', '_')}", "{product.brand_name.lower()}", "{self.get_spanish_industry_keywords(product) if product.marketplace == 'es' else 'THEN_ADD_13_MORE: category, color, size, material, feature1, feature2, use1, use2, style, type, model, variant, application'}"],
+    "longTail": ["GENERATE_25_PHRASES: {'mejor [product] para [uso]' if product.marketplace == 'es' else 'best [product] for [use]'}", "{'[brand] [product] original certificado' if product.marketplace == 'es' else '[brand] [product] with [feature]'}", "{'[product] profesional [aplicación]' if product.marketplace == 'es' else '[product] that [solves problem]'}", "{'[product] premium calidad' if product.marketplace == 'es' else 'professional [product] for [application]'}", "{'oferta [product] [beneficio]' if product.marketplace == 'es' else 'high quality [product] [benefit]'}", "etc"],
+    "problemSolving": ["GENERATE_15_PROBLEM_KEYWORDS: {'problemas españoles específicos' if product.marketplace == 'es' else 'based on what issues this product solves from description'}"],
+    "rufusConversational": ["GENERATE_15_RUFUS_PHRASES: {'bueno para [uso real]' if product.marketplace == 'es' else 'good for [real use]'}", "{'funciona con [items compatibles]' if product.marketplace == 'es' else 'works with [compatible items]'}", "{'perfecto para [escenarios]' if product.marketplace == 'es' else 'perfect for [scenarios]'}", "{'mejor que [alternativas]' if product.marketplace == 'es' else 'better than [alternatives]'}", "{'ideal para [situaciones]' if product.marketplace == 'es' else 'ideal for [situations]'}"],
+    "semantic": ["GENERATE_10_RELATED: {'sinónimos españoles, variaciones, términos relacionados, términos técnicos, nombres informales' if product.marketplace == 'es' else 'synonyms, variations, related terms, technical terms, informal names'}"]
   }},
   
   "backendKeywords": "Write exactly 249 characters of comprehensive search terms. CRITICAL: For occasions, prioritize occasion-specific terms first (e.g., 'christmas gift for him', 'valentine present ideas', 'mothers day gift'). Then include: product variations, synonyms, competitor terms, misspellings, related categories, use cases, customer language, technical terms, seasonal terms, gift occasions, target demographics, problem keywords, solution keywords, benefit terms, feature variations, brand alternatives, size variations, color terms, material types, style descriptors, application areas, compatibility terms, professional vs consumer terms, and industry jargon.",
