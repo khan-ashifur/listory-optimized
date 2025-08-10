@@ -6,11 +6,13 @@ import random
 from django.conf import settings
 from .models import GeneratedListing, KeywordResearch
 from apps.core.models import Product
+from .backend_keyword_optimizer import BackendKeywordOptimizer
 
 
 class ListingGeneratorService:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
+        self.backend_optimizer = BackendKeywordOptimizer()  # Initialize backend keyword optimizer
         try:
             self.logger.info("Checking OpenAI configuration...")
             self.logger.info(f"API Key exists: {bool(settings.OPENAI_API_KEY)}")
@@ -1512,16 +1514,35 @@ Technical specifications include comprehensive compatibility, robust build quali
             all_keywords = primary_keywords + secondary_keywords
             listing.keywords = ', '.join(all_keywords) if all_keywords else ''
             
+            # Backend keywords - ONLY optimize France market (keep USA and Germany untouched)
             backend_keywords = result.get('backendKeywords', '')
             if not backend_keywords:
-                # Generate fallback backend keywords
+                # Create fallback backend keywords
                 backend_keywords = f"premium quality {product.name.lower()} {product.brand_name.lower()} reliable performance great value"
                 print(f"⚠️ No backend keywords from AI, using fallback: {backend_keywords}")
             
-            listing.amazon_backend_keywords = backend_keywords
+            # Check if this is France market - if so, optimize for 249-byte limit
+            marketplace_code = getattr(product, 'marketplace', 'com') or 'com'
+            if marketplace_code == 'fr':
+                # FRANCE ONLY: Apply backend keyword optimization
+                base_keywords = [kw.strip() for kw in backend_keywords.replace(',', ' ').split() if kw.strip()]
+                optimized_backend = self.backend_optimizer.optimize_backend_keywords(
+                    primary_keywords=base_keywords,
+                    marketplace='fr',
+                    product_category=getattr(product, 'category', None)
+                )
+                listing.amazon_backend_keywords = optimized_backend
+                
+                # Analyze French optimization efficiency
+                efficiency = self.backend_optimizer.analyze_keyword_efficiency(optimized_backend, 249)
+                print(f"✅ French backend keywords optimized: {efficiency['current_length']}/249 chars ({efficiency['usage_percentage']:.1f}% usage)")
+                print(f"✅ French efficiency: {efficiency['efficiency']} ({efficiency['keywords_count']} keywords)")
+            else:
+                # USA and GERMANY: Keep original working backend keywords untouched
+                listing.amazon_backend_keywords = backend_keywords
+                print(f"✅ {marketplace_code.upper()} backend keywords preserved: {len(backend_keywords)} characters (keeping original)")
             
             print(f"✅ Final keywords count: {len(all_keywords)} total keywords")
-            print(f"✅ Backend keywords length: {len(backend_keywords)} characters")
             
             # Parse A+ content from comprehensive new structure
             aplus_plan = result.get('aPlusContentPlan', {})
@@ -1610,12 +1631,26 @@ Technical specifications include comprehensive compatibility, robust build quali
                 listing.keywords = ', '.join(all_seo_keywords)
                 print(f"✅ Comprehensive SEO keywords saved: {len(all_seo_keywords)} total keywords")
             
-            # Enhanced backend keywords from comprehensive structure
+            # Enhanced backend keywords - ONLY optimize France market (keep USA and Germany untouched) 
             backend_keywords = result.get('backendKeywords', '')
             if not backend_keywords:
                 # Generate comprehensive backend keywords if AI didn't provide them
-                backend_keywords = f"{product.name.lower()}, {product.brand_name.lower()}, premium quality, reliable performance, customer satisfaction, professional grade, exceptional value, trusted brand, high quality materials, superior design, innovative features, user friendly, long lasting, industry leading, best in class, top rated, highly recommended, outstanding quality, proven results, customer favorite"[:249]
-            listing.amazon_backend_keywords = backend_keywords[:249]  # Amazon limit is 249 characters
+                backend_keywords = f"{product.name.lower()}, {product.brand_name.lower()}, premium quality, reliable performance, customer satisfaction, professional grade, exceptional value, trusted brand, high quality materials, superior design, innovative features, user friendly, long lasting, industry leading, best in class, top rated, highly recommended, outstanding quality, proven results, customer favorite"
+            
+            # Check if this is France market - if so, optimize for 249-byte limit
+            marketplace_code = getattr(product, 'marketplace', 'com') or 'com'
+            if marketplace_code == 'fr':
+                # FRANCE ONLY: Apply comprehensive backend keyword optimization
+                base_keywords = [kw.strip() for kw in backend_keywords.split(',') if kw.strip()]
+                optimized_backend = self.backend_optimizer.optimize_backend_keywords(
+                    primary_keywords=base_keywords,
+                    marketplace='fr',
+                    product_category=getattr(product, 'category', None)
+                )
+                listing.amazon_backend_keywords = optimized_backend
+            else:
+                # USA and GERMANY: Keep original working backend keywords, just trim to 249 chars
+                listing.amazon_backend_keywords = backend_keywords[:249]  # Amazon limit is 249 characters
             
             # Save brand summary for A+ content
             brand_summary = result.get('brandSummary', f'{product.brand_name} is committed to delivering exceptional quality and customer satisfaction. With years of experience and innovation, we create products that exceed expectations and provide lasting value for our customers.')
@@ -2350,7 +2385,19 @@ JOIN THOUSANDS OF SATISFIED CUSTOMERS
 
 \"Finally, a {primary_keyword} that delivers on its promises\" - Verified Customer. Experience why this is rated among the best for quality and performance."""
         
-        listing.amazon_backend_keywords = f"{product.name}, {product.brand_name}, {primary_keyword}, premium {product_category}, quality {product_category}, kitchen accessories"
+        # Fallback backend keywords - ONLY optimize France market (keep USA and Germany untouched)
+        marketplace_code = getattr(product, 'marketplace', 'com') or 'com'
+        if marketplace_code == 'fr':
+            # FRANCE ONLY: Optimize fallback backend keywords
+            base_keywords = [product.name, product.brand_name, primary_keyword, f"premium {product_category}", f"quality {product_category}", "kitchen accessories"]
+            listing.amazon_backend_keywords = self.backend_optimizer.optimize_backend_keywords(
+                primary_keywords=base_keywords,
+                marketplace='fr',
+                product_category=product_category
+            )
+        else:
+            # USA and GERMANY: Keep original working fallback keywords untouched
+            listing.amazon_backend_keywords = f"{product.name}, {product.brand_name}, {primary_keyword}, premium {product_category}, quality {product_category}, kitchen accessories"
         
         # Enhanced A+ Content with all modules
         listing.amazon_aplus_content = """<div class='aplus-module module1'>
