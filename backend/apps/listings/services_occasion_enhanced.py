@@ -122,6 +122,44 @@ class OccasionOptimizer:
                 "seasonal_context": "Christmas delivery guaranteed if ordered by December 15th!"
             },
             
+            "Weihnachten": {
+                "emotional_hooks": [
+                    "Machen Sie Weihnachten unvergesslich",
+                    "Das Geschenk, über das sie sich wirklich freuen werden",
+                    "Bringen Sie extra Zauber in die Feiertage",
+                    "Weil die besten Geschenke durchdacht und nützlich sind",
+                    "Starten Sie eine neue Weihnachtstradition"
+                ],
+                "title_patterns": [
+                    "Weihnachtsgeschenk {product} - {benefit} - Perfektes Feiertagsgeschenk",
+                    "{product} Weihnachts-Edition - {feature} für die Festtage",
+                    "Ultimatives Weihnachtsgeschenk - {product} mit {unique_feature}",
+                    "Feiertags-Spezial {product} - {benefit} unterm Tannenbaum"
+                ],
+                "power_words": ["festlich", "Feiertage", "Weihnachten", "saisonal", "fröhlich", "weihnachtlich", "Feier", "Tradition"],
+                "urgency_phrases": ["Bestellen Sie bis 15. Dezember für Weihnachtslieferung", "Weihnachts-Versandfristen beachten", "Weihnachtsvorrat wird knapp"],
+                "bullet_starters": [
+                    "WEIHNACHTSGESCHENK-SIEGER:",
+                    "FEIERTAGS-ESSENTIAL:",
+                    "FESTLICH & FUNKTIONAL:",
+                    "PERFEKTER NIKOLAUSSTIEFEL-FÜLLER:",
+                    "WEIHNACHTSMORGEN-ÜBERRASCHUNG:"
+                ],
+                "keywords": [
+                    "weihnachtsgeschenk", "weihnachtspresent", "nikolausstiefel füller",
+                    "weihnachtsgeschenk ideen", "wichtelgeschenk", "schrottwichteln geschenk",
+                    "weihnachts {product_type}", "geschenk guide weihnachten", "xmas geschenk",
+                    "beste weihnachtsgeschenke 2024", "geschenk unterm tannenbaum"
+                ],
+                "description_hooks": [
+                    "Dieses Weihnachten schenken Sie etwas, das nicht weiter verschenkt wird.",
+                    "Stellen Sie sich ihr Gesicht vor, wenn sie das am Weihnachtsmorgen auspacken.",
+                    "Die Feiertage sollen Freude bringen, nicht Stress – dieses Geschenk schafft beides."
+                ],
+                "gift_messaging": "Kostenlose Weihnachts-Geschenkverpackung. Weihnachtskarte mit Nachricht inklusive.",
+                "seasonal_context": "Weihnachtslieferung garantiert bei Bestellung bis 15. Dezember!"
+            },
+            
             "Birthday": {
                 "emotional_hooks": [
                     "Make their birthday wish come true",
@@ -538,6 +576,82 @@ class OccasionOptimizer:
                 ],
                 "gift_messaging": "Housewarming gift presentation. Welcome them home!",
                 "seasonal_context": "Housewarming ready - Perfect for new homeowners!"
+            },
+            
+            "Oktoberfest": {
+                "emotional_hooks": [
+                    "Feiern Sie das größte Volksfest der Welt",
+                    "Bringen Sie Oktoberfest-Stimmung nach Hause",
+                    "Das perfekte Geschenk für Oktoberfest-Fans",
+                    "O'zapft is! Zeit für die richtigen Accessoires",
+                    "Münchner Gemütlichkeit das ganze Jahr"
+                ],
+                "title_patterns": [
+                    "Oktoberfest Geschenk {product} - {benefit} - Bayrische Tradition",
+                    "{product} Oktoberfest Edition - {feature} für das Volksfest",
+                    "Wiesn-Special {product} - {benefit} für echte Bayern",
+                    "Oktoberfest Essential {product} - {unique_feature} zur Wiesn"
+                ],
+                "power_words": ["Oktoberfest", "Wiesn", "bayrisch", "Volksfest", "traditionell", "Lederhosen", "Dirndl", "gemütlich"],
+                "urgency_phrases": ["Rechtzeitig zur Wiesn bestellen", "Oktoberfest-Lieferung verfügbar", "Limitierte Oktoberfest-Edition"],
+                "bullet_starters": [
+                    "OKTOBERFEST-BEREIT:",
+                    "WIESN-ESSENTIAL:",
+                    "BAYRISCHE TRADITION:",
+                    "VOLKSFEST-PERFEKT:",
+                    "MÜNCHNER GEMÜTLICHKEIT:"
+                ],
+                "keywords": [
+                    "oktoberfest geschenk", "wiesn accessoire", "oktoberfest artikel",
+                    "oktoberfest zubehör", "volksfest geschenk", "bayrisches geschenk",
+                    "oktoberfest {product_type}", "wiesn ausstattung", "oktoberfest tradition",
+                    "münchner oktoberfest", "oktoberfest souvenir"
+                ],
+                "description_hooks": [
+                    "Oktoberfest ist mehr als nur ein Fest – es ist ein Lebensgefühl.",
+                    "Von der Wiesn direkt zu Ihnen nach Hause.",
+                    "Echte Bayern wissen: zur Wiesn gehört die richtige Ausstattung."
+                ],
+                "gift_messaging": "Oktoberfest-Geschenkverpackung verfügbar. Wiesn-Grüße inklusive!",
+                "seasonal_context": "Oktoberfest (September-Oktober) - O'zapft is!"
+            },
+            
+            "Karneval": {
+                "emotional_hooks": [
+                    "Alaaf und Helau - die fünfte Jahreszeit beginnt",
+                    "Bringen Sie Karnevalsstimmung in Ihre Feier",
+                    "Das perfekte Accessoire für die närrische Zeit",
+                    "Karneval ohne Grenzen - feiern Sie mit",
+                    "Von Köln bis Mainz - Karneval vereint uns alle"
+                ],
+                "title_patterns": [
+                    "Karneval Geschenk {product} - {benefit} - Närrische Zeit",
+                    "{product} Fasching Edition - {feature} für die fünfte Jahreszeit",
+                    "Karnevals-Special {product} - {benefit} zum Feiern",
+                    "Alaaf! {product} - {unique_feature} für echte Narren"
+                ],
+                "power_words": ["Karneval", "Fasching", "närrisch", "Alaaf", "Helau", "fünfte Jahreszeit", "Kostüm", "Party"],
+                "urgency_phrases": ["Rechtzeitig zu Karneval bestellen", "Faschings-Lieferung garantiert", "Karnevalsvorrat wird knapp"],
+                "bullet_starters": [
+                    "KARNEVALS-BEREIT:",
+                    "NÄRRISCH GUT:",
+                    "FASCHING-ESSENTIAL:",
+                    "PARTY-PERFEKT:",
+                    "ALAAF & HELAU:"
+                ],
+                "keywords": [
+                    "karneval geschenk", "fasching zubehör", "karnevals artikel",
+                    "karneval accessoire", "fasching geschenk", "närrisches geschenk",
+                    "karneval {product_type}", "faschings ausstattung", "karnevals tradition",
+                    "kölner karneval", "mainzer fastnacht", "karnevals party"
+                ],
+                "description_hooks": [
+                    "Karneval ist die Zeit, in der alles möglich ist.",
+                    "Alaaf! Die fünfte Jahreszeit ruft nach den richtigen Accessoires.",
+                    "Von Weiberfastnacht bis Aschermittwoch - feiern Sie richtig."
+                ],
+                "gift_messaging": "Karnevals-Geschenkverpackung. Alaaf-Grüße inklusive!",
+                "seasonal_context": "Karnevals-Saison (Februar-März) - Alaaf und Helau!"
             }
         }
     

@@ -34,6 +34,16 @@ class BrandToneOptimizer:
                     "ADVANCED DESIGN:",
                     "TESTED DURABILITY:"
                 ],
+                "bullet_labels_de": [
+                    "PROFESSIONELLE LEISTUNG:",
+                    "EXPERTEN-KONSTRUKTION:",
+                    "BEWÄHRTE ZUVERLÄSSIGKEIT:",
+                    "INDUSTRIE-STANDARD:",
+                    "PRÄZISIONS-FERTIGUNG:",
+                    "ZERTIFIZIERTE QUALITÄT:",
+                    "FORTSCHRITTLICHES DESIGN:",
+                    "GETESTETE LANGLEBIGKEIT:"
+                ],
                 "description_hooks": [
                     "As professionals in this industry know,",
                     "Expert analysis reveals",
@@ -69,6 +79,16 @@ class BrandToneOptimizer:
                     "TOTALLY STRESS-FREE:",
                     "JUST WORKS GREAT:"
                 ],
+                "bullet_labels_de": [
+                    "SUPER EINFACH ZU BEDIENEN:",
+                    "DAS WERDEN SIE LIEBEN:",
+                    "EINFACH PERFEKT FÜR:",
+                    "SO EINFACH:",
+                    "WIRKLICH PRAKTISCH:",
+                    "MACHT DAS LEBEN LEICHTER:",
+                    "VÖLLIG STRESSFREI:",
+                    "FUNKTIONIERT EINFACH SUPER:"
+                ],
                 "description_hooks": [
                     "You know what's great about this?",
                     "Here's what makes this so easy:",
@@ -103,6 +123,16 @@ class BrandToneOptimizer:
                     "REFINED QUALITY:",
                     "EXCEPTIONAL VALUE:",
                     "DISTINGUISHED STYLE:"
+                ],
+                "bullet_labels_de": [
+                    "PREMIUM HANDWERKSKUNST:",
+                    "LUXURIÖSES ERLEBNIS:",
+                    "ELEGANTES DESIGN:",
+                    "HOCHWERTIGE LEISTUNG:",
+                    "EXKLUSIVE FUNKTIONEN:",
+                    "RAFFINIERTE QUALITÄT:",
+                    "AUSSERGEWÖHNLICHER WERT:",
+                    "DISTINGUIERTER STIL:"
                 ],
                 "description_hooks": [
                     "True luxury lies in the details.",
@@ -221,7 +251,7 @@ class BrandToneOptimizer:
             }
         }
     
-    def get_brand_tone_enhancement(self, brand_tone):
+    def get_brand_tone_enhancement(self, brand_tone, marketplace='us'):
         """Get comprehensive brand tone enhancement prompt"""
         
         if brand_tone not in self.tone_configurations:
@@ -232,7 +262,13 @@ class BrandToneOptimizer:
         # Randomly select elements for variety
         title_starter = random.choice(config["title_starters"])
         power_words = random.sample(config["power_words"], min(5, len(config["power_words"])))
-        bullet_labels = random.sample(config["bullet_labels"], min(4, len(config["bullet_labels"])))
+        
+        # Use German labels for German marketplace
+        if marketplace == 'de' and "bullet_labels_de" in config:
+            bullet_labels = random.sample(config["bullet_labels_de"], min(4, len(config["bullet_labels_de"])))
+        else:
+            bullet_labels = random.sample(config["bullet_labels"], min(4, len(config["bullet_labels"])))
+            
         description_hook = random.choice(config["description_hooks"])
         
         enhancement = f"""

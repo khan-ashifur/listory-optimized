@@ -38,6 +38,130 @@ class ListingGeneratorService:
             self.logger.error(f"Traceback: {traceback.format_exc()}")
             self.client = None
 
+    def get_marketplace_title_format(self, marketplace, brand_name):
+        """Get marketplace-specific title formatting instructions"""
+        
+        if marketplace == 'de':
+            return f"""🚨 CRITICAL AMAZON GERMANY TITLE FORMAT: Prioritize CONVERSION HOOKS first, then keywords: '[Hauptnutzen/Hook] [Produkttyp] von [Brand] - [Spezifikation] - [Weitere Vorteile]'. 
+            
+            German customers scan for BENEFITS FIRST, not just keywords. Lead with emotional hooks that drive purchase decisions.
+            
+            GOOD: 'Ultimativer Komfort Bluetooth Kopfhörer von {brand_name} - 30h Akku - Noise Cancelling Wireless Headset'
+            BAD: 'Bluetooth Kopfhörer 30h Akku {brand_name} - Wireless Headset mit Noise Cancelling'
+            
+            PRIORITY ORDER:
+            1. Conversion hook (Ultimativer Komfort, Perfekte Lösung, Professionelle Qualität)
+            2. Product type in German
+            3. Brand placement for trust 
+            4. Key specification
+            5. Secondary benefits
+            
+            150-190 chars max. Use German umlauts (ä, ö, ü, ß) naturally."""
+            
+        elif marketplace == 'fr':
+            return f"""🚨 CRITICAL AMAZON FRANCE TITLE FORMAT: French elegance meets conversion: '[Avantage Principal] [Type Produit] {brand_name} - [Spécification Clé] - [Bénéfices Secondaires]'. 
+            
+            French customers appreciate sophisticated benefit positioning.
+            
+            Example: 'Confort Ultime Écouteurs Bluetooth {brand_name} - Batterie 30h - Casque Sans Fil Réduction Bruit'
+            
+            150-190 chars max with proper French accents."""
+            
+        elif marketplace == 'it':
+            return f"""🚨 CRITICAL AMAZON ITALY TITLE FORMAT: Italian style with conversion focus: '[Beneficio Principale] [Tipo Prodotto] {brand_name} - [Specifica Chiave] - [Vantaggi Aggiuntivi]'.
+            
+            Italian customers value style and performance equally.
+            
+            Example: 'Comfort Supremo Cuffie Bluetooth {brand_name} - Batteria 30ore - Auricolari Wireless Cancellazione Rumore'
+            
+            150-190 chars max with Italian formatting."""
+        
+        else:  # USA and other markets
+            return f"""🚨 CRITICAL AMAZON USA TITLE FORMAT: Start with EXACT high-intent keywords customers type: '[Main Product Type] [Key Feature/USP] - [Brand] [Model/Size] - [Secondary Benefits]'. Front-load searchable terms, NOT marketing taglines. Example: 'Neck Fan Portable Hands Free - {brand_name} 4000mAh Battery - Bladeless Personal Cooling USB Rechargeable 3 Speeds'. Keywords FIRST, brand in middle, benefits last. 150-190 chars max."""
+
+    def get_marketplace_bullet_format(self, marketplace, bullet_number):
+        """Get marketplace-specific bullet point formatting instructions"""
+        
+        if marketplace == 'de':
+            bullet_examples = {
+                1: "LANGANHALTENDE AKKULAUFZEIT: Genießen Sie bis zu 12 Stunden kontinuierliches Kühlen mit einer einzigen Ladung durch unseren 4000mAh Akku - 3x länger als Konkurrenten. USB-C Schnellladung bringt Sie in nur 2 Stunden auf 100%.",
+                2: "ULTRALEICHTES DESIGN: Nur 193g wiegt bequem am Nacken den ganzen Tag - leichter als Ihr Smartphone. Verstellbares Band passt für Halsgrößen 12-18 cm mit weicher Silikonpolsterung.",
+                3: "KRAFTVOLLE LEISE KÜHLUNG: 3 Geschwindigkeitsstufen (2800/3600/4400 U/min) liefern starken Luftstrom bei flüsterleisem Betrieb unter 32dB - leiser als eine Bibliothek.",
+                4: "FREIHÄNDIGE BEQUEMLICHKEIT: 360° Rundumluft hält Sie bei jeder Aktivität kühl - arbeiten, trainieren, pendeln oder reisen. Schaufelloses Design ist sicher für Haar und Kinder.",
+                5: "PREMIUM QUALITÄT GARANTIERT: Gebaut mit ABS+PC Materialien, IPX4 schweißresistent, CE/FCC zertifiziert. Inklusive 18 Monate Garantie und 30 Tage Geld-zurück. Über 50.000 zufriedene Kunden."
+            }
+            
+            return f"MANDATORY GERMAN FORMAT: Start with 'GERMAN ALL CAPS LABEL:' then benefit, then specs. Keep under 200 chars for scannability. Example: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
+            
+        elif marketplace == 'fr':
+            bullet_examples = {
+                1: "AUTONOMIE EXCEPTIONNELLE: Profitez jusqu'à 12 heures de refroidissement continu avec notre batterie 4000mAh - 3x plus longue que la concurrence. Charge rapide USB-C à 100% en 2h.",
+                2: "DESIGN ULTRA-LÉGER: Seulement 193g repose confortablement sur votre cou toute la journée - plus léger que votre smartphone. Bandeau réglable 12-18cm avec coussinets silicone.",
+                3: "REFROIDISSEMENT SILENCIEUX: 3 vitesses (2800/3600/4400 tr/min) offrent un flux d'air puissant en silence sous 32dB - plus silencieux qu'une bibliothèque.",
+                4: "CONFORT MAINS LIBRES: Flux d'air 360° vous garde au frais pendant toute activité - travail, sport, transport. Design sans pales sûr pour cheveux et enfants.",
+                5: "QUALITÉ PREMIUM GARANTIE: Fabriqué en ABS+PC, résistant à la transpiration IPX4, certifié CE/FCC. Garantie 18 mois et remboursement 30 jours. Plus de 50.000 clients satisfaits."
+            }
+            
+            return f"MANDATORY FRENCH FORMAT: Start with 'FRENCH ALL CAPS LABEL:' then benefit, then specs. Keep under 200 chars for scannability. Example: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
+            
+        else:  # USA and other markets
+            bullet_examples = {
+                1: "LONG LASTING BATTERY LIFE: Enjoy up to 12 hours continuous cooling on a single charge with our 4000mAh rechargeable battery - 3x longer than competitors. USB-C fast charging gets you back to 100% in just 2 hours.",
+                2: "ULTRA LIGHTWEIGHT DESIGN: Only 6.8 oz (193g) sits comfortably on your neck all day - lighter than your smartphone. Adjustable band fits neck sizes 12-18 inches with soft silicone padding.",
+                3: "POWERFUL QUIET COOLING: 3 speed settings (2800/3600/4400 RPM) deliver strong airflow while maintaining whisper-quiet operation under 32dB - quieter than a library.",
+                4: "HANDS FREE CONVENIENCE: 360° surround airflow keeps you cool during any activity - working, exercising, commuting, or traveling. Bladeless turbine design is safe for hair and children.",
+                5: "PREMIUM QUALITY GUARANTEED: Built with ABS+PC materials, IPX4 sweat-resistant rating, and CE/FCC certified. Includes 18-month warranty and 30-day money-back guarantee. Over 50,000 satisfied customers."
+            }
+            
+            return f"MANDATORY FORMAT: Start with 'ALL CAPS LABEL (3-5 WORDS):' then benefit, then specs. Example: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
+
+    def get_marketplace_description_format(self, marketplace, brand_tone):
+        """Get marketplace-specific description formatting"""
+        
+        if marketplace == 'de':
+            return f"""🚨 CRITICAL GERMAN DESCRIPTION: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). 
+
+STRUCTURE FOR GERMAN MARKET:
+Paragraph 1 (300-350 chars): Deutsche Qualität opening - highlight engineering excellence and precision
+Paragraph 2 (350-400 chars): Product benefits with German engineering emphasis  
+Paragraph 3 (350-400 chars): Practical usage scenarios for German lifestyle
+Paragraph 4 (300-350 chars): Trust, warranty, and German customer satisfaction
+
+Use proper German umlauts (ä, ö, ü, ß). NO French or Italian phrases. Focus on German efficiency and precision."""
+
+        elif marketplace == 'fr':
+            return f"""🚨 CRITICAL FRENCH DESCRIPTION: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). 
+
+STRUCTURE FOR FRENCH MARKET:
+Paragraph 1 (300-350 chars): Sophisticated French opening - elegance and refinement
+Paragraph 2 (350-400 chars): Product benefits with French cultural excellence
+Paragraph 3 (350-400 chars): Usage scenarios and French lifestyle integration
+Paragraph 4 (300-350 chars): Customer satisfaction and call to action
+
+Use proper French accents. Focus on elegance and sophistication."""
+
+        elif marketplace == 'it':
+            return f"""🚨 CRITICAL ITALIAN DESCRIPTION: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). 
+
+STRUCTURE FOR ITALIAN MARKET:
+Paragraph 1 (300-350 chars): Italian style opening - design and craftsmanship
+Paragraph 2 (350-400 chars): Product benefits with Italian design excellence
+Paragraph 3 (350-400 chars): Usage scenarios and Italian lifestyle
+Paragraph 4 (300-350 chars): Customer satisfaction and Italian quality assurance
+
+Focus on style, design, and Italian craftsmanship."""
+
+        else:  # USA and other markets
+            return f"""🚨 CRITICAL STRUCTURE: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). 
+
+STRUCTURE:
+Paragraph 1 (300-350 chars): Compelling opening hook
+Paragraph 2 (350-400 chars): Product benefits and features
+Paragraph 3 (350-400 chars): Usage scenarios and lifestyle integration
+Paragraph 4 (300-350 chars): Customer satisfaction and call to action
+
+NEVER write as single paragraph - ALWAYS use \\n\\n separators between paragraphs."""
+
     def get_marketplace_language_instruction(self, marketplace, language):
         """Get language-specific instructions for the marketplace"""
         language_map = {
@@ -60,10 +184,23 @@ class ListingGeneratorService:
         if language == 'en':
             return ""
         
+        # Extra enforcement for German
+        german_extra = ""
+        if language == 'de':
+            german_extra = """
+🔥🔥🔥 SPEZIELLE DEUTSCHE DURCHSETZUNG 🔥🔥🔥
+Sie MÜSSEN deutsche Umlaute verwenden: ä, ö, ü, ß
+Verwenden Sie "Sie" (formal) für deutsche Kunden
+NIEMALS englische Wörter wie "performance", "quality", "design"
+STATTDESSEN: "Leistung", "Qualität", "Design"
+🔥🔥🔥 ENDE DEUTSCHE DURCHSETZUNG 🔥🔥🔥
+"""
+        
         return f"""
 🚨🚨🚨 CRITICAL LANGUAGE REQUIREMENT 🚨🚨🚨
 YOU MUST WRITE EVERYTHING IN {lang_name.upper()} ({native})!
 NOT A SINGLE WORD IN ENGLISH!
+{german_extra}
 
 LANGUAGE: {lang_name} for {country}
 TARGET MARKET: Amazon.{marketplace}
@@ -498,10 +635,11 @@ DESCRIPTION VARIATION: Show conviction through evidence and specific benefits
             occasion_enhancement = occasion_optimizer.get_occasion_prompt_enhancement(occasion)
             self.logger.info(f"Applied occasion enhancement for: {occasion}")
         
-        # Get brand tone-specific enhancements
+        # Get brand tone-specific enhancements with marketplace context
         brand_tone = getattr(product, 'brand_tone', 'professional')
-        brand_tone_enhancement = brand_tone_optimizer.get_brand_tone_enhancement(brand_tone)
-        self.logger.info(f"Applied brand tone enhancement for: {brand_tone}")
+        marketplace = getattr(product, 'marketplace', 'us')
+        brand_tone_enhancement = brand_tone_optimizer.get_brand_tone_enhancement(brand_tone, marketplace)
+        self.logger.info(f"Applied brand tone enhancement for: {brand_tone} (marketplace: {marketplace})")
         
         # Get international localization enhancements if applicable
         marketplace = getattr(product, 'marketplace', 'com')
@@ -649,17 +787,17 @@ KEYWORD GENERATION RULES:
 RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMUM-LENGTH content:
 
 {{
-  "productTitle": "🚨 CRITICAL AMAZON USA TITLE FORMAT: Start with EXACT high-intent keywords customers type: '[Main Product Type] [Key Feature/USP] - [Brand] [Model/Size] - [Secondary Benefits]'. Front-load searchable terms, NOT marketing taglines. Example: 'Neck Fan Portable Hands Free - {product.brand_name} 4000mAh Battery - Bladeless Personal Cooling USB Rechargeable 3 Speeds'. Keywords FIRST, brand in middle, benefits last. 150-190 chars max.",
+  "productTitle": "{self.get_marketplace_title_format(product.marketplace, product.brand_name)}",
   
   "bulletPoints": [
-    "MANDATORY FORMAT: Start with 'ALL CAPS LABEL (3-5 WORDS):' then benefit, then specs. Example: 'LONG LASTING BATTERY LIFE: Enjoy up to 12 hours continuous cooling on a single charge with our 4000mAh rechargeable battery - 3x longer than competitors. USB-C fast charging gets you back to 100% in just 2 hours.'",
-    "MANDATORY FORMAT: Start with 'ALL CAPS LABEL:' then key benefit + exact specs. Example: 'ULTRA LIGHTWEIGHT DESIGN: Only 6.8 oz (193g) sits comfortably on your neck all day - lighter than your smartphone. Adjustable band fits neck sizes 12-18 inches with soft silicone padding.'", 
-    "MANDATORY FORMAT: Start with 'ALL CAPS LABEL:' then performance benefit + numbers. Example: 'POWERFUL QUIET COOLING: 3 speed settings (2800/3600/4400 RPM) deliver strong airflow while maintaining whisper-quiet operation under 32dB - quieter than a library.'",
-    "MANDATORY FORMAT: Start with 'ALL CAPS LABEL:' then use case benefit + technical detail. Example: 'HANDS FREE CONVENIENCE: 360° surround airflow keeps you cool during any activity - working, exercising, commuting, or traveling. Bladeless turbine design is safe for hair and children.'",
-    "MANDATORY FORMAT: Start with 'ALL CAPS LABEL:' then guarantee/quality + specific details. Example: 'PREMIUM QUALITY GUARANTEED: Built with ABS+PC materials, IPX4 sweat-resistant rating, and CE/FCC certified. Includes 18-month warranty and 30-day money-back guarantee. Over 50,000 satisfied customers.'"
+    "{self.get_marketplace_bullet_format(product.marketplace, 1)}",
+    "{self.get_marketplace_bullet_format(product.marketplace, 2)}", 
+    "{self.get_marketplace_bullet_format(product.marketplace, 3)}",
+    "{self.get_marketplace_bullet_format(product.marketplace, 4)}",
+    "{self.get_marketplace_bullet_format(product.marketplace, 5)}"
   ],
   
-  "productDescription": "🚨 CRITICAL STRUCTURE: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). STRUCTURE:\\n\\nParagraph 1 (300-350 chars): Sophisticated cultural opening (French/Italian style)\\n\\nParagraph 2 (350-400 chars): Product benefits with cultural excellence\\n\\nParagraph 3 (350-400 chars): Usage scenarios and lifestyle integration\\n\\nParagraph 4 (300-350 chars): Customer satisfaction and call to action. NEVER write as single paragraph - ALWAYS use \\n\\n separators between paragraphs.",
+  "productDescription": "{self.get_marketplace_description_format(product.marketplace, product.brand_tone)}",
   
   "seoKeywords": {{
     "primary": ["{product.name.lower().replace(' ', '_')}", "{product.brand_name.lower()}", "THEN_ADD_13_MORE: category, color, size, material, feature1, feature2, use1, use2, style, type, model, variant, application"],
