@@ -627,7 +627,7 @@ KEYWORD GENERATION RULES:
 RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMUM-LENGTH content:
 
 {{
-  "productTitle": "Write 160-195 character SEO-optimized title that MUST reflect {brand_tone} brand tone. Use {brand_tone}-specific vocabulary and style. Include brand '{product.brand_name}', primary keywords, and key benefits. For {brand_tone} tone, use appropriate power words and avoid generic language. Sound distinctly {brand_tone}, not generic.",
+  "productTitle": "Write 150-190 character SEO-optimized title that MUST reflect {brand_tone} brand tone. Include brand '{product.brand_name}', primary keywords, and French sophistication indicators (français/française, qualité, raffiné, élégant). Use {brand_tone}-specific vocabulary. Sound distinctly French {brand_tone}, not generic.",
   
   "bulletPoints": [
     "BULLET 1: Use {brand_tone}-specific label format. For {brand_tone} tone, use appropriate style and vocabulary. Include occasion/gift context when applicable. Write 200+ characters reflecting {brand_tone} personality throughout. Use proper grammar and apostrophes (don't, can't, it's). Must sound distinctly {brand_tone}.",
@@ -637,7 +637,7 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
     "BULLET 5: Final {brand_tone} label that ends strong. Use {brand_tone} vocabulary for guarantee/confidence information. Must sound distinctly {brand_tone}, not generic. 200+ characters, proper contractions."
   ],
   
-  "productDescription": "Write 1500-2000 character {brand_tone} product description that MUST reflect {brand_tone} personality throughout. Use {brand_tone}-specific vocabulary, style, and approach consistently. Start with {brand_tone}-appropriate opening and maintain voice. Include proper contractions and apostrophes. Use {brand_tone} power words and avoid generic language. Must sound distinctly {brand_tone}, not generic marketing copy.",
+  "productDescription": "🚨 CRITICAL STRUCTURE: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). STRUCTURE:\\n\\nParagraph 1 (300-350 chars): French sophistication opening\\n\\nParagraph 2 (350-400 chars): Product benefits with French excellence\\n\\nParagraph 3 (350-400 chars): Usage scenarios and lifestyle integration\\n\\nParagraph 4 (300-350 chars): Customer satisfaction and call to action. NEVER write as single paragraph - ALWAYS use \\n\\n separators between paragraphs.",
   
   "seoKeywords": {{
     "primary": ["{product.name.lower().replace(' ', '_')}", "{product.brand_name.lower()}", "THEN_ADD_13_MORE: category, color, size, material, feature1, feature2, use1, use2, style, type, model, variant, application"],
@@ -1809,10 +1809,10 @@ Technical specifications include comprehensive compatibility, robust build quali
             <div class="content-section">
                 <h3 class="text-xl sm:text-2xl font-bold text-blue-900 mb-3">{listing.hero_title}</h3>
                 <p class="text-gray-700 text-sm sm:text-base leading-relaxed mb-4">{listing.hero_content}</p>
-                <div class="image-placeholder bg-white border-2 border-dashed border-blue-300 rounded-lg p-4 sm:p-8 text-center">
-                    <span class="text-4xl mb-2 block">🖼️</span>
-                    <p class="text-blue-700 font-medium mb-2">Hero Lifestyle Image</p>
-                    <p class="text-gray-600 text-xs sm:text-sm">Professional lifestyle shot showing product in use with {marketplace_lang if marketplace_lang != 'en' else 'lifestyle'} context</p>
+                <div class="product-showcase bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 sm:p-8 text-center">
+                    <span class="text-4xl mb-2 block">✨</span>
+                    <p class="text-blue-700 font-medium mb-2">Expérience Premium</p>
+                    <p class="text-gray-600 text-xs sm:text-sm">Découvrez l'élégance française dans chaque détail de conception</p>
                 </div>
             </div>
         </div>
@@ -1831,10 +1831,10 @@ Technical specifications include comprehensive compatibility, robust build quali
                 <ul class="text-gray-700 text-sm sm:text-base list-disc pl-5 mb-4">
                     {features_items}
                 </ul>
-                <div class="image-placeholder bg-white border-2 border-dashed border-green-300 rounded-lg p-4 sm:p-8 text-center">
-                    <span class="text-4xl mb-2 block">📊</span>
-                    <p class="text-green-700 font-medium mb-2">Feature Callout Grid</p>
-                    <p class="text-gray-600 text-xs sm:text-sm">4-panel grid showcasing key features with icons and brief descriptions</p>
+                <div class="features-highlight bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4 sm:p-8 text-center">
+                    <span class="text-4xl mb-2 block">🏆</span>
+                    <p class="text-green-700 font-medium mb-2">Caractéristiques Exceptionnelles</p>
+                    <p class="text-gray-600 text-xs sm:text-sm">Une conception française qui allie performance et raffinement</p>
                 </div>
             </div>
         </div>
@@ -1853,10 +1853,10 @@ Technical specifications include comprehensive compatibility, robust build quali
                 <ul class="text-gray-700 text-sm sm:text-base list-disc pl-5 mb-4">
                     {trust_items}
                 </ul>
-                <div class="image-placeholder bg-white border-2 border-dashed border-purple-300 rounded-lg p-4 sm:p-8 text-center">
-                    <span class="text-4xl mb-2 block">🏆</span>
-                    <p class="text-purple-700 font-medium mb-2">Trust & Certification Badges</p>
-                    <p class="text-gray-600 text-xs sm:text-sm">Display of certifications, awards, and trust indicators relevant to {marketplace_lang if marketplace_lang != 'en' else 'your'} market</p>
+                <div class="trust-showcase bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-4 sm:p-8 text-center">
+                    <span class="text-4xl mb-2 block">🛡️</span>
+                    <p class="text-purple-700 font-medium mb-2">Garantie de Confiance</p>
+                    <p class="text-gray-600 text-xs sm:text-sm">Certifications qualité et satisfaction client garantie</p>
                 </div>
             </div>
         </div>
@@ -1928,8 +1928,8 @@ Technical specifications include comprehensive compatibility, robust build quali
     <div class="flex items-center mb-4">
         <span class="text-3xl mr-3">🚀</span>
         <div>
-            <h2 class="text-xl sm:text-2xl font-bold text-gray-900">Complete A+ Content Strategy with Visual Templates</h2>
-            <p class="text-purple-700 text-sm">Don't just imagine A+ content. We show you exactly what it should look like.</p>
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900">Complete A+ Content Strategy</h2>
+            <p class="text-purple-700 text-sm">Professional Amazon A+ content for enhanced product presentation.</p>
         </div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -2135,11 +2135,9 @@ Technical specifications include comprehensive compatibility, robust build quali
                         image_suggestion = module_data.get('image_suggestion', '')
                         
                         section = f"<div class='aplus-module {module_key}'>\n"
-                        if module_type:
-                            section += f"<p><strong>Module Type:</strong> {module_type}</p>\n"
+                        # Remove placeholder module type briefing
                         section += f"<h3>{title}</h3>\n<p>{content}</p>"
-                        if image_suggestion:
-                            section += f"\n<p><em>Image Requirements: {image_suggestion}</em></p>"
+                        # Remove image requirement briefing - not buyer-facing
                         section += "</div>"
                         aplus_sections.append(section)
                 
@@ -2399,16 +2397,13 @@ JOIN THOUSANDS OF SATISFIED CUSTOMERS
             # USA and GERMANY: Keep original working fallback keywords untouched
             listing.amazon_backend_keywords = f"{product.name}, {product.brand_name}, {primary_keyword}, premium {product_category}, quality {product_category}, kitchen accessories"
         
-        # Enhanced A+ Content with all modules
+        # Enhanced A+ Content with all modules - CLEAN BUYER-READY VERSION
         listing.amazon_aplus_content = """<div class='aplus-module module1'>
-<p><strong>Module Type:</strong> Hero Banner with Text Overlay</p>
 <h3>Experience the Gaming Difference</h3>
 <p>Transform your gaming setup with professional-grade comfort. Join thousands who have discovered the ultimate gaming chair.</p>
-<p><em>Image Requirements: Lifestyle hero shot showing chair in gaming setup with happy gamer</em></p>
 </div>
 
 <div class='aplus-module module2'>
-<p><strong>Module Type:</strong> 4-Feature Grid with Icons</p>
 <h3>Everything You Need for All-Day Gaming</h3>
 <p>Ergonomic Support: Perfect posture | Memory Foam: Zero fatigue | Adjustable Design: Custom fit | Premium Build: Lasting durability</p>
 </div>"""
@@ -3293,7 +3288,6 @@ Return ONLY valid JSON:
     <div class="section-content">
         <p>{section_content}</p>
     </div>
-    {f'<div class="image-requirements"><h4>📸 Image Requirements:</h4><p class="image-desc">{image_requirements}</p></div>' if image_requirements else ''}
 </div>"""
                     sections_html.append(section_html)
             

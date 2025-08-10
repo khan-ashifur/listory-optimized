@@ -190,6 +190,10 @@ class BackendKeywordOptimizer:
                 base_with_typos.add(typo_variant)
         enhanced.update(base_with_typos)
         
+        # Add explicit high-priority typo variants for essential French terms
+        priority_typos = ['qualite', 'francais', 'electrique', 'securite', 'efficacite', 'durabilite', 'resistant', 'hygienique', 'etanche', 'resistance', 'ecologique', 'economique', 'precision']
+        enhanced.update(priority_typos)
+        
         # Add plural forms of base keywords
         for base_keyword in base_keywords:
             for singular, plurals in self.french_patterns['plurals'].items():
@@ -200,16 +204,16 @@ class BackendKeywordOptimizer:
         # Add material conquest terms (bambou, plastique, inox, etc.) - HIGH PRIORITY
         enhanced.update(self.french_patterns['materials'])  # Use all materials for max conquest
         
-        # Add seasonal keywords (limited set to save space)
-        seasonal_priority = ['cadeau noël', 'cadeau noel', 'cadeau', 'idée cadeau', 'idee cadeau', 'cadeau cuisine', 'fête', 'noël', 'pas cher', 'bon']
+        # Add seasonal keywords (limited set to save space) 
+        seasonal_priority = ['cadeau noël', 'cadeau noel', 'cadeau', 'idée cadeau', 'idee cadeau', 'cadeau cuisine', 'fête', 'noël']
         enhanced.update(seasonal_priority)
         
-        # Add high-volume phrases (limited)
-        high_vol_priority = ['cuisine professionnelle', 'ustensiles cuisine', 'qualité professionnelle', 'made in france', 'français', 'française']
+        # Add high-volume phrases with conquest terms (critical for ranking)
+        high_vol_priority = ['alternative bambou', 'mieux que plastique', 'superieur inox', 'remplace', 'qualité professionnelle', 'made in france', 'français', 'française', 'pas cher', 'pro', 'alternative', 'mieux', 'superieur']
         enhanced.update(high_vol_priority)
         
         # Add competitor conquest terms (limited)
-        competitor_priority = ['ikea cuisine', 'tefal ustensile', 'joseph joseph']
+        competitor_priority = ['ikea cuisine', 'tefal ustensile']
         enhanced.update(competitor_priority)
         
         # Clean and deduplicate
