@@ -2397,8 +2397,9 @@ JOIN THOUSANDS OF SATISFIED CUSTOMERS
             # USA and GERMANY: Keep original working fallback keywords untouched
             listing.amazon_backend_keywords = f"{product.name}, {product.brand_name}, {primary_keyword}, premium {product_category}, quality {product_category}, kitchen accessories"
         
-        # Enhanced A+ Content with all modules - CLEAN BUYER-READY VERSION
-        listing.amazon_aplus_content = """<div class='aplus-module module1'>
+        # Enhanced A+ Content fallback - ONLY if no A+ content was generated
+        if not listing.amazon_aplus_content:
+            listing.amazon_aplus_content = """<div class='aplus-module module1'>
 <h3>Experience the Gaming Difference</h3>
 <p>Transform your gaming setup with professional-grade comfort. Join thousands who have discovered the ultimate gaming chair.</p>
 </div>
