@@ -416,10 +416,10 @@ AMAZON.{marketplace.upper()} MARKETPLACE - {config['language'].upper()} LANGUAGE
 
 {'📌 GERMAN BULLET POINTS - 10/10 QUALITY STRUCTURE:' if market_code == 'de' else f'BULLETS FOR {config["language"].upper()}:'}
 • {'1st BULLET = EMOTIONAL HOOK: "[BENEFIT] wie ein Profi – ganz ohne [PROBLEM]."' if market_code == 'de' else f'Each bullet in {config["language"]}'}
-• {'2nd BULLET: Split into 2 sentences. 1st = core benefit. 2nd = scenario/feature.' if market_code == 'de' else 'Start with benefits'}
-• {'3rd BULLET: Split into 2 sentences. Technical specs + lifestyle application.' if market_code == 'de' else 'Include cultural elements'}
-• {'4th BULLET: Gift idea or seasonal use with emotional appeal.' if market_code == 'de' else 'Natural native expressions'}
-• {'5th BULLET: Trust/guarantee with specific benefit. Two sentences format.' if market_code == 'de' else 'Trust elements'}
+• {'2nd BULLET: 2-3 scannable sentences. Hook + feature + application. Mobile-optimized.' if market_code == 'de' else 'Start with benefits'}
+• {'3rd BULLET: 2-3 digestible sentences. Technical detail + lifestyle benefit + scenario.' if market_code == 'de' else 'Include cultural elements'}
+• {'4th BULLET: Gift/seasonal angle in 2-3 readable sentences with emotional appeal.' if market_code == 'de' else 'Natural native expressions'}
+• {'5th BULLET: Trust/guarantee in 2-3 substantial but scannable sentences.' if market_code == 'de' else 'Trust elements'}
 
 {'📝 GERMAN DESCRIPTION (LIFESTYLE-DRIVEN):' if market_code == 'de' else f'DESCRIPTION FOR {config["language"].upper()}:'}
 • {'Open with emotional story/scenario' if market_code == 'de' else f'Complete {config["language"]} language'}
@@ -481,10 +481,12 @@ JSON CONTENT OVERRIDE FOR {config['language'].upper()}:
 {'• "Hygienisch schneiden wie ein Profi – ganz ohne Geschmacksübertragung oder Küchenchaos."' if market_code == 'de' else ''}
 {'• "Perfekte Kühlung wie ein Profi – ganz ohne teure Klimaanlage oder sperrige Ventilatoren."' if market_code == 'de' else ''}
 {'' if market_code == 'de' else ''}
-{'BULLET STRUCTURE - MOBILE OPTIMIZED (2 SENTENCES MAX):' if market_code == 'de' else ''}
-{'✅ Sentence 1: Core emotional benefit (20-30 words)' if market_code == 'de' else ''}
-{'✅ Sentence 2: Scenario/feature explanation (15-25 words)' if market_code == 'de' else ''}
-{'❌ AVOID: Single 60+ word monster sentences that are hard to read on mobile' if market_code == 'de' else ''}
+{'BULLET STRUCTURE - MOBILE SCAN-ABILITY OPTIMIZED (2-3 SENTENCES):' if market_code == 'de' else ''}
+{'✅ Sentence 1: Emotional hook/core benefit (15-20 words)' if market_code == 'de' else ''}
+{'✅ Sentence 2: Key feature/technical detail (12-18 words)' if market_code == 'de' else ''}
+{'✅ Sentence 3 (optional): Scenario/application (10-15 words)' if market_code == 'de' else ''}
+{'📱 MOBILE-FIRST: Each sentence standalone readable, scannable, substantial but digestible' if market_code == 'de' else ''}
+{'❌ AVOID: 50+ word single sentences OR overly short 5-word fragments' if market_code == 'de' else ''}
 {'' if market_code == 'de' else ''}
 {'UMLAUT PERFECTION CHECKLIST:' if market_code == 'de' else ''}
 {'✅ für (not fr), größer (not grosser), Kühlung (not Kuhlung), Qualität (not Qualitat)' if market_code == 'de' else ''}
