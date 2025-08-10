@@ -575,7 +575,29 @@ MERGED STYLE RULES:
 • Backend Keywords: 249 max chars, must not duplicate exact words from title/bullets, instead target complementary indexing terms
 • No Repetition: Do not repeat identical sentences across sections
 
-YOUR MISSION: Create a COMPREHENSIVE, MAXIMUM-LENGTH Amazon listing optimized for both traditional search AND Rufus AI conversations using the MERGED STYLE approach.
+🚨🚨 AMAZON USA OPTIMIZATION RULES (NON-NEGOTIABLE) 🚨🚨
+
+TITLE VALIDATION CHECKLIST:
+✅ Starts with main product keywords (NOT marketing taglines)
+✅ High-intent search terms in first 40 characters  
+✅ Brand placed in middle, not at start
+✅ Specific model/size/capacity numbers included
+✅ No soft phrases like "Simply", "Just", "So Easy"
+
+BULLET VALIDATION CHECKLIST:
+✅ EVERY bullet starts with ALL CAPS LABEL (3-5 words)
+✅ Specific technical specs included (battery hours, weight, size)
+✅ Measurable performance numbers (RPM, dB, hours, oz/g)
+✅ Benefit stated immediately after label
+✅ No bullets without technical specifications
+
+CRITICAL FAILURE POINTS:
+❌ Title starting with taglines instead of keywords = FAILED LISTING
+❌ Bullets without ALL CAPS labels = FAILED LISTING  
+❌ Missing technical specs = FAILED LISTING
+❌ Soft marketing language = FAILED LISTING
+
+YOUR MISSION: Create a COMPREHENSIVE, MAXIMUM-LENGTH Amazon listing optimized for Amazon USA search algorithm and fast-scanning behavior.
 
 CRITICAL CONTENT REQUIREMENTS - GENERATE MAXIMUM CONTENT:
 ✅ Title: 110-125 chars ideal (up to 140 max). Start with hook + primary keyword. Mobile-first priority for scanability
@@ -627,14 +649,14 @@ KEYWORD GENERATION RULES:
 RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMUM-LENGTH content:
 
 {{
-  "productTitle": "🚨 MANDATORY: Write 150-190 character SEO-optimized title with 2+ sophistication indicators: français/française/qualité/raffiné/élégant (French) OR italiano/italiana/qualità/raffinato/elegante (Italian). Include brand '{product.brand_name}' and primary keywords. Sound distinctly sophisticated {brand_tone}, not generic.",
+  "productTitle": "🚨 CRITICAL AMAZON USA TITLE FORMAT: Start with EXACT high-intent keywords customers type: '[Main Product Type] [Key Feature/USP] - [Brand] [Model/Size] - [Secondary Benefits]'. Front-load searchable terms, NOT marketing taglines. Example: 'Neck Fan Portable Hands Free - {product.brand_name} 4000mAh Battery - Bladeless Personal Cooling USB Rechargeable 3 Speeds'. Keywords FIRST, brand in middle, benefits last. 150-190 chars max.",
   
   "bulletPoints": [
-    "BULLET 1: Use {brand_tone}-specific label format. For {brand_tone} tone, use appropriate style and vocabulary. Include occasion/gift context when applicable. Write 200+ characters reflecting {brand_tone} personality throughout. Use proper grammar and apostrophes (don't, can't, it's). Must sound distinctly {brand_tone}.",
-    "BULLET 2: Different {brand_tone} label style. Maintain {brand_tone} voice consistently. For occasions, focus on gift-giving benefits in {brand_tone} manner. 200+ characters, use {brand_tone}-appropriate language and contractions.", 
-    "BULLET 3: Another unique {brand_tone}-styled label. Emphasize benefits using {brand_tone} vocabulary and approach. Different writing style but maintain {brand_tone} personality. 200+ characters with proper apostrophes.",
-    "BULLET 4: Creative {brand_tone} label focusing on quality/performance. Use {brand_tone}-specific power words and approach. Maintain {brand_tone} voice throughout. 200+ characters with proper grammar.",
-    "BULLET 5: Final {brand_tone} label that ends strong. Use {brand_tone} vocabulary for guarantee/confidence information. Must sound distinctly {brand_tone}, not generic. 200+ characters, proper contractions."
+    "MANDATORY FORMAT: Start with 'ALL CAPS LABEL (3-5 WORDS):' then benefit, then specs. Example: 'LONG LASTING BATTERY LIFE: Enjoy up to 12 hours continuous cooling on a single charge with our 4000mAh rechargeable battery - 3x longer than competitors. USB-C fast charging gets you back to 100% in just 2 hours.'",
+    "MANDATORY FORMAT: Start with 'ALL CAPS LABEL:' then key benefit + exact specs. Example: 'ULTRA LIGHTWEIGHT DESIGN: Only 6.8 oz (193g) sits comfortably on your neck all day - lighter than your smartphone. Adjustable band fits neck sizes 12-18 inches with soft silicone padding.'", 
+    "MANDATORY FORMAT: Start with 'ALL CAPS LABEL:' then performance benefit + numbers. Example: 'POWERFUL QUIET COOLING: 3 speed settings (2800/3600/4400 RPM) deliver strong airflow while maintaining whisper-quiet operation under 32dB - quieter than a library.'",
+    "MANDATORY FORMAT: Start with 'ALL CAPS LABEL:' then use case benefit + technical detail. Example: 'HANDS FREE CONVENIENCE: 360° surround airflow keeps you cool during any activity - working, exercising, commuting, or traveling. Bladeless turbine design is safe for hair and children.'",
+    "MANDATORY FORMAT: Start with 'ALL CAPS LABEL:' then guarantee/quality + specific details. Example: 'PREMIUM QUALITY GUARANTEED: Built with ABS+PC materials, IPX4 sweat-resistant rating, and CE/FCC certified. Includes 18-month warranty and 30-day money-back guarantee. Over 50,000 satisfied customers.'"
   ],
   
   "productDescription": "🚨 CRITICAL STRUCTURE: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). STRUCTURE:\\n\\nParagraph 1 (300-350 chars): Sophisticated cultural opening (French/Italian style)\\n\\nParagraph 2 (350-400 chars): Product benefits with cultural excellence\\n\\nParagraph 3 (350-400 chars): Usage scenarios and lifestyle integration\\n\\nParagraph 4 (300-350 chars): Customer satisfaction and call to action. NEVER write as single paragraph - ALWAYS use \\n\\n separators between paragraphs.",
