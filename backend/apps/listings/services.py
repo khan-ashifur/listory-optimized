@@ -75,6 +75,34 @@ class ListingGeneratorService:
             Example: 'Comfort Supremo Cuffie Bluetooth {brand_name} - Batteria 30ore - Auricolari Wireless Cancellazione Rumore'
             
             150-190 chars max with Italian formatting."""
+            
+        elif marketplace == 'es':
+            return f"""🚨 CRITICAL AMAZON SPAIN TITLE FORMAT: Spanish passion meets authenticity: '[Beneficio Emocional] [Tipo de Producto] {brand_name} - [Especificación Clave] - [Ventajas Familiares]'.
+            
+            Spanish customers prioritize EMOTIONAL CONNECTION and FAMILY VALUES. Lead with benefits that resonate personally.
+            
+            GOOD: 'Tranquilidad Familiar Auriculares Bluetooth {brand_name} - Batería 30h - Momentos Sin Interrupciones'
+            BAD: 'Auriculares Bluetooth Batería 30h {brand_name} - Inalámbricos con Cancelación de Ruido'
+            
+            PRIORITY ORDER FOR SPANISH MARKET:
+            1. Emotional family benefit (Tranquilidad Familiar, Momentos Especiales, Calidad de Vida, Confianza Total)
+            2. Product type in Spanish with proper gender agreements (los/las, del/de la)
+            3. Brand placement for authenticity and trust (marca española preferred)
+            4. Key specification that impacts daily family life
+            5. Additional benefits that enhance family moments
+            
+            SPANISH CULTURAL VALUES:
+            - Family comes first (familia, hogar, momentos especiales)
+            - Personal relationships matter (confianza, cariño, cercanía)
+            - Quality over quantity (calidad auténtica, duradero, resistente)
+            - Practical benefits for daily life (vida diaria, día a día, cotidiano)
+            - Use proper Spanish accents (á, é, í, ó, ú, ñ)
+            - Warm, personal tone but professional quality
+            
+            EMOTIONAL HOOKS FOR SPAIN:
+            "Tranquilidad Familiar", "Momentos Especiales", "Calidad de Vida", "Confianza Total", "Para Toda la Familia", "Vida Más Cómoda", "Experiencia Auténtica"
+            
+            150-190 chars max. Must sound like written by Spanish native speaker."""
         
         else:  # USA and other markets
             return f"""🚨 CRITICAL AMAZON USA TITLE FORMAT: Start with EXACT high-intent keywords customers type: '[Main Product Type] [Key Feature/USP] - [Brand] [Model/Size] - [Secondary Benefits]'. Front-load searchable terms, NOT marketing taglines. Example: 'Neck Fan Portable Hands Free - {brand_name} 4000mAh Battery - Bladeless Personal Cooling USB Rechargeable 3 Speeds'. Keywords FIRST, brand in middle, benefits last. 150-190 chars max."""
@@ -103,6 +131,17 @@ class ListingGeneratorService:
             }
             
             return f"MANDATORY FRENCH FORMAT: Start with 'FRENCH ALL CAPS LABEL:' then benefit, then specs. Keep under 200 chars for scannability. Example: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
+            
+        elif marketplace == 'es':
+            bullet_examples = {
+                1: "DURACIÓN EXCEPCIONAL DE BATERÍA: Disfruta hasta 12 horas de enfriamiento continuo con una sola carga gracias a nuestra batería 4000mAh - 3x más duración que la competencia. Carga rápida USB-C te lleva al 100% en solo 2 horas.",
+                2: "DISEÑO ULTRALIGERO: Solo 193g descansa cómodamente en tu cuello todo el día - más ligero que tu smartphone. Banda ajustable se adapta a cuellos de 12-18cm con almohadillas de silicona suave.",
+                3: "REFRIGERACIÓN SILENCIOSA POTENTE: 3 velocidades (2800/3600/4400 RPM) ofrecen flujo de aire fuerte manteniendo operación silenciosa bajo 32dB - más silencioso que una biblioteca.",
+                4: "COMODIDAD MANOS LIBRES: Flujo de aire 360° te mantiene fresco durante cualquier actividad - trabajar, ejercitarse, viajar. Diseño sin aspas es seguro para cabello y niños.",
+                5: "CALIDAD PREMIUM GARANTIZADA: Construido con materiales ABS+PC, resistente al sudor IPX4, certificado CE/FCC. Incluye garantía 18 meses y devolución 30 días. Más de 50.000 clientes satisfechos."
+            }
+            
+            return f"MANDATORY SPANISH FORMAT: Start with 'SPANISH ALL CAPS LABEL:' then benefit, then specs. Keep under 200 chars for Spanish scannability. Example: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
             
         else:  # USA and other markets
             bullet_examples = {
@@ -150,6 +189,32 @@ Paragraph 3 (350-400 chars): Usage scenarios and Italian lifestyle
 Paragraph 4 (300-350 chars): Customer satisfaction and Italian quality assurance
 
 Focus on style, design, and Italian craftsmanship."""
+
+        elif marketplace == 'es':
+            return f"""🚨 CRITICAL SPANISH DESCRIPTION: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). 
+
+STRUCTURE FOR SPANISH MARKET:
+Paragraph 1 (300-350 chars): Conexión emocional española - family first, quality matters, personal trust
+Paragraph 2 (350-400 chars): Beneficios familiares con énfasis en vida diaria y momentos especiales
+Paragraph 3 (350-400 chars): Integración en el hogar español y escenarios de vida cotidiana
+Paragraph 4 (300-350 chars): Confianza, garantía, satisfacción familiar y compromiso duradero
+
+MANDATORY SPANISH CULTURAL ELEMENTS:
+- FAMILY VALUES: "familia", "hogar", "seres queridos", "momentos especiales", "para toda la familia"
+- PERSONAL CONNECTION: "confianza", "cariño", "cercanía", "acompañarte", "estar ahí"
+- QUALITY EMPHASIS: "calidad auténtica", "duradero", "resistente", "que perdure", "inversión inteligente"
+- DAILY LIFE: "día a día", "vida diaria", "cotidiano", "cada momento", "rutina familiar"
+- EMOTIONAL BONDS: "tranquilidad", "comodidad", "bienestar", "satisfacción", "alegría"
+
+SPANISH TONE REQUIREMENTS:
+- Use warm "tú" address (not formal "usted") for connection
+- Include proper Spanish accents (á, é, í, ó, ú, ñ)
+- Sound like conversation with trusted friend/family
+- Emphasize how product fits into Spanish family life
+- Reference Spanish lifestyle (siesta, familia, hogar, tradición)
+- Use natural Spanish expressions, not direct translations
+
+NO English words allowed. Must sound like written by Spanish native speaker who understands family values."""
 
         else:  # USA and other markets
             return f"""🚨 CRITICAL STRUCTURE: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). 

@@ -44,6 +44,16 @@ class BrandToneOptimizer:
                     "FORTSCHRITTLICHES DESIGN:",
                     "GETESTETE LANGLEBIGKEIT:"
                 ],
+                "bullet_labels_es": [
+                    "RENDIMIENTO PROFESIONAL:",
+                    "INGENIERÍA EXPERTA:",
+                    "CONFIABILIDAD PROBADA:",
+                    "ESTÁNDAR INDUSTRIAL:",
+                    "CONSTRUCCIÓN PRECISA:",
+                    "CALIDAD CERTIFICADA:",
+                    "DISEÑO AVANZADO:",
+                    "DURABILIDAD TESTADA:"
+                ],
                 "description_hooks": [
                     "As professionals in this industry know,",
                     "Expert analysis reveals",
@@ -88,6 +98,16 @@ class BrandToneOptimizer:
                     "MACHT DAS LEBEN LEICHTER:",
                     "VÖLLIG STRESSFREI:",
                     "FUNKTIONIERT EINFACH SUPER:"
+                ],
+                "bullet_labels_es": [
+                    "SÚPER FÁCIL DE USAR:",
+                    "TE VA A ENCANTAR:",
+                    "SIMPLEMENTE PERFECTO PARA:",
+                    "ASÍ DE SENCILLO:",
+                    "REALMENTE PRÁCTICO:",
+                    "HACE LA VIDA MÁS FÁCIL:",
+                    "COMPLETAMENTE SIN ESTRÉS:",
+                    "FUNCIONA DE MARAVILLA:"
                 ],
                 "description_hooks": [
                     "You know what's great about this?",
@@ -134,6 +154,16 @@ class BrandToneOptimizer:
                     "AUSSERGEWÖHNLICHER WERT:",
                     "DISTINGUIERTER STIL:"
                 ],
+                "bullet_labels_es": [
+                    "ARTESANÍA PREMIUM:",
+                    "EXPERIENCIA DE LUJO:",
+                    "DISEÑO ELEGANTE:",
+                    "RENDIMIENTO SOFISTICADO:",
+                    "CARACTERÍSTICAS EXCLUSIVAS:",
+                    "CALIDAD REFINADA:",
+                    "VALOR EXCEPCIONAL:",
+                    "ESTILO DISTINGUIDO:"
+                ],
                 "description_hooks": [
                     "True luxury lies in the details.",
                     "Sophisticated design meets exceptional performance.",
@@ -168,6 +198,16 @@ class BrandToneOptimizer:
                     "BRILLIANTLY SIMPLE:",
                     "TOTALLY INGENIOUS:",
                     "UNEXPECTEDLY GREAT:"
+                ],
+                "bullet_labels_es": [
+                    "REALMENTE INCREÍBLE:",
+                    "DISEÑO INTELIGENTE:",
+                    "SORPRENDENTEMENTE BUENO:",
+                    "SÚPER INTELIGENTE:",
+                    "CARACTERÍSTICA GENIAL:",
+                    "BRILLANTEMENTE SIMPLE:",
+                    "TOTALMENTE INGENIOSO:",
+                    "INESPERADAMENTE GENIAL:"
                 ],
                 "description_hooks": [
                     "Here's something cool -",
@@ -204,6 +244,16 @@ class BrandToneOptimizer:
                     "MINIMAL FUSS:",
                     "PURPOSEFUL BUILD:"
                 ],
+                "bullet_labels_es": [
+                    "SIMPLEMENTE FUNCIONA:",
+                    "DISEÑO LIMPIO:",
+                    "RENDIMIENTO PURO:",
+                    "FUNCIÓN ESENCIAL:",
+                    "CALIDAD ENFOCADA:",
+                    "USO OPTIMIZADO:",
+                    "MÍNIMAS COMPLICACIONES:",
+                    "CONSTRUCCIÓN CON PROPÓSITO:"
+                ],
                 "description_hooks": [
                     "Sometimes less really is more.",
                     "Clean design meets pure function.",
@@ -239,6 +289,16 @@ class BrandToneOptimizer:
                     "BOLD PERFORMANCE:",
                     "COMMANDING PRESENCE:"
                 ],
+                "bullet_labels_es": [
+                    "POTENCIA MÁXIMA:",
+                    "LIBERA EL RENDIMIENTO:",
+                    "DOMINA CON:",
+                    "FUERZA DEFINITIVA:",
+                    "RESULTADOS INTENSOS:",
+                    "DISEÑO PODEROSO:",
+                    "RENDIMIENTO AUDAZ:",
+                    "PRESENCIA IMPONENTE:"
+                ],
                 "description_hooks": [
                     "Power through any challenge with",
                     "Dominate your field using",
@@ -263,9 +323,11 @@ class BrandToneOptimizer:
         title_starter = random.choice(config["title_starters"])
         power_words = random.sample(config["power_words"], min(5, len(config["power_words"])))
         
-        # Use German labels for German marketplace
+        # Use localized labels for international marketplaces
         if marketplace == 'de' and "bullet_labels_de" in config:
             bullet_labels = random.sample(config["bullet_labels_de"], min(4, len(config["bullet_labels_de"])))
+        elif marketplace == 'es' and "bullet_labels_es" in config:
+            bullet_labels = random.sample(config["bullet_labels_es"], min(4, len(config["bullet_labels_es"])))
         else:
             bullet_labels = random.sample(config["bullet_labels"], min(4, len(config["bullet_labels"])))
             

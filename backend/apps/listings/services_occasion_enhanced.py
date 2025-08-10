@@ -652,6 +652,273 @@ class OccasionOptimizer:
                 ],
                 "gift_messaging": "Karnevals-Geschenkverpackung. Alaaf-Grüße inklusive!",
                 "seasonal_context": "Karnevals-Saison (Februar-März) - Alaaf und Helau!"
+            },
+            
+            # SPANISH OCCASIONS 🇪🇸
+            "Navidad": {
+                "emotional_hooks": [
+                    "Haz de esta Navidad la más especial",
+                    "El regalo que realmente van a usar después de Reyes",
+                    "Porque la Navidad se trata de crear momentos inolvidables",
+                    "Dale un toque mágico a sus fiestas navideñas",
+                    "El detalle perfecto para completar la Nochebuena"
+                ],
+                "title_patterns": [
+                    "Regalo de Navidad {product} - {benefit} - Perfecto para las Fiestas",
+                    "{product} Edición Navideña - {feature} para Navidad",
+                    "Especial Navidad {product} - {benefit} Bajo el Árbol",
+                    "Regalo Navideño Perfecto - {product} con {unique_feature}"
+                ],
+                "power_words": ["navideño", "fiestas", "navidad", "nochebuena", "villancico", "tradición", "familia", "celebración"],
+                "urgency_phrases": ["Pedidos antes del 15 de diciembre para Navidad", "Entrega navideña garantizada", "Stock limitado navideño"],
+                "bullet_starters": [
+                    "REGALO NAVIDEÑO PERFECTO:",
+                    "ESENCIAL PARA LAS FIESTAS:",
+                    "NAVIDAD INOLVIDABLE:",
+                    "TRADICIÓN FAMILIAR:",
+                    "MAGIA NAVIDEÑA:"
+                ],
+                "keywords": [
+                    "regalo navidad", "regalo navideño", "navidad 2024",
+                    "regalo familia navidad", "nochebuena regalo", "fiestas navideñas",
+                    "navidad {product_type}", "regalos bajo el árbol", "tradición navideña",
+                    "mejores regalos navidad", "regalo especial navidad"
+                ],
+                "description_hooks": [
+                    "Esta Navidad, regala algo que recordarán mucho después de que se acaben los turrones.",
+                    "Imagínate su cara la mañana de Navidad cuando abran este regalo.",
+                    "Las mejores navidades se construyen con detalles que importan."
+                ],
+                "gift_messaging": "Envoltorio navideño gratuito. Incluye tarjeta personalizada para Navidad.",
+                "seasonal_context": "Navidad española - Entrega garantizada antes del 25 de diciembre!"
+            },
+            
+            "Reyes Magos": {
+                "emotional_hooks": [
+                    "Para que los Reyes Magos traigan algo realmente especial",
+                    "El regalo que sus majestades de Oriente aprobarían",
+                    "Más emocionante que encontrar carbón en el zapato",
+                    "La ilusión del 6 de enero merece el mejor regalo",
+                    "Tradición española que nunca pasa de moda"
+                ],
+                "title_patterns": [
+                    "Regalo Reyes Magos {product} - {benefit} - 6 de Enero Especial",
+                    "{product} para Reyes - {feature} Melchor, Gaspar y Baltasar",
+                    "Especial Reyes Magos {product} - {benefit} Ilusión de Enero",
+                    "Regalo de Reyes Perfecto - {product} con {unique_feature}"
+                ],
+                "power_words": ["reyes magos", "melchor", "gaspar", "baltasar", "ilusión", "tradición", "enero", "zapatos", "cabalgata"],
+                "urgency_phrases": ["Pedidos antes del 3 de enero para Reyes", "Los Reyes llegan el 6 de enero", "Entrega especial Reyes Magos"],
+                "bullet_starters": [
+                    "REGALO DE REYES PERFECTO:",
+                    "ILUSIÓN DEL 6 DE ENERO:",
+                    "TRADICIÓN ESPAÑOLA:",
+                    "MAGIA DE LOS REYES:",
+                    "ESPECIAL MELCHOR, GASPAR Y BALTASAR:"
+                ],
+                "keywords": [
+                    "regalo reyes magos", "reyes magos 2025", "6 enero regalo",
+                    "cabalgata reyes", "tradición reyes magos", "ilusión enero",
+                    "reyes {product_type}", "melchor gaspar baltasar", "zapatos reyes",
+                    "mejores regalos reyes magos", "regalo especial 6 enero"
+                ],
+                "description_hooks": [
+                    "Los Reyes Magos saben que los mejores regalos son los que se usan todo el año.",
+                    "Este 6 de enero, que la ilusión venga acompañada de un regalo útil.",
+                    "Mantén viva la magia de los Reyes Magos con un regalo que realmente emocione."
+                ],
+                "gift_messaging": "Envoltorio especial Reyes Magos. Los Reyes saben que es especial.",
+                "seasonal_context": "Reyes Magos - La tradición española más querida (6 de enero)!"
+            },
+            
+            "Día de la Madre": {
+                "emotional_hooks": [
+                    "Porque mamá se merece más que flores que se marchitan",
+                    "Para la mujer que siempre piensa en todos menos en ella",
+                    "El detalle que le demuestre cuánto la quieres",
+                    "Hacer que este Día de la Madre sea su favorito",
+                    "Para la reina de la casa que lo merece todo"
+                ],
+                "title_patterns": [
+                    "Regalo Día de la Madre - {product} que Mamá Adorará - {benefit}",
+                    "Perfecto para Mamá - {product} con {feature} - Especial Día de la Madre",
+                    "{product} Edición Día de la Madre - {benefit} para Mamás",
+                    "Regalo Especial Mamá - {product} Día de la Madre"
+                ],
+                "power_words": ["mamá", "madre", "maternal", "cariño", "amor", "familia", "dedicación", "especial", "querida"],
+                "urgency_phrases": ["Pedidos antes del 4 de mayo para el Día de la Madre", "Entrega Día de la Madre garantizada", "Stock especial mamás"],
+                "bullet_starters": [
+                    "MAMÁ LO ADORARÁ:",
+                    "PERFECTO PARA MAMÁS:",
+                    "ESPECIAL DÍA DE LA MADRE:",
+                    "CARIÑO Y FUNCIONALIDAD:",
+                    "REGALO MATERNAL IDEAL:"
+                ],
+                "keywords": [
+                    "regalo dia madre", "regalo para mama", "dia madre españa",
+                    "regalo mamá especial", "mayo regalo madre", "mejor regalo mama",
+                    "dia madre {product_type}", "regalos madres 2025", "mama regalo",
+                    "detalles dia madre", "regalo maternal"
+                ],
+                "description_hooks": [
+                    "Mamá ha pasado años cuidando de todos. Este Día de la Madre, es su turno.",
+                    "No es solo otro regalo del Día de la Madre que acabará olvidado en un cajón.",
+                    "El tipo de regalo que hace que mamá diga 'cómo sabías que lo necesitaba'."
+                ],
+                "gift_messaging": "Envoltorio especial Día de la Madre. Incluye mensaje personalizado para mamá.",
+                "seasonal_context": "Día de la Madre España (primer domingo de mayo) - ¡Demuéstrale tu cariño!"
+            },
+            
+            "San Valentín": {
+                "emotional_hooks": [
+                    "Porque 'te quiero' merece más que palabras",
+                    "Convierte el 14 de febrero en su recuerdo favorito",
+                    "Olvídate de regalos cliché, regala algo que realmente usarán",
+                    "Romance que se encuentra con la practicidad",
+                    "El detalle perfecto para parejas que se entienden"
+                ],
+                "title_patterns": [
+                    "Regalo San Valentín {product} - {benefit} - Especial Parejas",
+                    "{product} Edición San Valentín - {feature} para Enamorados",
+                    "Perfecto San Valentín - {product} con {unique_feature}",
+                    "Regalo Romántico {product} - San Valentín Especial"
+                ],
+                "power_words": ["romántico", "amor", "parejas", "cariño", "san valentín", "corazón", "enamorados", "especial", "íntimo"],
+                "urgency_phrases": ["Pedidos antes del 12 de febrero para San Valentín", "Entrega San Valentín garantizada", "Stock limitado San Valentín"],
+                "bullet_starters": [
+                    "PERFECCIÓN SAN VALENTÍN:",
+                    "ROMÁNTICO Y PRÁCTICO:",
+                    "AMOR REAL:",
+                    "PAREJAS LO ADORARÁN:",
+                    "DETALLE ROMÁNTICO:"
+                ],
+                "keywords": [
+                    "regalo san valentin", "san valentin parejas", "14 febrero regalo",
+                    "regalo romantico", "san valentin especial", "amor regalo",
+                    "san valentin {product_type}", "regalos enamorados", "parejas san valentin",
+                    "mejores regalos san valentin", "detalle romantico"
+                ],
+                "description_hooks": [
+                    "Este San Valentín, olvídate de las flores que se marchitan y los chocolates que desaparecen.",
+                    "El amor está en los detalles, y este {product} lo demuestra.",
+                    "Transforma San Valentín de predecible a inolvidable."
+                ],
+                "gift_messaging": "Envoltorio romántico disponible. Añade tu mensaje de amor personalizado.",
+                "seasonal_context": "San Valentín español - ¡El detalle perfecto para el 14 de febrero!"
+            },
+            
+            "Día del Padre": {
+                "emotional_hooks": [
+                    "Para el papá que dice que no necesita nada",
+                    "Demuestra a papá que es más que el manitas de la casa",
+                    "Porque papá se merece más que otra corbata",
+                    "Hacer que el Día del Padre signifique algo de verdad",
+                    "El regalo del que papá presumirá"
+                ],
+                "title_patterns": [
+                    "Regalo Día del Padre - {product} que Papá Usará Siempre - {benefit}",
+                    "Perfecto para Papá - {product} con {feature} - Día del Padre",
+                    "{product} Edición Día del Padre - {benefit} para Papás",
+                    "Regalo Especial Papá - {product} Día del Padre"
+                ],
+                "power_words": ["papá", "padre", "paternal", "familia", "práctico", "útil", "resistente", "calidad", "duradero"],
+                "urgency_phrases": ["Pedidos antes del 17 de marzo para el Día del Padre", "Entrega Día del Padre garantizada", "Aprobado por papás"],
+                "bullet_starters": [
+                    "PAPÁ LO ADORARÁ:",
+                    "GANADOR DÍA DEL PADRE:",
+                    "PRÁCTICO PARA PAPÁ:",
+                    "CALIDAD APROBADA PAPÁ:",
+                    "ESENCIAL PARA PADRES:"
+                ],
+                "keywords": [
+                    "regalo dia padre", "regalo para papa", "dia padre españa",
+                    "regalo papa especial", "marzo regalo padre", "mejor regalo papa",
+                    "dia padre {product_type}", "regalos padres 2025", "papa regalo",
+                    "detalles dia padre", "regalo paternal"
+                ],
+                "description_hooks": [
+                    "Papá ha pasado años siendo el héroe de todos. Es hora de devolverle el favor.",
+                    "Este Día del Padre, regala a papá algo que realmente usará, no solo agradecerá.",
+                    "El tipo de regalo que hace que papá diga 'cómo sabías que necesitaba esto'."
+                ],
+                "gift_messaging": "Envoltorio Día del Padre disponible. Añade tu mensaje para papá.",
+                "seasonal_context": "Día del Padre España (19 de marzo) - ¡Demuestra que papá es especial!"
+            },
+            
+            "Semana Santa": {
+                "emotional_hooks": [
+                    "Para una Semana Santa de recogimiento y familia",
+                    "El detalle perfecto para las vacaciones de Pascua",
+                    "Celebra la renovación y los nuevos comienzos",
+                    "Tradición española que merece regalos especiales",
+                    "Para disfrutar en familia durante las vacaciones"
+                ],
+                "title_patterns": [
+                    "Especial Semana Santa - {product} para las Vacaciones - {benefit}",
+                    "{product} Semana Santa - {feature} para Pascua",
+                    "Perfecto Semana Santa - {product} con {unique_feature}",
+                    "Vacaciones Pascua {product} - Especial Abril"
+                ],
+                "power_words": ["semana santa", "pascua", "vacaciones", "tradición", "familia", "descanso", "renovación", "primavera", "celebración"],
+                "urgency_phrases": ["Entrega antes de Semana Santa", "Especial vacaciones Pascua", "Stock limitado Semana Santa"],
+                "bullet_starters": [
+                    "PERFECTO SEMANA SANTA:",
+                    "VACACIONES PASCUA:",
+                    "TRADICIÓN FAMILIAR:",
+                    "DESCANSO MERECIDO:",
+                    "RENOVACIÓN PRIMAVERAL:"
+                ],
+                "keywords": [
+                    "semana santa regalo", "pascua regalo", "vacaciones pascua",
+                    "semana santa especial", "abril regalo", "tradicion pascua",
+                    "semana santa {product_type}", "vacaciones familia", "pascua españa",
+                    "regalo vacaciones pascua", "semana santa familia"
+                ],
+                "description_hooks": [
+                    "Esta Semana Santa, añade un toque especial a las vacaciones familiares.",
+                    "Las tradiciones se mantienen vivas con detalles que importan.",
+                    "Celebra la renovación de la primavera con algo verdaderamente útil."
+                ],
+                "gift_messaging": "Presentación especial Semana Santa. Perfecto para las vacaciones.",
+                "seasonal_context": "Semana Santa española - Tradición, familia y descanso merecido!"
+            },
+            
+            "Día de Andalucía": {
+                "emotional_hooks": [
+                    "Celebra el orgullo andaluz con estilo",
+                    "Para los que llevan Andalucía en el corazón",
+                    "Tradición andaluza que merece ser celebrada",
+                    "El detalle perfecto para el 28 de febrero",
+                    "Andalucía universal, calidad excepcional"
+                ],
+                "title_patterns": [
+                    "Especial Día de Andalucía - {product} Andaluz - {benefit}",
+                    "{product} Andalucía - {feature} para el 28 de Febrero",
+                    "Orgullo Andaluz {product} - {benefit} Tradición",
+                    "Día de Andalucía {product} - Especial Regional"
+                ],
+                "power_words": ["andaluz", "andalucía", "tradición", "orgullo", "regional", "tierra", "cultura", "celebración", "febrero"],
+                "urgency_phrases": ["Especial 28 de febrero", "Edición Día de Andalucía", "Orgullo andaluz garantizado"],
+                "bullet_starters": [
+                    "ORGULLO ANDALUZ:",
+                    "TRADICIÓN REGIONAL:",
+                    "ANDALUCÍA UNIVERSAL:",
+                    "28 FEBRERO ESPECIAL:",
+                    "CULTURA ANDALUZA:"
+                ],
+                "keywords": [
+                    "dia andalucia regalo", "28 febrero regalo", "andalucia especial",
+                    "orgullo andaluz", "tradicion andaluza", "andalucia regalo",
+                    "dia andalucia {product_type}", "febrero andalucia", "regional andaluz",
+                    "celebracion andaluza", "cultura andaluza"
+                ],
+                "description_hooks": [
+                    "El 28 de febrero celebramos lo que nos hace únicos como andaluces.",
+                    "Andalucía se lleva en el corazón, y este regalo lo demuestra.",
+                    "Tradición andaluza con la calidad que nos caracteriza."
+                ],
+                "gift_messaging": "Presentación especial Día de Andalucía. Orgullo andaluz incluido.",
+                "seasonal_context": "Día de Andalucía (28 febrero) - Celebra la tierra que nos vió nacer!"
             }
         }
     
