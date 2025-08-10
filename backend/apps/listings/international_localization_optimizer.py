@@ -475,11 +475,12 @@ JSON CONTENT OVERRIDE FOR {config['language'].upper()}:
 • productDescription: Complete {config['language']} description with cultural adaptation
 • All other content fields: 100% {config['language']} language only
 
-{'🔥 GERMAN 10/10 BULLET OPTIMIZATION FORMULA 🔥' if market_code == 'de' else ''}
-{'BULLET 1 EMOTIONAL HOOK EXAMPLES:' if market_code == 'de' else ''}
-{'• "Erfrischende Abkühlung wie ein Profi – ganz ohne schwere Geräte oder laute Ventilatoren."' if market_code == 'de' else ''}
-{'• "Hygienisch schneiden wie ein Profi – ganz ohne Geschmacksübertragung oder Küchenchaos."' if market_code == 'de' else ''}
-{'• "Perfekte Kühlung wie ein Profi – ganz ohne teure Klimaanlage oder sperrige Ventilatoren."' if market_code == 'de' else ''}
+{'🔥 GERMAN 10/10 BULLET OPTIMIZATION WITH BRAND TONE LABELS 🔥' if market_code == 'de' else ''}
+{'CRITICAL: Include German brand tone labels (translate from English) + emotional hooks:' if market_code == 'de' else ''}
+{'• "PROFESSIONELLE LEISTUNG: Erfrischende Abkühlung wie ein Profi – ganz ohne schwere Geräte."' if market_code == 'de' else ''}
+{'• "BEWÄHRTE QUALITÄT: Hygienisch schneiden wie ein Profi – ganz ohne Geschmacksübertragung."' if market_code == 'de' else ''}
+{'• "ZERTIFIZIERTE KÜHLUNG: Perfekte Abkühlung wie ein Profi – ganz ohne teure Klimaanlage."' if market_code == 'de' else ''}
+{'MANDATORY: Each bullet MUST start with German brand tone label + emotional hook formula' if market_code == 'de' else ''}
 {'' if market_code == 'de' else ''}
 {'BULLET STRUCTURE - MOBILE SCAN-ABILITY OPTIMIZED (2-3 SENTENCES):' if market_code == 'de' else ''}
 {'✅ Sentence 1: Emotional hook/core benefit (15-20 words)' if market_code == 'de' else ''}
