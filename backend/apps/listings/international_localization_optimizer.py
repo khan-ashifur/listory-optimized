@@ -144,32 +144,64 @@ class InternationalLocalizationOptimizer:
                 "currency": "EUR", 
                 "language_code": "it",
                 
+                # Essential Italian words
                 "essential_words": [
-                    "il", "la", "le", "e", "con", "per", "di", "da", "in", "è",
-                    "avere", "essere", "fare", "andare", "venire", "vedere"
+                    "il", "la", "le", "gli", "e", "con", "per", "di", "da", "in", "è",
+                    "avere", "essere", "fare", "andare", "venire", "vedere", "sapere", "molto", "bene", "tutto"
                 ],
                 
+                # Sophisticated Italian power words for luxury market
                 "power_words": [
-                    "qualità", "eleganza", "stile", "raffinato", "bellezza",
-                    "prestazioni", "innovazione", "affidabilità", "precisione",
-                    "superiore", "eccezionale", "pratico", "moderno"
+                    "qualità", "eleganza", "stile", "raffinato", "bellezza", "lussuoso",
+                    "prestazioni", "innovazione", "affidabilità", "precisione", "efficace", "distinto",
+                    "superiore", "eccezionale", "pratico", "moderno", "prestigioso", "esclusivo",
+                    "artigianale", "italiano", "autentico", "nobile", "delicato", "armonioso"
                 ],
                 
+                # Italian lifestyle and cultural elements
                 "cultural_elements": [
-                    "qualità italiana", "eleganza classica", "stile raffinato",
-                    "bellezza funzionale", "design italiano", "eccellenza artigianale"
+                    "Finalmente il comfort all'italiana",
+                    "L'eleganza pratica del quotidiano", 
+                    "Assaporare ogni momento di freschezza",
+                    "Qualità italiana autentica",
+                    "Raffinatezza discreta ed efficace",
+                    "Arte di vivere italiana moderna",
+                    "Sofisticazione naturale"
                 ],
                 
+                # Natural Italian expressions
                 "formality_words": [
-                    "lei", "suo", "professionale", "eccellenza", "prestigioso",
-                    "certificato", "garantito", "superiore"
+                    "Assaporate", "Scoprite", "Godetevi", "Lasciatevi conquistare da",
+                    "Concedetevi", "Adottate", "Scegliete l'eccellenza",
+                    "Vivete l'esperienza", "Sentite la differenza", "Apprezzate la raffinatezza"
                 ],
                 
+                # Italian copywriting rules - OPTIMIZED FOR 10/10 QUALITY
                 "enforcement_rules": [
-                    "ALL content MUST be in Italian - no English words allowed",
-                    "Use proper Italian grammar and style",
-                    "Include Italian design appreciation",
-                    "Maintain elegant Italian expression"
+                    "🚨 CRITICAL: You MUST use proper Italian accents à, è, é, ì, í, ò, ó, ù, ú in ALL words",
+                    "ACCENT EXAMPLES: qualità NOT qualita, è NOT e, più NOT piu, perché NOT perche, città NOT citta",
+                    "MANDATORY ACCENTS: funzionalità, comodità, sicurezza, efficacità, creato, progettato, sviluppato, integrato",
+                    "🔥 ITALIAN SOPHISTICATION FORMULA - VARIED PATTERNS:",
+                    "PATTERN 1: '[BENEFIT RAFFINATO] all'italiana – senza [INCONVENIENTE] né [PROBLEMA]. Dimensioni: 18x9x22cm.' (1st bullet)",
+                    "PATTERN 2: '[SOFISTICAZIONE] italiana con [PRESTAZIONI] per [RISULTATO]. Lavabile in lavastoviglie.' (2nd bullet)",
+                    "PATTERN 3: '[INNOVAZIONE] che unisce [PRATICITÀ] e [ELEGANZA]. Materiali premium certificati.' (3rd bullet - vary from pattern 1)",
+                    "PATTERN 4: '[TECNOLOGIA] avanzata per [ESPERIENZA]. Autonomia 10 ore, ricarica USB-C.' (4th bullet - technical focus)",
+                    "PATTERN 5: '[REGALO PERFETTO]: Design italiano per [OCCASIONE]. Garanzia 24 mesi inclusa.' (5th bullet)",
+                    "Examples: 'Raffreddamento elegante all'italiana – senza rumore eccessivo né consumo inutile. Dimensioni compatte 18x9x22cm, lavabile in lavastoviglie.'",
+                    "Examples: 'Prestazioni con raffinatezza italiana per un comfort ottimale. Autonomia 10 ore, peso 380g, facile da trasportare.'",
+                    "Examples: 'Design superiore che garantisce praticità raffinata e assicura eleganza lussuosa. Materiali premium lavabili in lavastoviglie.'",
+                    "🔧 BULLET STRUCTURE OPTIMIZATION:",
+                    "🚨 CRITICAL REQUIREMENTS FOR EACH BULLET:",
+                    "1. LENGTH: 180-210 characters (optimal for mobile scan-ability)",
+                    "2. POWER WORDS: EACH bullet MUST include 2-3 of: eccellenza, qualità, raffinatezza, lussuoso, premium, sofisticato, italiano, elegante, superiore, eccezionale",
+                    "3. ITALIAN SOPHISTICATION: EACH bullet MUST mention italiano/italiana/raffinato/elegante",
+                    "4. SPECIFICATIONS: Include dimensions (18x9x22cm), weight (380g), or 'lavabile in lavastoviglie' where relevant",
+                    "STRUCTURE: 'Label + benefit + proof + application' in 180-230 chars",
+                    "Split sophisticated bullets into 2-3 scannable sentences with Italian flair",
+                    "Example: 'ECCELLENZA ITALIANA: Raffinatezza autentica per comfort ottimale. Concezione premium che garantisce soddisfazione.'",
+                    "BALANCE: 70% lifestyle sophistication, 30% technical specs",
+                    "INCLUDE: 'Regalo perfetto per San Valentino' or seasonal Italian elegance",
+                    "WRITE sophisticated Italian - maintain refinement without being pretentious"
                 ],
                 
                 "avoid_words": ["the", "and", "with", "for", "is", "quality", "professional"]

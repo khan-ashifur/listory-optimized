@@ -627,7 +627,7 @@ KEYWORD GENERATION RULES:
 RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMUM-LENGTH content:
 
 {{
-  "productTitle": "Write 150-190 character SEO-optimized title that MUST reflect {brand_tone} brand tone. Include brand '{product.brand_name}', primary keywords, and French sophistication indicators (français/française, qualité, raffiné, élégant). Use {brand_tone}-specific vocabulary. Sound distinctly French {brand_tone}, not generic.",
+  "productTitle": "🚨 MANDATORY: Write 150-190 character SEO-optimized title with 2+ sophistication indicators: français/française/qualité/raffiné/élégant (French) OR italiano/italiana/qualità/raffinato/elegante (Italian). Include brand '{product.brand_name}' and primary keywords. Sound distinctly sophisticated {brand_tone}, not generic.",
   
   "bulletPoints": [
     "BULLET 1: Use {brand_tone}-specific label format. For {brand_tone} tone, use appropriate style and vocabulary. Include occasion/gift context when applicable. Write 200+ characters reflecting {brand_tone} personality throughout. Use proper grammar and apostrophes (don't, can't, it's). Must sound distinctly {brand_tone}.",
@@ -637,7 +637,7 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
     "BULLET 5: Final {brand_tone} label that ends strong. Use {brand_tone} vocabulary for guarantee/confidence information. Must sound distinctly {brand_tone}, not generic. 200+ characters, proper contractions."
   ],
   
-  "productDescription": "🚨 CRITICAL STRUCTURE: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). STRUCTURE:\\n\\nParagraph 1 (300-350 chars): French sophistication opening\\n\\nParagraph 2 (350-400 chars): Product benefits with French excellence\\n\\nParagraph 3 (350-400 chars): Usage scenarios and lifestyle integration\\n\\nParagraph 4 (300-350 chars): Customer satisfaction and call to action. NEVER write as single paragraph - ALWAYS use \\n\\n separators between paragraphs.",
+  "productDescription": "🚨 CRITICAL STRUCTURE: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). STRUCTURE:\\n\\nParagraph 1 (300-350 chars): Sophisticated cultural opening (French/Italian style)\\n\\nParagraph 2 (350-400 chars): Product benefits with cultural excellence\\n\\nParagraph 3 (350-400 chars): Usage scenarios and lifestyle integration\\n\\nParagraph 4 (300-350 chars): Customer satisfaction and call to action. NEVER write as single paragraph - ALWAYS use \\n\\n separators between paragraphs.",
   
   "seoKeywords": {{
     "primary": ["{product.name.lower().replace(' ', '_')}", "{product.brand_name.lower()}", "THEN_ADD_13_MORE: category, color, size, material, feature1, feature2, use1, use2, style, type, model, variant, application"],
@@ -1521,14 +1521,14 @@ Technical specifications include comprehensive compatibility, robust build quali
                 backend_keywords = f"premium quality {product.name.lower()} {product.brand_name.lower()} reliable performance great value"
                 print(f"⚠️ No backend keywords from AI, using fallback: {backend_keywords}")
             
-            # Check if this is France market - if so, optimize for 249-byte limit
+            # Check if this is France or Italy market - if so, optimize for 249-byte limit
             marketplace_code = getattr(product, 'marketplace', 'com') or 'com'
-            if marketplace_code == 'fr':
-                # FRANCE ONLY: Apply backend keyword optimization
+            if marketplace_code in ['fr', 'it']:
+                # FRANCE AND ITALY ONLY: Apply backend keyword optimization
                 base_keywords = [kw.strip() for kw in backend_keywords.replace(',', ' ').split() if kw.strip()]
                 optimized_backend = self.backend_optimizer.optimize_backend_keywords(
                     primary_keywords=base_keywords,
-                    marketplace='fr',
+                    marketplace=marketplace_code,
                     product_category=getattr(product, 'category', None)
                 )
                 listing.amazon_backend_keywords = optimized_backend
@@ -1637,14 +1637,14 @@ Technical specifications include comprehensive compatibility, robust build quali
                 # Generate comprehensive backend keywords if AI didn't provide them
                 backend_keywords = f"{product.name.lower()}, {product.brand_name.lower()}, premium quality, reliable performance, customer satisfaction, professional grade, exceptional value, trusted brand, high quality materials, superior design, innovative features, user friendly, long lasting, industry leading, best in class, top rated, highly recommended, outstanding quality, proven results, customer favorite"
             
-            # Check if this is France market - if so, optimize for 249-byte limit
+            # Check if this is France or Italy market - if so, optimize for 249-byte limit
             marketplace_code = getattr(product, 'marketplace', 'com') or 'com'
-            if marketplace_code == 'fr':
-                # FRANCE ONLY: Apply comprehensive backend keyword optimization
+            if marketplace_code in ['fr', 'it']:
+                # FRANCE AND ITALY ONLY: Apply comprehensive backend keyword optimization
                 base_keywords = [kw.strip() for kw in backend_keywords.split(',') if kw.strip()]
                 optimized_backend = self.backend_optimizer.optimize_backend_keywords(
                     primary_keywords=base_keywords,
-                    marketplace='fr',
+                    marketplace=marketplace_code,
                     product_category=getattr(product, 'category', None)
                 )
                 listing.amazon_backend_keywords = optimized_backend
@@ -2383,14 +2383,14 @@ JOIN THOUSANDS OF SATISFIED CUSTOMERS
 
 \"Finally, a {primary_keyword} that delivers on its promises\" - Verified Customer. Experience why this is rated among the best for quality and performance."""
         
-        # Fallback backend keywords - ONLY optimize France market (keep USA and Germany untouched)
+        # Fallback backend keywords - ONLY optimize France and Italy markets (keep USA and Germany untouched)
         marketplace_code = getattr(product, 'marketplace', 'com') or 'com'
-        if marketplace_code == 'fr':
-            # FRANCE ONLY: Optimize fallback backend keywords
+        if marketplace_code in ['fr', 'it']:
+            # FRANCE AND ITALY ONLY: Optimize fallback backend keywords
             base_keywords = [product.name, product.brand_name, primary_keyword, f"premium {product_category}", f"quality {product_category}", "kitchen accessories"]
             listing.amazon_backend_keywords = self.backend_optimizer.optimize_backend_keywords(
                 primary_keywords=base_keywords,
-                marketplace='fr',
+                marketplace=marketplace_code,
                 product_category=product_category
             )
         else:

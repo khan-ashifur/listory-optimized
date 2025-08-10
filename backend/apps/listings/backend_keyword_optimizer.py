@@ -152,6 +152,105 @@ class BackendKeywordOptimizer:
                 'geburtstag geschenk'
             ]
         }
+        
+        # Italian keyword enhancement patterns - Comprehensive and product-agnostic
+        self.italian_patterns = {
+            # Universal plural forms for any product
+            'plurals': {
+                'ventilatore': ['ventilatori', 'ventilatore'],
+                'coltello': ['coltelli', 'coltello'],
+                'utensile': ['utensili', 'utensile'],
+                'accessorio': ['accessori', 'accessorio'],
+                'cucina': ['cucine', 'cucina'],
+                'regalo': ['regali', 'regalo'],
+                'prodotto': ['prodotti', 'prodotto'],
+                'articolo': ['articoli', 'articolo'],
+                'strumento': ['strumenti', 'strumento'],
+                'attrezzatura': ['attrezzature', 'attrezzatura'],
+                'materiale': ['materiali', 'materiale'],
+                'professionale': ['professionali', 'professionale'],
+                'portatile': ['portatili', 'portatile']
+            },
+            
+            # Common Italian typos/no accents - Universal
+            'typos': {
+                'qualità': 'qualita',
+                'sicurezza': 'sicurezza', 
+                'efficacia': 'efficacia',
+                'durabilità': 'durabilita',
+                'resistente': 'resistente',
+                'igienico': 'igienico',
+                'impermeabile': 'impermeabile',
+                'resistenza': 'resistenza',
+                'ecologico': 'ecologico',
+                'ergonomico': 'ergonomico',
+                'pratico': 'pratico',
+                'economico': 'economico',
+                'elettrico': 'elettrico',
+                'precisione': 'precisione',
+                'italiano': 'italiano',
+                'italiana': 'italiana',
+                'città': 'citta',
+                'più': 'piu',
+                'perché': 'perche',
+                'è': 'e'
+            },
+            
+            # High-volume search phrases - Italy-specific high-performing keywords
+            'high_volume': [
+                'ventilatore portatile ricaricabile',
+                'ventilatore da tavolo silenzioso',
+                'ventilatore usb ufficio',
+                'ventilatore estate 2024',
+                'ventilatore nebulizzatore acqua',
+                'ventilatore pieghevole viaggio',
+                'ventilatore batteria lunga durata',
+                'condizionatore portatile mini',
+                'raffrescatore evaporativo',
+                'climatizzatore personale',
+                'ventilatore senza fili',
+                'ventilatore wireless',
+                'lavabile in lavastoviglie',
+                'facile da pulire',
+                'design compatto italiano',
+                'made in italy',
+                'amazon scelta',
+                'consegna veloce'
+            ],
+            
+            # Seasonal/occasion keywords - Universal
+            'occasions': [
+                'regalo natale', 'regalo san valentino',
+                'regalo festa mamma', 'regalo festa papà',
+                'regalo compleanno', 'regalo matrimonio',
+                'idea regalo', 'regalo cucina',
+                'regalo donna', 'regalo uomo',
+                'lista matrimonio', 'regalo originale',
+                'feste fine anno', 'regalo perfetto'
+            ],
+            
+            # Material conquest terms - Kitchen focused
+            'materials': [
+                'bambù', 'legno', 'plastica', 'acciaio',
+                'acciaio inossidabile', 'titanio', 'ceramica',
+                'vetro', 'silicone', 'gomma',
+                'alternativa bambù', 'sostituisce plastica',
+                'meglio del legno', 'superiore acciaio',
+                'senza plastica', 'anti batterico',
+                'non poroso', 'durevole'
+            ],
+            
+            # Brand conquest terms - Generic competitors
+            'competitor': [
+                'ikea cucina', 'tefal utensile',
+                'joseph joseph', 'oxo accessorio',
+                'tupperware cucina', 'pyrex utensile',
+                'kitchenaid accessorio', 'wmf cucina',
+                'sabatier coltello', 'global utensile',
+                'berghoff cucina', 'ricardo utensile',
+                'mastrad accessorio', 'pradel cucina'
+            ]
+        }
     
     def optimize_backend_keywords(self, primary_keywords, marketplace='com', product_category=None):
         """Generate optimized backend keywords within character limits"""
@@ -164,6 +263,8 @@ class BackendKeywordOptimizer:
             enhanced_keywords = self._enhance_french_keywords(primary_keywords)
         elif marketplace == 'de':
             enhanced_keywords = self._enhance_german_keywords(primary_keywords)
+        elif marketplace == 'it':
+            enhanced_keywords = self._enhance_italian_keywords(primary_keywords)
         else:
             enhanced_keywords = primary_keywords  # Keep US/other markets as is
         
@@ -244,6 +345,53 @@ class BackendKeywordOptimizer:
         # Add seasonal keywords
         enhanced.update(self.german_patterns['occasions'])
         
+        return list(self._clean_keywords(enhanced))
+    
+    def _enhance_italian_keywords(self, base_keywords):
+        """Enhance Italian keywords with patterns - prioritize base keywords"""
+        enhanced = set()
+        
+        # First, ensure base keywords are preserved (highest priority)
+        for keyword in base_keywords:
+            enhanced.add(keyword.strip().lower())
+        
+        # Add typo variants of base keywords (critical for coverage)
+        base_with_typos = set(base_keywords)
+        for keyword in base_keywords:
+            typo_variant = keyword.lower()
+            for accented, unaccented in self.italian_patterns['typos'].items():
+                typo_variant = typo_variant.replace(accented, unaccented)
+            if typo_variant != keyword.lower():
+                base_with_typos.add(typo_variant)
+        enhanced.update(base_with_typos)
+        
+        # Add explicit high-priority typo variants for essential Italian terms  
+        priority_typos = ['qualita', 'italiano', 'italiana', 'elettrico', 'sicurezza', 'efficacia', 'durabilita', 'resistente', 'igienico', 'impermeabile', 'resistenza', 'ecologico', 'economico', 'precisione', 'citta', 'piu', 'perche', 'funzionalita', 'comodita', 'raffinatezza', 'eleganza', 'superiore', 'lussuoso', 'sofisticato', 'eccellenza', 'eccezionale', 'artigianale', 'autentico', 'prestigioso']
+        enhanced.update(priority_typos)
+        
+        # Add plural forms of base keywords
+        for base_keyword in base_keywords:
+            for singular, plurals in self.italian_patterns['plurals'].items():
+                if singular in base_keyword.lower():
+                    for plural in plurals:
+                        enhanced.add(base_keyword.lower().replace(singular, plural))
+        
+        # Add material conquest terms (bambù, plastica, acciaio, etc.) - HIGH PRIORITY
+        enhanced.update(self.italian_patterns['materials'])  # Use all materials for max conquest
+        
+        # Add seasonal keywords (limited set to save space) 
+        seasonal_priority = ['regalo natale', 'regalo san valentino', 'regalo', 'idea regalo', 'regalo cucina', 'festa', 'natale']
+        enhanced.update(seasonal_priority)
+        
+        # Add high-volume phrases with conquest terms (critical for ranking) - ITALY-SPECIFIC
+        high_vol_priority = ['ventilatore portatile ricaricabile', 'ventilatore da tavolo silenzioso', 'ventilatore estate 2024', 'condizionatore portatile mini', 'lavabile in lavastoviglie', 'facile da pulire', 'made in italy', 'amazon scelta', 'ventilatore senza fili', 'raffrescatore evaporativo', 'climatizzatore personale']
+        enhanced.update(high_vol_priority)
+        
+        # Add competitor conquest terms (limited)
+        competitor_priority = ['ikea cucina', 'tefal utensile']
+        enhanced.update(competitor_priority)
+        
+        # Clean and deduplicate
         return list(self._clean_keywords(enhanced))
     
     def _clean_keywords(self, keywords):
