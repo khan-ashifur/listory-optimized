@@ -2131,6 +2131,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "Premium-Qualität, deutsche Standards, TÜV-geprüft"
                         elif marketplace_code == 'fr':
                             section_keywords = "qualité premium, tradition française, savoir-faire"
+                        elif marketplace_code == 'it':
+                            section_keywords = "qualità premium, eccellenza italiana, fiducia del cliente"
                         else:
                             section_keywords = "premium quality, trusted brand, customer satisfaction"
                     elif 'feature' in section_key.lower() or 'section2' in section_key:
@@ -2148,6 +2150,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "Ingenieursqualität, Präzision, Zuverlässigkeit, Effizienz"
                         elif marketplace_code == 'fr':
                             section_keywords = "sophistication, élégance française, art de vivre"
+                        elif marketplace_code == 'it':
+                            section_keywords = "design innovativo, prestazioni superiori, stile italiano"
                         else:
                             section_keywords = "innovative design, high performance, user-friendly"
                     elif 'trust' in section_key.lower() or 'quality' in section_key.lower() or 'guarantee' in section_key.lower():
@@ -2160,8 +2164,80 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "TÜV-geprüft, deutsche Qualitätsnormen, Zertifizierung, Compliance"
                         elif marketplace_code == 'fr':
                             section_keywords = "tradition française, savoir-faire, qualité artisanale, héritage"
+                        elif marketplace_code == 'it':
+                            section_keywords = "tradizione italiana, artigianato, qualità superiore, heritage"
                         else:
                             section_keywords = "5-star reviews, money-back guarantee, customer satisfaction"
+                    elif 'usage' in section_key.lower() or 'section3' in section_key:
+                        # Usage section - application focused
+                        if marketplace_code == 'jp':
+                            section_keywords = "日常使い, 様々な場面, 便利性, 効率アップ"
+                        elif marketplace_code == 'es':
+                            section_keywords = "uso cotidiano, vida familiar, versatilidad, comodidad"
+                        elif marketplace_code == 'de':
+                            section_keywords = "vielseitige Anwendung, Alltagstauglichkeit, praktisch, effizient"
+                        elif marketplace_code == 'fr':
+                            section_keywords = "usage quotidien, polyvalence, praticité, élégance d'usage"
+                        elif marketplace_code == 'it':
+                            section_keywords = "uso quotidiano, versatilità italiana, praticità, stile di vita"
+                        else:
+                            section_keywords = "everyday use, versatile applications, practical, convenient"
+                    elif 'quality' in section_key.lower() or 'section4' in section_key:
+                        # Quality section - standards focused
+                        if marketplace_code == 'jp':
+                            section_keywords = "品質管理, 検査基準, 製造工程, 信頼性テスト"
+                        elif marketplace_code == 'es':
+                            section_keywords = "control de calidad, estándares europeos, fabricación cuidadosa"
+                        elif marketplace_code == 'de':
+                            section_keywords = "Qualitätskontrolle, ISO-Standards, deutsche Fertigung, Prüfsiegel"
+                        elif marketplace_code == 'fr':
+                            section_keywords = "contrôle qualité, normes françaises, fabrication soignée"
+                        elif marketplace_code == 'it':
+                            section_keywords = "controllo qualità, standard italiani, manifattura eccellente"
+                        else:
+                            section_keywords = "quality control, manufacturing standards, certified excellence"
+                    elif 'social' in section_key.lower() or 'proof' in section_key.lower() or 'section6' in section_key:
+                        # Social proof section - testimonials focused
+                        if marketplace_code == 'jp':
+                            section_keywords = "お客様満足度, 高評価レビュー, リピーター多数, 口コミ人気"
+                        elif marketplace_code == 'es':
+                            section_keywords = "testimonios reales, familias satisfechas, recomendaciones"
+                        elif marketplace_code == 'de':
+                            section_keywords = "Kundenbewertungen, Zufriedenheitsgarantie, Weiterempfehlung"
+                        elif marketplace_code == 'fr':
+                            section_keywords = "témoignages clients, satisfaction garantie, reconnaissance"
+                        elif marketplace_code == 'it':
+                            section_keywords = "testimonianze, soddisfazione clienti, raccomandazioni"
+                        else:
+                            section_keywords = "customer testimonials, verified reviews, satisfaction guaranteed"
+                    elif 'comparison' in section_key.lower() or 'section7' in section_key:
+                        # Comparison section - competitive advantage focused
+                        if marketplace_code == 'jp':
+                            section_keywords = "他社比較, 優位性, 選ばれる理由, 差別化ポイント"
+                        elif marketplace_code == 'es':
+                            section_keywords = "ventajas competitivas, mejor elección, diferencias clave"
+                        elif marketplace_code == 'de':
+                            section_keywords = "Wettbewerbsvorteil, Alleinstellungsmerkmal, Überlegenheit"
+                        elif marketplace_code == 'fr':
+                            section_keywords = "avantages concurrentiels, supériorité, choix optimal"
+                        elif marketplace_code == 'it':
+                            section_keywords = "vantaggi competitivi, superiorità, scelta migliore"
+                        else:
+                            section_keywords = "competitive advantage, superior choice, key differentiators"
+                    elif 'package' in section_key.lower() or 'section8' in section_key:
+                        # Package section - contents focused
+                        if marketplace_code == 'jp':
+                            section_keywords = "同梱内容, パッケージング, 付属品, 開封体験"
+                        elif marketplace_code == 'es':
+                            section_keywords = "contenido completo, empaque premium, accesorios incluidos"
+                        elif marketplace_code == 'de':
+                            section_keywords = "Lieferumfang, Verpackungsqualität, Zubehör, Vollständigkeit"
+                        elif marketplace_code == 'fr':
+                            section_keywords = "contenu livré, emballage soigné, accessoires inclus"
+                        elif marketplace_code == 'it':
+                            section_keywords = "contenuto confezione, imballaggio curato, accessori inclusi"
+                        else:
+                            section_keywords = "package contents, premium packaging, included accessories"
                     elif 'faq' in section_key.lower() or 'support' in section_key.lower():
                         # FAQ/Support section - help focused
                         if marketplace_code == 'jp':
@@ -2172,6 +2248,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "technische Details, Bedienungsanleitung, Problemlösung"
                         elif marketplace_code == 'fr':
                             section_keywords = "conseils d'expert, solutions élégantes, guide sophistiqué"
+                        elif marketplace_code == 'it':
+                            section_keywords = "supporto tecnico, guide dettagliate, assistenza italiana"
                         else:
                             section_keywords = "quick answers, troubleshooting, user guide"
                     
