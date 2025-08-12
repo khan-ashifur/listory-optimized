@@ -23,6 +23,7 @@ class GeneratedListing(models.Model):
     
     # Platform-specific fields
     amazon_aplus_content = models.TextField(blank=True, help_text="Amazon A+ content suggestions")
+    amazon_keywords = models.TextField(blank=True, help_text="Amazon frontend display keywords")
     amazon_backend_keywords = models.TextField(blank=True)
     
     # A+ Content fields
