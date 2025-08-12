@@ -2115,6 +2115,79 @@ Technical specifications include comprehensive compatibility, robust build quali
                     section_keywords = ', '.join(section_data.get('keywords', []))
                     image_desc = section_data.get('imageDescription', '')
                     seo_note = section_data.get('seoOptimization', '')
+                    
+                    # Enhance with culturally-specific keywords based on marketplace and section type
+                    marketplace_code = getattr(product, 'marketplace', 'com') or 'com'
+                    product_category = getattr(product, 'categories', '').lower() if hasattr(product, 'categories') else ''
+                    
+                    # Override keywords with cultural ones based on section type and market
+                    if 'hero' in section_key.lower() or 'section1' in section_key:
+                        # Hero section - trust and brand focused
+                        if marketplace_code == 'jp':
+                            section_keywords = "プレミアム品質, みんなの信頼, 安心保証, 日本基準"
+                        elif marketplace_code == 'es':
+                            section_keywords = "calidad premium, confianza familiar, garantía extendida"
+                        elif marketplace_code == 'de':
+                            section_keywords = "Premium-Qualität, deutsche Standards, TÜV-geprüft"
+                        elif marketplace_code == 'fr':
+                            section_keywords = "qualité premium, tradition française, savoir-faire"
+                        else:
+                            section_keywords = "premium quality, trusted brand, customer satisfaction"
+                    elif 'feature' in section_key.lower() or 'section2' in section_key:
+                        # Features section - functionality focused
+                        if marketplace_code == 'jp':
+                            if 'audio' in product_category or 'headphone' in product_category:
+                                section_keywords = "高音質, ノイズキャンセリング, 長時間再生, 快適装着"
+                            elif 'kitchen' in product_category:
+                                section_keywords = "衛生的, 食洗機対応, 安全設計, 長持ち"
+                            else:
+                                section_keywords = "高品質, 安全性, 使いやすさ, 長期保証"
+                        elif marketplace_code == 'es':
+                            section_keywords = "funcionalidad superior, diseño elegante, uso familiar"
+                        elif marketplace_code == 'de':
+                            section_keywords = "Ingenieursqualität, Präzision, Zuverlässigkeit, Effizienz"
+                        elif marketplace_code == 'fr':
+                            section_keywords = "sophistication, élégance française, art de vivre"
+                        else:
+                            section_keywords = "innovative design, high performance, user-friendly"
+                    elif 'trust' in section_key.lower() or 'quality' in section_key.lower() or 'guarantee' in section_key.lower():
+                        # Trust/Quality section - reliability focused
+                        if marketplace_code == 'jp':
+                            section_keywords = "みんなが選ぶ安心, 長期保証, 日本品質基準, アフターサポート"
+                        elif marketplace_code == 'es':
+                            section_keywords = "recomendado por familias, garantía extendida, servicio al cliente"
+                        elif marketplace_code == 'de':
+                            section_keywords = "TÜV-geprüft, deutsche Qualitätsnormen, Zertifizierung, Compliance"
+                        elif marketplace_code == 'fr':
+                            section_keywords = "tradition française, savoir-faire, qualité artisanale, héritage"
+                        else:
+                            section_keywords = "5-star reviews, money-back guarantee, customer satisfaction"
+                    elif 'faq' in section_key.lower() or 'support' in section_key.lower():
+                        # FAQ/Support section - help focused
+                        if marketplace_code == 'jp':
+                            section_keywords = "詳しい説明, 心配解消, 使い方ガイド, トラブル対応"
+                        elif marketplace_code == 'es':
+                            section_keywords = "ayuda familiar, dudas comunes, consejos prácticos"
+                        elif marketplace_code == 'de':
+                            section_keywords = "technische Details, Bedienungsanleitung, Problemlösung"
+                        elif marketplace_code == 'fr':
+                            section_keywords = "conseils d'expert, solutions élégantes, guide sophistiqué"
+                        else:
+                            section_keywords = "quick answers, troubleshooting, user guide"
+                    
+                    # Also enhance image descriptions culturally
+                    if not image_desc or len(image_desc) < 50:
+                        if 'hero' in section_key.lower() or 'section1' in section_key:
+                            if marketplace_code == 'jp':
+                                image_desc = "日本の家庭で安心して使用、清潔感と品質を重視 (970x600px)"
+                            elif marketplace_code == 'es':
+                                image_desc = "Familia española disfrutando del producto, ambiente cálido (970x600px)"
+                            elif marketplace_code == 'de':
+                                image_desc = "Deutsche Qualität und Präzision im modernen Zuhause (970x600px)"
+                            elif marketplace_code == 'fr':
+                                image_desc = "Élégance française, sophistication au quotidien (970x600px)"
+                            else:
+                                image_desc = "Modern lifestyle, premium quality experience (970x600px)"
                     card_type = section_data.get('cardType', 'default')
                     card_color = section_data.get('cardColor', 'gray')
                     visual_template = section_data.get('visualTemplate', {})
