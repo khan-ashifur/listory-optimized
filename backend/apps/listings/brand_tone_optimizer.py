@@ -54,6 +54,16 @@ class BrandToneOptimizer:
                     "DISEÑO AVANZADO:",
                     "DURABILIDAD TESTADA:"
                 ],
+                "bullet_labels_jp": [
+                    "プロフェッショナル品質:",
+                    "専門技術採用:",
+                    "信頼性実証済み:",
+                    "業界標準仕様:",
+                    "精密設計:",
+                    "品質認証取得:",
+                    "先進的設計:",
+                    "耐久性テスト済み:"
+                ],
                 "description_hooks": [
                     "As professionals in this industry know,",
                     "Expert analysis reveals",
@@ -108,6 +118,16 @@ class BrandToneOptimizer:
                     "HACE LA VIDA MÁS FÁCIL:",
                     "COMPLETAMENTE SIN ESTRÉS:",
                     "FUNCIONA DE MARAVILLA:"
+                ],
+                "bullet_labels_jp": [
+                    "とても簡単操作:",
+                    "きっと気に入ります:",
+                    "シンプルで最適:",
+                    "これほど簡単:",
+                    "実用的で便利:",
+                    "生活をより快適に:",
+                    "ストレスフリー:",
+                    "素晴らしい機能性:"
                 ],
                 "description_hooks": [
                     "You know what's great about this?",
@@ -164,6 +184,16 @@ class BrandToneOptimizer:
                     "VALOR EXCEPCIONAL:",
                     "ESTILO DISTINGUIDO:"
                 ],
+                "bullet_labels_jp": [
+                    "プレミアム職人技:",
+                    "ラグジュアリー体験:",
+                    "エレガントなデザイン:",
+                    "洗練された性能:",
+                    "限定機能搭載:",
+                    "上質な品質:",
+                    "卓越した価値:",
+                    "洗練されたスタイル:"
+                ],
                 "description_hooks": [
                     "True luxury lies in the details.",
                     "Sophisticated design meets exceptional performance.",
@@ -208,6 +238,16 @@ class BrandToneOptimizer:
                     "BRILLANTEMENTE SIMPLE:",
                     "TOTALMENTE INGENIOSO:",
                     "INESPERADAMENTE GENIAL:"
+                ],
+                "bullet_labels_jp": [
+                    "本当に素晴らしい:",
+                    "スマートなデザイン:",
+                    "驚くほど優秀:",
+                    "超スマート機能:",
+                    "クールな特徴:",
+                    "見事にシンプル:",
+                    "完全に独創的:",
+                    "予想以上に素晴らしい:"
                 ],
                 "description_hooks": [
                     "Here's something cool -",
@@ -254,6 +294,16 @@ class BrandToneOptimizer:
                     "MÍNIMAS COMPLICACIONES:",
                     "CONSTRUCCIÓN CON PROPÓSITO:"
                 ],
+                "bullet_labels_jp": [
+                    "シンプルに機能:",
+                    "クリーンなデザイン:",
+                    "純粋な性能:",
+                    "必須機能のみ:",
+                    "集中した品質:",
+                    "最適化された使用:",
+                    "最小限の複雑さ:",
+                    "目的に特化した構造:"
+                ],
                 "description_hooks": [
                     "Sometimes less really is more.",
                     "Clean design meets pure function.",
@@ -299,6 +349,16 @@ class BrandToneOptimizer:
                     "RENDIMIENTO AUDAZ:",
                     "PRESENCIA IMPONENTE:"
                 ],
+                "bullet_labels_jp": [
+                    "最大パワー:",
+                    "性能を解放:",
+                    "圧倒的な力:",
+                    "究極の強さ:",
+                    "強力な結果:",
+                    "パワフルなデザイン:",
+                    "大胆な性能:",
+                    "圧倒的な存在感:"
+                ],
                 "description_hooks": [
                     "Power through any challenge with",
                     "Dominate your field using",
@@ -328,6 +388,9 @@ class BrandToneOptimizer:
             bullet_labels = random.sample(config["bullet_labels_de"], min(4, len(config["bullet_labels_de"])))
         elif marketplace == 'es' and "bullet_labels_es" in config:
             bullet_labels = random.sample(config["bullet_labels_es"], min(4, len(config["bullet_labels_es"])))
+        elif marketplace == 'jp' and "bullet_labels_jp" in config:
+            # For Japanese marketplace, include ALL labels for comprehensive cultural adaptation
+            bullet_labels = config["bullet_labels_jp"][:4]  # Take first 4 consistently for testing
         else:
             bullet_labels = random.sample(config["bullet_labels"], min(4, len(config["bullet_labels"])))
             
