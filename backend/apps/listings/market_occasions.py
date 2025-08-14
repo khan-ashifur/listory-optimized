@@ -223,6 +223,51 @@ class MarketOccasions:
                 'inverno': 'Inverno',  # Winter
                 'ferias': 'Férias',  # Vacation
                 'final_de_semana': 'Final de Semana'  # Weekend
+            },
+            
+            'nl': {  # Netherlands
+                'koningsdag': 'Koningsdag',  # King's Day (most important Dutch celebration - April 27)
+                'sinterklaas': 'Sinterklaas',  # Sinterklaas (December 5/6 - uniquely Dutch)
+                'kerst': 'Kerst',  # Christmas
+                'nieuwjaar': 'Nieuwjaar',  # New Year
+                'moederdag': 'Moederdag',  # Mother's Day (2nd Sunday of May)
+                'vaderdag': 'Vaderdag',  # Father's Day (3rd Sunday of June)
+                'kinderdag': 'Kinderdag',  # Children's Day
+                'valentijnsdag': 'Valentijnsdag',  # Valentine's Day
+                'pasen': 'Pasen',  # Easter
+                'bevrijdingsdag': 'Bevrijdingsdag',  # Liberation Day (May 5)
+                'dodenherdenking': 'Dodenherdenking',  # Remembrance Day (May 4)
+                'prinsjesdag': 'Prinsjesdag',  # Budget Day (3rd Tuesday of September)
+                'zwarte_piet': 'Zwarte Piet',  # Black Pete (Sinterklaas helper)
+                'kerstmis': 'Kerstmis',  # Christmas alternative term
+                'tweede_kerstdag': 'Tweede Kerstdag',  # Boxing Day (December 26)
+                'oudejaarsavond': 'Oudejaarsavond',  # New Year's Eve
+                'carnaval': 'Carnaval',  # Carnival (mainly southern Netherlands)
+                'tulpentijd': 'Tulpentijd',  # Tulip Season (Spring)
+                'keukenhof': 'Keukenhof',  # Keukenhof Gardens season
+                'schoolvakanties': 'Schoolvakanties',  # School holidays
+                'zomervakantie': 'Zomervakantie',  # Summer vacation
+                'terug_naar_school': 'Terug naar School',  # Back to School
+                'familietijd': 'Familietijd',  # Family time
+                'gezelligheid': 'Gezelligheid',  # Coziness/togetherness (uniquely Dutch concept)
+                'bruiloft': 'Bruiloft',  # Wedding
+                'verjaardag': 'Verjaardag',  # Birthday
+                'afstuderen': 'Afstuderen',  # Graduation
+                'babyshower': 'Babyshower',  # Baby Shower
+                'housewarming': 'Housewarming',  # Housewarming
+                'black_friday': 'Black Friday',  # Black Friday
+                'cyber_monday': 'Cyber Monday',  # Cyber Monday
+                'uitverkoop': 'Uitverkoop',  # Sale/Clearance
+                'zomer': 'Zomer',  # Summer
+                'winter': 'Winter',  # Winter
+                'lente': 'Lente',  # Spring
+                'herfst': 'Herfst',  # Autumn
+                'weekend': 'Weekend',  # Weekend
+                'vakantie': 'Vakantie',  # Vacation/Holiday
+                'fietsseizoen': 'Fietsseizoen',  # Cycling season
+                'voetbal': 'Voetbal',  # Football season
+                'ek_wk': 'EK/WK',  # European/World Championship
+                'oranje': 'Oranje'  # Dutch national team events
             }
         }
         

@@ -121,6 +121,11 @@ class ListingQualityValidator:
                 'high': ['incrível', 'revolucionário', 'extraordinário', 'fantástico', 'perfeito', 'transforma', 'último', 'irresistível', 'mágico'],
                 'medium': ['excelente', 'premium', 'de luxo', 'profissional', 'super', 'demais', 'top', 'sensacional', 'autêntico'],
                 'comfort': ['cômodo', 'fácil', 'prático', 'confiável', 'seguro', 'garantido', 'brasileiro', 'familiar']
+            },
+            'nl': {
+                'high': ['geweldig', 'revolutionair', 'fantastisch', 'perfect', 'uniek', 'transformeert', 'ultieme', 'onweerstaanbaar', 'magisch'],
+                'medium': ['uitstekend', 'premium', 'luxe', 'professioneel', 'super', 'top', 'slim', 'innovatief', 'authentiek'],
+                'comfort': ['comfortabel', 'gemakkelijk', 'praktisch', 'betrouwbaar', 'veilig', 'gegarandeerd', 'nederlands', 'gezellig']
             }
         }
         

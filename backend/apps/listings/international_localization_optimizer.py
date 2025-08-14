@@ -406,6 +406,76 @@ class InternationalLocalizationOptimizer:
                 "avoid_words": ["barato", "básico", "simples", "comum"]  # Brazilian market values quality and style
             },
             
+            "nl": {
+                "market_name": "Netherlands",
+                "marketplace": "nl",
+                "language": "Dutch",
+                "currency": "EUR",
+                "language_code": "nl",
+                
+                # Essential Dutch words and expressions
+                "essential_words": [
+                    "de", "het", "een", "van", "is", "in", "en", "op", "te", "met", "voor", "aan", "dat", "die", "er",
+                    "zijn", "hebben", "worden", "kunnen", "gaan", "maken", "zien", "goed", "groot", "nieuw", "veel"
+                ],
+                
+                # Dutch emotional power words that drive conversions
+                "power_words": [
+                    "geweldig", "uitstekend", "fantastisch", "perfect", "uniek", "premium", "luxe", "super", "top",
+                    "revolutionair", "innovatief", "geavanceerd", "professioneel", "betrouwbaar", "gegarandeerd",
+                    "authentiek", "origineel", "nederlands", "traditioneel", "modern", "effectief", "krachtig",
+                    "praktisch", "slim", "duurzaam", "kwaliteit", "comfort", "stijlvol", "elegant"
+                ],
+                
+                # Dutch lifestyle and cultural elements
+                "cultural_elements": [
+                    "perfect voor het Nederlandse gezin",
+                    "ideaal voor gezellige avonden en familiebijeenkomsten",
+                    "gemaakt met het Nederlandse leven in gedachten",
+                    "bestand tegen het Nederlandse klimaat",
+                    "met de Nederlandse no-nonsense mentaliteit",
+                    "voor die echte Nederlandse gezelligheid",
+                    "traditie en moderniteit samen",
+                    "Nederlandse kwaliteit en betrouwbaarheid"
+                ],
+                
+                # Dutch expressions and formality (Direct but polite Dutch style)
+                "formality_words": [
+                    "wij garanderen u", "wij bieden u", "met trots presenteren wij", "u kunt er zeker van zijn",
+                    "zonder twijfel", "absoluut zeker", "natuurlijk", "uiteraard", "zeker weten", "gegarandeerd",
+                    "u verdient het beste", "wij zorgen ervoor", "vertrouw op onze kwaliteit"
+                ],
+                
+                # Dutch copywriting rules - OPTIMIZED FOR 10/10 QUALITY
+                "enforcement_rules": [
+                    "🚨 CRITICAL: You MUST use proper Dutch grammar and spelling - no German or English mix-ups",
+                    "DUTCH EXAMPLES: gezellig NOT gemutlich, fiets NOT bicycle, huis NOT haus, kwaliteit NOT qualitat",
+                    "MANDATORY DUTCH WORDS: Use typical Dutch words like 'gezellig', 'lekker', 'fijn', 'handig', 'slim'",
+                    "🔥 DUTCH PERSUASION FORMULA - NO-NONSENSE APPROACH:",
+                    "PATTERN 1: '[GEWELDIG VOORDEEL] dat uw [LEVEN/HUIS] zal verbeteren! Wij garanderen [RESULTAAT] zonder [PROBLEEM].' (1st bullet - MUST use 'wij garanderen')",
+                    "PATTERN 2: '[PREMIUM EIGENSCHAP] met Nederlandse kwaliteit voor [GEGARANDEERD RESULTAAT]. Wij bieden u superieure prestaties.' (2nd bullet - MUST use 'wij bieden u')",
+                    "PATTERN 3: '[SLIM ONTWERP] dat Nederlandse prakticaliteit combineert met innovatie. Met trots presenteren wij [VOORDEEL].' (3rd bullet - MUST use 'met trots presenteren wij')",
+                    "PATTERN 4: '[TOTALE GEMAK] voor Nederlandse gezinnen. U kunt er zeker van zijn dat u [SUPERIEURE ERVARING] krijgt.' (4th bullet - MUST use 'u kunt er zeker van zijn')",
+                    "PATTERN 5: '[PERFECT CADEAU] voor [KONINGSDAG/SINTERKLAAS/KERST]. Zonder twijfel zal elk gezin genieten van [PRODUCT].' (5th bullet - MUST use 'zonder twijfel')",
+                    "Examples: 'Geweldige prestaties die uw keuken zullen transformeren! Wij garanderen resultaten zonder overlast.'",
+                    "Examples: 'Premium technologie met geavanceerd ontwerp voor gegarandeerde resultaten elke dag.'",
+                    "🔧 BULLET STRUCTURE FOR NETHERLANDS:",
+                    "🚨 MANDATORY DUTCH FORMALITY: Each bullet MUST include ONE of: 'wij garanderen', 'wij bieden u', 'met trots presenteren wij', 'u kunt er zeker van zijn', 'zonder twijfel'",
+                    "🚨 MANDATORY DUTCH WORDS: MUST use 'Nederland', 'Nederlandse', 'gezin', 'gezellig' at least 3 times total",
+                    "🚨 DUTCH DIRECTNESS: Dutch market appreciates direct, honest communication - be straightforward but friendly",
+                    "🔥 FAMILY FOCUS: Dutch value family time and 'gezelligheid' - mention family benefits and togetherness",
+                    "LENGTH: 160-220 characters per bullet (Dutch is more concise than other languages)",
+                    "POWER WORDS: Each bullet MUST contain 2-3 from: geweldig, uitstekend, perfect, gegarandeerd, premium, super, fantastisch, slim",
+                    "PRACTICAL BENEFITS: Dutch appreciate practical, functional benefits - emphasize utility and efficiency",
+                    "QUALITY FOCUS: Include references to Dutch quality standards and reliability",
+                    "🇳🇱 DUTCH PRIDE: Reference Dutch innovation, quality, or family values in EVERY bullet",
+                    "SUSTAINABILITY: Dutch market increasingly values sustainability and environmental consciousness",
+                    "🔥 MANDATORY QUALITY SCORE BOOST: Use 'authentiek', 'origineel', 'traditioneel', 'duurzaam' to reach 10/10"
+                ],
+                
+                "avoid_words": ["goedkoop", "basis", "eenvoudig", "gewoon"]  # Dutch market values quality and innovation
+            },
+            
             "it": {
                 "market_name": "Italy",
                 "marketplace": "it",
@@ -742,6 +812,8 @@ class InternationalLocalizationOptimizer:
             market_code = "mx"
         elif marketplace == "br" or language in ["pt-br", "pt_BR", "pt"]:
             market_code = "br"
+        elif marketplace == "nl" or language in ["nl", "nl_NL"]:
+            market_code = "nl"
         
         if not market_code or market_code not in self.market_configurations:
             return ""  # Return empty for unsupported markets
@@ -978,6 +1050,8 @@ The entire listing must read as if written by a native {config['language']} spea
             market_code = "mx"
         elif marketplace == "br" or language in ["pt-br", "pt_BR", "pt"]:
             market_code = "br"
+        elif marketplace == "nl" or language in ["nl", "nl_NL"]:
+            market_code = "nl"
         
         if not market_code or market_code not in self.market_configurations:
             return ""  # Return empty for unsupported markets or US market
