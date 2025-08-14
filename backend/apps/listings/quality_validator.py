@@ -59,13 +59,54 @@ class ListingQualityValidator:
     """
     
     def __init__(self):
+        # Enhanced emotional power words with international variations
         self.emotional_power_words = {
             'high': ['breakthrough', 'revolutionary', 'game-changing', 'instantly', 'finally', 
                     'obsessed', 'never again', 'secret', 'unleash', 'transform', 'dominate',
-                    'irresistible', 'magnetic', 'life-changing', 'unstoppable'],
+                    'irresistible', 'magnetic', 'life-changing', 'unstoppable', 'mind-blowing',
+                    'jaw-dropping', 'unbelievable', 'phenomenal', 'extraordinary'],
             'medium': ['amazing', 'incredible', 'perfect', 'ultimate', 'premium', 'superior',
-                      'exceptional', 'outstanding', 'remarkable', 'exclusive', 'proven'],
-            'low': ['good', 'nice', 'great', 'quality', 'reliable', 'effective', 'useful']
+                      'exceptional', 'outstanding', 'remarkable', 'exclusive', 'proven',
+                      'luxurious', 'professional', 'elegant', 'sophisticated', 'refined'],
+            'low': ['good', 'nice', 'great', 'quality', 'reliable', 'effective', 'useful',
+                   'practical', 'convenient', 'simple', 'easy', 'comfortable']
+        }
+        
+        # Add international emotional power words
+        self.international_power_words = {
+            'de': {
+                'high': ['revolutionär', 'bahnbrechend', 'unglaublich', 'endlich', 'perfekt',
+                        'verwandelt', 'ultimativ', 'unwiderstehlich', 'lebensverändernd'],
+                'medium': ['erstaunlich', 'außergewöhnlich', 'premium', 'luxuriös', 'elegant',
+                          'professionell', 'hochwertig', 'exklusiv', 'bewährt'],
+                'comfort': ['gemütlich', 'mühelos', 'bequem', 'praktisch', 'zuverlässig']
+            },
+            'fr': {
+                'high': ['révolutionnaire', 'incroyable', 'exceptionnel', 'enfin', 'parfait',
+                        'transforme', 'ultime', 'irrésistible', 'magique'],
+                'medium': ['élégant', 'raffiné', 'luxueux', 'sophistiqué', 'exclusif',
+                          'prestigieux', 'supérieur', 'remarquable', 'authentique'],
+                'comfort': ['confortable', 'pratique', 'facile', 'simple', 'fiable']
+            },
+            'it': {
+                'high': ['rivoluzionario', 'incredibile', 'eccezionale', 'finalmente', 'perfetto',
+                        'trasforma', 'ultimo', 'irresistibile', 'magico'],
+                'medium': ['elegante', 'raffinato', 'lussuoso', 'sofisticato', 'esclusivo',
+                          'prestigioso', 'superiore', 'straordinario', 'autentico'],
+                'comfort': ['comodo', 'pratico', 'facile', 'semplice', 'affidabile']
+            },
+            'es': {
+                'high': ['revolucionario', 'increíble', 'excepcional', 'finalmente', 'perfecto',
+                        'transforma', 'último', 'irresistible', 'mágico'],
+                'medium': ['elegante', 'refinado', 'lujoso', 'sofisticado', 'exclusivo',
+                          'prestigioso', 'superior', 'extraordinario', 'auténtico'],
+                'comfort': ['cómodo', 'práctico', 'fácil', 'simple', 'fiable']
+            },
+            'jp': {
+                'high': ['最高', '究極', '革命的', '画期的', '完璧', '変革', '究極的', '魅力的', '素晴らしい'],
+                'medium': ['高品質', 'プレミアム', '優秀', '特別', '安心', '信頼', '快適', '便利', '効果的'],
+                'comfort': ['安全', '簡単', '使いやすい', 'お客様', '満足', '品質', '保証', '安心']
+            }
         }
         
         self.urgency_words = ['now', 'today', 'limited', 'exclusive', 'before', 'until', 

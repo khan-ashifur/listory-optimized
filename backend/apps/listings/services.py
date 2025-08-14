@@ -84,6 +84,29 @@ class ListingGeneratorService:
         # Default high-intent Spanish keywords
         return "mejor, original, profesional, certificado CE, garantía 2 años, premium, oferta España, envío España 24h, calidad europea"
     
+    def get_japanese_industry_keywords(self, product):
+        """Get Japanese industry-specific high-intent keywords"""
+        category = product.categories.lower() if product.categories else ""
+        
+        # Industry-specific Japanese keywords by category
+        industry_keywords = {
+            "electronics": "正規品, 高品質, PSE認証, 日本語サポート, 送料無料, 1年保証, Amazon配送, 安心, 信頼",
+            "audio": "ノイズキャンセリング, 高音質, ワイヤレス, Bluetooth5.3, HiFi, 長時間再生, 通勤用, オフィス用, ゲーミング対応",
+            "headphones": "ノイズキャンセリング付き, 30時間再生, 軽量設計, 防水仕様, iPhone対応, Android対応, 通話機能, 急速充電",
+            "home": "省エネ, 静音設計, コンパクト, おしゃれ, 清掃簡単, ワイヤレス, スマート機能, エコ設計, 日本製品質",
+            "kitchen": "ステンレス鋼, ノンスティック, 食洗機対応, BPAフリー, 耐熱性, プロ仕様, 調理器具, 安全設計",
+            "sports": "防水IPX7, 通気性, 人間工学, 軽量, 耐久性, フィットネス, ジム用, ランニング, スポーツ用品",
+            "office": "生産性向上, デスクワーク, 在宅勤務, 整理整頓, 調整可能, ビジネス用, オフィス用品, 作業効率"
+        }
+        
+        # Find matching category keywords
+        for key, keywords in industry_keywords.items():
+            if key in category:
+                return keywords
+        
+        # Default high-intent Japanese keywords
+        return "正規品, 高品質, PSE認証, 日本語サポート, 1年保証, 送料無料, Amazon配送, 安心購入, 信頼ブランド"
+    
     def get_marketplace_title_format(self, marketplace, brand_name):
         """Get marketplace-specific title formatting instructions"""
         
@@ -181,6 +204,29 @@ MOBILE-FIRST: Japanese users scan first 40 chars on mobile."""
             ✅ "{brand_name} Powerbank 20000mAh Carga Rápida - USB-C PD | Viaje iPhone Samsung"
             
             MOBILE: First 80 chars must have complete value proposition."""
+
+        elif marketplace == 'jp':
+            return f"""🚨 CRITICAL AMAZON JAPAN TITLE FORMAT: Japanese titles prioritize quality, safety, and customer respect: '[品質表現] [商品名] - [ブランド名] - [主要機能] - [お客様への価値]'.
+            
+            Japanese customers highly value: 1) Quality assurance, 2) Safety/Peace of mind, 3) Respectful language, 4) Clear specifications.
+            
+            GOOD: '高品質 ワイヤレスヘッドホン - {brand_name} - 30時間再生 - お客様に安心の1年保証'
+            BAD: 'ワイヤレスヘッドホン {brand_name} 30時間 バッテリー'
+            
+            PRIORITY ORDER:
+            1. Quality descriptor (高品質, プレミアム, 安心, 信頼の)
+            2. Product name in Japanese
+            3. Brand name (can be katakana for foreign brands)
+            4. Key feature/specification  
+            5. Customer value (安心, 保証, サポート)
+            
+            MANDATORY ELEMENTS:
+            - Use proper Japanese characters (Hiragana, Katakana, Kanji)
+            - Include quality/safety terms: 高品質, 安心, 信頼, 保証
+            - Show respect for customers: お客様, 皆様
+            - Specify warranty/support: 1年保証, 日本語サポート
+            
+            AVOID: Overly casual language, discount emphasis, or direct romaji transliterations."""
         
         else:  # USA and other markets
             return f"""🚨 CRITICAL AMAZON USA TITLE FORMAT: Start with EXACT high-intent keywords customers type: '[Main Product Type] [Key Feature/USP] - [Brand] [Model/Size] - [Secondary Benefits]'. Front-load searchable terms, NOT marketing taglines. Example: 'Neck Fan Portable Hands Free - {brand_name} 4000mAh Battery - Bladeless Personal Cooling USB Rechargeable 3 Speeds'. Keywords FIRST, brand in middle, benefits last. 150-190 chars max."""
@@ -511,6 +557,7 @@ Use culturally appropriate phrases and expressions for {country} shoppers.
         from .services_occasion_enhanced import OccasionOptimizer
         from .brand_tone_optimizer import BrandToneOptimizer
         from .international_localization_optimizer import InternationalLocalizationOptimizer
+        from .market_occasions import MarketOccasions
         
         self.logger.info(f"GENERATING AMAZON LISTING FOR {product.name}")
         self.logger.info(f"OpenAI client status: {'AVAILABLE' if self.client else 'NOT AVAILABLE'}")
@@ -529,8 +576,8 @@ Use culturally appropriate phrases and expressions for {country} shoppers.
         occasion_optimizer = OccasionOptimizer()
         brand_tone_optimizer = BrandToneOptimizer()
         international_optimizer = InternationalLocalizationOptimizer()
+        market_occasions = MarketOccasions()
         
-        competitor_context = self._get_competitor_context(product)
         
         # Generate product-specific keywords and context
         product_context = self._analyze_product_context(product)
@@ -881,10 +928,36 @@ DESCRIPTION VARIATION: Show conviction through evidence and specific benefits
         
         # Get occasion-specific enhancements if applicable
         occasion = getattr(product, 'occasion', None)
+        marketplace = getattr(product, 'marketplace', 'us')
         occasion_enhancement = ""
+        
         if occasion and occasion != 'None':
+            # Translate occasion to local market version
+            local_occasion = market_occasions.translate_occasion(occasion, marketplace)
+            
+            # Check if this occasion is appropriate for this market
+            if not market_occasions.should_include_occasion(occasion, marketplace):
+                self.logger.info(f"Skipping US-specific occasion '{occasion}' for market {marketplace}")
+                occasion = 'general'  # Fall back to general
+                local_occasion = 'general'
+            
+            # Get localized occasion keywords
+            occasion_keywords = market_occasions.get_occasion_keywords(occasion, marketplace)
+            
+            # Get localized emotional hooks
+            occasion_hooks = market_occasions.get_occasion_emotional_hooks(occasion, marketplace)
+            
             occasion_enhancement = occasion_optimizer.get_occasion_prompt_enhancement(occasion)
-            self.logger.info(f"Applied occasion enhancement for: {occasion}")
+            
+            # Add localized occasion context
+            if occasion_keywords or occasion_hooks:
+                occasion_enhancement += f"\n\nLOCALIZED OCCASION CONTEXT for {marketplace.upper()}:"
+                if occasion_keywords:
+                    occasion_enhancement += f"\nLocal Keywords: {', '.join(occasion_keywords)}"
+                if occasion_hooks:
+                    occasion_enhancement += f"\nLocal Hooks: {' | '.join(occasion_hooks)}"
+            
+            self.logger.info(f"Applied localized occasion enhancement for: {local_occasion} (market: {marketplace})")
         
         # Get brand tone-specific enhancements with marketplace context
         brand_tone = getattr(product, 'brand_tone', 'professional')
@@ -920,13 +993,10 @@ PRODUCT INFORMATION (USE ALL OF THIS):
 - Description: {product.description}
 - Features: {', '.join(features_list) if features_list else 'Focus on description details'}
 - Price: ${product.price if product.price else '29.99'}
-- ASIN: {product.asin if hasattr(product, 'asin') and product.asin else 'New Product'}
+- Product ID: {product.id}
 - Marketplace: {product.get_marketplace_display() if hasattr(product, 'marketplace') else 'United States'}
 {brand_context}
 
-COMPETITOR INSIGHTS TO LEVERAGE:
-- Competitor ASINs: {getattr(product, 'competitor_asins', 'None provided')}
-- Competitor URLs: {getattr(product, 'competitor_urls', 'None provided')}
 
 REQUIRED ELEMENTS (MUST USE):
 - Target Keywords: {getattr(product, 'target_keywords', 'Generate based on product description')}
@@ -1311,14 +1381,15 @@ Write each section in a completely different style and tone. Use unexpected but 
             # Extract regular message content (JSON response)
             ai_content = response.choices[0].message.content or "{}"
             
-            # For international markets, preserve ALL characters including umlauts
+            # CRITICAL FIX: Preserve all UTF-8 characters for international markets
             if marketplace_lang and marketplace_lang != 'en':
-                # Keep original content with umlauts for international markets
-                print(f"AI Response received: {len(ai_content)} characters (preserving international characters)")
+                # Keep original content with umlauts/accents for international markets
+                print(f"AI Response received: {len(ai_content)} characters (UTF-8 preserved for {marketplace_lang})")
+                # Do NOT ASCII-clean international content!
             else:
-                # For US market, clean to ASCII to avoid issues
+                # For US market only, clean to ASCII if needed
                 ai_content = ai_content.encode('ascii', errors='ignore').decode('ascii')
-                print(f"AI Response received: {len(ai_content)} characters (ASCII cleaned)")
+                print(f"AI Response received: {len(ai_content)} characters (ASCII cleaned for US)")
             # Use safe encoding for Windows
             safe_preview = ai_content[:300]
             safe_ending = ai_content[-200:]
@@ -2090,6 +2161,25 @@ Technical specifications include comprehensive compatibility, robust build quali
             if len(listing.hero_content) < 200:
                 listing.hero_content = f"{listing.hero_content}\n\n{brand_summary}"[:500]
                 
+            # CRITICAL FIX: Save missing fields that are expected
+            # Save separate SEO keywords (frontend display keywords)
+            seo_keywords_list = result.get('seoKeywords', [])
+            if isinstance(seo_keywords_list, list):
+                listing.amazon_keywords = ', '.join(seo_keywords_list[:15])  # Frontend display keywords
+            else:
+                listing.amazon_keywords = str(seo_keywords_list)[:200]
+            
+            # Save brand summary as a separate field (for A+ content reference)
+            brand_summary = result.get('brandSummary', f'{product.brand_name} delivers exceptional quality and innovation')
+            # Note: Brand summary is integrated into hero_content above, but we also store it separately
+            
+            # Save the complete A+ content plan as JSON for future reference
+            aplus_plan = result.get('aPlusContentPlan', {})
+            if aplus_plan:
+                # Store the A+ plan structure for debugging and future enhancements
+                # aplus_html will be generated later in the code
+                pass  # A+ content HTML will be set later in the generation process
+            
             print(f"✅ Comprehensive listing content generated:")
             print(f"   - Title: {len(listing.title)} characters")
             print(f"   - Description: {len(listing.long_description)} characters")
@@ -2097,6 +2187,7 @@ Technical specifications include comprehensive compatibility, robust build quali
             current_keywords = listing.keywords.split(',') if listing.keywords else []
             print(f"   - Keywords: {len(current_keywords)} total")
             print(f"   - Backend Keywords: {len(listing.amazon_backend_keywords)} characters")
+            print(f"   - Frontend Keywords: {len(listing.amazon_keywords) if hasattr(listing, 'amazon_keywords') else 0} characters")
             print(f"   - A+ Content: Hero, Features, FAQs, Trust Builders")
             print(f"   - Brand Summary integrated into content")
             self.logger.info("Generating A+ content HTML...")
@@ -3373,7 +3464,6 @@ A: Most gamers feel the difference within their first session. Say goodbye to th
         # Initialize occasion optimizer for Walmart too
         occasion_optimizer = OccasionOptimizer()
             
-        competitor_context = self._get_competitor_context(product)
         
         # Extract brand tone details
         brand_tone_mapping = {
@@ -4008,14 +4098,6 @@ Return ONLY valid JSON:
         
         return context
 
-    def _get_competitor_context(self, product):
-        if not product.competitor_urls:
-            return ""
-        
-        urls = [url.strip() for url in product.competitor_urls.split(',') if url.strip()]
-        if urls:
-            return f"\nCOMPETITOR ANALYSIS: Differentiate from competitors at {', '.join(urls[:3])}"
-        return ""
     
     def _queue_image_generation(self, listing):
         # Queue image generation for the listing

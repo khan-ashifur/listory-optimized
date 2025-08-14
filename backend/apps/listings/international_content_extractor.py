@@ -72,28 +72,40 @@ class InternationalContentExtractor:
             return None
     
     def _extract_title(self, text):
-        """Extract product title with international characters"""
+        """Extract product title with international characters including Japanese"""
         patterns = [
+            # Standard JSON patterns
             r'"productTitle":\s*"([^"]+(?:\\"[^"]*)*)"',
             r'"productTitle":\s*"(.*?)"(?=\s*[,}])',
-            r'productTitle["\s]*:["\s]*(.*?)["]*(?=\s*[,}])'
+            r'productTitle["\s]*:["\s]*(.*?)["]*(?=\s*[,}])',
+            # More flexible patterns for Japanese content
+            r'"productTitle":\s*"([^"]*[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF][^"]*)"',
+            # Single line title extraction
+            r'productTitle[^:]*:\s*"([^"\n]+)"',
+            # Fallback: look for quoted strings with Japanese characters
+            r'"([^"]*[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF][^"]*)"'
         ]
         
         for pattern in patterns:
             matches = re.finditer(pattern, text, re.DOTALL | re.IGNORECASE)
             for match in matches:
                 title = match.group(1).replace('\\"', '"').strip()
-                if len(title) > 20:  # Valid title should be substantial
+                # Accept shorter titles for Japanese (often more concise)
+                if len(title) > 10 and any(ord(c) > 127 for c in title):  # Has international chars
+                    return title
+                elif len(title) > 20:  # Standard length check for other languages
                     return title
         
         return ""
     
     def _extract_bullets(self, text):
-        """Extract bullet points array with international characters"""
+        """Extract bullet points array with international characters including Japanese"""
         # Find the bulletPoints array
         bullet_patterns = [
             r'"bulletPoints":\s*\[(.*?)\]',
-            r'bulletPoints["\s]*:["\s]*\[(.*?)\]'
+            r'bulletPoints["\s]*:["\s]*\[(.*?)\]',
+            # More flexible pattern for malformed JSON
+            r'bulletPoints[^[]*\[(.*?)\]'
         ]
         
         bullets = []
@@ -102,28 +114,43 @@ class InternationalContentExtractor:
             if match:
                 bullet_content = match.group(1)
                 
-                # Extract individual bullets from the array
-                bullet_matches = re.findall(r'"([^"]+(?:\\"[^"]*)*)"', bullet_content)
-                if bullet_matches:
-                    bullets = [bullet.replace('\\"', '"').strip() for bullet in bullet_matches]
-                    if len(bullets) >= 3:  # Should have at least 3 bullets
-                        return bullets[:5]  # Take max 5 bullets
+                # Extract individual bullets from the array - more flexible patterns
+                bullet_patterns_inner = [
+                    r'"([^"]+(?:\\"[^"]*)*)"',  # Standard quoted strings
+                    r'"([^"]*[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF][^"]*)"',  # Japanese content
+                    r'"([^"\n]{20,})"'  # Longer content (likely bullet points)
+                ]
+                
+                for inner_pattern in bullet_patterns_inner:
+                    bullet_matches = re.findall(inner_pattern, bullet_content)
+                    if bullet_matches:
+                        bullets = [bullet.replace('\\"', '"').strip() for bullet in bullet_matches]
+                        # Accept bullets if we have at least 2 (sometimes one gets corrupted)
+                        if len(bullets) >= 2:
+                            return bullets[:5]  # Take max 5 bullets
         
         return []
     
     def _extract_description(self, text):
-        """Extract product description with international characters"""
+        """Extract product description with international characters including Japanese"""
         patterns = [
             r'"productDescription":\s*"([^"]+(?:\\"[^"]*)*)"',
             r'"productDescription":\s*"(.*?)"(?=\s*[,}])',
-            r'productDescription["\s]*:["\s]*(.*?)["]*(?=\s*[,}])'
+            r'productDescription["\s]*:["\s]*(.*?)["]*(?=\s*[,}])',
+            # Japanese-specific patterns
+            r'"productDescription":\s*"([^"]*[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF][^"]*)"',
+            # More flexible pattern for multiline descriptions
+            r'productDescription[^:]*:\s*"([^"]{50,})"'
         ]
         
         for pattern in patterns:
             matches = re.finditer(pattern, text, re.DOTALL | re.IGNORECASE)
             for match in matches:
                 description = match.group(1).replace('\\"', '"').strip()
-                if len(description) > 50:  # Valid description should be substantial
+                # Accept shorter descriptions for Japanese (more concise)
+                if len(description) > 30 and any(ord(c) > 127 for c in description):
+                    return description
+                elif len(description) > 50:  # Standard length check
                     return description
         
         return ""

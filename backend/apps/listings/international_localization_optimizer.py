@@ -137,6 +137,71 @@ class InternationalLocalizationOptimizer:
                 "avoid_words": ["the", "and", "with", "for", "is", "quality", "professional"]
             },
             
+            "jp": {
+                "market_name": "Japan",
+                "marketplace": "jp", 
+                "language": "Japanese",
+                "currency": "JPY",
+                "language_code": "ja",
+                
+                # Essential Japanese particles and words
+                "essential_words": [
+                    "は", "が", "を", "に", "で", "と", "の", "か", "も", "から",
+                    "まで", "という", "として", "について", "によって", "ため", "こと", "もの"
+                ],
+                
+                # Japanese emotional power words that drive conversions
+                "power_words": [
+                    "最高", "究極", "革命的", "画期的", "完璧", "高品質", "プレミアム", "特別",
+                    "安心", "信頼", "快適", "便利", "簡単", "効果的", "優秀", "人気",
+                    "おすすめ", "話題", "注目", "限定", "独占", "新登場", "進化", "改良"
+                ],
+                
+                # Japanese lifestyle and cultural elements
+                "cultural_elements": [
+                    "日本の皆様に安心してお使いいただける",
+                    "毎日の生活をより快適に",
+                    "お客様の満足度を最優先に",
+                    "品質へのこだわり",
+                    "使いやすさを追求",
+                    "安全・安心の日本品質",
+                    "おもてなしの心で"
+                ],
+                
+                # Polite Japanese expressions (very important for Japan market)
+                "formality_words": [
+                    "いただけます", "させていただき", "お客様", "皆様", "ございます",
+                    "いたします", "させていただきます", "お使いください", "ご利用ください",
+                    "ご安心ください", "お楽しみください", "ご体験ください"
+                ],
+                
+                # Japanese copywriting rules - OPTIMIZED FOR 10/10 QUALITY
+                "enforcement_rules": [
+                    "🚨 CRITICAL: You MUST use proper Japanese characters: Hiragana (ひらがな), Katakana (カタカナ), and Kanji (漢字)",
+                    "CHARACTER EXAMPLES: 高品質 NOT koushitsu, 安心 NOT anshin, 快適 NOT kaiteki, 便利 NOT benri",
+                    "MANDATORY JAPANESE: すべて, について, として, による, ため, こと, もの, という",
+                    "🔥 JAPANESE PERSUASION FORMULA - STRUCTURED APPROACH:",
+                    "PATTERN 1: '【特徴】で【ベネフィット】を実現。お客様の【問題解決】をサポートします。' (1st bullet)",
+                    "PATTERN 2: '【高品質素材】により【信頼性】を確保。毎日の【使用場面】で安心してご利用いただけます。' (2nd bullet)",
+                    "PATTERN 3: '【独自技術】が【効果】を最大化。【具体的数値】で実証された性能をお届けします。' (3rd bullet)",
+                    "PATTERN 4: '【簡単操作】で【時短効果】を実現。忙しい【ターゲット】の方にもおすすめです。' (4th bullet)",
+                    "PATTERN 5: '【ギフト提案】：大切な方への【機会】のプレゼントとして最適です。' (5th bullet)",
+                    "Examples: '【革新的ノイズキャンセリング】で集中できる環境を実現。お客様の生産性向上をサポートします。'",
+                    "Examples: '【高品質ドライバー】により音質の信頼性を確保。毎日の通勤・作業で安心してご利用いただけます。'",
+                    "🔧 BULLET STRUCTURE OPTIMIZATION:",
+                    "🚨 LENGTH REQUIREMENT: 80-120 characters (optimal for Japanese mobile display)",
+                    "🔥 POLITENESS LEVEL: MUST use 丁寧語 (polite form) - です/ます ending for all sentences",
+                    "STRUCTURE: '【ラベル】+ 特徴説明 + お客様への価値提案' in 80-120 chars",
+                    "MANDATORY ELEMENTS: Each bullet must include お客様/皆様 (honorific for customers)",
+                    "GIFT INTEGRATION: Include appropriate Japanese gift occasions (お歳暮, お中元, etc.)",
+                    "SAFETY EMPHASIS: Japanese customers highly value 安心・安全 (safety/security)",
+                    "QUALITY FOCUS: Emphasize 品質管理, 検査済み, 保証付き (quality control, tested, guaranteed)",
+                    "WRITE respectful, customer-first Japanese that builds trust and confidence"
+                ],
+                
+                "avoid_words": ["cheap", "discount", "sale", "promotion"]  # Japanese prefer value over discount messaging
+            },
+            
             "it": {
                 "market_name": "Italy",
                 "marketplace": "it",
@@ -379,31 +444,66 @@ class InternationalLocalizationOptimizer:
                 "currency": "JPY",
                 "language_code": "ja",
                 
+                # Essential Japanese words for natural content
                 "essential_words": [
                     "の", "に", "を", "は", "が", "と", "で", "から", "まで", "より",
                     "です", "ます", "である", "ある", "する", "なる", "行く", "来る"
                 ],
                 
+                # Emotional power words for Japanese consumers - EXPANDED for 10/10 quality
                 "power_words": [
                     "品質", "信頼性", "機能的", "高品質", "優れた", "性能", "革新",
-                    "精密", "効率的", "上質", "特別", "現代的", "先進的", "耐久性"
+                    "精密", "効率的", "上質", "特別", "現代的", "先進的", "耐久性",
+                    "安心", "便利", "快適", "安全", "丁寧", "美しい", "素晴らしい",
+                    "最高", "完璧", "理想的", "実用的", "確実", "卓越", "優秀"
                 ],
                 
+                # Japanese lifestyle and cultural elements - EXPANDED
                 "cultural_elements": [
-                    "日本品質", "精密設計", "信頼できる性能", "優秀な機能性",
-                    "高い技術力", "丁寧な作り"
+                    "日本品質の証", "きめ細やかな仕上がり", "職人技の品質", 
+                    "安心の日本基準", "丁寧な作り込み", "長く愛用できる品質",
+                    "毎日の生活をより快適に", "家族みんなで安心してお使いいただけます",
+                    "使う人のことを考えた設計", "日本のご家庭に最適"
                 ],
                 
+                # Natural Japanese expressions - EXPANDED  
                 "formality_words": [
-                    "です", "ます", "致します", "ございます", "いらっしゃる",
-                    "でございます", "させていただきます"
+                    "いただく", "させていただく", "ございます", "でございます",
+                    "いらっしゃいます", "お客様", "ご利用", "ご使用", "ご家庭",
+                    "安心して", "快適に", "便利に", "長くお使い"
                 ],
                 
+                # Japanese copywriting rules - ENHANCED for comprehensive A+ content
                 "enforcement_rules": [
-                    "ALL content MUST be in Japanese - no English words allowed",
-                    "Use proper Japanese grammar and respectful keigo",
-                    "Include Japanese quality appreciation",
-                    "Maintain polite Japanese business language"
+                    "🚨 CRITICAL: ALL content MUST be in Japanese - no English words allowed",
+                    "🔥 COMPREHENSIVE A+ CONTENT REQUIREMENTS FOR JAPANESE MARKET:",
+                    "✅ Generate ALL 8 A+ content sections with substantial content (minimum 200-300 characters each)",
+                    "✅ Each section must include Japanese cultural elements and respectful language",
+                    "✅ Use proper Japanese honorific expressions: いただく, ございます, でございます",
+                    "✅ Include Japanese quality appreciation: 日本品質, 丁寧な作り, 安心",
+                    "✅ Features section: minimum 5 detailed features in Japanese",
+                    "✅ Trust section: minimum 4 trust builders with Japanese business language",
+                    "✅ Usage section: minimum 3 detailed use cases for Japanese households",
+                    "✅ FAQ section: minimum 3 comprehensive Q&A pairs in Japanese",
+                    "✅ What's in box: detailed Japanese descriptions of all items",
+                    "✅ Testimonials: authentic Japanese customer satisfaction language",
+                    "✅ Comparison: advantages explained in Japanese consumer perspective",
+                    "✅ Hero section: compelling Japanese marketing language with emotional appeal",
+                    "🎯 JAPANESE CONTENT LENGTH REQUIREMENTS:",
+                    "- Hero section: 150-200+ characters in Japanese",
+                    "- Features section: 300-400+ characters with detailed explanations",
+                    "- Trust section: 200-300+ characters with Japanese business credibility",
+                    "- Usage section: 250-350+ characters with practical Japanese scenarios",
+                    "- FAQ section: 400-500+ characters with comprehensive answers",
+                    "- Each section MUST be substantial and informative, not just brief sentences",
+                    "🌸 JAPANESE CULTURAL ADAPTATION:",
+                    "- Emphasize quality craftsmanship (職人技)",
+                    "- Highlight long-term value (長く使える)",
+                    "- Include family-oriented benefits (家族で安心)",
+                    "- Mention attention to detail (きめ細やか)",
+                    "- Use respectful business language throughout",
+                    "- Include seasonal considerations where appropriate",
+                    "🚫 AVOID: Brief, shallow content - each section must provide real value"
                 ],
                 
                 "avoid_words": ["the", "and", "with", "for", "is", "quality", "professional"],
@@ -693,22 +793,50 @@ aPlusContentPlan: {{
   
   "section2_features": {{
     "title": "Key Features & Benefits",
-    "content": "Write feature descriptions in {config['language']}",
-    "features": ["Feature 1 in {config['language']}", "Feature 2 in {config['language']}", "Feature 3 in {config['language']}"],
-    "imageDescription": "ENGLISH: Feature callout grid showing 4 key product features with icons and brief descriptions"
+    "content": "Write comprehensive feature descriptions in {config['language']}",
+    "features": ["Feature 1 in {config['language']}", "Feature 2 in {config['language']}", "Feature 3 in {config['language']}", "Feature 4 in {config['language']}", "Feature 5 in {config['language']}"],
+    "imageDescription": "ENGLISH: Feature callout grid showing 5-6 key product features with icons and brief descriptions"
   }},
   
   "section3_trust": {{
     "title": "Quality & Trust",  
-    "content": "Write trust content in {config['language']} emphasizing: {', '.join(cultural_elements)}",
-    "trust_builders": ["Trust element 1 in {config['language']}", "Trust element 2 in {config['language']}"],
+    "content": "Write comprehensive trust content in {config['language']} emphasizing: {', '.join(cultural_elements)}",
+    "trust_builders": ["Trust element 1 in {config['language']}", "Trust element 2 in {config['language']}", "Trust element 3 in {config['language']}", "Trust element 4 in {config['language']}"],
     "imageDescription": "ENGLISH: Trust badges, certifications, and quality indicators relevant to {config['market_name']} market"
   }},
   
-  "section4_faqs": {{
+  "section4_usage": {{
+    "title": "How to Use & Applications",
+    "content": "Write detailed usage instructions and applications in {config['language']}",
+    "use_cases": ["Use case 1 in {config['language']}", "Use case 2 in {config['language']}", "Use case 3 in {config['language']}"],
+    "imageDescription": "ENGLISH: Step-by-step usage guide with visual instructions and real-world applications"
+  }},
+  
+  "section5_comparison": {{
+    "title": "Why Choose This Product",
+    "content": "Write comparison content highlighting advantages in {config['language']}",
+    "advantages": ["Advantage 1 in {config['language']}", "Advantage 2 in {config['language']}", "Advantage 3 in {config['language']}"],
+    "imageDescription": "ENGLISH: Comparison chart or before/after showing product benefits vs alternatives"
+  }},
+  
+  "section6_testimonials": {{
+    "title": "Customer Satisfaction",
+    "content": "Write customer testimonial overview in {config['language']}",
+    "testimonials": ["Customer testimonial 1 in {config['language']}", "Customer testimonial 2 in {config['language']}"],
+    "imageDescription": "ENGLISH: Customer photos, ratings, and testimonial quotes with star ratings"
+  }},
+  
+  "section7_whats_in_box": {{
+    "title": "What's Included",
+    "content": "Write complete package contents description in {config['language']}",
+    "items": ["Item 1 in {config['language']}", "Item 2 in {config['language']}", "Item 3 in {config['language']}", "Manual/warranty in {config['language']}"],
+    "imageDescription": "ENGLISH: Unboxing layout showing all included items with clear labeling"
+  }},
+  
+  "section8_faqs": {{
     "title": "Frequently Asked Questions",
-    "content": "Write FAQ answers in {config['language']}",
-    "faqs": ["Q: Question in {config['language']}? A: Answer in {config['language']}"],
+    "content": "Write comprehensive FAQ answers in {config['language']}",
+    "faqs": ["Q: Question 1 in {config['language']}? A: Answer 1 in {config['language']}", "Q: Question 2 in {config['language']}? A: Answer 2 in {config['language']}", "Q: Question 3 in {config['language']}? A: Answer 3 in {config['language']}"],
     "imageDescription": "ENGLISH: FAQ visual aid showing common use cases and solutions"
   }}
 }}
@@ -722,6 +850,38 @@ socialProof: "Customer satisfaction text in {config['language']}",
 ✅ Visual template instructions: ENGLISH ONLY
 ✅ A+ strategy descriptions: ENGLISH ONLY
 ✅ Actual content (keywords, features, FAQs, trust): {config['language'].upper()} ONLY
+
+🎯 MANDATORY: Generate ALL 8 sections for complete A+ content:
+1. section1_hero - REQUIRED
+2. section2_features - REQUIRED  
+3. section3_trust - REQUIRED
+4. section4_usage - REQUIRED
+5. section5_comparison - REQUIRED
+6. section6_testimonials - REQUIRED
+7. section7_whats_in_box - REQUIRED
+8. section8_faqs - REQUIRED
+
+⚠️ DO NOT skip any sections. Generate complete content for each section to match US/German A+ length.
+
+🇯🇵 SPECIAL REQUIREMENTS FOR JAPANESE MARKET (marketplace: ja/co.jp):
+🚨 COMPREHENSIVE JAPANESE A+ CONTENT REQUIREMENTS 🚨
+✅ Each section MUST contain 200-400+ characters in Japanese (not just brief sentences)
+✅ Hero section: Include emotional appeal with Japanese cultural elements like "日本品質" or "安心"
+✅ Features section: MINIMUM 5 detailed features with Japanese quality language
+✅ Trust section: Include Japanese business credibility terms like "信頼性" and "丁寧な作り"
+✅ Usage section: Provide specific Japanese household scenarios and applications
+✅ Comparison section: Highlight advantages using Japanese consumer perspective
+✅ FAQ section: MINIMUM 3 comprehensive Q&A pairs in natural Japanese
+✅ What's in Box: Detailed descriptions using respectful Japanese language
+✅ Testimonials: Authentic Japanese customer satisfaction expressions
+
+🌸 JAPANESE CULTURAL ADAPTATION REQUIREMENTS:
+• Use respectful keigo language: ございます, いただく, させていただく
+• Emphasize long-term value: 長く使える, 耐久性, 品質
+• Include family-oriented benefits: 家族で安心, ご家庭で
+• Highlight attention to detail: きめ細やか, 丁寧な
+• Use seasonal considerations where appropriate
+• Include Japanese quality craftsmanship terminology: 職人技, 日本品質
 
 EXAMPLE CORRECT MIXED FORMAT:
 {{

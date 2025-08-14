@@ -15,7 +15,6 @@ const ProductForm = () => {
     name: '',
     description: '',
     brand_name: '',
-    asin: '',
     marketplace: 'us',
     price: '',
     categories: '',
@@ -24,9 +23,6 @@ const ProductForm = () => {
     brand_tone: 'professional',
     brand_persona: '',
     target_audience: '',
-    product_urls: [''],
-    competitor_urls: [''],
-    competitor_asins: [''],
     target_keywords: '',
     occasion: ''
   });
@@ -136,9 +132,6 @@ const ProductForm = () => {
         target_platform: selectedPlatform,
         marketplace: formData.marketplace,
         marketplace_language: selectedMarketplace?.language || 'en',
-        product_urls: formData.product_urls.filter(url => url.trim()),
-        competitor_urls: formData.competitor_urls.filter(url => url.trim()),
-        competitor_asins: formData.competitor_asins.filter(asin => asin.trim()),
         // Handle occasion - use custom input if 'custom' is selected, otherwise use selected value
         occasion: formData.occasion === 'custom' ? customOccasion : formData.occasion
       };
@@ -332,24 +325,6 @@ const ProductForm = () => {
                 </div>
               </div>
 
-              {selectedPlatform === 'amazon' && (
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Product ASIN (if existing product)
-                  </label>
-                  <input
-                    type="text"
-                    name="asin"
-                    value={formData.asin}
-                    onChange={handleInputChange}
-                    className="form-input"
-                    placeholder="B08N5WRWNW"
-                  />
-                  <p className="text-sm text-gray-500 mt-1">
-                    Enter ASIN if updating an existing Amazon listing
-                  </p>
-                </div>
-              )}
 
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -549,115 +524,6 @@ const ProductForm = () => {
                         </p>
                       </div>
 
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Product URLs (Reference Links)
-                        </label>
-                        {formData.product_urls.map((url, index) => (
-                          <div key={index} className="flex mb-2">
-                            <input
-                              type="url"
-                              value={url}
-                              onChange={(e) => handleArrayInputChange('product_urls', index, e.target.value)}
-                              className="form-input flex-1"
-                              placeholder="https://www.example.com/product"
-                            />
-                            {formData.product_urls.length > 1 && (
-                              <button
-                                type="button"
-                                onClick={() => removeArrayField('product_urls', index)}
-                                className="ml-2 text-red-600 hover:text-red-700"
-                              >
-                                <X className="h-5 w-5" />
-                              </button>
-                            )}
-                          </div>
-                        ))}
-                        {formData.product_urls.length < 3 && (
-                          <button
-                            type="button"
-                            onClick={() => addArrayField('product_urls')}
-                            className="text-sm text-primary-600 hover:text-primary-700 flex items-center"
-                          >
-                            <Plus className="h-4 w-4 mr-1" />
-                            Add Another Product URL (Max 3)
-                          </button>
-                        )}
-                        <p className="text-sm text-gray-500 mt-1">
-                          Add up to 3 product reference URLs for better content generation
-                        </p>
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Competitor URLs
-                        </label>
-                        {formData.competitor_urls.map((url, index) => (
-                          <div key={index} className="flex mb-2">
-                            <input
-                              type="url"
-                              value={url}
-                              onChange={(e) => handleArrayInputChange('competitor_urls', index, e.target.value)}
-                              className="form-input flex-1"
-                              placeholder="https://amazon.com/dp/B08N5WRWNW"
-                            />
-                            {formData.competitor_urls.length > 1 && (
-                              <button
-                                type="button"
-                                onClick={() => removeArrayField('competitor_urls', index)}
-                                className="ml-2 text-red-600 hover:text-red-700"
-                              >
-                                <X className="h-5 w-5" />
-                              </button>
-                            )}
-                          </div>
-                        ))}
-                        <button
-                          type="button"
-                          onClick={() => addArrayField('competitor_urls')}
-                          className="text-sm text-primary-600 hover:text-primary-700 flex items-center"
-                        >
-                          <Plus className="h-4 w-4 mr-1" />
-                          Add Another Competitor URL
-                        </button>
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Competitor ASINs
-                        </label>
-                        {formData.competitor_asins.map((asin, index) => (
-                          <div key={index} className="flex mb-2">
-                            <input
-                              type="text"
-                              value={asin}
-                              onChange={(e) => handleArrayInputChange('competitor_asins', index, e.target.value)}
-                              className="form-input flex-1"
-                              placeholder="B08N5WRWNW"
-                            />
-                            {formData.competitor_asins.length > 1 && (
-                              <button
-                                type="button"
-                                onClick={() => removeArrayField('competitor_asins', index)}
-                                className="ml-2 text-red-600 hover:text-red-700"
-                              >
-                                <X className="h-5 w-5" />
-                              </button>
-                            )}
-                          </div>
-                        ))}
-                        <button
-                          type="button"
-                          onClick={() => addArrayField('competitor_asins')}
-                          className="text-sm text-primary-600 hover:text-primary-700 flex items-center"
-                        >
-                          <Plus className="h-4 w-4 mr-1" />
-                          Add Another Competitor ASIN
-                        </button>
-                        <p className="text-sm text-gray-500 mt-1">
-                          We'll analyze these competitors to optimize your listing
-                        </p>
-                      </div>
                     </>
                   )}
                 </div>
