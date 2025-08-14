@@ -336,6 +336,76 @@ class InternationalLocalizationOptimizer:
                 "avoid_words": ["barato", "básico", "simple", "ordinario"]  # Mexican market values quality and style
             },
             
+            "br": {
+                "market_name": "Brazil",
+                "marketplace": "br",
+                "language": "Brazilian Portuguese",
+                "currency": "BRL",
+                "language_code": "pt-br",
+                
+                # Essential Brazilian Portuguese words and expressions
+                "essential_words": [
+                    "o", "a", "os", "as", "de", "do", "da", "para", "por", "com", "em", "que", "é", "muito", "mais",
+                    "mas", "como", "esta", "este", "todo", "todos", "bem", "melhor", "novo", "grande", "ótimo"
+                ],
+                
+                # Brazilian emotional power words that drive conversions
+                "power_words": [
+                    "incrível", "excelente", "extraordinário", "fantástico", "maravilhoso", "perfeito", "único",
+                    "premium", "de luxo", "super", "demais", "top", "show", "bacana", "sensacional",
+                    "revolucionário", "inovador", "avançado", "profissional", "confiável", "garantido",
+                    "autêntico", "original", "brasileiro", "tradicional", "moderno", "eficaz", "potente"
+                ],
+                
+                # Brazilian lifestyle and cultural elements
+                "cultural_elements": [
+                    "perfeito para a família brasileira",
+                    "ideal para festas e reuniões familiares",
+                    "feito pensando no brasileiro",
+                    "resistente ao clima tropical brasileiro",
+                    "com o jeitinho brasileiro que a gente ama",
+                    "para curtir em grande estilo como gostamos",
+                    "tradição e modernidade juntas",
+                    "qualidade brasileira de primeira"
+                ],
+                
+                # Brazilian Portuguese expressions and formality
+                "formality_words": [
+                    "oferecemos a você", "garantimos para você", "temos o prazer", "é uma honra",
+                    "com muito orgulho", "pode ter certeza", "sem dúvida nenhuma", "com toda certeza",
+                    "definitivamente", "é claro", "sem problema", "pode contar", "está garantido"
+                ],
+                
+                # Brazilian copywriting rules - OPTIMIZED FOR 10/10 QUALITY
+                "enforcement_rules": [
+                    "🚨 CRITICAL: You MUST use Brazilian Portuguese with proper accent marks: á, â, à, é, ê, í, ó, ô, õ, ú, ç",
+                    "BRAZILIAN EXAMPLES: São Paulo NOT Sao Paulo, coração NOT coracao, função NOT funcao, proteção NOT protecao",
+                    "MANDATORY ACCENTS: também, além, após, fácil, rápido, único, prático, cômodo, proteção, função",
+                    "🔥 BRAZILIAN PERSUASION FORMULA - CULTURAL APPROACH:",
+                    "PATTERN 1: '[BENEFÍCIO INCRÍVEL] que vai transformar sua [VIDA/CASA]! Garantimos [RESULTADO] sem [PROBLEMA].' (1st bullet - MUST use 'garantimos')",
+                    "PATTERN 2: '[CARACTERÍSTICA PREMIUM] com tecnologia brasileira para [RESULTADO GARANTIDO]. Oferecemos qualidade superior.' (2nd bullet - MUST use 'oferecemos')",
+                    "PATTERN 3: '[DESIGN INTELIGENTE] que combina tradição brasileira com inovação. Com muito orgulho [BENEFÍCIO].' (3rd bullet - MUST use 'com muito orgulho')",
+                    "PATTERN 4: '[FACILIDADE TOTAL] para famílias brasileiras. Pode ter certeza de [EXPERIÊNCIA SUPERIOR].' (4th bullet - MUST use 'pode ter certeza')",
+                    "PATTERN 5: '[PRESENTE PERFEITO] para [CARNAVAL/NATAL/DIA DAS MÃES]. Sem dúvida nenhuma, toda família vai amar [PRODUTO].' (5th bullet - MUST use 'sem dúvida nenhuma')",
+                    "Examples: 'Performance incrível que vai transformar sua cozinha! Garantimos resultado sem barulho excessivo.'",
+                    "Examples: 'Tecnologia premium com design avançado para resultados garantidos todo dia.'",
+                    "🔧 BULLET STRUCTURE FOR BRAZIL:",
+                    "🚨 MANDATORY BRAZILIAN FORMALITY: Each bullet MUST include ONE of: 'garantimos', 'oferecemos', 'com muito orgulho', 'pode ter certeza', 'sem dúvida nenhuma'",
+                    "🚨 MANDATORY BRAZILIAN WORDS: MUST use 'Brasil', 'brasileira/brasileiro', 'família brasileira', 'tradição brasileira' at least 3 times total",
+                    "🚨 USE ENTHUSIASM: Brazilian market loves energy and positivity - USE exclamation marks frequently",
+                    "🔥 FAMILY EMPHASIS: Always consider family benefits and gatherings - mention 'família' in every bullet",
+                    "LENGTH: 180-250 characters per bullet (Brazilian Portuguese is expressive)",
+                    "POWER WORDS: Each bullet MUST contain 2-3 from: incrível, excelente, perfeito, garantido, premium, super, show, sensacional",
+                    "CULTURAL WARMTH: Use warm, friendly tone that resonates with Brazilian hospitality and joy",
+                    "CELEBRATION FOCUS: Include references to Brazilian celebrations and traditions",
+                    "🇧🇷 BRAZILIAN PRIDE: Reference Brazilian quality, tradition, or family values in EVERY bullet",
+                    "GUARANTEE EMPHASIS: Brazilians value security and guarantees - emphasize warranties and support",
+                    "🔥 MANDATORY QUALITY SCORE BOOST: Use 'autêntico', 'original', 'tradicional', 'artesanal' to reach 10/10"
+                ],
+                
+                "avoid_words": ["barato", "básico", "simples", "comum"]  # Brazilian market values quality and style
+            },
+            
             "it": {
                 "market_name": "Italy",
                 "marketplace": "it",
@@ -670,6 +740,8 @@ class InternationalLocalizationOptimizer:
             market_code = "ae"
         elif marketplace == "mx" or language in ["es-mx", "es_MX"]:
             market_code = "mx"
+        elif marketplace == "br" or language in ["pt-br", "pt_BR", "pt"]:
+            market_code = "br"
         
         if not market_code or market_code not in self.market_configurations:
             return ""  # Return empty for unsupported markets
@@ -904,6 +976,8 @@ The entire listing must read as if written by a native {config['language']} spea
             market_code = "ae"
         elif marketplace == "mx" or language in ["es-mx", "es_MX"]:
             market_code = "mx"
+        elif marketplace == "br" or language in ["pt-br", "pt_BR", "pt"]:
+            market_code = "br"
         
         if not market_code or market_code not in self.market_configurations:
             return ""  # Return empty for unsupported markets or US market

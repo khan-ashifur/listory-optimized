@@ -187,6 +187,42 @@ class MarketOccasions:
                 'hotline': 'Hot Sale',  # Mexican Hot Sale (May)
                 'verano': 'Verano',  # Summer
                 'vacaciones': 'Vacaciones'  # Vacation
+            },
+            
+            'br': {  # Brazil
+                'carnaval': 'Carnaval',  # Carnival (most important Brazilian celebration)
+                'natal': 'Natal',  # Christmas
+                'ano_novo': 'Ano Novo',  # New Year
+                'dia_das_maes': 'Dia das Mães',  # Mother's Day (2nd Sunday of May)
+                'dia_dos_pais': 'Dia dos Pais',  # Father's Day
+                'dia_das_criancas': 'Dia das Crianças',  # Children's Day (October 12)
+                'dia_dos_namorados': 'Dia dos Namorados',  # Valentine's Day (June 12)
+                'festa_junina': 'Festa Junina',  # June Festival
+                'independencia_brasil': 'Independência do Brasil',  # Independence Day (September 7)
+                'proclamacao_republica': 'Proclamação da República',  # Republic Day (November 15)
+                'nossa_senhora_aparecida': 'Nossa Senhora Aparecida',  # Our Lady of Aparecida (October 12)
+                'consciencia_negra': 'Consciência Negra',  # Black Awareness Day (November 20)
+                'sao_joao': 'São João',  # Saint John's Day
+                'oktoberfest_brasil': 'Oktoberfest Brasil',  # Brazilian Oktoberfest
+                'dia_do_trabalho': 'Dia do Trabalho',  # Labor Day (May 1)
+                'tiradentes': 'Tiradentes',  # Tiradentes Day (April 21)
+                'corpus_christi': 'Corpus Christi',  # Corpus Christi
+                'pascoa': 'Páscoa',  # Easter
+                'volta_as_aulas': 'Volta às Aulas',  # Back to School
+                'dia_da_familia': 'Dia da Família',  # Family Day
+                'casamento': 'Casamento',  # Wedding
+                'formatura': 'Formatura',  # Graduation
+                'aniversario': 'Aniversário',  # Birthday
+                'cha_de_bebe': 'Chá de Bebê',  # Baby Shower
+                'cha_de_panela': 'Chá de Panela',  # Kitchen Shower
+                'cha_de_lingerie': 'Chá de Lingerie',  # Lingerie Shower
+                'black_friday': 'Black Friday',  # Black Friday
+                'cyber_monday': 'Cyber Monday',  # Cyber Monday
+                'liquidacao': 'Liquidação',  # Clearance Sale
+                'verao': 'Verão',  # Summer
+                'inverno': 'Inverno',  # Winter
+                'ferias': 'Férias',  # Vacation
+                'final_de_semana': 'Final de Semana'  # Weekend
             }
         }
         

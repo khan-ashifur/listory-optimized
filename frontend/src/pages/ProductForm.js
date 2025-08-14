@@ -63,7 +63,6 @@ const ProductForm = () => {
   const amazonMarketplaces = [
     { value: 'us', label: 'United States', flag: '🇺🇸', language: 'en', domain: 'amazon.com' },
     { value: 'ca', label: 'Canada', flag: '🇨🇦', language: 'en', domain: 'amazon.ca' },
-    { value: 'mx', label: 'Mexico', flag: '🇲🇽', language: 'es', domain: 'amazon.com.mx' },
     { value: 'uk', label: 'United Kingdom', flag: '🇬🇧', language: 'en', domain: 'amazon.co.uk' },
     { value: 'de', label: 'Germany', flag: '🇩🇪', language: 'de', domain: 'amazon.de' },
     { value: 'fr', label: 'France', flag: '🇫🇷', language: 'fr', domain: 'amazon.fr' },
@@ -79,7 +78,7 @@ const ProductForm = () => {
     { value: 'ae', label: 'UAE', flag: '🇦🇪', language: 'ar', domain: 'amazon.ae' },
     { value: 'mx', label: 'Mexico', flag: '🇲🇽', language: 'es-mx', domain: 'amazon.com.mx' },
     { value: 'sa', label: 'Saudi Arabia', flag: '🇸🇦', language: 'ar', domain: 'amazon.sa' },
-    { value: 'br', label: 'Brazil', flag: '🇧🇷', language: 'pt', domain: 'amazon.com.br' },
+    { value: 'br', label: 'Brazil', flag: '🇧🇷', language: 'pt-br', domain: 'amazon.com.br' },
     { value: 'au', label: 'Australia', flag: '🇦🇺', language: 'en', domain: 'amazon.com.au' },
     { value: 'tr', label: 'Turkey', flag: '🇹🇷', language: 'tr', domain: 'amazon.com.tr' },
     { value: 'eg', label: 'Egypt', flag: '🇪🇬', language: 'ar', domain: 'amazon.eg' }

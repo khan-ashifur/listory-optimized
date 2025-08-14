@@ -116,6 +116,11 @@ class ListingQualityValidator:
                 'high': ['increíble', 'revolucionario', 'extraordinario', 'fantástico', 'perfecto', 'transforma', 'último', 'irresistible', 'mágico'],
                 'medium': ['excelente', 'premium', 'de lujo', 'profesional', 'súper', 'genial', 'padrísimo', 'fabuloso', 'auténtico'],
                 'comfort': ['cómodo', 'fácil', 'práctico', 'confiable', 'seguro', 'garantizado', 'mexicano', 'familiar']
+            },
+            'br': {
+                'high': ['incrível', 'revolucionário', 'extraordinário', 'fantástico', 'perfeito', 'transforma', 'último', 'irresistível', 'mágico'],
+                'medium': ['excelente', 'premium', 'de luxo', 'profissional', 'super', 'demais', 'top', 'sensacional', 'autêntico'],
+                'comfort': ['cômodo', 'fácil', 'prático', 'confiável', 'seguro', 'garantido', 'brasileiro', 'familiar']
             }
         }
         
