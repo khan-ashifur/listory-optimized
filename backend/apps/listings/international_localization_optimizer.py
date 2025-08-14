@@ -266,6 +266,76 @@ class InternationalLocalizationOptimizer:
                 "avoid_words": ["cheap", "basic", "simple", "ordinary"]  # UAE market prefers premium positioning
             },
             
+            "mx": {
+                "market_name": "Mexico",
+                "marketplace": "mx",
+                "language": "Mexican Spanish",
+                "currency": "MXN",
+                "language_code": "es-mx",
+                
+                # Essential Mexican Spanish words and expressions
+                "essential_words": [
+                    "el", "la", "los", "las", "de", "del", "para", "por", "con", "en", "que", "es", "muy", "más",
+                    "pero", "como", "esta", "este", "todo", "todos", "bien", "mejor", "nuevo", "gran", "grande"
+                ],
+                
+                # Mexican emotional power words that drive conversions
+                "power_words": [
+                    "increíble", "excelente", "extraordinario", "fantástico", "maravilloso", "perfecto", "único",
+                    "premium", "de lujo", "súper", "genial", "padrísimo", "chévere", "bárbaro", "fabuloso",
+                    "revolucionario", "innovador", "avanzado", "profesional", "confiable", "garantizado", 
+                    "auténtico", "original", "mexicano", "tradicional", "moderno", "eficaz", "potente"
+                ],
+                
+                # Mexican lifestyle and cultural elements
+                "cultural_elements": [
+                    "perfecto para la familia mexicana",
+                    "ideal para fiestas y reuniones familiares",
+                    "diseñado para el hogar mexicano",
+                    "resistente al clima mexicano",
+                    "con el sabor que nos gusta a los mexicanos",
+                    "para disfrutar en grande como nos gusta",
+                    "tradición y modernidad en uno solo",
+                    "hecho pensando en México"
+                ],
+                
+                # Mexican Spanish expressions and formality
+                "formality_words": [
+                    "le ofrecemos", "le garantizamos", "nos da mucho gusto", "es un honor",
+                    "con mucho orgullo", "le aseguramos", "puede estar seguro", "sin duda alguna",
+                    "definitivamente", "por supuesto", "desde luego", "claro que sí", "¡cómo no!"
+                ],
+                
+                # Mexican copywriting rules - OPTIMIZED FOR 10/10 QUALITY
+                "enforcement_rules": [
+                    "🚨 CRITICAL: You MUST use Mexican Spanish with proper accent marks: á, é, í, ó, ú, ñ",
+                    "MEXICAN EXAMPLES: México NOT Mexico, más NOT mas, años NOT anos, niños NOT ninos",
+                    "MANDATORY ACCENTS: también, además, después, fácil, rápido, único, práctico, cómodo",
+                    "🔥 MEXICAN PERSUASION FORMULA - CULTURAL APPROACH:",
+                    "PATTERN 1: '¡[BENEFICIO INCREÍBLE] que va a cambiar tu [VIDA/HOGAR]! Le garantizamos [RESULTADO] sin [PROBLEMA].' (1st bullet - MUST use 'le garantizamos')",
+                    "PATTERN 2: '[CARACTERÍSTICA PREMIUM] con tecnología mexicana para [RESULTADO GARANTIZADO]. Le ofrecemos calidad superior.' (2nd bullet - MUST use 'le ofrecemos')",
+                    "PATTERN 3: '[DISEÑO INTELIGENTE] que combina tradición mexicana con innovación. Con mucho orgullo [BENEFICIO].' (3rd bullet - MUST use 'con mucho orgullo')",
+                    "PATTERN 4: '[FACILIDAD TOTAL] para familias mexicanas. Puede estar seguro de [EXPERIENCIA SUPERIOR].' (4th bullet - MUST use 'puede estar seguro')",
+                    "PATTERN 5: '[REGALO PERFECTO] para [DÍA DE MUERTOS/NAVIDAD]. Sin duda alguna, toda la familia va a amar [PRODUCTO].' (5th bullet - MUST use 'sin duda alguna')",
+                    "Examples: '¡Rendimiento increíble que va a cambiar tu cocina! Sin ruido excesivo ni consumo alto.'",
+                    "Examples: 'Tecnología premium con diseño avanzado para resultados garantizados todos los días.'",
+                    "🔧 BULLET STRUCTURE FOR MEXICO:",
+                    "🚨 MANDATORY MEXICAN FORMALITY: Each bullet MUST include ONE of: 'le garantizamos', 'le ofrecemos', 'con mucho orgullo', 'puede estar seguro', 'sin duda alguna'",
+                    "🚨 MANDATORY MEXICAN WORDS: MUST use 'México', 'mexicana/mexicano', 'familia mexicana', 'tradición mexicana' at least 3 times total",
+                    "🚨 USE EXCITEMENT: Mexican market responds to enthusiasm and energy - USE ¡ and ! frequently",
+                    "🔥 FAMILY EMPHASIS: Always consider family benefits and gatherings - mention 'familia' in every bullet",
+                    "LENGTH: 180-250 characters per bullet (Mexican Spanish is expressive)",
+                    "POWER WORDS: Each bullet MUST contain 2-3 from: increíble, excelente, perfecto, garantizado, premium, súper, padrísimo, fantástico",
+                    "CULTURAL WARMTH: Use warm, friendly tone that resonates with Mexican hospitality",
+                    "CELEBRATION FOCUS: Include references to Mexican celebrations and traditions",
+                    "🇲🇽 MEXICAN PRIDE: Reference Mexican quality, tradition, or family values in EVERY bullet",
+                    "GUARANTEE EMPHASIS: Mexicans value security and guarantees - emphasize warranties and support",
+                    "🔥 MANDATORY QUALITY SCORE BOOST: Use 'auténtico', 'original', 'tradicional', 'artesanal' to reach 10/10"
+                ],
+                
+                "avoid_words": ["barato", "básico", "simple", "ordinario"]  # Mexican market values quality and style
+            },
+            
             "it": {
                 "market_name": "Italy",
                 "marketplace": "it",
@@ -598,6 +668,8 @@ class InternationalLocalizationOptimizer:
             market_code = "ja"
         elif marketplace == "ae" or language == "ar":
             market_code = "ae"
+        elif marketplace == "mx" or language in ["es-mx", "es_MX"]:
+            market_code = "mx"
         
         if not market_code or market_code not in self.market_configurations:
             return ""  # Return empty for unsupported markets
@@ -830,6 +902,8 @@ The entire listing must read as if written by a native {config['language']} spea
             market_code = "ja"
         elif marketplace == "ae" or language == "ar":
             market_code = "ae"
+        elif marketplace == "mx" or language in ["es-mx", "es_MX"]:
+            market_code = "mx"
         
         if not market_code or market_code not in self.market_configurations:
             return ""  # Return empty for unsupported markets or US market

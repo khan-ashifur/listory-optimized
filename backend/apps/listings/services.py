@@ -472,6 +472,7 @@ NEVER write as single paragraph - ALWAYS use \\n\\n separators between paragraph
             'ja': ('Japanese', '日本', '日本語'),
             'pt': ('Portuguese', 'Brasil', 'português brasileiro'),
             'ar': ('Arabic', 'العربية', 'عربي'),
+            'es-mx': ('Mexican Spanish', 'México', 'español mexicano'),
             'tr': ('Turkish', 'Türkiye', 'Türkçe'),
             'en': ('English', 'United States', 'English')
         }

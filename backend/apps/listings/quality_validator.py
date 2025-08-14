@@ -111,6 +111,11 @@ class ListingQualityValidator:
                 'high': ['ثوري', 'مذهل', 'استثنائي', 'أخيراً', 'مثالي', 'يحول', 'نهائي', 'لا يقاوم', 'سحري'],
                 'medium': ['أنيق', 'متقدم', 'فاخر', 'متطور', 'حصري', 'مرموق', 'متفوق', 'رائع', 'أصيل'],
                 'comfort': ['مريح', 'عملي', 'سهل', 'بسيط', 'موثوق', 'آمن', 'مضمون', 'جودة عالية']
+            },
+            'mx': {
+                'high': ['increíble', 'revolucionario', 'extraordinario', 'fantástico', 'perfecto', 'transforma', 'último', 'irresistible', 'mágico'],
+                'medium': ['excelente', 'premium', 'de lujo', 'profesional', 'súper', 'genial', 'padrísimo', 'fabuloso', 'auténtico'],
+                'comfort': ['cómodo', 'fácil', 'práctico', 'confiable', 'seguro', 'garantizado', 'mexicano', 'familiar']
             }
         }
         

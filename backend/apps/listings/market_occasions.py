@@ -152,6 +152,41 @@ class MarketOccasions:
                 'ramadan_iftar': 'إفطار رمضان',  # Ramadan Iftar
                 'family_gathering': 'تجمع العائلة',  # Family Gathering
                 'housewarming': 'حفل افتتاح المنزل'  # Housewarming
+            },
+            
+            'mx': {  # Mexico
+                'dia_de_muertos': 'Día de Muertos',  # Day of the Dead (most important)
+                'navidad': 'Navidad',  # Christmas
+                'dia_de_reyes': 'Día de Reyes',  # Three Kings Day (January 6)
+                'dia_de_la_candelaria': 'Día de la Candelaria',  # Candlemas (February 2)
+                'dia_de_la_madre': 'Día de la Madre',  # Mother's Day (May 10)
+                'dia_del_padre': 'Día del Padre',  # Father's Day
+                'dia_del_niño': 'Día del Niño',  # Children's Day (April 30)
+                'cinco_de_mayo': 'Cinco de Mayo',  # May 5th
+                'dia_de_independencia': 'Día de la Independencia',  # Independence Day (September 16)
+                'revolucion_mexicana': 'Revolución Mexicana',  # Mexican Revolution (November 20)
+                'posadas': 'Las Posadas',  # Christmas season celebrations
+                'nochebuena': 'Nochebuena',  # Christmas Eve
+                'año_nuevo': 'Año Nuevo',  # New Year
+                'dia_de_san_valentin': 'Día de San Valentín',  # Valentine's Day
+                'semana_santa': 'Semana Santa',  # Holy Week
+                'corpus_christi': 'Corpus Christi',  # Corpus Christi
+                'regreso_a_clases': 'Regreso a Clases',  # Back to School
+                'dia_de_la_familia': 'Día de la Familia',  # Family Day
+                'quinceañera': 'Quinceañera',  # 15th Birthday Celebration
+                'boda': 'Boda',  # Wedding
+                'bautizo': 'Bautizo',  # Baptism
+                'primera_comunion': 'Primera Comunión',  # First Communion
+                'graduacion': 'Graduación',  # Graduation
+                'baby_shower': 'Baby Shower',  # Baby Shower
+                'cumpleaños': 'Cumpleaños',  # Birthday
+                'aniversario': 'Aniversario',  # Anniversary
+                'el_buen_fin': 'El Buen Fin',  # Mexican Black Friday (November)
+                'black_friday': 'Black Friday',  # Black Friday
+                'cyber_monday': 'Cyber Monday',  # Cyber Monday
+                'hotline': 'Hot Sale',  # Mexican Hot Sale (May)
+                'verano': 'Verano',  # Summer
+                'vacaciones': 'Vacaciones'  # Vacation
             }
         }
         
