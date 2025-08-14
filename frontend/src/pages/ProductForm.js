@@ -76,7 +76,7 @@ const ProductForm = () => {
     { value: 'jp', label: 'Japan', flag: '🇯🇵', language: 'ja', domain: 'amazon.co.jp' },
     { value: 'in', label: 'India', flag: '🇮🇳', language: 'en', domain: 'amazon.in' },
     { value: 'sg', label: 'Singapore', flag: '🇸🇬', language: 'en', domain: 'amazon.sg' },
-    { value: 'ae', label: 'UAE', flag: '🇦🇪', language: 'en', domain: 'amazon.ae' },
+    { value: 'ae', label: 'UAE', flag: '🇦🇪', language: 'ar', domain: 'amazon.ae' },
     { value: 'sa', label: 'Saudi Arabia', flag: '🇸🇦', language: 'ar', domain: 'amazon.sa' },
     { value: 'br', label: 'Brazil', flag: '🇧🇷', language: 'pt', domain: 'amazon.com.br' },
     { value: 'au', label: 'Australia', flag: '🇦🇺', language: 'en', domain: 'amazon.com.au' },

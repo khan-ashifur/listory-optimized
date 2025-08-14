@@ -202,6 +202,70 @@ class InternationalLocalizationOptimizer:
                 "avoid_words": ["cheap", "discount", "sale", "promotion"]  # Japanese prefer value over discount messaging
             },
             
+            "ae": {
+                "market_name": "United Arab Emirates",
+                "marketplace": "ae",
+                "language": "Arabic",
+                "currency": "AED",
+                "language_code": "ar",
+                
+                # Essential Arabic words and phrases
+                "essential_words": [
+                    "في", "من", "إلى", "على", "مع", "هذا", "هذه", "التي", "الذي", "كل", "أو", "إذا",
+                    "عند", "بين", "أمام", "خلف", "تحت", "فوق", "داخل", "خارج", "ضد", "بدون"
+                ],
+                
+                # Arabic emotional power words that drive conversions
+                "power_words": [
+                    "الأفضل", "ممتاز", "فاخر", "رائع", "مذهل", "استثنائي", "متقدم", "عالي الجودة",
+                    "موثوق", "آمن", "مريح", "سهل", "فعال", "قوي", "متين", "عملي",
+                    "حصري", "محدود", "جديد", "محسن", "مطور", "مبتكر", "عصري", "أنيق"
+                ],
+                
+                # UAE lifestyle and cultural elements
+                "cultural_elements": [
+                    "مناسب للمنزل والمكتب الإماراتي",
+                    "يناسب الأجواء الحارة في دولة الإمارات",
+                    "مصمم خصيصاً لنمط الحياة الخليجي",
+                    "يواكب التطور والحداثة في الإمارات",
+                    "مثالي للعائلات الإماراتية",
+                    "يلبي معايير الجودة العالمية",
+                    "موافق للمعايير الإسلامية"
+                ],
+                
+                # Formal Arabic expressions for business
+                "formality_words": [
+                    "بإمكانكم", "يسعدنا", "نفخر بتقديم", "نضمن لكم", "نوفر لكم",
+                    "يشرفنا", "نقدم لكم", "نحرص على", "نهتم بـ", "نسعى لتوفير",
+                    "بفضل", "من خلال", "بواسطة", "عبر استخدام", "لضمان"
+                ],
+                
+                # Arabic copywriting rules - OPTIMIZED FOR UAE MARKET
+                "enforcement_rules": [
+                    "🚨 CRITICAL: You MUST use proper Arabic script with correct diacritics when necessary",
+                    "ARABIC EXAMPLES: الجودة العالية NOT al-jawda al-alia, منتج ممتاز NOT montaj momtaz",
+                    "MANDATORY ARABIC: جميع, حول, كـ, من خلال, لأجل, شيء, بواسطة",
+                    "🔥 ARABIC PERSUASION FORMULA - UAE MARKET APPROACH:",
+                    "PATTERN 1: '[الميزة الرئيسية] توفر [الفائدة المباشرة] لتحقيق [النتيجة المرغوبة] في منزلكم.' (1st bullet)",
+                    "PATTERN 2: '[التقنية المتطورة] تضمن [الأداء الفائق] مع [الموثوقية العالية] للاستخدام اليومي.' (2nd bullet)",
+                    "PATTERN 3: '[التصميم الأنيق] يجمع بين [الوظائف العملية] و[الجمال البصري] المناسب للمنازل الحديثة.' (3rd bullet)",
+                    "PATTERN 4: '[سهولة الاستخدام] مع [التحكم الذكي] يجعل [المهمة اليومية] أسرع وأكثر راحة.' (4th bullet)",
+                    "PATTERN 5: '[هدية مثالية] لمناسبة [عيد الفطر/عيد الأضحى/رمضان] للأهل والأحباب.' (5th bullet)",
+                    "Examples: 'التقنية المتقدمة توفر أداءً استثنائياً لتحقيق الراحة المطلقة في منزلكم.'",
+                    "Examples: 'النظام الذكي يضمن الفعالية العالية مع الموثوقية التامة للاستخدام اليومي.'",
+                    "🔧 BULLET STRUCTURE FOR UAE:",
+                    "🚨 RESPECT RTL (Right-to-Left) reading pattern in Arabic",
+                    "🔥 CULTURAL CONSIDERATIONS: Include family values, hospitality, luxury lifestyle",
+                    "LENGTH: 150-200 characters per bullet (Arabic is more compact)",
+                    "POWER WORDS: Each bullet MUST contain 2-3 from: ممتاز, فاخر, موثوق, عملي, أنيق, متطور",
+                    "RELIGIOUS SENSITIVITY: Use appropriate Islamic greetings and expressions when relevant",
+                    "FAMILY FOCUS: Emphasize family benefits and household harmony",
+                    "🇦🇪 UAE LUXURY MARKET: Include premium positioning and quality emphasis"
+                ],
+                
+                "avoid_words": ["cheap", "basic", "simple", "ordinary"]  # UAE market prefers premium positioning
+            },
+            
             "it": {
                 "market_name": "Italy",
                 "marketplace": "it",
@@ -532,6 +596,8 @@ class InternationalLocalizationOptimizer:
             market_code = "pl"
         elif marketplace in ["co.jp", "jp"] or language == "ja":
             market_code = "ja"
+        elif marketplace == "ae" or language == "ar":
+            market_code = "ae"
         
         if not market_code or market_code not in self.market_configurations:
             return ""  # Return empty for unsupported markets
@@ -762,6 +828,8 @@ The entire listing must read as if written by a native {config['language']} spea
             market_code = "pl"
         elif marketplace in ["co.jp", "jp"] or language == "ja":
             market_code = "ja"
+        elif marketplace == "ae" or language == "ar":
+            market_code = "ae"
         
         if not market_code or market_code not in self.market_configurations:
             return ""  # Return empty for unsupported markets or US market

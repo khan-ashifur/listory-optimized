@@ -128,6 +128,30 @@ class MarketOccasions:
                 'shinnenkai': '新年会',  # New Year party
                 'black_friday': 'ブラックフライデー',  # Black Friday (growing)
                 'amazon_prime_day': 'プライムデー'  # Amazon Prime Day
+            },
+            
+            'ae': {  # United Arab Emirates
+                'eid_al_fitr': 'عيد الفطر',  # Eid al-Fitr (most important)
+                'eid_al_adha': 'عيد الأضحى',  # Eid al-Adha (Feast of Sacrifice)
+                'ramadan': 'شهر رمضان',  # Ramadan (Holy Month)
+                'new_year': 'رأس السنة الميلادية',  # New Year
+                'uae_national_day': 'اليوم الوطني الإماراتي',  # UAE National Day (December 2)
+                'mothers_day': 'يوم الأم',  # Mother's Day
+                'fathers_day': 'يوم الأب',  # Father's Day
+                'back_to_school': 'العودة إلى المدرسة',  # Back to School
+                'summer_vacation': 'العطلة الصيفية',  # Summer Vacation
+                'winter_shopping': 'تسوق الشتاء',  # Winter Shopping
+                'iftar_gathering': 'تجمع الإفطار',  # Iftar Gathering
+                'suhoor_preparation': 'تحضير السحور',  # Suhoor Preparation
+                'hajj_preparation': 'تحضيرات الحج',  # Hajj Preparation
+                'graduation_season': 'موسم التخرج',  # Graduation Season
+                'wedding_season': 'موسم الأعراس',  # Wedding Season
+                'black_friday': 'الجمعة البيضاء',  # Black Friday
+                'white_friday': 'الجمعة البيضاء',  # White Friday (regional name)
+                'dubai_shopping_festival': 'مهرجان دبي للتسوق',  # Dubai Shopping Festival
+                'ramadan_iftar': 'إفطار رمضان',  # Ramadan Iftar
+                'family_gathering': 'تجمع العائلة',  # Family Gathering
+                'housewarming': 'حفل افتتاح المنزل'  # Housewarming
             }
         }
         
