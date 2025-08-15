@@ -107,6 +107,33 @@ class ListingGeneratorService:
         # Default high-intent Japanese keywords
         return "正規品, 高品質, PSE認証, 日本語サポート, 1年保証, 送料無料, Amazon配送, 安心購入, 信頼ブランド"
     
+    def get_turkish_industry_keywords(self, product):
+        """Get Turkish industry-specific high-intent keywords for Turkey market"""
+        category = product.categories.lower() if product.categories else ""
+        
+        # Industry-specific Turkish keywords by category - BEATS ALL COMPETITORS
+        industry_keywords = {
+            "electronics": "en iyi, orijinal, CE sertifikalı, profesyonel, premium, türkiye fırsatı, 2024, garanti, uyumlu, kablosuz, teknoloji, sınırlı stok, özel fiyat, bugün kaçırmayın, aileniz için güvenli, türk kalitesi, 10000+ mutlu müşteri",
+            "audio": "gürültü engelleme, bluetooth 5.3, HiFi, gaming kulaklık, stereo, mikrofon, eller serbest, türkiye kargo, avrupa kalitesi, müzik keyfi, ses teknolojisi, profesyonel ses, ailenize değer, türkiye'nin tercihi, sınırlı süre",
+            "headphones": "aktif gürültü engelleme, bluetooth 5.3, gaming kulaklık, premium stereo, ENC mikrofon, türkiye kargo 24h, uzun pil ömrü, müzik tutkunları, ses kalitesi, konfor, çocuklarınız için güvenli, türk ailesinin seçimi, acele edin",
+            "home": "enerji tasarruflu, sessiz, taşınabilir, modern tasarım, kolay temizlik, kablosuz, akıllı, eco, sürdürülebilir türkiye, ev konfor, aile zamanı, misafir ağırlama, özel günler, ev sahipliği, son fırsat",
+            "kitchen": "paslanmaz çelik, yapışmaz, bulaşık makinesi uyumlu, BPA içermez, ısı dayanıklı, profesyonel mutfak, türkiye kargo, aile sofrası, mutfak keyfi, lezzet garantisi, türk mutfağı, sevdiklerinize değer, hemen alın",
+            "sports": "su geçirmez IPX7, nefes alır, ergonomik, ultra hafif, dayanıklı, fitness, spor salonu, koşu, türkiye kargo, spor tutkunları, sağlık, aktif yaşam, türkiye'den hızlı kargo, özel indirim, bugün siparişte",
+            "office": "verimlilik, masa, uzaktan çalışma, organize edici, ayarlanabilir, profesyonel, premium business, türkiye kargo, iş başarısı, ofis konfor, profesyonel seçim, kariyeriniz için, türkiye garantisi, sınırlı ürün",
+            "beauty": "organik, doğal, paraben içermez, hassas cilt, dermatolojik test, türk kozmetik, güzellik bakım, anti-aging, güzelliğiniz için, kendine değer, türk kadınının tercihi, sağlıklı cilt, özel formül, kaçırmayın",
+            "fashion": "moda, trend, stil, kaliteli kumaş, rahat, şık, günlük, klasik, modern türk tarzı, sezonluk, tarzınız için, kendine güven, türk modası, şıklık garantisi, özel koleksiyon, sınırlı sayıda",
+            "jewelry": "925 ayar gümüş, altın kaplama, el işçiliği, türk zanaatkarlığı, özel tasarım, hediye kutusu, şık aksesuvar, sevdiklerinize hediye, özel günler, türk sanatı, değerli anılar, gurur duyacağınız, özel fırsat",
+            "baby": "bebek güvenli, BPA içermez, hipoalerjenik, yumuşak, organik pamuk, anne dostu, bebek bakım, türkiye üretimi, bebeğiniz için güvenli, anne kalbi rahatlığı, çocuk sağlığı, türk anne tercihi, güvenli gelecek, özel bebek ürünü"
+        }
+        
+        # Find matching category keywords
+        for key, keywords in industry_keywords.items():
+            if key in category:
+                return keywords
+        
+        # Default high-intent Turkish keywords - BEATS ALL COMPETITORS
+        return "en iyi, orijinal, profesyonel, CE sertifikalı, garanti 2 yıl, premium, türkiye fırsatı, türkiye kargo 24h, avrupa kalitesi, güvenilir marka, sınırlı stok, özel fiyat, aileniz için, türk kalitesi, 10000+ mutlu müşteri, bugün kaçırmayın, son fırsat, acele edin, hayalinizdeki kalite"
+    
     def get_marketplace_title_format(self, marketplace, brand_name):
         """Get marketplace-specific title formatting instructions"""
         
@@ -182,6 +209,48 @@ JAPANESE CULTURAL PRIORITIES:
 
 MOBILE-FIRST: Japanese users scan first 40 chars on mobile."""
         
+        elif marketplace == 'tr':  # Turkey
+            return f"""🇹🇷 AMAZON TURKEY TITLE OPTIMIZATION - RAKİPLERİ GEÇ! HELIUM 10/JASPER/COPYMONKEY'DEN ÜSTÜN:
+
+FORMAT (MAX 200 CHARS - CONVERSION FIRST):
+[{brand_name}] [Premium] [Ürün Kategorisi] [Dönüşüm Hook'u] [Güven/Garanti] [Aciliyet]
+
+CRITICAL TURKISH SEO + CULTURAL + CONVERSION RULES:
+1. BRAND FIRST - Türkiye'de güven en önemli (trust is paramount)
+2. PREMIUM POSITIONING - "Premium", "En İyi", "Profesyonel" 
+3. CONVERSION HOOKS - "Aileniz İçin", "Sınırlı Stok", "Özel Fiyat"
+4. TRUST SIGNALS - "2 Yıl Garanti", "CE Sertifikalı", "10.000+ Mutlu Müşteri"
+5. URGENCY/SCARCITY - "Bugün Kaçırmayın", "Son Fırsat", "Acele Edin"
+
+SUPER HIGH-CONVERTING TURKISH KEYWORDS (BEATS COMPETITORS):
+✓ "Aileniz için en iyisi" (family emotional hook)
+✓ "Sınırlı stok" (scarcity)
+✓ "Özel fiyat bugün" (urgency + price)
+✓ "10.000+ mutlu müşteri" (social proof)
+✓ "Türkiye'nin tercihi" (local pride)
+✓ "Hayalinizdeki kalite" (aspirational)
+✓ "Gurur duyacağınız seçim" (emotional validation)
+✓ "Son fırsat" (FOMO)
+✓ profesyonel (professional) - business quality
+
+TURKISH TITLE EXAMPLES:
+✅ "{brand_name} Kablosuz Kulaklık 30 Saat Dinleme Gürültü Engelleme Orijinal 2 Yıl Garanti"
+✅ "{brand_name} Taşınabilir Şarj Aleti 20000mAh Hızlı Şarj CE Sertifikalı Türkiye Kargo"
+✅ "{brand_name} Bluetooth Hoparlör Su Geçirmez IPX7 Yüksek Ses Kalitesi Türk Müşteri Desteği"
+
+TURKISH CULTURAL PRIORITIES:
+- güvenilirlik (reliability) over flashy claims
+- kalite (quality) specifications matter
+- güven (trust) essential for purchase decisions
+- nezaket (politeness) shows respect to customers
+- teknik özellikler (technical specs) appreciated
+- Made in Turkey or European quality standards
+- aile değerleri (family values) important
+- misafirperverlik (hospitality) culture
+
+MOBILE-FIRST: Turkish users scan first 50 chars on mobile.
+AVOID: Overly promotional language, focus on genuine benefits."""
+        
         elif marketplace == 'es':
             return f"""🚨 SEO-OPTIMIZED SPANISH TITLE FOR AMAZON.ES TOP RANKING:
             
@@ -228,6 +297,94 @@ MOBILE-FIRST: Japanese users scan first 40 chars on mobile."""
             
             AVOID: Overly casual language, discount emphasis, or direct romaji transliterations."""
         
+        elif marketplace == 'br':
+            return f"""🇧🇷 AMAZON BRAZIL TITLE OPTIMIZATION - MERCADO BRASILEIRO:
+            
+FORMAT (MAX 200 CHARS - Portuguese mobile priority):
+[{brand_name}] [Produto Principal] [Característica Principal] [Benefício] [Garantia/Certificação]
+
+CRITICAL BRAZILIAN SEO + CULTURAL RULES:
+1. BRAND FIRST - Confiança é fundamental no Brasil (trust is paramount)
+2. PRODUCT CATEGORY in Portuguese (Fones Bluetooth, Carregador Portátil)
+3. KEY FEATURE with benefit (Cancelamento Ruído, Carregamento Rápido)
+4. TRUST SIGNALS (garantia, certificado INMETRO, nota fiscal)
+5. SHIPPING/GUARANTEE (frete grátis, garantia nacional, suporte Brasil)
+
+HIGH-CONVERTING BRAZILIAN KEYWORDS:
+✓ premium (premium quality emphasis)
+✓ garantia (guarantee - essential trust signal)
+✓ certificado (certified - quality assurance)
+✓ Brasil/brasileiro (local market relevance)
+✓ frete grátis (free shipping - conversion driver)
+✓ original (authentic product)
+✓ qualidade (quality obsession)"""
+
+        elif marketplace == 'mx':
+            return f"""🇲🇽 AMAZON MEXICO TITLE OPTIMIZATION - MERCADO MEXICANO:
+            
+FORMAT (MAX 200 CHARS - Spanish Mexican mobile priority):
+[{brand_name}] [Producto Principal] [Característica Clave] [Beneficio] [Garantía/Certificación]
+
+CRITICAL MEXICAN SEO + CULTURAL RULES:
+1. BRAND FIRST - Confianza familiar es clave (family trust is key)
+2. PRODUCT CATEGORY in Mexican Spanish (Audífonos Bluetooth, Cargador Portátil)
+3. KEY FEATURE with benefit (Cancelación Ruido, Carga Rápida)
+4. TRUST SIGNALS (garantía, certificado calidad, factura incluida)
+5. SHIPPING/GUARANTEE (envío seguro, garantía México, servicio local)
+
+HIGH-CONVERTING MEXICAN KEYWORDS:
+✓ premium (calidad premium)
+✓ garantía (guarantee essential)
+✓ certificado (certified quality)
+✓ México/mexicano (local relevance)
+✓ envío gratis (free shipping)
+✓ original (producto original)
+✓ calidad (quality focus)"""
+
+        elif marketplace == 'nl':
+            return f"""🇳🇱 AMAZON NETHERLANDS TITLE OPTIMIZATION - NEDERLANDSE MARKT:
+            
+FORMAT (MAX 200 CHARS - Dutch mobile priority):
+[{brand_name}] [Product Categorie] [Hoofdkenmerk] [Voordeel] [Garantie/Certificering]
+
+CRITICAL DUTCH SEO + CULTURAL RULES:
+1. BRAND FIRST - Betrouwbaarheid voorop (reliability first)
+2. PRODUCT CATEGORY in Dutch (Bluetooth Koptelefoon, Powerbank)
+3. KEY FEATURE with benefit (Ruisonderdrukking, Snelladen)
+4. TRUST SIGNALS (garantie, CE keurmerk, Nederlandse service)
+5. SHIPPING/GUARANTEE (gratis verzending, garantie Nederland)
+
+HIGH-CONVERTING DUTCH KEYWORDS:
+✓ premium (premium kwaliteit)
+✓ garantie (guarantee important)
+✓ gecertificeerd (certified)
+✓ Nederland/Nederlandse (local relevance)
+✓ gratis verzending (free shipping)
+✓ origineel (authentic)
+✓ kwaliteit (quality focus)"""
+
+        elif marketplace == 'tr':
+            return f"""🇹🇷 AMAZON TURKEY TITLE OPTIMIZATION - RAKİPLERİ EZMEYE HAZIR!
+            
+FORMAT (MAX 200 CHARS - CONVERSION & EMOTIONAL HOOKS FIRST):
+[{brand_name}] [Premium/En İyi] [Ürün] [Emosyonel Hook] [Güven] [Aciliyet] 
+
+CRITICAL TURKISH SEO + CULTURAL + CONVERSION RULES:
+1. BRAND FIRST - Güven en önemli (trust is most important)
+2. EMOTIONAL HOOKS - "Aileniz için", "Türk kalitesi", "Gurur duyacağınız"
+3. CONVERSION ELEMENTS - "Sınırlı stok", "Özel fiyat", "Bugün alın"
+4. TRUST SIGNALS (2 yıl garanti, 10.000+ müşteri, CE sertifikalı)
+5. URGENCY TRIGGERS (Son fırsat, Acele edin, Kaçırmayın)
+
+SUPER HIGH-CONVERTING TURKISH KEYWORDS (COMPETITOR-BEATING):
+✓ "Aileniz için en iyi seçim" (family priority)
+✓ "Türk kalitesi güvencesi" (national pride)
+✓ "10.000+ mutlu müşteri onayı" (social proof)
+✓ "Son fırsat özel fiyat" (urgency + price)
+✓ "Hayalinizdeki kalite" (aspirational)
+✓ "Çocuklarınız için güvenli" (family safety)
+✓ "Gurur duyacağınız seçim" (emotional validation)"""
+
         else:  # USA and other markets
             return f"""🚨 CRITICAL AMAZON USA TITLE FORMAT: Start with EXACT high-intent keywords customers type: '[Main Product Type] [Key Feature/USP] - [Brand] [Model/Size] - [Secondary Benefits]'. Front-load searchable terms, NOT marketing taglines. Example: 'Neck Fan Portable Hands Free - {brand_name} 4000mAh Battery - Bladeless Personal Cooling USB Rechargeable 3 Speeds'. Keywords FIRST, brand in middle, benefits last. 150-190 chars max."""
 
@@ -284,6 +441,42 @@ JAPANESE TRUST ELEMENTS:
 - 認証 (certification) - safety compliance
 - サポート (support) - service reliability"""
         
+        elif marketplace == 'tr':  # Turkey
+            bullet_examples = {
+                1: "🔋 UZUN PİL ÖMRÜ: 30 saat kesintisiz müzik keyfi. 2 saat hızlı şarj. iPhone/Android uyumlu. Seyahat ve işe gidişte mükemmel.",
+                2: "🎧 GÜRÜLTÜ ENGELLEMe: -35dB sessizlik. Çevre sesi modu. Laboratuvar testli. Ofis ve uçakta ideal kullanım.",
+                3: "💪 ULTRA HAFİF 180G: Premium memory foam. Ayarlanabilir çelik kafa bandı. IPX5 ter geçirmez. 10.000 esneme testi geçti.",
+                4: "📱 BLUETOOTH 5.3: 15m menzil. 2 cihaz eş zamanlı. Gaming için <40ms gecikme. Kristal berraklığında mikrofon.",
+                5: "✅ 2 YIL GARANTİ: 7/24 Türkçe destek. 30 gün iade hakkı. CE/FCC sertifikalı. Türkiye'den hızlı kargo."
+            }
+            
+            return f"""🇹🇷 TURKISH BULLET FORMAT (MAX 180 CHARS - Nazik ve profesyonel):
+
+STRUCTURE: [EMOJI] [ÖZELLİK ADI]: [Fayda açıklaması]. [Teknik spec]. [Kullanım alanı]. [Güven unsuru].
+
+CRITICAL TURKISH RULES:
+- Nazik dil (polite language) kullanın: professional but warm
+- Somut sayılar (specific numbers): 30 saat, -35dB, 180g
+- Kullanım alanları (use cases): ofis, ev, seyahat, spor
+- Güven unsurları (trust elements): garanti, sertifika, destek
+- Kalite vurgusu (quality emphasis) - Türk müşteriler kaliteye önem verir
+- Aile ve misafirperverlik değerleri (family & hospitality values)
+
+Bullet {bullet_number} EXAMPLE: '{bullet_examples.get(bullet_number, bullet_examples[1])}'
+
+TURKISH TRUST ELEMENTS:
+- orijinal/kaliteli (genuine/quality) - güven sinyali
+- garanti (warranty) - güvenlik ve kalite
+- CE sertifikalı (certified) - güvenlik uyumluluğu  
+- Türkiye kargo (Turkey shipping) - yerel hizmet güveni
+- müşteri desteği (customer support) - satış sonrası güven
+
+TURKISH CULTURAL VALUES:
+- misafirperverlik (hospitality) - ürün misafirleri ağırlamak için
+- aile zamanı (family time) - aile bireyleriyle kaliteli vakit
+- kalite obsesyonu (quality obsession) - uzun ömürlü kullanım
+- güven kültürü (trust culture) - marka ve satıcı güvenilirliği"""
+        
         elif marketplace == 'es':
             bullet_examples = {
                 1: "🔋 BATERÍA 30H: Libertad sin cables. USB-C 2h carga completa. Compatible iPhone/Android. Perfecto viajes largos.",
@@ -295,6 +488,50 @@ JAPANESE TRUST ELEMENTS:
             
             return f"🚀 MOBILE-OPTIMIZED SPANISH BULLETS (MAX 150 CHARS): [EMOJI] [2-3 WORD LABEL]: [Benefit <10 words]. [Spec]. [Use case]. Bullet {bullet_number}: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
             
+        elif marketplace == 'br':
+            bullet_examples = {
+                1: "QUALIDADE PREMIUM BRASILEIRA: Som cristalino com cancelamento de ruído para família brasileira - 30H de bateria garante música ininterrupta. Certificado INMETRO e garantia nacional de 2 anos.",
+                2: "CONFORTO TROPICAL SUPERIOR: Design leve 193g se adapta ao clima brasileiro - almofadas respiráveis para uso prolongado. Ajuste perfeito para todos os tamanhos de cabeça.",
+                3: "CONECTIVIDADE BLUETOOTH 5.3: Alcance de 15m sem travamentos - conexão estável para videochamadas e música. Compatível com todos dispositivos Android e iPhone.",
+                4: "RESISTÊNCIA AO SUOR IPX5: Ideal para exercícios e clima tropical brasileiro - resistente à umidade e transpiração. Design dobrável para transporte fácil.",
+                5: "GARANTIA NACIONAL COMPLETA: Suporte técnico em português 24/7 - nota fiscal incluída e 30 dias para devolução. Mais de 50.000 clientes satisfeitos no Brasil."
+            }
+            
+            return f"🇧🇷 FORMATO BRASILEIRO (MAX 200 CHARS): [LABEL EM MAIÚSCULO]: [Benefício em português]. [Especificação]. [Garantia/Certificação]. Bullet {bullet_number}: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
+
+        elif marketplace == 'mx':
+            bullet_examples = {
+                1: "CALIDAD PREMIUM MEXICANA: Audio excepcional con cancelación de ruido para familias mexicanas - batería 30H para escuchar sin límites. Certificado de calidad y garantía nacional 2 años.",
+                2: "COMODIDAD FAMILIAR TOTAL: Diseño ligero 193g perfecto para reuniones familiares - almohadillas suaves para uso prolongado. Ajuste cómodo para toda la familia.",
+                3: "CONECTIVIDAD BLUETOOTH 5.3: Rango 15m sin interrupciones - conexión estable para llamadas y música. Compatible con todos los dispositivos iPhone y Android.",
+                4: "RESISTENTE AL SUDOR IPX5: Ideal para ejercicio y clima mexicano - resistente a humedad y transpiración. Diseño plegable para viajes familiares.",
+                5: "GARANTÍA NACIONAL COMPLETA: Soporte técnico en español 24/7 - factura incluida y 30 días devolución. Más de 50,000 clientes felices en México."
+            }
+            
+            return f"🇲🇽 FORMATO MEXICANO (MAX 200 CHARS): [LABEL EN MAYÚSCULA]: [Beneficio en español]. [Especificación]. [Garantía/Certificado]. Bullet {bullet_number}: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
+
+        elif marketplace == 'nl':
+            bullet_examples = {
+                1: "PREMIUM NEDERLANDSE KWALITEIT: Kristalhelder geluid met ruisonderdrukking voor Nederlandse families - 30u batterij voor ononderbroken luisterplezier. CE gecertificeerd met 2 jaar garantie.",
+                2: "SUPERIEUR DRAAGCOMFORT: Lichtgewicht 193g design perfect voor Nederlandse levensstijl - ademende oorkussens voor langdurig gebruik. Verstelbaar voor alle hoofdmaten.",
+                3: "BLUETOOTH 5.3 CONNECTIVITEIT: 15m bereik zonder onderbrekingen - stabiele verbinding voor gesprekken en muziek. Compatibel met alle iPhone en Android apparaten.",
+                4: "ZWEET BESTENDIG IPX5: Ideaal voor sport en Nederlandse weersomstandigheden - bestand tegen vocht en transpiratie. Opvouwbaar design voor eenvoudig transport.",
+                5: "VOLLEDIGE NEDERLANDSE GARANTIE: 24/7 technische ondersteuning in het Nederlands - factuur inbegrepen en 30 dagen retourrecht. Meer dan 50,000 tevreden klanten in Nederland."
+            }
+            
+            return f"🇳🇱 NEDERLANDS FORMAAT (MAX 200 CHARS): [LABEL IN HOOFDLETTERS]: [Voordeel in het Nederlands]. [Specificatie]. [Garantie/Certificering]. Bullet {bullet_number}: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
+
+        elif marketplace == 'tr':
+            bullet_examples = {
+                1: "TÜRK KALİTESİ PREMİUM: Kristal ses kalitesi gürültü engelleme ile Türk aileleri için - 30 saat pil ömrü kesintisiz müzik keyfini garantiler. TSE belgeli, 2 yıl garanti.",
+                2: "ÜSTÜN RAHATLIK TASARIMI: 193g hafif tasarım Türk yaşam tarzına uygun - nefes alan kulaklık pedleri uzun süreli kullanım için. Tüm baş boyutlarına ayarlanabilir.",
+                3: "BLUETOOTH 5.3 BAĞLANTI: 15m menzil kesintisiz bağlantı - kararlı bağlantı görüşmeler ve müzik için. Tüm iPhone ve Android cihazlarla uyumlu.",
+                4: "TER DİRENÇLİ IPX5: Spor ve Türkiye iklimi için ideal - nem ve tere karşı dayanıklı. Seyahat için katlanabilir tasarım.",
+                5: "TAM TÜRKİYE GARANTİSİ: 7/24 Türkçe teknik destek - fatura dahil 30 gün iade hakkı. Türkiye'de 50,000'den fazla memnun müşteri."
+            }
+            
+            return f"🇹🇷 TÜRK FORMATI (MAX 200 CHARS): [BÜYÜK HARF ETİKET]: [Türkçe fayda]. [Özellik]. [Garanti/Sertifika]. Bullet {bullet_number}: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
+
         else:  # USA and other markets
             bullet_examples = {
                 1: "LONG LASTING BATTERY LIFE: Enjoy up to 12 hours continuous cooling on a single charge with our 4000mAh rechargeable battery - 3x longer than competitors. USB-C fast charging gets you back to 100% in just 2 hours.",
@@ -392,6 +629,57 @@ Example: "正規品[BRAND]は高品質な設計で、日本のお客様に安心
 
 RESULT: Japanese customer psychology + cultural values + Amazon.co.jp optimization."""
         
+        elif marketplace == 'tr':  # Turkey
+            return f"""🇹🇷 AMAZON TURKEY DESCRIPTION - TÜRK PAZARI KÜLTÜREL UYUM (10/10 kalite):
+
+MANDATORY STRUCTURE (1000-1300 karakter - okunabilirlik öncelik):
+
+🏆 Paragraf 1 - Güvenilirlik & Kalite (200-250 karakter):
+[Kalite güvencesi] + [Güven unsuru] + [Somut fayda] + [Türk müşteri değeri]
+KEYWORDS: orijinal ürün, yüksek kalite, güvenilir, CE sertifikalı
+Örnek: "Sayın müşterilerimiz, TürkKahve orijinal ürün kalitesi ile Türkiye'de güvenle kullanılabilir. 2 yıl garanti ile uzun yıllar kahve keyfini yaşarsınız."
+
+⚙️ Paragraf 2 - Teknik Özellikler & İşlev (400-450 karakter):
+Ana Özellikler:
+• Kapasite: Aile boyu 6 fincan - hızlı servis imkanı
+• Sıcaklık Kontrolü: Hassas ısı ayarı - yanmayan mükemmel köpük
+• Malzeme: Premium bakır gövde - homojen ısı dağıtımı
+• Temizlik: Çıkarılabilir parçalar - kolay bakım
+• Uyumluluk: Tüm ocak tipleri - elektrik/gaz/indüksiyon
+[Türk müşterilerinin beklediği teknik detayları dahil edin]
+
+🏠 Paragraf 3 - Kullanım Alanları & Yaşam Tarzı (400-450 karakter):
+Çeşitli anlarınızda kullanabilirsiniz:
+✅ Sabah kahvesi - güne enerjik başlangıç
+✅ Misafir ağırlama - Türk misafirperverliği gösterimi
+✅ Aile buluşmaları - ev sahipliğinde kaliteli sunum
+✅ Bayram ziyaretleri - özel gün kutlamaları
+✅ İş molası - ofiste kaliteli kahve keyfi
+✅ Akşam sohbetleri - dostlarla kaliteli vakit
+[Türk yaşam tarzına odaklanın: misafir ağırlama, aile zamanı, bayram]
+
+🛡️ Paragraf 4 - Garanti & Destek (200-250 karakter):
+Güvenilir satış sonrası hizmet:
+2 yıl orijinal ürün garantisi. Türkçe müşteri desteği mevcut. 30 gün iade-değişim hakkı. CE sertifikalı güvenli kullanım. Türkiye'den hızlı kargo imkanı. Müşteri memnuniyeti önceliğimizdir.
+
+🎯 KRİTİK TÜRK KÜLTÜREL KURALLAR:
+1. Nezaket ZORUNLU: sayın, değerli, memnuniyetle ifadeleri
+2. Güvenilirlik ÖNCELİK: orijinal, garanti, sertifika öne çıkarma
+3. Somut rakamlar: 6 fincan, 2 yıl, 30 gün gibi net özellikler
+4. Kullanım senaryoları: misafir ağırlama, aile, bayram gibi Türk yaşamı
+5. Güven unsuru: kalite, destek, iade garantisi ile endişe giderme
+6. Teknik öncelik: işlev açıklamalarını detaylı - performans rakamlarla
+7. Müşteri odaklı: hizmet kalitesi, müşteri memnuniyetini vurgulama
+
+🇹🇷 TÜRK PAZAR PSİKOLOJİSİ:
+- misafirperverlik (hospitality culture) - konukları ağırlama kültürü
+- kalite obsesyonu (quality focus) - işlev ve performans güveni
+- güven ihtiyacı (trust requirement) - garanti ve destek ile güven
+- saygı beklentisi (respect expectation) - nezaket kipi ile saygı
+- uzun vadeli kullanım (long-term use) - dayanıklılık ve servis
+
+SONUÇ: Türk müşteri psikolojisi + kültürel değerler + Amazon.com.tr optimizasyonu."""
+        
         elif marketplace == 'es':
             return f"""🚀 AMAZON MOBILE-FIRST SPANISH DESCRIPTION (10/10 SEO + READABILITY):
 
@@ -448,6 +736,50 @@ ENVÍO DESDE ESPAÑA 24H. Garantía 2 años. Miles de familias españolas ya coc
 
 RESULT: Amazon algorithm-friendly + mobile-scannable + conversion-optimized Spanish description."""
 
+        elif marketplace == 'br':
+            return f"""🇧🇷 DESCRIÇÃO CRÍTICA BRASILEIRA: Escreva descrição {brand_tone} de 1300-1600 caracteres em EXATAMENTE 4 parágrafos separados. OBRIGATÓRIO: Cada parágrafo DEVE ser separado por quebras duplas de linha (\\n\\n).
+
+ESTRUTURA PARA MERCADO BRASILEIRO:
+Parágrafo 1 (300-350 chars): Abertura envolvente - destaque qualidade e confiança brasileira
+Parágrafo 2 (350-400 chars): Benefícios do produto com ênfase familiar brasileira
+Parágrafo 3 (350-400 chars): Cenários de uso no estilo de vida brasileiro
+Parágrafo 4 (300-350 chars): Satisfação do cliente e call-to-action com garantia
+
+Use certificações INMETRO, garantia nacional, suporte brasileiro. Foque na família e confiança."""
+
+        elif marketplace == 'mx':
+            return f"""🇲🇽 DESCRIPCIÓN CRÍTICA MEXICANA: Escriba descripción {brand_tone} de 1300-1600 caracteres en EXACTAMENTE 4 párrafos separados. OBLIGATORIO: Cada párrafo DEBE estar separado por saltos dobles de línea (\\n\\n).
+
+ESTRUCTURA PARA MERCADO MEXICANO:
+Párrafo 1 (300-350 chars): Apertura atractiva - destaque calidad y confianza mexicana
+Párrafo 2 (350-400 chars): Beneficios del producto con énfasis familiar mexicano
+Párrafo 3 (350-400 chars): Escenarios de uso en el estilo de vida mexicano
+Párrafo 4 (300-350 chars): Satisfacción del cliente y call-to-action con garantía
+
+Use certificaciones mexicanas, garantía nacional, soporte local. Enfoque en familia y tradición."""
+
+        elif marketplace == 'nl':
+            return f"""🇳🇱 KRITIEKE NEDERLANDSE BESCHRIJVING: Schrijf {brand_tone} productbeschrijving van 1300-1600 karakters in PRECIES 4 aparte paragrafen. VERPLICHT: Elke paragraaf MOET gescheiden worden door dubbele regeleinden (\\n\\n).
+
+STRUCTUUR VOOR NEDERLANDSE MARKT:
+Paragraaf 1 (300-350 chars): Boeiende opening - nadruk op Nederlandse kwaliteit en betrouwbaarheid
+Paragraaf 2 (350-400 chars): Productvoordelen met Nederlandse praktische benadering
+Paragraaf 3 (350-400 chars): Gebruiksscenario's in Nederlandse levensstijl
+Paragraaf 4 (300-350 chars): Klanttevredenheid en call-to-action met garantie
+
+Gebruik CE keurmerken, Nederlandse garantie, lokale service. Focus op praktische waarde."""
+
+        elif marketplace == 'tr':
+            return f"""🇹🇷 KRİTİK TÜRK AÇIKLAMASI: {brand_tone} ürün açıklamasını TAM OLARAK 4 ayrı paragrafta 1300-1600 karakter olarak yazın. ZORUNLU: Her paragraf çift satır araları (\\n\\n) ile ayrılmalıdır.
+
+TÜRK PAZARI İÇİN YAPI:
+Paragraf 1 (300-350 chars): İlgi çekici açılış - Türk kalitesi ve güvene vurgu
+Paragraf 2 (350-400 chars): Ürün faydaları Türk aile değerleri ile
+Paragraf 3 (350-400 chars): Türk yaşam tarzında kullanım senaryoları
+Paragraf 4 (300-350 chars): Müşteri memnuniyeti ve call-to-action garanti ile
+
+TSE belgeleri, Türkiye garantisi, yerel destek kullanın. Aile ve misafirperverliğe odaklan."""
+
         else:  # USA and other markets
             return f"""CRITICAL STRUCTURE: Write 1300-1600 character {brand_tone} product description in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n). 
 
@@ -495,21 +827,140 @@ STATTDESSEN: "Leistung", "Qualität", "Design"
 🔥🔥🔥 ENDE DEUTSCHE DURCHSETZUNG 🔥🔥🔥
 """
         
+        # Extra enforcement for Turkish
+        turkish_extra = ""
+        if language == 'tr':
+            turkish_extra = """
+🔥🔥🔥 SPESİYEL TÜRKÇE UYGULAMA - 10/10 KALİTE - RAKİPLERİ GEÇ! 🔥🔥🔥
+TÜRK PAZARI İÇİN ZORUNLU UNSURLAR - HELIUM 10, JASPER AI, COPYMONKEY'İ GEÇMEK İÇİN:
+
+🎯 TÜRKÇE NEZAKET VE SAYGILILİK (ZORUNLU):
+✓ "Sayın müşterilerimiz" ✓ "Değerli müşteri" ✓ "Memnuniyetle" 
+✓ "Sizlere" ✓ "Hizmetinizdeyiz" ✓ "Keyifle sunuyoruz"
+→ BAŞLANGICI BÖYLE YAP: "Sayın müşterilerimiz, değerli [ürün] arayan..."
+
+🇹🇷 YEREL PAZAR RELEVANSİ (ZORUNLU):
+✓ "Türkiye'den gönderim" ✓ "Türk kalitesi" ✓ "Yerli üretim"
+✓ "Anadolu geleneksel" ✓ "Türk zanaatkarlığı" ✓ "Milli değerler"
+
+💎 GÜVEN UNSURLARI (ZORUNLU - Rakipleri Geçmek İçin):
+✓ "2 Yıl Garanti" ✓ "CE Sertifikalı" ✓ "TSE Belgeli" ✓ "Orijinal Ürün"
+✓ "30 Gün İade Garantisi" ✓ "Güvenli Alışveriş" ✓ "Faturalı Satış"
+✓ "10.000+ Mutlu Müşteri" ✓ "Türkiye'nin Tercihi"
+→ MUTLAKA EKLE: En az 5 güven unsuru
+
+🛡️ TÜRKÇE GÜVENİLİRLİK (ZORUNLU):
+✓ "orijinal ürün" ✓ "CE sertifikalı" ✓ "kalite güvencesi" ✓ "sertifikalı kalite"
+✓ "2 yıl garanti" ✓ "Türkiye kargo" ✓ "müşteri desteği" ✓ "güvenilir marka"
+
+🏠 TÜRK MİSAFİRPERVERLİĞİ (ZORUNLU):
+✓ "misafir ağırlama" ✓ "aile zamanı" ✓ "ev sahipliği" ✓ "konukseverlik"
+✓ "sofra süsleme" ✓ "özel günler" ✓ "aile birlikteliği"
+
+💰 DÖNÜŞÜM OPTİMİZASYONU (ZORUNLU - RAKİPLERİ GEÇMEK):
+✓ "Sınırlı Stok" ✓ "Bugün Siparişte İndirim" ✓ "Son Fırsat"
+✓ "Acele Edin" ✓ "Sizinle Olsun" ✓ "Kaçırmayın"
+✓ "Özel Fiyat" ✓ "Sadece Bugün" ✓ "Hemen Alın"
+
+🏆 EMOSYONEL BAĞLANMA (ZORUNLU):
+✓ "Aileniz için en iyisi" ✓ "Sevdiklerinize değer"
+✓ "Türk ailesinin tercihi" ✓ "Hayalinizdeki kalite"
+✓ "Gurur duyacağınız seçim" ✓ "Çocuklarınız için güvenli"
+
+🚨 KRİTİK A+ İÇERİK KURALI:
+- "Keywords" yerine "Anahtar Kelimeler" 
+- "Image Strategy" yerine "Görsel Strateji"
+- "SEO Focus" yerine "SEO Odak"
+- HER ŞEY TÜRKÇE OLMALI!
+- ⚠️ ÖZEL KURAL: imageDescription alanları MUTLAKA İNGİLİZCE olmalı!
+- Örnek: "Turkish family lifestyle image showing product in use (970x600px)"
+
+⚠️ KRİTİK: Bu 7 kategori eksikse listing BAŞARISIZ! Helium 10'u geçmek için HEPSI gerekli!
+🔥🔥🔥 TÜRKÇE UYGULAMA SONU 🔥🔥🔥
+"""
+        
+        # Brazil/Portuguese conversion optimization
+        brazil_extra = ""
+        if language in ['pt', 'pt-br']:
+            brazil_extra = """
+🔥🔥🔥 OTIMIZAÇÃO BRASILEIRA - CONVERSÃO MÁXIMA 🔥🔥🔥
+
+💚 SINAIS DE CONFIANÇA (OBRIGATÓRIO):
+✓ "Garantia de 2 Anos" ✓ "Certificado INMETRO" ✓ "Qualidade Garantida"
+✓ "30 Dias para Devolução" ✓ "Compra Segura" ✓ "Nota Fiscal"
+✓ "Mais de 10.000 Clientes Satisfeitos" ✓ "Escolha dos Brasileiros"
+
+🎯 URGÊNCIA E AÇÃO (OBRIGATÓRIO):
+✓ "Aproveite Hoje" ✓ "Oferta Limitada" ✓ "Últimas Unidades"
+✓ "Garanta o Seu" ✓ "Não Perca" ✓ "Promoção Exclusiva"
+
+📊 ESTRUTURA FOCO-BENEFÍCIO (OBRIGATÓRIO):
+Cada bullet: CARACTERÍSTICA → BENEFÍCIO → RESULTADO
+Exemplo: "Bateria 40H → Música sem parar → Viagens sem preocupação"
+🔥🔥🔥 FIM OTIMIZAÇÃO BRASILEIRA 🔥🔥🔥
+"""
+
+        # Mexico conversion optimization  
+        mexico_extra = ""
+        if language == 'es-mx':
+            mexico_extra = """
+🔥🔥🔥 OPTIMIZACIÓN MEXICANA - MÁXIMA CONVERSIÓN 🔥🔥🔥
+
+🌮 SEÑALES DE CONFIANZA (OBLIGATORIO):
+✓ "Garantía de 2 Años" ✓ "Certificado de Calidad" ✓ "100% Original"
+✓ "30 Días de Garantía" ✓ "Envío Seguro" ✓ "Factura Incluida"
+✓ "Miles de Clientes Felices" ✓ "Preferido en México"
+
+💥 URGENCIA Y ACCIÓN (OBLIGATORIO):
+✓ "Compra Hoy" ✓ "Oferta Limitada" ✓ "Últimas Piezas"
+✓ "Asegura el Tuyo" ✓ "No Te Lo Pierdas" ✓ "Promoción Exclusiva"
+
+📊 ESTRUCTURA CARACTERÍSTICA-BENEFICIO (OBLIGATORIO):
+Cada viñeta: CARACTERÍSTICA → BENEFICIO → RESULTADO
+Ejemplo: "Batería 40H → Música sin interrupciones → Viajes sin preocupaciones"
+🔥🔥🔥 FIN OPTIMIZACIÓN MEXICANA 🔥🔥🔥
+"""
+
+        # Netherlands conversion optimization
+        netherlands_extra = ""
+        if language == 'nl':
+            netherlands_extra = """
+🔥🔥🔥 NEDERLANDSE OPTIMALISATIE - MAXIMALE CONVERSIE 🔥🔥🔥
+
+🌷 VERTROUWENSSIGNALEN (VERPLICHT):
+✓ "2 Jaar Garantie" ✓ "CE Gecertificeerd" ✓ "Kwaliteitsgarantie"
+✓ "30 Dagen Retourrecht" ✓ "Veilig Betalen" ✓ "Nederlandse Service"
+✓ "10.000+ Tevreden Klanten" ✓ "Keuze van Nederland"
+
+⚡ URGENTIE EN ACTIE (VERPLICHT):
+✓ "Bestel Vandaag" ✓ "Beperkte Voorraad" ✓ "Laatste Stuks"
+✓ "Pak de Jouwe" ✓ "Mis Het Niet" ✓ "Exclusieve Aanbieding"
+
+📊 KENMERK-VOORDEEL STRUCTUUR (VERPLICHT):
+Elke bullet: KENMERK → VOORDEEL → RESULTAAT
+Voorbeeld: "40 Uur Batterij → Non-stop muziek → Zorgeloos reizen"
+🔥🔥🔥 EINDE NEDERLANDSE OPTIMALISATIE 🔥🔥🔥
+"""
+
         return f"""
 🚨🚨🚨 CRITICAL LANGUAGE REQUIREMENT 🚨🚨🚨
 YOU MUST WRITE EVERYTHING IN {lang_name.upper()} ({native})!
 NOT A SINGLE WORD IN ENGLISH!
 {german_extra}
+{turkish_extra}
+{brazil_extra}
+{mexico_extra}
+{netherlands_extra}
 
 LANGUAGE: {lang_name} for {country}
 TARGET MARKET: Amazon.{marketplace}
 
 ALL CONTENT MUST BE IN {lang_name.upper()}:
-- Title: COMPLETELY in {lang_name}
-- Bullet Points: COMPLETELY in {lang_name}  
-- Description: COMPLETELY in {lang_name}
-- FAQs: COMPLETELY in {lang_name}
-- Keywords: COMPLETELY in {lang_name}
+- Title: COMPLETELY in {lang_name} with trust signals
+- Bullet Points: COMPLETELY in {lang_name} with FEATURE→BENEFIT→OUTCOME  
+- Description: COMPLETELY in {lang_name} with urgency CTAs
+- FAQs: COMPLETELY in {lang_name} with guarantees
+- Keywords: COMPLETELY in {lang_name} including conversion terms
 - EVERYTHING: COMPLETELY in {lang_name}
 
 DO NOT TRANSLATE BRAND NAME, but everything else MUST be in {lang_name}.
@@ -1026,15 +1477,46 @@ Merge two proven approaches into one powerful listing:
 From GPT-4 strengths: emotional storytelling, vivid scenarios, problem-solving benefits, and strong feature-to-benefit connections.
 From GPT-5 strengths: short, mobile-friendly bullet points, gifting/lifestyle positioning, broad keyword coverage, and strong trust signals (like warranties and guarantees).
 
+🔥🔥🔥 CONVERSION OPTIMIZATION REQUIREMENTS (BEATS HELIUM 10, JASPER, COPYMONKEY) 🔥🔥🔥
+
+TRUST SIGNALS (MANDATORY - Beats CopyMonkey):
+• Include "Guarantee", "Warranty", "Certified", "Quality" in EVERY listing
+• Add "30-day money back", "2-year warranty", "CE/FDA certified" when applicable
+• Use "Premium", "Professional", "Trusted by thousands" positioning
+• Include social proof: "Join 10,000+ satisfied customers"
+• Add scarcity: "Limited availability", "Best seller", "Stock running low"
+
+URGENCY ELEMENTS (MANDATORY - Conversion Boost):
+• Use action verbs: "Get", "Enjoy", "Experience", "Upgrade", "Transform"
+• Time-sensitive language: "Today", "Now", "Don't miss out", "While supplies last"
+• Exclusive positioning: "Exclusive design", "Limited edition", "Premium selection"
+• Call-to-action in description: "Click Add to Cart to secure yours today"
+
+BENEFIT-FOCUSED STRUCTURE (MANDATORY - Beats Jasper AI):
+• EVERY bullet must follow: FEATURE → BENEFIT → OUTCOME
+• Example: "40H Battery Life → Never stops your music → Enjoy week-long trips without charging"
+• Use emotional outcomes: "Feel confident", "Save time", "Reduce stress", "Impress guests"
+• Problem → Solution format in at least 2 bullets
+• Include lifestyle transformation: "Turn your daily routine into..."
+
+CONVERSION PSYCHOLOGY (MANDATORY):
+• Loss aversion: "Don't let poor quality ruin your experience"
+• Social proof: "Chosen by professionals", "Family favorite", "Top-rated"
+• Authority: "Engineered by experts", "Industry-leading", "Patented technology"
+• Reciprocity: "Includes bonus accessories", "Free guide included"
+• Commitment: "Investment in quality", "Built to last a lifetime"
+
+🔥🔥🔥 END CONVERSION OPTIMIZATION 🔥🔥🔥
+
 MERGED STYLE RULES:
-• Title: Mobile-first priority - impactful and fully scannable within 110-125 characters (up to 140 max if brand name is long). Start with hook + primary keyword
-• Bullet Points: 5 maximum, each 200+ chars. Each begins with a strong 6-8 word benefit phrase (micro-headline) before detailed explanation. Must have bold-style micro-headlines (Amazon strips HTML bold but wording must read like strong lead)
-• Description: 1500-2000 chars, broken into short 2-3 sentence chunks with line breaks for mobile readability. Each chunk ends with a soft benefit-driven hook
-• FAQ: Address common objections, warranty info, and gifting appeal
-• A+ Content: Combine lifestyle briefs, technical infographic briefs, and warranty comparisons
-• Keywords: Naturally integrate both short-tail and long-tail keywords throughout
-• Backend Keywords: 249 max chars, must not duplicate exact words from title/bullets, instead target complementary indexing terms
-• No Repetition: Do not repeat identical sentences across sections
+• Title: Mobile-first priority - impactful and fully scannable within 110-125 characters (up to 140 max if brand name is long). Start with hook + primary keyword + trust signal
+• Bullet Points: 5 maximum, each 200+ chars. Each begins with a strong 6-8 word benefit phrase (micro-headline) before detailed explanation. MUST include trust/urgency elements
+• Description: 1500-2000 chars, broken into short 2-3 sentence chunks with line breaks for mobile readability. Each chunk ends with conversion-focused CTA
+• FAQ: Address objections, highlight guarantees, emphasize urgency
+• A+ Content: Heavy focus on trust badges, comparison charts, money-back guarantees
+• Keywords: Include conversion terms: "best", "premium", "guaranteed", "certified"
+• Backend Keywords: 249 max chars, include trust and urgency keywords
+• No Repetition: Vary trust signals and urgency elements across sections
 
 🚨🚨 AMAZON USA OPTIMIZATION RULES (NON-NEGOTIABLE) 🚨🚨
 
@@ -1123,8 +1605,8 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
   "productDescription": "{self.get_marketplace_description_format(product.marketplace, product.brand_tone)}",
   
   "seoKeywords": {{
-    "primary": ["{product.name.lower().replace(' ', '_')}", "{product.brand_name.lower()}", "{self.get_japanese_industry_keywords(product) if product.marketplace == 'jp' else self.get_spanish_industry_keywords(product) if product.marketplace == 'es' else 'THEN_ADD_13_MORE: category, color, size, material, feature1, feature2, use1, use2, style, type, model, variant, application'}"],
-    "longTail": ["GENERATE_25_PHRASES: {'[product] [用途]に最適' if product.marketplace == 'jp' else 'mejor [product] para [uso]' if product.marketplace == 'es' else 'best [product] for [use]'}", "{'[brand] [product] 正規品' if product.marketplace == 'jp' else '[brand] [product] original certificado' if product.marketplace == 'es' else '[brand] [product] with [feature]'}", "{'[product] 高品質 [機能]' if product.marketplace == 'jp' else '[product] profesional [aplicación]' if product.marketplace == 'es' else '[product] that [solves problem]'}", "{'[product] プレミアム品質' if product.marketplace == 'jp' else '[product] premium calidad' if product.marketplace == 'es' else 'professional [product] for [application]'}", "{'[product] 送料無料' if product.marketplace == 'jp' else 'oferta [product] [beneficio]' if product.marketplace == 'es' else 'high quality [product] [benefit]'}", "etc"],
+    "primary": ["{product.name.lower().replace(' ', '_')}", "{product.brand_name.lower()}", "{self.get_japanese_industry_keywords(product) if product.marketplace == 'jp' else self.get_spanish_industry_keywords(product) if product.marketplace == 'es' else self.get_turkish_industry_keywords(product) if product.marketplace == 'tr' else 'THEN_ADD_13_MORE: category, color, size, material, feature1, feature2, use1, use2, style, type, model, variant, application'}"],
+    "longTail": ["GENERATE_25_PHRASES: {'[ürün] [kullanım] için ideal' if product.marketplace == 'tr' else '[product] [用途]に最適' if product.marketplace == 'jp' else 'mejor [product] para [uso]' if product.marketplace == 'es' else 'best [product] for [use]'}", "{'[marka] [ürün] orijinal' if product.marketplace == 'tr' else '[brand] [product] 正規品' if product.marketplace == 'jp' else '[brand] [product] original certificado' if product.marketplace == 'es' else '[brand] [product] with [feature]'}", "{'[ürün] kaliteli [özellik]' if product.marketplace == 'tr' else '[product] 高品質 [機能]' if product.marketplace == 'jp' else '[product] profesional [aplicación]' if product.marketplace == 'es' else '[product] that [solves problem]'}", "{'[ürün] premium kalite' if product.marketplace == 'tr' else '[product] プレミアム品質' if product.marketplace == 'jp' else '[product] premium calidad' if product.marketplace == 'es' else 'professional [product] for [application]'}", "{'[ürün] Türkiye kargo' if product.marketplace == 'tr' else '[product] 送料無料' if product.marketplace == 'jp' else 'oferta [product] [beneficio]' if product.marketplace == 'es' else 'high quality [product] [benefit]'}", "etc"],
     "problemSolving": ["GENERATE_15_PROBLEM_KEYWORDS: {'problemas españoles específicos' if product.marketplace == 'es' else 'based on what issues this product solves from description'}"],
     "rufusConversational": ["GENERATE_15_RUFUS_PHRASES: {'bueno para [uso real]' if product.marketplace == 'es' else 'good for [real use]'}", "{'funciona con [items compatibles]' if product.marketplace == 'es' else 'works with [compatible items]'}", "{'perfecto para [escenarios]' if product.marketplace == 'es' else 'perfect for [scenarios]'}", "{'mejor que [alternativas]' if product.marketplace == 'es' else 'better than [alternatives]'}", "{'ideal para [situaciones]' if product.marketplace == 'es' else 'ideal for [situations]'}"],
     "semantic": ["GENERATE_10_RELATED: {'sinónimos españoles, variaciones, términos relacionados, términos técnicos, nombres informales' if product.marketplace == 'es' else 'synonyms, variations, related terms, technical terms, informal names'}"]
@@ -1137,56 +1619,56 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
       "title": "Write compelling headline with occasion/gift theme",
       "content": "Write comprehensive story explaining value proposition with emotional benefits and specific use cases. Connect personally with customers.",
       "keywords": ["3-5 relevant keywords for this section"],
-      "imageDescription": "Detailed description of the ideal image for this section (970x600px hero lifestyle shot)",
+      "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Describe exactly what should be shown in the image - specific people, setting, lighting, product placement, props, colors, mood, and composition. Include technical specs and why this image works for conversion. Example: 'Turkish family of 4 in modern Istanbul apartment, warm evening lighting, father using headphones while working on laptop, family visible in background preparing dinner, product prominently displayed on desk with premium materials visible, shot emphasizes comfort and family time, professional photography style (970x600px hero lifestyle shot)'",
       "seoOptimization": "Brief note on SEO strategy for this section"
     }},
     "section2_features": {{
       "title": "Key Features and Benefits",
       "content": "Write detailed technical analysis covering 6-8 features with specifications and real-world benefits.",
       "keywords": ["3-5 feature-related keywords"],
-      "imageDescription": "Description of feature callouts with detailed product shots (300x300px each)",
+      "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Specific description of feature showcase images - exact product angles, close-up details, demonstration scenarios, technical diagrams, before/after comparisons. Include lighting, background, props, and why each image converts. Example: 'Grid of 6 feature images: 1) Close-up of premium foam padding with cross-section view, 2) Hands adjusting noise-canceling controls with sound waves graphic, 3) Battery indicator showing 40-hour display, 4) Waterproof test with droplets, 5) Bluetooth connection to multiple devices, 6) Foldable design demonstration (300x300px each)'",
       "seoOptimization": "Feature-based keywords strategy"
     }},
     "section3_usage": {{
       "title": "Real-World Applications",
       "content": "Write comprehensive guide describing 4-6 usage scenarios across different environments with specific examples.",
       "keywords": ["3-5 usage-related keywords"],
-      "imageDescription": "Usage scenarios and application images (220x220px each)",
+      "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Specific real-world usage scenarios - exact people, activities, environments where product is used. Include demographics, settings, lighting, and emotional context. Example: 'Collage of 4 usage scenarios: 1) Young professional in coffee shop working with headphones, 2) Jogger in park using wireless features, 3) Family movie night with surround sound, 4) Business traveler in airport lounge, each showing different benefits (220x220px each)'",
       "seoOptimization": "Usage-based search optimization"
     }},
     "section4_quality": {{
       "title": "Quality Assurance",
       "content": "Write detailed analysis covering quality control, testing standards, and certifications with specific metrics.",
       "keywords": ["3-5 quality/trust keywords"],
-      "imageDescription": "Quality certifications and trust building visuals",
+      "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Trust-building certification display - specific badges, certificates, test results, quality seals. Include layout, colors, and credibility elements. Example: 'Professional layout showing CE certification badge, TSE quality seal, 2-year warranty certificate, customer satisfaction ratings (4.8/5 stars), Turkish quality assurance logo, arranged in trust-building grid format with premium styling'",
       "seoOptimization": "Trust and quality-focused keywords"
     }},
     "section5_guarantee": {{
       "title": "Warranty and Support",
       "content": "Write comprehensive guide covering warranty terms, return policies, and customer support with timeframes.",
       "keywords": ["3-5 warranty/support keywords"],
-      "imageDescription": "Warranty and support visual elements",
+      "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Customer support and warranty visualization - specific support channels, warranty terms, customer service elements. Example: 'Split-screen image: Left shows warranty certificate with 2-year guarantee highlighted, right shows Turkish customer service representative helping customer via phone/chat, includes contact information and support hours, professional and reassuring tone'",
       "seoOptimization": "Support and warranty-based keywords"
     }},
     "section6_social_proof": {{
       "title": "Customer Stories",
       "content": "Write detailed section featuring customer testimonials, usage stories, and real experiences.",
       "keywords": ["3-5 testimonial/review keywords"],
-      "imageDescription": "Customer testimonials and social proof visuals",
+      "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Social proof and testimonials layout - specific customer photos, review snippets, star ratings, usage proof. Example: 'Grid of 6 customer testimonials with profile photos, 5-star ratings, specific quotes about battery life and comfort, includes verified purchase badges, diverse Turkish customers, authentic and credible presentation'",
       "seoOptimization": "Social proof and customer satisfaction keywords"
     }},
     "section7_comparison": {{
       "title": "Why Choose This Product",
       "content": "Write competitive analysis comparing advantages, unique features, and value propositions vs alternatives.",
       "keywords": ["3-5 comparison/competitive keywords"],
-      "imageDescription": "Comparison charts and competitive advantage visuals",
+      "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Competitive comparison and advantages - specific comparison metrics, charts, feature differences. Example: 'Professional comparison table showing this product vs 3 competitors: battery life (40h vs 20h), noise cancellation (-35dB vs -20dB), warranty (2 years vs 1 year), price value, clearly highlighting advantages with checkmarks and superior metrics'",
       "seoOptimization": "Competitive advantage and comparison keywords"
     }},
     "section8_package": {{
       "title": "Complete Package Contents",
       "content": "Write detailed description of what customers receive: package contents, accessories, and setup guides.",
       "keywords": ["3-5 package/contents keywords"],
-      "imageDescription": "Package contents and unboxing visuals",
+      "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Unboxing and package contents display - specific items, premium packaging, first impression elements. Example: 'Top-down unboxing shot showing premium box opening to reveal headphones nestled in soft foam, accessories laid out (charging cable, carrying case, manual), clean white background, emphasizing quality packaging and complete value package'"
       "seoOptimization": "Package and contents-based keywords"
     }},
     "overallStrategy": "Complete A+ content strategy for customer journey from awareness to purchase."
@@ -1740,7 +2222,7 @@ Write each section in a completely different style and tone. Use unexpected but 
                                     "title": "Why Choose Premium Quality?",
                                     "content": "Experience superior performance and reliability with our premium product line.",
                                     "keywords": ["premium", "quality", "reliable"],
-                                    "imageDescription": "Professional lifestyle image showing satisfied customer using product",
+                                    "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Professional lifestyle shot showing satisfied customer using product in real environment - specific setting, lighting, emotions, and product benefits clearly visible. Include demographics, activity context, and conversion elements that resonate with target market.",
                                     "seoOptimization": "Focus on quality and premium positioning"
                                 },
                                 "overallStrategy": "Premium positioning with quality focus"
@@ -1804,14 +2286,14 @@ Write each section in a completely different style and tone. Use unexpected but 
                             "title": "Why Choose Our Premium Quality?",
                             "content": "Experience the difference with our superior product design and customer-focused approach.",
                             "keywords": ["premium", "quality", "superior"],
-                            "imageDescription": "Hero lifestyle shot showing satisfied customer using product",
+                            "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Hero lifestyle shot showing satisfied customer using product - specific person demographics, setting details, lighting mood, product placement, emotional context, and why this image drives conversion for the target market.",
                             "seoOptimization": "Focus on quality and premium positioning"
                         },
                         "section2_features": {
                             "title": "Key Features & Benefits",
                             "content": "Discover what makes our product stand out with premium materials and thoughtful design.",
                             "keywords": ["features", "benefits", "premium materials"],
-                            "imageDescription": "Feature callouts with detailed product shots",
+                            "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Feature callouts with detailed product shots - specific angles, close-ups, technical details, demonstration scenarios, and visual proof of key benefits. Include composition, lighting, and conversion-focused elements.",
                             "seoOptimization": "Feature-based keywords for detailed searches"
                         },
                         "overallStrategy": "Complete A+ content strategy for maximum conversion"
@@ -2194,6 +2676,55 @@ Technical specifications include comprehensive compatibility, robust build quali
             print(f"   - Brand Summary integrated into content")
             self.logger.info("Generating A+ content HTML...")
             # Build comprehensive A+ content HTML from the plan
+            
+            # Define localized interface labels (needed for all markets) - MOVED HERE TO FIX SCOPE ISSUE
+            marketplace_code = getattr(product, 'marketplace', 'com') or 'com'
+            
+            def get_localized_labels(market_code):
+                if market_code == 'tr':
+                    return {
+                        'keywords': 'Anahtar Kelimeler',
+                        'image_strategy': 'Görsel Strateji', 
+                        'seo_focus': 'SEO Odak'
+                    }
+                elif market_code == 'jp':
+                    return {
+                        'keywords': 'キーワード',
+                        'image_strategy': '画像戦略',
+                        'seo_focus': 'SEO焦点'
+                    }
+                elif market_code == 'de':
+                    return {
+                        'keywords': 'Schlüsselwörter',
+                        'image_strategy': 'Bildstrategie',
+                        'seo_focus': 'SEO-Fokus'
+                    }
+                elif market_code == 'fr':
+                    return {
+                        'keywords': 'Mots-clés',
+                        'image_strategy': 'Stratégie image',
+                        'seo_focus': 'Focus SEO'
+                    }
+                elif market_code == 'es':
+                    return {
+                        'keywords': 'Palabras clave',
+                        'image_strategy': 'Estrategia imagen',
+                        'seo_focus': 'Enfoque SEO'
+                    }
+                elif market_code == 'nl':
+                    return {
+                        'keywords': 'Trefwoorden',
+                        'image_strategy': 'Beeld Strategie',
+                        'seo_focus': 'SEO Focus'
+                    }
+                else:
+                    return {
+                        'keywords': 'Keywords',
+                        'image_strategy': 'Image Strategy',
+                        'seo_focus': 'SEO Focus'
+                    }
+            
+            localized_labels = get_localized_labels(marketplace_code)
             sections_html = []
             
             # For international markets, ensure we use actual content even if structure is different
@@ -2486,21 +3017,21 @@ Technical specifications include comprehensive compatibility, robust build quali
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">🔍</span>
-                        <strong class="text-gray-900">Keywords</strong>
+                        <strong class="text-gray-900">{localized_labels['keywords']}</strong>
                     </div>
                     <p class="text-gray-600">{section_keywords}</p>
                 </div>
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">📸</span>
-                        <strong class="text-gray-900">Image Strategy</strong>
+                        <strong class="text-gray-900">{localized_labels['image_strategy']}</strong>
                     </div>
                     <p class="text-gray-600">{image_desc}</p>
                 </div>
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">🎯</span>
-                        <strong class="text-gray-900">SEO Focus</strong>
+                        <strong class="text-gray-900">{localized_labels['seo_focus']}</strong>
                     </div>
                     <p class="text-gray-600">{seo_note}</p>
                 </div>
@@ -2509,14 +3040,14 @@ Technical specifications include comprehensive compatibility, robust build quali
     </div>"""
                     sections_html.append(section_html)
             
+            
             # If no sections were generated (common for international markets), create them from actual content
-            if not sections_html and (listing.hero_title or listing.features or listing.trust_builders):
+            # EXCEPTION: Turkey (tr) and Netherlands (nl) should ONLY use AI-generated content, no fallback
+            if not sections_html and (listing.hero_title or listing.features or listing.trust_builders) and marketplace_code not in ['tr', 'nl']:
                 self.logger.info("Creating A+ sections from extracted content for international market")
                 
                 # Create hero section from actual hero content with new box design
                 if listing.hero_title and listing.hero_content:
-                    # Get marketplace-specific labels
-                    marketplace_code = getattr(product, 'marketplace', 'com') or 'com'
                     if marketplace_code == 'jp':
                         keywords_text = "プレミアム, 品質, 信頼性"
                         image_text = "ライフスタイル写真 (970x600px)"
@@ -2541,6 +3072,18 @@ Technical specifications include comprehensive compatibility, robust build quali
                         seo_text = "Stratégie SEO axée qualité"
                         premium_label = "Expérience Premium"
                         premium_desc = "Conception supérieure aux normes françaises"
+                    elif marketplace_code == 'tr':
+                        keywords_text = "premium kalite, güvenilir marka, müşteri memnuniyeti"
+                        image_text = "ENGLISH: Turkish family lifestyle image showing product in use (970x600px)"
+                        seo_text = "Kalite odaklı SEO stratejisi"
+                        premium_label = "Premium Deneyim"
+                        premium_desc = "Türk standartlarına göre üstün tasarım ve kalite"
+                    elif marketplace_code == 'nl':
+                        keywords_text = "premium kwaliteit, betrouwbaar merk, klanttevredenheid"
+                        image_text = "ENGLISH: Dutch lifestyle hero image with product (970x600px)"
+                        seo_text = "Kwaliteit gerichte SEO strategie"
+                        premium_label = "Premium Ervaring"
+                        premium_desc = "Superieur ontwerp volgens Nederlandse normen"
                     else:
                         keywords_text = "premium, quality, trust"
                         image_text = "Hero lifestyle image (970x600px)"
@@ -2565,21 +3108,21 @@ Technical specifications include comprehensive compatibility, robust build quali
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">🔍</span>
-                        <strong class="text-gray-900">Keywords</strong>
+                        <strong class="text-gray-900">{localized_labels['keywords']}</strong>
                     </div>
                     <p class="text-gray-600">{keywords_text}</p>
                 </div>
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">📸</span>
-                        <strong class="text-gray-900">Image Strategy</strong>
+                        <strong class="text-gray-900">{localized_labels['image_strategy']}</strong>
                     </div>
                     <p class="text-gray-600">{image_text}</p>
                 </div>
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">🎯</span>
-                        <strong class="text-gray-900">SEO Focus</strong>
+                        <strong class="text-gray-900">{localized_labels['seo_focus']}</strong>
                     </div>
                     <p class="text-gray-600">{seo_text}</p>
                 </div>
@@ -2614,6 +3157,70 @@ Technical specifications include comprehensive compatibility, robust build quali
                         else:
                             features_image = "機能詳細図解、日本語ラベル付き (1500x1500px)"
                         features_seo = "機能キーワード最適化戦略"
+                    elif marketplace_code == 'br':
+                        # Brazil culture: vibrant, family-oriented, celebration
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_keywords = "som cristalino, cancelamento ruído, bateria longa, confortável"
+                        elif 'kitchen' in product_category:
+                            features_keywords = "cozinha prática, família brasileira, durável, fácil limpeza"
+                        else:
+                            features_keywords = "qualidade premium, garantia estendida, suporte brasileiro"
+                        # Brazil image descriptions in Portuguese
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_image = "Pessoa usando fones em ambiente tropical, destaque para recursos técnicos com ícones coloridos (1500x1500px)"
+                        elif 'kitchen' in product_category:
+                            features_image = "Cozinha brasileira moderna mostrando produto em uso, família preparando refeição (1500x1500px)"
+                        else:
+                            features_image = "Infográfico com recursos detalhados, cores vibrantes do Brasil (1500x1500px)"
+                        features_seo = "Otimização para palavras-chave de recursos técnicos"
+                    elif marketplace_code == 'mx':
+                        # Mexico culture: family values, warmth, tradition
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_keywords = "sonido superior, cancelación ruido, batería duradera, comodidad total"
+                        elif 'kitchen' in product_category:
+                            features_keywords = "cocina mexicana, tradición familiar, resistente, práctico"
+                        else:
+                            features_keywords = "calidad certificada, garantía mexicana, servicio local"
+                        # Mexico image descriptions in Spanish
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_image = "Usuario disfrutando música en sala familiar mexicana, características destacadas con iconos (1500x1500px)"
+                        elif 'kitchen' in product_category:
+                            features_image = "Cocina tradicional mexicana con producto destacado, familia reunida (1500x1500px)"
+                        else:
+                            features_image = "Gráfico de características con diseño mexicano colorido (1500x1500px)"
+                        features_seo = "SEO optimizado para características técnicas en México"
+                    elif marketplace_code == 'nl':
+                        # Netherlands culture: practical, quality-conscious, direct
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_keywords = "uitstekend geluid, ruisonderdrukking, lange batterij, comfortabel"
+                        elif 'kitchen' in product_category:
+                            features_keywords = "praktisch keukengereedschap, duurzaam, makkelijk schoon"
+                        else:
+                            features_keywords = "Nederlandse kwaliteit, garantie, betrouwbaar"
+                        # Netherlands image descriptions in Dutch
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_image = "Nederlandse professional met koptelefoon in modern kantoor, technische details zichtbaar (1500x1500px)"
+                        elif 'kitchen' in product_category:
+                            features_image = "Moderne Nederlandse keuken met product in gebruik, praktische toepassingen (1500x1500px)"
+                        else:
+                            features_image = "Technische specificaties overzicht, Nederlandse stijl design (1500x1500px)"
+                        features_seo = "SEO voor technische kenmerken in Nederland"
+                    elif marketplace_code == 'tr':
+                        # Turkey culture: hospitality, family, quality focus
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_keywords = "kristal ses, gürültü engelleme, uzun pil, rahat kullanım"
+                        elif 'kitchen' in product_category:
+                            features_keywords = "Türk mutfağı, aile boyu, dayanıklı, kolay temizlik"
+                        else:
+                            features_keywords = "kalite belgeli, Türkiye garantisi, yerli destek"
+                        # Turkey image descriptions in English (like Netherlands)
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_image = "ENGLISH: Turkish family listening to music, technical features displayed with Turkish labels (1500x1500px)"
+                        elif 'kitchen' in product_category:
+                            features_image = "ENGLISH: Turkish kitchen with product in use, hospitality scene showcased (1500x1500px)"
+                        else:
+                            features_image = "ENGLISH: Features infographic with Turkish design patterns (1500x1500px)"
+                        features_seo = "Teknik özellikler için SEO optimizasyonu"
                     elif marketplace_code == 'es':
                         # Spanish culture: emphasizes family, passion, and value
                         if 'audio' in product_category or 'headphone' in product_category:
@@ -2698,21 +3305,21 @@ Technical specifications include comprehensive compatibility, robust build quali
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">🔍</span>
-                        <strong class="text-gray-900">Keywords</strong>
+                        <strong class="text-gray-900">{localized_labels['keywords']}</strong>
                     </div>
                     <p class="text-gray-600">{features_keywords}</p>
                 </div>
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">📸</span>
-                        <strong class="text-gray-900">Image Strategy</strong>
+                        <strong class="text-gray-900">{localized_labels['image_strategy']}</strong>
                     </div>
                     <p class="text-gray-600">{features_image}</p>
                 </div>
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">🎯</span>
-                        <strong class="text-gray-900">SEO Focus</strong>
+                        <strong class="text-gray-900">{localized_labels['seo_focus']}</strong>
                     </div>
                     <p class="text-gray-600">{features_seo}</p>
                 </div>
@@ -2733,6 +3340,30 @@ Technical specifications include comprehensive compatibility, robust build quali
                         # Japanese trust image: group consensus, long-term thinking
                         trust_image = "日本の家族が安心して使用、信頼の証、認証マーク (1200x800px)"
                         trust_seo = "信頼性重視のSEO戦略"
+                    elif marketplace_code == 'br':
+                        # Brazil culture: trust through social proof and guarantees
+                        trust_keywords = "garantia estendida, certificado INMETRO, qualidade brasileira, nota fiscal"
+                        # Brazil trust image descriptions in Portuguese
+                        trust_image = "Selos de certificação brasileiros, depoimentos de clientes satisfeitos, garantia destacada (1200x800px)"
+                        trust_seo = "SEO focado em confiança e garantias"
+                    elif marketplace_code == 'mx':
+                        # Mexico culture: trust through family recommendations
+                        trust_keywords = "garantía mexicana, certificado calidad, recomendado familias, servicio local"
+                        # Mexico trust image descriptions in Spanish
+                        trust_image = "Certificaciones mexicanas visibles, testimonios familias mexicanas, sellos de garantía (1200x800px)"
+                        trust_seo = "Estrategia SEO de confianza y calidad"
+                    elif marketplace_code == 'nl':
+                        # Netherlands culture: trust through quality and reliability
+                        trust_keywords = "CE keurmerk, Nederlandse garantie, betrouwbare kwaliteit, klantenservice"
+                        # Netherlands trust image descriptions in Dutch
+                        trust_image = "CE certificering zichtbaar, Nederlandse kwaliteitskeurmerken, garantiebewijzen (1200x800px)"
+                        trust_seo = "SEO strategie voor vertrouwen"
+                    elif marketplace_code == 'tr':
+                        # Turkey culture: trust through certifications and local support
+                        trust_keywords = "TSE belgesi, CE sertifikası, 2 yıl garanti, Türkiye destek"
+                        # Turkey trust image descriptions in English (like Netherlands)
+                        trust_image = "ENGLISH: TSE and CE certificates visible, Turkish customer testimonials, warranty badges (1200x800px)"
+                        trust_seo = "Güven odaklı SEO stratejisi"
                     elif marketplace_code == 'es':
                         # Spanish culture: trust through family recommendations and community
                         trust_keywords = "recomendado por familias, garantía extendida, servicio al cliente"
@@ -2777,21 +3408,21 @@ Technical specifications include comprehensive compatibility, robust build quali
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">🔍</span>
-                        <strong class="text-gray-900">Keywords</strong>
+                        <strong class="text-gray-900">{localized_labels['keywords']}</strong>
                     </div>
                     <p class="text-gray-600">{trust_keywords}</p>
                 </div>
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">📸</span>
-                        <strong class="text-gray-900">Image Strategy</strong>
+                        <strong class="text-gray-900">{localized_labels['image_strategy']}</strong>
                     </div>
                     <p class="text-gray-600">{trust_image}</p>
                 </div>
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">🎯</span>
-                        <strong class="text-gray-900">SEO Focus</strong>
+                        <strong class="text-gray-900">{localized_labels['seo_focus']}</strong>
                     </div>
                     <p class="text-gray-600">{trust_seo}</p>
                 </div>
@@ -2812,6 +3443,30 @@ Technical specifications include comprehensive compatibility, robust build quali
                         # Japanese FAQ image: detailed, helpful, respectful
                         faq_image = "丁寧なサポートスタッフ、詳しい説明書、日本語対応 (800x600px)"
                         faq_seo = "問題解決SEO戦略"
+                    elif marketplace_code == 'br':
+                        # Brazil culture: friendly guidance and community support
+                        faq_keywords = "dúvidas frequentes, suporte brasileiro, como usar, passo a passo"
+                        # Brazil FAQ image descriptions in Portuguese
+                        faq_image = "Atendimento brasileiro amigável, tutorial visual passo a passo, ícones explicativos (800x600px)"
+                        faq_seo = "Otimização SEO para perguntas frequentes"
+                    elif marketplace_code == 'mx':
+                        # Mexico culture: family-friendly help and warm support
+                        faq_keywords = "preguntas comunes, ayuda familiar, guía fácil, soporte mexicano"
+                        # Mexico FAQ image descriptions in Spanish
+                        faq_image = "Servicio al cliente mexicano sonriente, guía visual paso a paso, iconos amigables (800x600px)"
+                        faq_seo = "SEO para preguntas frecuentes México"
+                    elif marketplace_code == 'nl':
+                        # Netherlands culture: direct and practical information
+                        faq_keywords = "veelgestelde vragen, praktische hulp, gebruiksaanwijzing, probleemoplossing"
+                        # Netherlands FAQ image descriptions in Dutch
+                        faq_image = "Duidelijke instructies met pictogrammen, stap-voor-stap handleiding, praktische tips (800x600px)"
+                        faq_seo = "SEO voor veelgestelde vragen"
+                    elif marketplace_code == 'tr':
+                        # Turkey culture: detailed support with hospitality
+                        faq_keywords = "sık sorulan sorular, Türkçe destek, kullanım kılavuzu, problem çözümü"
+                        # Turkey FAQ image descriptions in English (like Netherlands)
+                        faq_image = "ENGLISH: Turkish customer service smiling, step-by-step visual guide, helpful icons (800x600px)"
+                        faq_seo = "SSS için SEO optimizasyonu"
                     elif marketplace_code == 'es':
                         # Spanish culture: community help and family-friendly guidance
                         faq_keywords = "ayuda familiar, dudas comunes, consejos prácticos, guía fácil"
@@ -2856,21 +3511,21 @@ Technical specifications include comprehensive compatibility, robust build quali
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">🔍</span>
-                        <strong class="text-gray-900">Keywords</strong>
+                        <strong class="text-gray-900">{localized_labels['keywords']}</strong>
                     </div>
                     <p class="text-gray-600">{faq_keywords}</p>
                 </div>
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">📸</span>
-                        <strong class="text-gray-900">Image Strategy</strong>
+                        <strong class="text-gray-900">{localized_labels['image_strategy']}</strong>
                     </div>
                     <p class="text-gray-600">{faq_image}</p>
                 </div>
                 <div class="bg-white p-3 rounded border">
                     <div class="flex items-center mb-2">
                         <span class="mr-2">🎯</span>
-                        <strong class="text-gray-900">SEO Focus</strong>
+                        <strong class="text-gray-900">{localized_labels['seo_focus']}</strong>
                     </div>
                     <p class="text-gray-600">{faq_seo}</p>
                 </div>
@@ -4262,10 +4917,58 @@ Return ONLY valid JSON:
         return clean_object(result)
 
 
-    def _create_structured_aplus_html(self, aplus_plan, result):
+    def _create_structured_aplus_html(self, aplus_plan, result, marketplace='com'):
         """Create structured HTML A+ content from JSON data for better display."""
         import json
         try:
+            # Define localized interface labels at the beginning
+            marketplace_code = marketplace
+            
+            def get_localized_labels(market_code):
+                if market_code == 'tr':
+                    return {
+                        'keywords': 'Anahtar Kelimeler',
+                        'image_strategy': 'Görsel Strateji', 
+                        'seo_focus': 'SEO Odak'
+                    }
+                elif market_code == 'jp':
+                    return {
+                        'keywords': 'キーワード',
+                        'image_strategy': '画像戦略',
+                        'seo_focus': 'SEO焦点'
+                    }
+                elif market_code == 'de':
+                    return {
+                        'keywords': 'Schlüsselwörter',
+                        'image_strategy': 'Bildstrategie',
+                        'seo_focus': 'SEO-Fokus'
+                    }
+                elif market_code == 'fr':
+                    return {
+                        'keywords': 'Mots-clés',
+                        'image_strategy': 'Stratégie image',
+                        'seo_focus': 'Focus SEO'
+                    }
+                elif market_code == 'es':
+                    return {
+                        'keywords': 'Palabras clave',
+                        'image_strategy': 'Estrategia imagen',
+                        'seo_focus': 'Enfoque SEO'
+                    }
+                elif market_code == 'nl':
+                    return {
+                        'keywords': 'Trefwoorden',
+                        'image_strategy': 'Beeld Strategie',
+                        'seo_focus': 'SEO Focus'
+                    }
+                else:
+                    return {
+                        'keywords': 'Keywords',
+                        'image_strategy': 'Image Strategy',
+                        'seo_focus': 'SEO Focus'
+                    }
+            
+            localized_labels = get_localized_labels(marketplace_code)
             sections_html = []
             
             # Define section order and display names
