@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
 from .models import GeneratedListing, ListingImage
 from .serializers import (GeneratedListingSerializer, ListingImageSerializer, 
                          QualityValidationInputSerializer, QualityValidationOutputSerializer)
@@ -271,3 +273,41 @@ class GeneratedListingViewSet(viewsets.ModelViewSet):
                 'status': 'error',
                 'message': f'Error generating quality report: {str(e)}'
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def generate_listing_clean(request, product_id, platform):
+    """
+    Clean API endpoint that bypasses DRF serialization issues.
+    Returns minimal JSON response to prevent encoding errors.
+    """
+    try:
+        # Convert product_id to integer
+        try:
+            product_id = int(product_id)
+        except (ValueError, TypeError):
+            return JsonResponse({
+                'error': 'Invalid product_id format'
+            }, status=400)
+        
+        # Generate listing using the working service
+        service = ListingGeneratorService()
+        listing = service.generate_listing(product_id, platform)
+        
+        # Return minimal response with safe encoding
+        return JsonResponse({
+            'success': True,
+            'id': listing.id,
+            'title': listing.title[:100] if listing.title else '',
+            'status': listing.status,
+            'aplus_length': len(listing.amazon_aplus_content) if listing.amazon_aplus_content else 0,
+            'message': 'Listing generated successfully'
+        }, status=201)
+        
+    except Exception as e:
+        # Return error without traceback to avoid encoding issues
+        return JsonResponse({
+            'success': False,
+            'error': str(e)[:200]  # Limit error message length
+        }, status=500)

@@ -44,7 +44,7 @@ export const productAPI = {
 };
 
 export const listingAPI = {
-  generate: (productId, platform) => api.post(`/listings/generate/${productId}/${platform}/`),
+  generate: (productId, platform) => api.post(`/listings/generate-clean/${productId}/${platform}/`),
   list: () => api.get('/listings/generated/'),
   get: (id) => api.get(`/listings/generated/${id}/`),
   delete: (id) => api.delete(`/listings/generated/${id}/`),

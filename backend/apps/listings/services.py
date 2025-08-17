@@ -868,14 +868,84 @@ TÜRK PAZARI İÇİN ZORUNLU UNSURLAR - HELIUM 10, JASPER AI, COPYMONKEY'İ GEÇ
 ✓ "Gurur duyacağınız seçim" ✓ "Çocuklarınız için güvenli"
 
 🚨 KRİTİK A+ İÇERİK KURALI:
-- "Keywords" yerine "Anahtar Kelimeler" 
-- "Image Strategy" yerine "Görsel Strateji"
-- "SEO Focus" yerine "SEO Odak"
-- HER ŞEY TÜRKÇE OLMALI!
-- ⚠️ ÖZEL KURAL: imageDescription alanları MUTLAKA İNGİLİZCE olmalı!
-- Örnek: "Turkish family lifestyle image showing product in use (970x600px)"
+- Interface labels MUTLAKA İNGİLİZCE: "Keywords", "Image Strategy", "SEO Focus"
+- İçerik TÜRKÇE olmalı!
+- ⚠️ ÇOK ÖZEL KURAL: imageDescription alanları MUTLAKA MEXICO SEVİYESİNDE DETAYLI İNGİLİZCE olmalı!
+- ZORUNLU: Her imageDescription "ENGLISH:" ile başlamalı
+- ZORUNLU: ÖZEL DETAYLAR - yaş, meslek, tam aktivite, zaman, ışık, props, duygular, ürün konumu
+- YASAK: Generic kelimeler "Collage", "Grid", "professional setup" - BU KELİMELERİ KULLANMA!
+- ZORUNLU: Tam hikaye anlat - kim, ne yapıyor, nerede, ne zaman, nasıl görünüyor
+- Örnek: "ENGLISH: Turkish businessman in his 30s using earbuds during video conference call with international clients in modern Istanbul office, morning sunlight streaming through floor-to-ceiling windows, product prominently visible on mahogany desk next to traditional Turkish tea glass and family photo, warm professional atmosphere with city skyline visible in background, shot emphasizes modern Turkish success and international connectivity, commercial lifestyle photography (970x600px)"
 
-⚠️ KRİTİK: Bu 7 kategori eksikse listing BAŞARISIZ! Helium 10'u geçmek için HEPSI gerekli!
+🚨 ÇOK KRİTİK KEYWORDS KURALI:
+- ZORUNLU: aPlusContentPlan içindeki TÜM "keywords" alanları MUTLAKA TÜRKÇE olmalı!
+- YASAK İngilizce örnekler: "everyday use", "versatile applications", "practical", "convenient", "5-star reviews", "money-back guarantee", "customer satisfaction", "customer testimonials", "verified reviews", "satisfaction guaranteed", "competitive advantage", "superior choice", "key differentiators", "package contents", "premium packaging", "included accessories"
+- ZORUNLU Türkçe karşılıkları: "günlük kullanım", "çok amaçlı kullanım", "pratik", "kolay kullanım", "5 yıldızlı değerlendirmeler", "para iade garantisi", "müşteri memnuniyeti", "müşteri yorumları", "doğrulanmış incelemeler", "memnuniyet garantisi", "rekabet avantajı", "üstün seçim", "temel farklılıklar", "paket içeriği", "premium ambalaj", "dahil aksesuarlar"
+- HER SECTION'DA keywords alanı SADECE TÜRKÇE kelimeler içermeli!
+
+🚨🚨🚨 KRİTİK 8 BÖLÜM A+ İÇERİK KURALI - MEKSİKA SEVİYESİNDE ZORUNLU! 🚨🚨🚨
+TURKEY için MUTLAKA 8 comprehensive bölüm oluştur:
+
+"aPlusContentPlan": {
+  "section1_hero": {
+    "title": "Türkçe ana başlık",
+    "content": "Detaylı Türkçe hikaye (min 200 karakter)",
+    "keywords": ["türkçe", "anahtar", "kelimeler"],
+    "imageDescription": "ENGLISH: EXTREMELY detailed description...",
+    "seoOptimization": "ENGLISH: SEO strategy note"
+  },
+  "section2_features": {
+    "title": "Özellikler ve Avantajlar",
+    "content": "6-8 teknik özellik detaylı açıklama",
+    "keywords": ["özellik", "avantaj", "kalite"],
+    "imageDescription": "ENGLISH: Detailed feature showcase...",
+    "seoOptimization": "ENGLISH: Feature SEO strategy"
+  },
+  "section3_usage": {
+    "title": "Kullanım Alanları",
+    "content": "Günlük kullanım senaryoları",
+    "keywords": ["kullanım", "yaşam", "pratik"],
+    "imageDescription": "ENGLISH: Usage scenarios...",
+    "seoOptimization": "ENGLISH: Usage SEO"
+  },
+  "section4_quality": {
+    "title": "Kalite Güvencesi",
+    "content": "Kalite standartları ve sertifikalar",
+    "keywords": ["kalite", "güvence", "sertifika"],
+    "imageDescription": "ENGLISH: Quality proof...",
+    "seoOptimization": "ENGLISH: Quality SEO"
+  },
+  "section5_guarantee": {
+    "title": "Garanti ve Destek",
+    "content": "Garanti bilgileri ve müşteri desteği",
+    "keywords": ["garanti", "destek", "güven"],
+    "imageDescription": "ENGLISH: Trust and support...",
+    "seoOptimization": "ENGLISH: Trust SEO"
+  },
+  "section6_social_proof": {
+    "title": "Müşteri Memnuniyeti",
+    "content": "Yorumlar ve sosyal kanıt",
+    "keywords": ["müşteri", "memnuniyet", "yorum"],
+    "imageDescription": "ENGLISH: Social proof display...",
+    "seoOptimization": "ENGLISH: Social SEO"
+  },
+  "section7_comparison": {
+    "title": "Neden Bu Ürün",
+    "content": "Rekabet avantajları",
+    "keywords": ["avantaj", "üstün", "seçim"],
+    "imageDescription": "ENGLISH: Comparison chart...",
+    "seoOptimization": "ENGLISH: Competitive SEO"
+  },
+  "section8_package": {
+    "title": "Paket İçeriği",
+    "content": "Kutu açılış deneyimi",
+    "keywords": ["paket", "içerik", "kutu"],
+    "imageDescription": "ENGLISH: Unboxing experience...",
+    "seoOptimization": "ENGLISH: Package SEO"
+  }
+}
+
+⚠️ KRİTİK: Bu 8 bölüm eksikse listing BAŞARISIZ! Mexico seviyesinde comprehensive content zorunlu!
 🔥🔥🔥 TÜRKÇE UYGULAMA SONU 🔥🔥🔥
 """
         
@@ -919,6 +989,27 @@ Exemplo: "Bateria 40H → Música sem parar → Viagens sem preocupação"
 Cada viñeta: CARACTERÍSTICA → BENEFICIO → RESULTADO
 Ejemplo: "Batería 40H → Música sin interrupciones → Viajes sin preocupaciones"
 🔥🔥🔥 FIN OPTIMIZACIÓN MEXICANA 🔥🔥🔥
+"""
+
+        # Turkey conversion optimization - EXACT COPY OF MEXICO
+        turkey_extra = ""
+        if language == 'tr':
+            turkey_extra = """
+🔥🔥🔥 TÜRKİYE OPTİMİZASYONU - MAKSİMUM DÖNÜŞÜM 🔥🔥🔥
+
+🌮 GÜVENİLİRLİK SİNYALLERİ (ZORUNLU):
+✓ "2 Yıl Garanti" ✓ "Kalite Sertifikası" ✓ "%100 Orijinal"
+✓ "30 Gün Garanti" ✓ "Güvenli Kargo" ✓ "Fatura Dahil"
+✓ "Binlerce Mutlu Müşteri" ✓ "Türkiye'de Tercih Edilen"
+
+💥 ACELE VE EYLEM (ZORUNLU):
+✓ "Bugün Satın Al" ✓ "Sınırlı Teklif" ✓ "Son Parçalar"
+✓ "Seninkini Güvence Altına Al" ✓ "Kaçırma" ✓ "Özel Promosyon"
+
+📊 ÖZELLİK-FAYDA YAPISI (ZORUNLU):
+Her madde: ÖZELLİK → FAYDA → SONUÇ
+Örnek: "40H Pil → Kesintisiz Müzik → Endişesiz Seyahat"
+🔥🔥🔥 TÜRKİYE OPTİMİZASYONU SONU 🔥🔥🔥
 """
 
         # Netherlands conversion optimization
@@ -1424,9 +1515,16 @@ DESCRIPTION VARIATION: Show conviction through evidence and specific benefits
         aplus_enhancement = ""
         if marketplace_lang and marketplace_lang != 'en':
             localization_enhancement = international_optimizer.get_localization_enhancement(marketplace, marketplace_lang)
-            aplus_enhancement = international_optimizer.get_aplus_content_enhancement(marketplace, marketplace_lang)
+            
+            # TURKEY GETS SPECIAL 8-SECTION A+ INSTRUCTIONS (NOT GENERIC INTERNATIONAL)
+            if marketplace == 'tr':
+                aplus_enhancement = self._get_turkey_aplus_enhancement()
+                self.logger.info(f"Applied Turkey-specific 8-section A+ enhancement")
+            else:
+                aplus_enhancement = international_optimizer.get_aplus_content_enhancement(marketplace, marketplace_lang)
+                self.logger.info(f"Applied international A+ content enhancement for: {marketplace} ({marketplace_lang})")
+            
             self.logger.info(f"Applied international localization for: {marketplace} ({marketplace_lang})")
-            self.logger.info(f"Applied A+ content international enhancement for: {marketplace} ({marketplace_lang})")
         
         # Now create the completely new human-focused prompt
         prompt = f"""
@@ -1572,7 +1670,22 @@ KEYWORD STRATEGY FOR MAXIMUM VISIBILITY:
 - Semantic Keywords (10+): Related terms, synonyms, variations
 - TOTAL TARGET: 80+ keywords covering every possible search angle
 
-CRITICAL JSON FORMATTING RULES:
+CRITICAL JSON FORMATTING RULES FOR TURKEY (🇹🇷 SPECIAL REQUIREMENTS):
+⚠️ TURKEY JSON MUST BE PERFECT - NO PARSING ERRORS ALLOWED!
+1. ALL JSON field values MUST use double quotes (") not single quotes (')
+2. INSIDE content text, use single quotes for contractions: dont, cant, wont, its  
+3. NEVER use unescaped double quotes inside content text - use single quotes instead
+4. Turkish characters (ğ, ı, ş, ç, ü, ö) are allowed and required
+5. For aPlusContentPlan sections, ensure ALL 8 sections are included
+6. Each imageDescription MUST start with "ENGLISH:" 
+7. NO trailing commas before closing brackets or braces
+8. Test structure: {{"field": "content with Turkish chars: üğışçö"}}
+9. CRITICAL: End each section with proper comma, except the last section
+10. MANDATORY: Include all these sections in aPlusContentPlan:
+    - section1_hero, section2_features, section3_usage, section4_quality
+    - section5_guarantee, section6_social_proof, section7_comparison, section8_package
+
+ORIGINAL JSON FORMATTING RULES:
 1. ALL JSON field values MUST use double quotes (") not single quotes (')
 2. INSIDE content text, use single quotes for contractions: dont, cant, wont, its  
 3. NEVER use unescaped double quotes inside content text
@@ -1588,6 +1701,31 @@ KEYWORD GENERATION RULES:
 4. Replace template phrases like [actual use case] with real use cases based on the product
 5. EXAMPLE GOOD: ["wireless earbuds", "bluetooth headphones", "noise cancelling"] 
 6. EXAMPLE BAD: ["Generate 15+ short keywords based on..."]
+
+🇹🇷 TURKEY SPECIAL JSON EXAMPLE (COPY THIS EXACT STRUCTURE):
+{{
+  "productTitle": "N-GEN Premium Ürün Kaliteli Tasarım 2 Yıl Garanti CE Sertifikalı",
+  "bulletPoints": [
+    "KALİTE GÜVENCE: Premium malzeme ile üstün performans",
+    "GÜVENLİ KULLANIM: CE sertifikalı güvenlik standardı"
+  ],
+  "aPlusContentPlan": {{
+    "section1_hero": {{
+      "title": "Premium Türk Kalitesi",
+      "content": "Aileniz için en iyi seçim", 
+      "keywords": ["premium", "kalite", "aile"],
+      "imageDescription": "ENGLISH: Turkish family using product happily",
+      "seoOptimization": "ENGLISH: Family-focused keywords"
+    }},
+    "section8_package": {{
+      "title": "Paket İçeriği",
+      "content": "Kutu açılış deneyimi detayları",
+      "keywords": ["paket", "içerik", "kutu"],
+      "imageDescription": "ENGLISH: Unboxing experience",
+      "seoOptimization": "ENGLISH: Package SEO"
+    }}
+  }}
+}}
 
 RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMUM-LENGTH content:
 
@@ -1619,21 +1757,21 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
       "title": "Write compelling headline with occasion/gift theme",
       "content": "Write comprehensive story explaining value proposition with emotional benefits and specific use cases. Connect personally with customers.",
       "keywords": ["3-5 relevant keywords for this section"],
-      "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Describe exactly what should be shown in the image - specific people, setting, lighting, product placement, props, colors, mood, and composition. Include technical specs and why this image works for conversion. Example: 'Turkish family of 4 in modern Istanbul apartment, warm evening lighting, father using headphones while working on laptop, family visible in background preparing dinner, product prominently displayed on desk with premium materials visible, shot emphasizes comfort and family time, professional photography style (970x600px hero lifestyle shot)'",
+      "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Describe exactly what should be shown in the image - specific people, setting, lighting, product placement, props, colors, mood, and composition. Include technical specs and why this image works for conversion. Example: Turkish family of 4 in modern Istanbul apartment, warm evening lighting, father using headphones while working on laptop, family visible in background preparing dinner, product prominently displayed on desk with premium materials visible, shot emphasizes comfort and family time, professional photography style (970x600px hero lifestyle shot)",
       "seoOptimization": "Brief note on SEO strategy for this section"
     }},
     "section2_features": {{
       "title": "Key Features and Benefits",
       "content": "Write detailed technical analysis covering 6-8 features with specifications and real-world benefits.",
       "keywords": ["3-5 feature-related keywords"],
-      "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Specific description of feature showcase images - exact product angles, close-up details, demonstration scenarios, technical diagrams, before/after comparisons. Include lighting, background, props, and why each image converts. Example: 'Grid of 6 feature images: 1) Close-up of premium foam padding with cross-section view, 2) Hands adjusting noise-canceling controls with sound waves graphic, 3) Battery indicator showing 40-hour display, 4) Waterproof test with droplets, 5) Bluetooth connection to multiple devices, 6) Foldable design demonstration (300x300px each)'",
+      "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Specific description of feature showcase images - exact product angles, close-up details, demonstration scenarios, technical diagrams, before/after comparisons. Include lighting, background, props, and why each image converts. Example: Grid of 6 feature images: 1) Close-up of premium foam padding with cross-section view, 2) Hands adjusting noise-canceling controls with sound waves graphic, 3) Battery indicator showing 40-hour display, 4) Waterproof test with droplets, 5) Bluetooth connection to multiple devices, 6) Foldable design demonstration (300x300px each)",
       "seoOptimization": "Feature-based keywords strategy"
     }},
     "section3_usage": {{
       "title": "Real-World Applications",
       "content": "Write comprehensive guide describing 4-6 usage scenarios across different environments with specific examples.",
       "keywords": ["3-5 usage-related keywords"],
-      "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Specific real-world usage scenarios - exact people, activities, environments where product is used. Include demographics, settings, lighting, and emotional context. Example: 'Collage of 4 usage scenarios: 1) Young professional in coffee shop working with headphones, 2) Jogger in park using wireless features, 3) Family movie night with surround sound, 4) Business traveler in airport lounge, each showing different benefits (220x220px each)'",
+      "imageDescription": "DETAILED ENGLISH IMAGE STRATEGY: Specific real-world usage scenarios - exact people, activities, environments where product is used. Include demographics, settings, lighting, and emotional context. Example: Collage of 4 usage scenarios: 1) Young professional in coffee shop working with headphones, 2) Jogger in park using wireless features, 3) Family movie night with surround sound, 4) Business traveler in airport lounge, each showing different benefits (220x220px each)",
       "seoOptimization": "Usage-based search optimization"
     }},
     "section4_quality": {{
@@ -1743,7 +1881,7 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
             
             while retry_count < max_retries:
                 try:
-                    print(f"AI generation attempt {retry_count + 1}/{max_retries}")
+                    # print(f"AI generation attempt {retry_count + 1}/{max_retries}")
                     # Add language-specific system message if needed
                     system_content = """You are a creative copywriting expert who writes like a real human, not a marketing robot. 
 
@@ -1823,7 +1961,7 @@ Write each section in a completely different style and tone. Use unexpected but 
                     # Debug: Check if response contains umlauts
                     response_text = response.choices[0].message.content if response.choices else ""
                     if marketplace_lang == 'de':
-                        print(f"🔍 AI RESPONSE UMLAUT CHECK:")
+                        print(f"AI RESPONSE UMLAUT CHECK:")
                         print(f"   Response contains ü: {'ü' in response_text}")
                         print(f"   Response contains ä: {'ä' in response_text}")
                         print(f"   Response contains ö: {'ö' in response_text}")
@@ -1837,26 +1975,26 @@ Write each section in a completely different style and tone. Use unexpected but 
                     error_type = type(api_error).__name__
                     error_message = str(api_error)
                     
-                    print(f"🚨 OpenAI API error on attempt {retry_count}/{max_retries}")
-                    print(f"Error type: {error_type}")
-                    print(f"Error message: {error_message}")
+                    # print(f"OpenAI API error on attempt {retry_count}/{max_retries}")
+                    # print(f"Error type: {error_type}")
+                    # print(f"Error message: {error_message}")
                     
                     # Enhanced error handling based on error types
                     if "rate_limit" in error_message.lower() or "429" in error_message:
-                        print("⏱️ Rate limit detected, using exponential backoff")
+                        # print("Rate limit detected, using exponential backoff")
                         time.sleep(2 ** retry_count)  # Exponential backoff for rate limits
                     elif "insufficient_quota" in error_message.lower() or "billing" in error_message.lower():
-                        print("💳 Billing/quota issue detected")
+                        # print("Billing/quota issue detected")
                         raise Exception(f"OpenAI API quota/billing error: {error_message}")
                     elif "invalid_request_error" in error_message.lower():
-                        print("📝 Request format error detected")
+                        # print("Request format error detected")
                         raise Exception(f"OpenAI API request error: {error_message}")
                     else:
-                        print(f"🔄 Generic error, retrying in {retry_count} seconds")
+                        # print(f"Generic error, retrying in {retry_count} seconds")
                         time.sleep(retry_count)  # Progressive delay
                     
                     if retry_count >= max_retries:
-                        print(f"❌ All {max_retries} attempts failed")
+                        # print(f"All {max_retries} attempts failed")
                         raise Exception(f"Failed to generate content after {max_retries} attempts. Final error: {error_type}: {error_message}")
             
             if response is None:
@@ -1892,19 +2030,19 @@ Write each section in a completely different style and tone. Use unexpected but 
                 # For German content, ensure proper UTF-8 handling
                 content_to_parse = ai_content.strip()
                 if marketplace_lang == 'de':
-                    print(f"🔍 German JSON parsing - checking for umlauts in source:")
+                    print(f"German JSON parsing - checking for umlauts in source:")
                     print(f"   Source contains ü: {'ü' in content_to_parse}")
                     print(f"   Source contains ä: {'ä' in content_to_parse}")
                     print(f"   Source contains ö: {'ö' in content_to_parse}")
                     print(f"   Source contains ß: {'ß' in content_to_parse}")
                 
                 result = json.loads(content_to_parse)
-                print("✅ Direct JSON parsing successful!")
+                print("Direct JSON parsing successful!")
                 
                 # Verify umlauts are preserved in parsed result
                 if marketplace_lang == 'de' and result:
                     title = result.get('productTitle', '')
-                    print(f"🔍 Parsed JSON title: {title[:80]}...")
+                    print(f"Parsed JSON title: {title[:80]}...")
                     print(f"   Parsed title has umlauts: {any(c in title for c in 'äöüßÄÖÜ')}")
                 
             except json.JSONDecodeError:
@@ -1932,7 +2070,7 @@ Write each section in a completely different style and tone. Use unexpected but 
                             break
                     
                     result = json.loads(cleaned_content)
-                    print("✅ Markdown cleanup parsing successful!")
+                    print("Markdown cleanup parsing successful!")
                 except (json.JSONDecodeError, AttributeError):
                     pass
             
@@ -1949,7 +2087,7 @@ Write each section in a completely different style and tone. Use unexpected but 
                     if start != -1 and end != -1 and end > start:
                         json_content = ai_content[start:end+1]
                         result = json.loads(json_content)
-                        print("✅ JSON boundary detection successful!")
+                        print("JSON boundary detection successful!")
                 except (json.JSONDecodeError, ValueError):
                     pass
             
@@ -1968,13 +2106,13 @@ Write each section in a completely different style and tone. Use unexpected but 
                     cleaned = re.sub(r'(\w+):', r'"\1":', cleaned)  # Add quotes to keys
                     
                     result = json.loads(cleaned)
-                    print("✅ Character cleanup parsing successful!")
+                    print("Character cleanup parsing successful!")
                 except (json.JSONDecodeError, AttributeError):
                     pass
             
             # Final validation and logging
             if result:
-                print(f"🎉 JSON parsing successful after {parsing_attempts} attempts!")
+                print(f"JSON parsing successful after {parsing_attempts} attempts!")
                 print(f"🔍 AI response contains {len(result.keys())} fields: {list(result.keys())}")
                 
                 # Validate critical fields
@@ -1985,7 +2123,37 @@ Write each section in a completely different style and tone. Use unexpected but 
                         print(f"✅ {field}: {field_length} characters")
                     else:
                         print(f"⚠️ Missing critical field: {field}")
-            else:
+            # Turkey-specific JSON fix for missing closing braces
+            elif marketplace_lang == 'tr':
+                try:
+                    print("🇹🇷 Applying Turkey-specific JSON fix...")
+                    
+                    # Find JSON boundaries
+                    start = ai_content.find('{')
+                    end = ai_content.rfind('}')
+                    
+                    if start != -1 and end != -1:
+                        json_content = ai_content[start:end+1]
+                        
+                        # Remove trailing commas before } or ]
+                        fixed_json = re.sub(r',(\s*[}\]])', r'\1', json_content)
+                        
+                        # Balance braces - Turkey often has 1 missing closing brace
+                        open_braces = fixed_json.count('{')
+                        close_braces = fixed_json.count('}')
+                        
+                        if open_braces > close_braces:
+                            missing_braces = open_braces - close_braces
+                            fixed_json += '}' * missing_braces
+                            print(f"🇹🇷 Turkey fix: Added {missing_braces} missing closing braces")
+                        
+                        result = json.loads(fixed_json)
+                        print("🇹🇷 Turkey-specific JSON fix successful!")
+                except (json.JSONDecodeError, ValueError) as e:
+                    print(f"🇹🇷 Turkey JSON fix failed: {e}")
+                    result = None
+
+            if result is None:
                 print("❌ All JSON parsing attempts failed!")
                 cleaned_content = ai_content.strip()
                 
@@ -2659,9 +2827,16 @@ Technical specifications include comprehensive compatibility, robust build quali
             
             # Save the complete A+ content plan as JSON for future reference
             aplus_plan = result.get('aPlusContentPlan', {})
+            
+            print(f"🔍 MARKETPLACE DEBUG: marketplace_code='{marketplace_code}', product.marketplace='{product.marketplace}'")
+            
+            # Turkey gets enhanced A+ content using the same template as Mexico
+            if marketplace_code == 'tr':
+                print(f"🇹🇷 TURKEY DEBUG: Using standard A+ template like Mexico")
+                self.logger.info(f"Turkey: Using Mexico-style A+ template")
+            
             if aplus_plan:
-                # Store the A+ plan structure for debugging and future enhancements
-                # aplus_html will be generated later in the code
+                # Other markets: Store the A+ plan structure for debugging and future enhancements
                 pass  # A+ content HTML will be set later in the generation process
             
             print(f"✅ Comprehensive listing content generated:")
@@ -2683,9 +2858,9 @@ Technical specifications include comprehensive compatibility, robust build quali
             def get_localized_labels(market_code):
                 if market_code == 'tr':
                     return {
-                        'keywords': 'Anahtar Kelimeler',
-                        'image_strategy': 'Görsel Strateji', 
-                        'seo_focus': 'SEO Odak'
+                        'keywords': 'Keywords',
+                        'image_strategy': 'Image Strategy', 
+                        'seo_focus': 'SEO Focus'
                     }
                 elif market_code == 'jp':
                     return {
@@ -2757,6 +2932,12 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "qualité premium, tradition française, savoir-faire"
                         elif marketplace_code == 'it':
                             section_keywords = "qualità premium, eccellenza italiana, fiducia del cliente"
+                        elif marketplace_code == 'tr':
+                            # Turkey: Keep AI-generated keywords only, no fallback override
+                            pass
+                        elif marketplace_code == 'nl':
+                            # Netherlands: Keep AI-generated keywords only, no fallback override
+                            pass
                         else:
                             section_keywords = "premium quality, trusted brand, customer satisfaction"
                     elif 'feature' in section_key.lower() or 'section2' in section_key:
@@ -2776,6 +2957,12 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "sophistication, élégance française, art de vivre"
                         elif marketplace_code == 'it':
                             section_keywords = "design innovativo, prestazioni superiori, stile italiano"
+                        elif marketplace_code == 'tr':
+                            # Turkey: Keep AI-generated keywords only, no fallback override
+                            pass
+                        elif marketplace_code == 'nl':
+                            # Netherlands: Keep AI-generated keywords only, no fallback override
+                            pass
                         else:
                             section_keywords = "innovative design, high performance, user-friendly"
                     elif 'trust' in section_key.lower() or 'quality' in section_key.lower() or 'guarantee' in section_key.lower():
@@ -2790,6 +2977,9 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "tradition française, savoir-faire, qualité artisanale, héritage"
                         elif marketplace_code == 'it':
                             section_keywords = "tradizione italiana, artigianato, qualità superiore, heritage"
+                        elif marketplace_code == 'tr':
+                            # Turkey: Keep AI-generated keywords only, no fallback override
+                            pass
                         else:
                             section_keywords = "5-star reviews, money-back guarantee, customer satisfaction"
                     elif 'usage' in section_key.lower() or 'section3' in section_key:
@@ -2804,6 +2994,9 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "usage quotidien, polyvalence, praticité, élégance d'usage"
                         elif marketplace_code == 'it':
                             section_keywords = "uso quotidiano, versatilità italiana, praticità, stile di vita"
+                        elif marketplace_code == 'tr':
+                            # Turkey: Keep AI-generated keywords only, no fallback override
+                            pass
                         else:
                             section_keywords = "everyday use, versatile applications, practical, convenient"
                     elif 'quality' in section_key.lower() or 'section4' in section_key:
@@ -2818,6 +3011,9 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "contrôle qualité, normes françaises, fabrication soignée"
                         elif marketplace_code == 'it':
                             section_keywords = "controllo qualità, standard italiani, manifattura eccellente"
+                        elif marketplace_code == 'tr':
+                            # Turkey: Keep AI-generated keywords only, no fallback override
+                            pass
                         else:
                             section_keywords = "quality control, manufacturing standards, certified excellence"
                     elif 'social' in section_key.lower() or 'proof' in section_key.lower() or 'section6' in section_key:
@@ -2832,6 +3028,9 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "témoignages clients, satisfaction garantie, reconnaissance"
                         elif marketplace_code == 'it':
                             section_keywords = "testimonianze, soddisfazione clienti, raccomandazioni"
+                        elif marketplace_code == 'tr':
+                            # Turkey: Keep AI-generated keywords only, no fallback override
+                            pass
                         else:
                             section_keywords = "customer testimonials, verified reviews, satisfaction guaranteed"
                     elif 'comparison' in section_key.lower() or 'section7' in section_key:
@@ -2846,6 +3045,9 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "avantages concurrentiels, supériorité, choix optimal"
                         elif marketplace_code == 'it':
                             section_keywords = "vantaggi competitivi, superiorità, scelta migliore"
+                        elif marketplace_code == 'tr':
+                            # Turkey: Keep AI-generated keywords only, no fallback override
+                            pass
                         else:
                             section_keywords = "competitive advantage, superior choice, key differentiators"
                     elif 'package' in section_key.lower() or 'section8' in section_key:
@@ -2860,6 +3062,9 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "contenu livré, emballage soigné, accessoires inclus"
                         elif marketplace_code == 'it':
                             section_keywords = "contenuto confezione, imballaggio curato, accessori inclusi"
+                        elif marketplace_code == 'tr':
+                            # Turkey: Keep AI-generated keywords only, no fallback override
+                            pass
                         else:
                             section_keywords = "package contents, premium packaging, included accessories"
                     elif 'faq' in section_key.lower() or 'support' in section_key.lower():
@@ -2874,6 +3079,9 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "conseils d'expert, solutions élégantes, guide sophistiqué"
                         elif marketplace_code == 'it':
                             section_keywords = "supporto tecnico, guide dettagliate, assistenza italiana"
+                        elif marketplace_code == 'tr':
+                            # Turkey: Keep AI-generated keywords only, no fallback override
+                            pass
                         else:
                             section_keywords = "quick answers, troubleshooting, user guide"
                     
@@ -2888,6 +3096,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                                 image_desc = "Deutsche Qualität und Präzision im modernen Zuhause (970x600px)"
                             elif marketplace_code == 'fr':
                                 image_desc = "Élégance française, sophistication au quotidien (970x600px)"
+                            elif marketplace_code == 'tr':
+                                image_desc = "ENGLISH: Professional Turkish family using premium electronic device in modern Istanbul home setting - warm lighting, contemporary furniture, authentic lifestyle moment showcasing product functionality and family togetherness (970x600px, high-quality lifestyle photography)"
                             else:
                                 image_desc = "Modern lifestyle, premium quality experience (970x600px)"
                     card_type = section_data.get('cardType', 'default')
@@ -3005,7 +3215,7 @@ Technical specifications include comprehensive compatibility, robust build quali
             <span class="text-2xl sm:text-3xl mr-3">{icon}</span>
             <div class="flex-1">
                 <h3 class="{colors['title']} text-xl sm:text-2xl font-bold">{section_title}</h3>
-                <p class="text-gray-600 text-sm mt-1">{card_type.title()} section with detailed content and optimization</p>
+                <p class="text-gray-600 text-sm mt-1">{card_type.title()} section with AI-generated content and optimization</p>
             </div>
         </div>
         <div class="content-section bg-white rounded-lg p-4 mb-4 border">
@@ -3042,8 +3252,8 @@ Technical specifications include comprehensive compatibility, robust build quali
             
             
             # If no sections were generated (common for international markets), create them from actual content
-            # EXCEPTION: Turkey (tr) and Netherlands (nl) should ONLY use AI-generated content, no fallback
-            if not sections_html and (listing.hero_title or listing.features or listing.trust_builders) and marketplace_code not in ['tr', 'nl']:
+            # EXCEPTION: Netherlands (nl) and Turkey (tr) should ONLY use AI-generated content, no fallback
+            if not sections_html and (listing.hero_title or listing.features or listing.trust_builders) and marketplace_code not in ['nl', 'tr']:
                 self.logger.info("Creating A+ sections from extracted content for international market")
                 
                 # Create hero section from actual hero content with new box design
@@ -3074,8 +3284,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                         premium_desc = "Conception supérieure aux normes françaises"
                     elif marketplace_code == 'tr':
                         keywords_text = "premium kalite, güvenilir marka, müşteri memnuniyeti"
-                        image_text = "ENGLISH: Turkish family lifestyle image showing product in use (970x600px)"
-                        seo_text = "Kalite odaklı SEO stratejisi"
+                        image_text = "ENGLISH: Premium lifestyle hero shot featuring successful Turkish family in elegant Istanbul apartment - product prominently displayed during authentic usage moment, professional lighting highlighting premium materials and design, contemporary Turkish home décor, genuine emotional connections (970x600px, commercial quality photography)"
+                        seo_text = "ENGLISH: Premium quality-focused SEO strategy targeting high-intent Turkish customers with Turkish cultural keywords and family-oriented search terms"
                         premium_label = "Premium Deneyim"
                         premium_desc = "Türk standartlarına göre üstün tasarım ve kalite"
                     elif marketplace_code == 'nl':
@@ -3189,6 +3399,22 @@ Technical specifications include comprehensive compatibility, robust build quali
                         else:
                             features_image = "Gráfico de características con diseño mexicano colorido (1500x1500px)"
                         features_seo = "SEO optimizado para características técnicas en México"
+                    elif marketplace_code == 'tr':
+                        # Turkey - EXACT COPY OF MEXICO implementation
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_keywords = "üstün ses kalitesi, gürültü engelleme, uzun pil ömrü, tam konfor"
+                        elif 'kitchen' in product_category:
+                            features_keywords = "Türk mutfağı, aile geleneği, dayanıklı, pratik"
+                        else:
+                            features_keywords = "sertifikalı kalite, Türk garantisi, yerel servis"
+                        # Turkey image descriptions in Turkish (like Mexico's Spanish)
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_image = "Türk aile salonunda müzik dinleyen kullanıcı, özellikler simgelerle vurgulanmış (1500x1500px)"
+                        elif 'kitchen' in product_category:
+                            features_image = "Geleneksel Türk mutfağında öne çıkan ürün, bir araya gelmiş aile (1500x1500px)"
+                        else:
+                            features_image = "Türk tarzı renkli tasarım ile özellikler grafiği (1500x1500px)"
+                        features_seo = "Türkiye'de teknik özellikler için SEO optimizasyonu"
                     elif marketplace_code == 'nl':
                         # Netherlands culture: practical, quality-conscious, direct
                         if 'audio' in product_category or 'headphone' in product_category:
@@ -3352,18 +3578,18 @@ Technical specifications include comprehensive compatibility, robust build quali
                         # Mexico trust image descriptions in Spanish
                         trust_image = "Certificaciones mexicanas visibles, testimonios familias mexicanas, sellos de garantía (1200x800px)"
                         trust_seo = "Estrategia SEO de confianza y calidad"
+                    elif marketplace_code == 'tr':
+                        # Turkey - EXACT COPY OF MEXICO implementation
+                        trust_keywords = "Türk garantisi, kalite sertifikası, ailelerin önerdiği, yerel servis"
+                        # Turkey trust image descriptions in Turkish (like Mexico's Spanish)
+                        trust_image = "Görünür Türk sertifikaları, Türk ailelerinin tanıklıkları, garanti mühürleri (1200x800px)"
+                        trust_seo = "Güven ve kalite SEO stratejisi"
                     elif marketplace_code == 'nl':
                         # Netherlands culture: trust through quality and reliability
                         trust_keywords = "CE keurmerk, Nederlandse garantie, betrouwbare kwaliteit, klantenservice"
                         # Netherlands trust image descriptions in Dutch
                         trust_image = "CE certificering zichtbaar, Nederlandse kwaliteitskeurmerken, garantiebewijzen (1200x800px)"
                         trust_seo = "SEO strategie voor vertrouwen"
-                    elif marketplace_code == 'tr':
-                        # Turkey culture: trust through certifications and local support
-                        trust_keywords = "TSE belgesi, CE sertifikası, 2 yıl garanti, Türkiye destek"
-                        # Turkey trust image descriptions in English (like Netherlands)
-                        trust_image = "ENGLISH: TSE and CE certificates visible, Turkish customer testimonials, warranty badges (1200x800px)"
-                        trust_seo = "Güven odaklı SEO stratejisi"
                     elif marketplace_code == 'es':
                         # Spanish culture: trust through family recommendations and community
                         trust_keywords = "recomendado por familias, garantía extendida, servicio al cliente"
@@ -3455,18 +3681,18 @@ Technical specifications include comprehensive compatibility, robust build quali
                         # Mexico FAQ image descriptions in Spanish
                         faq_image = "Servicio al cliente mexicano sonriente, guía visual paso a paso, iconos amigables (800x600px)"
                         faq_seo = "SEO para preguntas frecuentes México"
+                    elif marketplace_code == 'tr':
+                        # Turkey - EXACT COPY OF MEXICO implementation
+                        faq_keywords = "sık sorular, aile yardımı, kolay rehber, Türk desteği"
+                        # Turkey FAQ image descriptions in Turkish (like Mexico's Spanish)
+                        faq_image = "Gülümseyen Türk müşteri hizmeti, adım adım görsel rehber, yardımcı simgeler (800x600px)"
+                        faq_seo = "Türkiye sık sorulan sorular için SEO"
                     elif marketplace_code == 'nl':
                         # Netherlands culture: direct and practical information
                         faq_keywords = "veelgestelde vragen, praktische hulp, gebruiksaanwijzing, probleemoplossing"
                         # Netherlands FAQ image descriptions in Dutch
                         faq_image = "Duidelijke instructies met pictogrammen, stap-voor-stap handleiding, praktische tips (800x600px)"
                         faq_seo = "SEO voor veelgestelde vragen"
-                    elif marketplace_code == 'tr':
-                        # Turkey culture: detailed support with hospitality
-                        faq_keywords = "sık sorulan sorular, Türkçe destek, kullanım kılavuzu, problem çözümü"
-                        # Turkey FAQ image descriptions in English (like Netherlands)
-                        faq_image = "ENGLISH: Turkish customer service smiling, step-by-step visual guide, helpful icons (800x600px)"
-                        faq_seo = "SSS için SEO optimizasyonu"
                     elif marketplace_code == 'es':
                         # Spanish culture: community help and family-friendly guidance
                         faq_keywords = "ayuda familiar, dudas comunes, consejos prácticos, guía fácil"
@@ -3679,8 +3905,9 @@ Technical specifications include comprehensive compatibility, robust build quali
             # Always save the full comprehensive aplus_html structure
             # The aplus_html already contains properly localized content from the AI response
             # because the AI was instructed to generate localized content in the aplus_plan sections
+            # Set the Mexico-style A+ content for all markets including Turkey
             listing.amazon_aplus_content = aplus_html
-            self.logger.info(f"Comprehensive A+ content HTML saved for {marketplace_code}: {len(aplus_html)} characters")
+            self.logger.info(f"Mexico-style A+ content HTML saved for {marketplace_code}: {len(aplus_html)} characters")
             
             # CRITICAL: The localized content is already embedded within aplus_html structure
             # because the HTML generation above (lines 2085-2430) processes the localized aplus_plan
@@ -4927,9 +5154,9 @@ Return ONLY valid JSON:
             def get_localized_labels(market_code):
                 if market_code == 'tr':
                     return {
-                        'keywords': 'Anahtar Kelimeler',
-                        'image_strategy': 'Görsel Strateji', 
-                        'seo_focus': 'SEO Odak'
+                        'keywords': 'Keywords',
+                        'image_strategy': 'Image Strategy', 
+                        'seo_focus': 'SEO Focus'
                     }
                 elif market_code == 'jp':
                     return {
@@ -4971,15 +5198,29 @@ Return ONLY valid JSON:
             localized_labels = get_localized_labels(marketplace_code)
             sections_html = []
             
-            # Define section order and display names
-            section_order = [
-                ('hero_section', '🎯 Hero Section'),
-                ('features_section', '⭐ Key Features'), 
-                ('comparison_section', '🏆 Why Choose This'),
-                ('usage_section', '📖 How to Use'),
-                ('lifestyle_section', '🌟 Perfect For Your Lifestyle'),
-                ('aplus_content_suggestions', '💡 A+ Content Suggestions')
-            ]
+            # Define section order and display names based on marketplace
+            if marketplace_code == 'tr':
+                # Turkey uses 8-section comprehensive structure
+                section_order = [
+                    ('section1_hero', '🎯 Premium Kalite'),
+                    ('section2_features', '⭐ Özellikler ve Avantajlar'), 
+                    ('section3_usage', '📖 Kullanım Alanları'),
+                    ('section4_quality', '🏆 Kalite ve Garanti'),
+                    ('section5_social_proof', '🌟 Müşteri Memnuniyeti'),
+                    ('section6_comparison', '🥇 Rakip Karşılaştırması'),
+                    ('section7_warranty', '🛡️ Garanti ve Güvence'),
+                    ('section8_package', '📦 Paket İçeriği')
+                ]
+            else:
+                # Other markets use standard structure
+                section_order = [
+                    ('hero_section', '🎯 Hero Section'),
+                    ('features_section', '⭐ Key Features'), 
+                    ('comparison_section', '🏆 Why Choose This'),
+                    ('usage_section', '📖 How to Use'),
+                    ('lifestyle_section', '🌟 Perfect For Your Lifestyle'),
+                    ('aplus_content_suggestions', '💡 A+ Content Suggestions')
+                ]
             
             # Generate HTML for each A+ section
             for section_key, display_name in section_order:
@@ -4987,9 +5228,28 @@ Return ONLY valid JSON:
                 if isinstance(section_data, dict) and section_data:
                     section_title = section_data.get('title', display_name)
                     section_content = section_data.get('content', '')
-                    image_requirements = section_data.get('image_requirements', section_data.get('image_suggestion', ''))
+                    keywords = section_data.get('keywords', [])
+                    image_desc = section_data.get('imageDescription', '')
+                    seo_opt = section_data.get('seoOptimization', '')
                     
-                    section_html = f"""
+                    # Format keywords for display
+                    keywords_str = ', '.join(keywords) if isinstance(keywords, list) else str(keywords)
+                    
+                    # Build comprehensive section HTML for Turkey
+                    if marketplace_code == 'tr':
+                        section_html = f"""
+<div class="aplus-section {section_key}">
+    <h2 class="section-title">{section_title}</h2>
+    <div class="section-content">
+        <p>{section_content}</p>
+        {f'<div class="keywords-box"><strong>{localized_labels["keywords"]}:</strong> {keywords_str}</div>' if keywords_str else ''}
+        {f'<div class="image-requirements"><strong>{localized_labels["image_strategy"]}:</strong><br><span class="image-desc">{image_desc}</span></div>' if image_desc else ''}
+        {f'<div class="seo-note"><strong>{localized_labels["seo_focus"]}:</strong> {seo_opt}</div>' if seo_opt else ''}
+    </div>
+</div>"""
+                    else:
+                        # Standard section for other markets
+                        section_html = f"""
 <div class="aplus-section {section_key}">
     <h2 class="section-title">{section_title}</h2>
     <div class="section-content">
@@ -5088,6 +5348,21 @@ Return ONLY valid JSON:
     margin-top: 15px;
     color: #232f3e;
 }}
+.keywords-box {{
+    background: #f0f8ff;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border-left: 3px solid #007bff;
+}}
+.seo-note {{
+    background: #f8f9fa;
+    padding: 8px;
+    margin: 8px 0;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #666;
+}}
 </style>
 
 <div class="aplus-container">
@@ -5108,3 +5383,174 @@ Return ONLY valid JSON:
                 'brandSummary': result.get('brandSummary', '')
             }
             return json.dumps(comprehensive_strategy, indent=2)
+    
+    def _get_turkey_aplus_enhancement(self):
+        """Get Turkey-specific 8-section A+ content instructions"""
+        return """
+🇹🇷 AMAZON TURKEY A+ CONTENT OPTIMIZATION - EMOTIONAL & CONVERSION FOCUSED (10/10 kalite):
+
+MANDATORY TURKISH CULTURAL ELEMENTS:
+✓ "Ailesinin değerini bilen" ✓ "Güvenilir marka" 
+✓ "Türk kalitesi" ✓ "Sevdikleriniz için"
+✓ "Misafirperverlik" ✓ "Geleneksel değerler"
+✓ "Aileniz için en iyisi" ✓ "Sevdiklerinize değer"
+✓ "Türk ailesinin tercihi" ✓ "Hayalinizdeki kalite"
+✓ "Gurur duyacağınız seçim" ✓ "Çocuklarınız için güvenli"
+
+🚨 KRİTİK A+ İÇERİK KURALI - TÜM 8 SECTION OPTIMIZE EDİLMELİ:
+- Interface labels MUTLAKA İNGİLİZCE: "Keywords", "Image Strategy", "SEO Focus"
+- İçerik TÜRKÇE olmalı!
+- ⚠️ ÇOK ÖZEL KURAL: imageDescription alanları MUTLAKA MEXICO SEVİYESİNDE DETAYLI İNGİLİZCE olmalı!
+- ZORUNLU: Her imageDescription "ENGLISH:" ile başlamalı
+- ZORUNLU: ÖZEL DETAYLAR - yaş, meslek, tam aktivite, zaman, ışık, props, duygular, ürün konumu
+- YASAK: Generic kelimeler "Collage", "Grid", "professional setup", "business environment", "corporate", "quality certificates", "documents displayed", "comparison chart", "customer testimonials", "unboxing experience" - BU KELİMELERİ KULLANMA!
+- ZORUNLU: Tam hikaye anlat - kim, ne yapıyor, nerede, ne zaman, nasıl görünüyor
+- ZORUNLU: HER 8 SECTION için ayrı detaylı lifestyle senaryosu:
+  * Section 1 (Hero): Turkish aile evde, çay/kahve, sabah/akşam ışığı, sıcak aile ortamı
+  * Section 2 (Features): Genç Turkish profesyonel ofiste, iş toplantısı, modern workspace aktivitesi
+  * Section 3 (Usage): Turkish kadın geleneksel evde, misafirler, çay servisi, social moment
+  * Section 4 (Quality): Turkish mühendis/teknisyen laboratuvarda test yaparken, teknik kontrol
+  * Section 5 (Social): Farklı yaş Turkish müşteriler, farklı Turkish şehirler, gerçek yaşam
+  * Section 6 (Comparison): Tech uzmanı modern workspace'te analiz yaparken, side-by-side
+  * Section 7 (Warranty): Customer service rep Turkish aileye video call ile yardım ederken
+  * Section 8 (Package): Turkish aile evde unboxing yapıyor, çocuklar heyecanlı, kutlama anı
+- Örnek: "ENGLISH: Turkish businessman in his 30s using earbuds during video conference call with international clients in modern Istanbul office, morning sunlight streaming through floor-to-ceiling windows, product prominently visible on mahogany desk next to traditional Turkish tea glass and family photo, warm professional atmosphere with city skyline visible in background, shot emphasizes modern Turkish success and international connectivity, commercial lifestyle photography (970x600px)"
+
+🚨 ÇOK KRİTİK KEYWORDS KURALI:
+- ZORUNLU: aPlusContentPlan içindeki TÜM "keywords" alanları MUTLAKA TÜRKÇE olmalı!
+- YASAK İngilizce örnekler: "everyday use", "versatile applications", "practical", "convenient", "5-star reviews", "money-back guarantee", "customer satisfaction", "customer testimonials", "verified reviews", "satisfaction guaranteed", "competitive advantage", "superior choice", "key differentiators", "package contents", "premium packaging", "included accessories"
+- ZORUNLU Türkçe karşılıkları: "günlük kullanım", "çok amaçlı kullanım", "pratik", "kolay kullanım", "5 yıldızlı değerlendirmeler", "para iade garantisi", "müşteri memnuniyeti", "müşteri yorumları", "doğrulanmış incelemeler", "memnuniyet garantisi", "rekabet avantajı", "üstün seçim", "temel farklılıklar", "paket içeriği", "premium ambalaj", "dahil aksesuarlar"
+- HER SECTION'DA keywords alanı SADECE TÜRKÇE kelimeler içermeli!
+
+🚨🚨🚨 KRİTİK 8 BÖLÜM A+ İÇERİK KURALI - MEKSİKA SEVİYESİNDE ZORUNLU! 🚨🚨🚨
+TURKEY için MUTLAKA 8 comprehensive bölüm oluştur:
+
+"aPlusContentPlan": {
+  "section1_hero": {
+    "title": "Türkçe ana başlık",
+    "content": "Detaylı Türkçe hikaye (min 200 karakter)",
+    "keywords": ["türkçe", "anahtar", "kelimeler"],
+    "imageDescription": "ENGLISH: EXTREMELY detailed description...",
+    "seoOptimization": "ENGLISH: SEO strategy note"
+  },
+  "section2_features": {
+    "title": "Özellikler ve Avantajlar",
+    "content": "6-8 teknik özellik detaylı açıklama",
+    "keywords": ["özellik", "avantaj", "kalite"],
+    "imageDescription": "ENGLISH: Detailed feature showcase...",
+    "seoOptimization": "ENGLISH: Feature SEO strategy"
+  },
+  "section3_usage": {
+    "title": "Kullanım Alanları",
+    "content": "Günlük kullanım senaryoları",
+    "keywords": ["kullanım", "uygulama", "pratik"],
+    "imageDescription": "ENGLISH: Usage scenarios showing...",
+    "seoOptimization": "ENGLISH: Usage SEO focus"
+  },
+  "section4_quality": {
+    "title": "Kalite ve Garanti",
+    "content": "Kalite standartları ve güvence",
+    "keywords": ["kalite", "garanti", "güvenilir"],
+    "imageDescription": "ENGLISH: Quality certificates and guarantees...",
+    "seoOptimization": "ENGLISH: Trust building SEO"
+  },
+  "section5_social_proof": {
+    "title": "Müşteri Memnuniyeti",
+    "content": "Müşteri yorumları ve değerlendirmeler",
+    "keywords": ["memnuniyet", "yorum", "tavsiye"],
+    "imageDescription": "ENGLISH: Customer testimonials and reviews...",
+    "seoOptimization": "ENGLISH: Social proof SEO"
+  },
+  "section6_comparison": {
+    "title": "Rakip Karşılaştırması",
+    "content": "Diğer markalarla karşılaştırma",
+    "keywords": ["karşılaştırma", "üstünlük", "fark"],
+    "imageDescription": "ENGLISH: Comparison chart showing advantages...",
+    "seoOptimization": "ENGLISH: Competitive advantage SEO"
+  },
+  "section7_warranty": {
+    "title": "Garanti ve Destek",
+    "content": "Garanti koşulları ve müşteri desteği",
+    "keywords": ["garanti", "destek", "hizmet"],
+    "imageDescription": "ENGLISH: Warranty information and support...",
+    "seoOptimization": "ENGLISH: Support and warranty SEO"
+  },
+  "section8_package": {
+    "title": "Paket İçeriği",
+    "content": "Kutuda neler var detaylı liste",
+    "keywords": ["paket", "içerik", "aksesuar"],
+    "imageDescription": "ENGLISH: Unboxing experience showing all contents...",
+    "seoOptimization": "ENGLISH: Package contents SEO"
+  }
+}
+
+ZORUNLU: Tüm 8 bölümü eksiksiz oluştur! Her bölüm min 150 karakter Türkçe içerik + İngilizce imageDescription olmalı!
+"""
+
+    def _create_turkey_comprehensive_aplus_plan(self, result, product):
+        """Create a comprehensive 8-section A+ plan for Turkey when extraction fails"""
+        
+        # Extract basic content from the result
+        title = result.get('productTitle', product.name)
+        description = result.get('productDescription', product.description)
+        brand = product.brand_name
+        
+        # Create comprehensive 8-section plan for Turkey
+        return {
+            "section1_hero": {
+                "title": f"{brand} Premium Kalite",
+                "content": f"Sayın müşterilerimiz, {brand} markası olarak sizlere en kaliteli ürünleri sunmaktan gurur duyuyoruz. {title} ile günlük yaşamınızda konfor ve kaliteyi bir arada yaşayacaksınız. Türk ailesinin güvenilir tercihi olan markamız, uzun yılların deneyimi ile sizlere hizmet veriyor.",
+                "keywords": ["premium kalite", "güvenilir marka", "türk ailesi", "konfor"],
+                "imageDescription": "ENGLISH: Lifestyle image showing a Turkish family in their modern Istanbul apartment, father using the AI translation earbuds during an international business call while mother and children prepare traditional Turkish tea in the background, warm golden hour lighting streaming through large windows, clear focus on product usage, authentic family moment (970x600px)",
+                "seoOptimization": "ENGLISH: Hero section focusing on brand trust and family values"
+            },
+            "section2_features": {
+                "title": "Özellikler ve Avantajlar",
+                "content": f"Bu ürün özenle tasarlanmış özellikleri ile günlük ihtiyaçlarınızı karşılar. Yüksek kalite standartları, dayanıklı malzeme kullanımı ve kullanıcı dostu tasarım bir arada. {description[:200] if description else 'Detaylı özellikler sayesinde uzun süre memnuniyetle kullanabilirsiniz.'}",
+                "keywords": ["özellikler", "avantajlar", "kalite standartları", "dayanıklı"],
+                "imageDescription": "ENGLISH: Close-up lifestyle shot of a young Turkish professional in a sleek Ankara office wearing the AI translation earbuds while reviewing technical documents, with product features clearly visible, warm office lighting, colleagues collaborating in the blurred background, emphasizing precision and professional reliability (970x600px)",
+                "seoOptimization": "ENGLISH: Features highlighting quality and durability"
+            },
+            "section3_usage": {
+                "title": "Kullanım Alanları",
+                "content": "Evde, işte, seyahatte her an yanınızda. Türk yaşam tarzına uygun tasarım ile günlük aktivitelerinizde size eşlik eder. Misafir ağırlarken, aile zamanlarında veya profesyonel kullanımda mükemmel performans sergiler.",
+                "keywords": ["kullanım alanları", "günlük aktivite", "misafir ağırlama", "aile zamanı"],
+                "imageDescription": "ENGLISH: Lifestyle image showing a Turkish woman using the AI translation earbuds while video calling international friends, sitting in a beautifully decorated traditional Turkish living room with ornate carpets and tea service, natural afternoon light from balcony doors, authentic hospitality moment with product seamlessly integrated (970x600px)",
+                "seoOptimization": "ENGLISH: Usage scenarios for Turkish lifestyle"
+            },
+            "section4_quality": {
+                "title": "Kalite ve Garanti",
+                "content": "CE sertifikalı güvenilir kalite. 2 yıl tam garanti ile uzun süre güven içinde kullanın. Türkiye standartlarına uygun test edilmiş, uzman ekibimiz tarafından onaylanmış ürün. Kalite kontrolden geçmiş her detay.",
+                "keywords": ["ce sertifikalı", "2 yıl garanti", "türkiye standartları", "kalite kontrol"],
+                "imageDescription": "ENGLISH: Lifestyle shot of Turkish engineer testing the AI translation earbuds in a modern tech lab in Istanbul, quality testing equipment visible in background, product displayed with CE certification and warranty cards, clean industrial lighting, emphasizing Turkish manufacturing excellence and reliability (970x600px)",
+                "seoOptimization": "ENGLISH: Quality assurance and warranty focus"
+            },
+            "section5_social_proof": {
+                "title": "Müşteri Memnuniyeti",
+                "content": "Binlerce memnun müşterimizin tercihi. 5 yıldızlı değerlendirmeler ve pozitif geri bildirimler. 'Ailemizin vazgeçilmezi oldu' diyen müşterilerimiz, ürün kalitesini onaylıyor. Türkiye genelinde güvenilir hizmet.",
+                "keywords": ["memnun müşteri", "5 yıldız", "pozitif geri bildirim", "güvenilir hizmet"],
+                "imageDescription": "ENGLISH: Lifestyle montage showing diverse Turkish customers - a university student in Izmir using earbuds for language learning, a businessman in Istanbul during international meetings, and a grandmother in Antalya talking to overseas relatives, all with genuine smiles, natural lighting, authentic Turkish settings (970x600px)",
+                "seoOptimization": "ENGLISH: Customer testimonials and satisfaction"
+            },
+            "section6_comparison": {
+                "title": "Rakip Karşılaştırması",
+                "content": "Diğer markalarla karşılaştırıldığında üstün performans. Fiyat-performans oranında sektör lideri. Kalite, dayanıklılık ve müşteri hizmetlerinde fark yaratan detaylar. Türk müşterisinin beklentilerini karşılayan özel tasarım.",
+                "keywords": ["üstün performans", "fiyat performans", "sektör lideri", "özel tasarım"],
+                "imageDescription": "ENGLISH: Lifestyle scene of Turkish tech consultant in a modern Ankara workspace comparing different translation earbuds side-by-side, with infographic showing advantages displayed on wall-mounted screens, colleagues discussing in background, professional yet approachable atmosphere, clear product differentiation focus (970x600px)",
+                "seoOptimization": "ENGLISH: Competitive advantages and differentiation"
+            },
+            "section7_warranty": {
+                "title": "Garanti ve Destek",
+                "content": "7/24 Türkçe müşteri desteği. Uzman teknisyen kadrosu ile hızlı çözüm. Türkiye genelinde yetkili servis ağı. Garanti kapsamında ücretsiz bakım ve onarım hizmeti. Müşteri memnuniyeti önceliğimiz.",
+                "keywords": ["türkçe destek", "uzman teknisyen", "yetkili servis", "ücretsiz bakım"],
+                "imageDescription": "ENGLISH: Lifestyle scene showing Turkish customer service specialist in Istanbul helping a family via video call, with warranty documentation and service tools visible, warm office environment with Turkish cultural elements, emphasizing personal care and local support expertise (970x600px)",
+                "seoOptimization": "ENGLISH: Support services and warranty coverage"
+            },
+            "section8_package": {
+                "title": "Paket İçeriği",
+                "content": "Dikkatli ambalajlama ile güvenli teslimat. Paket içerisinde ürün, kullanım kılavuzu (Türkçe), garanti belgesi ve gerekli aksesuarlar. Hediye paketi seçeneği ile sevdiklerinize özel sürpriz. Zarar görmeyecek şekilde özel koruma.",
+                "keywords": ["dikkatli ambalaj", "türkçe kılavuz", "garanti belgesi", "hediye paketi"],
+                "imageDescription": "ENGLISH: Lifestyle unboxing scene showing Turkish family opening the premium package in their modern living room, with traditional Turkish elements like tea glasses nearby, father reading Turkish manual while mother examines the earbuds, children excited in background, natural lighting emphasizing the joy of receiving quality technology (970x600px)",
+                "seoOptimization": "ENGLISH: Package contents and presentation"
+            }
+        }

@@ -509,7 +509,7 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                         </button>
                       </div>
                       <div className="flex flex-wrap gap-2">
-                        {(currentListing.keywords || '').split(', ').filter(keyword => keyword.split(' ').length <= 2).map((keyword, index) => (
+                        {(typeof currentListing.keywords === 'string' ? currentListing.keywords : (currentListing.keywords || []).join(', ') || '').split(', ').filter(keyword => keyword.split(' ').length <= 2).map((keyword, index) => (
                           <span
                             key={index}
                             className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium border border-blue-300"
