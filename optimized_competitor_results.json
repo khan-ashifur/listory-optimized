@@ -1,0 +1,91 @@
+{
+  "test_date": "2025-08-14T20:10:53.443977",
+  "markets_tested": 4,
+  "beating_competitors": 4,
+  "results": [
+    {
+      "market": "Brazil",
+      "conversion_elements": 20,
+      "conversion_analysis": {
+        "trust_signals": 10,
+        "urgency_elements": 1,
+        "benefit_structure": 1,
+        "call_to_action": 0,
+        "social_proof": 4,
+        "guarantees": 2,
+        "scarcity": 0,
+        "authority": 2
+      },
+      "competitor_scores": {
+        "helium10": 10,
+        "jasper": 10,
+        "copymonkey": 8.0,
+        "average": 9.333333333333334
+      },
+      "verdict": "🏆 DESTROYS ALL COMPETITORS!"
+    },
+    {
+      "market": "Mexico",
+      "conversion_elements": 22,
+      "conversion_analysis": {
+        "trust_signals": 10,
+        "urgency_elements": 1,
+        "benefit_structure": 1,
+        "call_to_action": 0,
+        "social_proof": 3,
+        "guarantees": 3,
+        "scarcity": 0,
+        "authority": 4
+      },
+      "competitor_scores": {
+        "helium10": 10,
+        "jasper": 10,
+        "copymonkey": 8.8,
+        "average": 9.6
+      },
+      "verdict": "🏆 DESTROYS ALL COMPETITORS!"
+    },
+    {
+      "market": "Netherlands",
+      "conversion_elements": 22,
+      "conversion_analysis": {
+        "trust_signals": 8,
+        "urgency_elements": 2,
+        "benefit_structure": 1,
+        "call_to_action": 0,
+        "social_proof": 4,
+        "guarantees": 4,
+        "scarcity": 1,
+        "authority": 2
+      },
+      "competitor_scores": {
+        "helium10": 10,
+        "jasper": 10,
+        "copymonkey": 8.8,
+        "average": 9.6
+      },
+      "verdict": "🏆 DESTROYS ALL COMPETITORS!"
+    },
+    {
+      "market": "Turkey",
+      "conversion_elements": 19,
+      "conversion_analysis": {
+        "trust_signals": 8,
+        "urgency_elements": 2,
+        "benefit_structure": 0,
+        "call_to_action": 1,
+        "social_proof": 2,
+        "guarantees": 2,
+        "scarcity": 2,
+        "authority": 2
+      },
+      "competitor_scores": {
+        "helium10": 10,
+        "jasper": 9.5,
+        "copymonkey": 7.6,
+        "average": 9.033333333333333
+      },
+      "verdict": "🏆 DESTROYS ALL COMPETITORS!"
+    }
+  ]
+}

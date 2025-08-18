@@ -1,0 +1,417 @@
+{
+  "us": {
+    "linguistic_scores": [],
+    "occasion_scores": [],
+    "section_completeness": [
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      },
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      },
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      }
+    ],
+    "competitor_benchmarks": [],
+    "overall_quality": 0
+  },
+  "fr": {
+    "linguistic_scores": [],
+    "occasion_scores": [],
+    "section_completeness": [
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      },
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      },
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      }
+    ],
+    "competitor_benchmarks": [],
+    "overall_quality": 0
+  },
+  "it": {
+    "linguistic_scores": [],
+    "occasion_scores": [],
+    "section_completeness": [
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      },
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      },
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      }
+    ],
+    "competitor_benchmarks": [],
+    "overall_quality": 0
+  },
+  "de": {
+    "linguistic_scores": [],
+    "occasion_scores": [],
+    "section_completeness": [
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      },
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      },
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      }
+    ],
+    "competitor_benchmarks": [],
+    "overall_quality": 0
+  },
+  "es": {
+    "linguistic_scores": [],
+    "occasion_scores": [],
+    "section_completeness": [
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      },
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      },
+      {
+        "title": {
+          "exists": false,
+          "quality": 0
+        },
+        "bullet_points": {
+          "exists": false,
+          "count": 0,
+          "quality": 0
+        },
+        "description": {
+          "exists": false,
+          "quality": 0
+        },
+        "backend_keywords": {
+          "exists": false,
+          "count": 0
+        },
+        "aplus_content": {
+          "exists": false,
+          "sections": 0,
+          "quality": 0
+        },
+        "error": "Product() got unexpected keyword arguments: 'about_item', 'key_features', 'key_product_features'"
+      }
+    ],
+    "competitor_benchmarks": [],
+    "overall_quality": 0
+  }
+}

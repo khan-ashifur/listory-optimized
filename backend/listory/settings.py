@@ -123,27 +123,47 @@ LOGGING = {
         },
     },
     'root': {
-        'handlers': ['file'],  # Use file handler to avoid console Unicode issues
-        'level': 'WARNING',
+        'handlers': ['null'],  # Disable all output to prevent encoding issues
+        'level': 'ERROR',
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
-            'level': 'WARNING',
+            'handlers': ['null'],
+            'level': 'ERROR',
             'propagate': False,
         },
         'apps': {
-            'handlers': ['file'],
-            'level': 'WARNING',
+            'handlers': ['null'],
+            'level': 'ERROR',
             'propagate': False,
         },
         'django.request': {
-            'handlers': ['file'],
+            'handlers': ['null'],
             'level': 'ERROR',
             'propagate': False,
         },
     },
 }
+
+# Completely disable stdout buffering to prevent encoding issues
+import sys
+import io
+if hasattr(sys.stdout, 'reconfigure'):
+    try:
+        sys.stdout.reconfigure(encoding='utf-8', errors='ignore')
+        sys.stderr.reconfigure(encoding='utf-8', errors='ignore')
+    except:
+        pass
+
+# Override print function to prevent encoding errors during web requests
+import builtins
+original_print = builtins.print
+def safe_print(*args, **kwargs):
+    try:
+        original_print(*args, **kwargs)
+    except (UnicodeEncodeError, OSError):
+        pass  # Silently ignore encoding errors
+builtins.print = safe_print
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

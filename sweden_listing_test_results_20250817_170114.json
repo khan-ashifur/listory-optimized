@@ -1,0 +1,20 @@
+{
+  "timestamp": "20250817_170114",
+  "product": {
+    "id": 821,
+    "name": "Professional Kitchen Knife Set",
+    "marketplace": "se",
+    "language": "sv"
+  },
+  "listing": null,
+  "analysis": {
+    "overall_quality": "Failed",
+    "issues": [
+      "No listing generated"
+    ],
+    "successes": [],
+    "keyword_analysis": {},
+    "aplus_analysis": {},
+    "language_analysis": {}
+  }
+}

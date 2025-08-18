@@ -1,0 +1,18 @@
+{
+  "timestamp": "2025-08-17T19:12:10.716249",
+  "product_id": 840,
+  "marketplace": "tr",
+  "aplus_generated": true,
+  "aplus_length": 6249,
+  "aplus_preview": "<div class=\"aplus-introduction bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 p-4 sm:p-6 rounded-lg mb-6\">\n    <div class=\"flex items-center mb-4\">\n        <span class=\"text-3xl mr-3\">🚀</span>\n        <div>\n            <h2 class=\"text-xl sm:text-2xl font-bold text-gray-900\">Complete A+ Content Strategy</h2>\n            <p class=\"text-purple-700 text-sm\">Professional Amazon A+ content for enhanced product presentation.</p>\n        </div>\n    </div>\n    <div class=\"grid grid-cols-1 md:grid-cols-3 gap-4 text-sm\">\n        <div class=\"bg-white p-3 rounded border\">\n            <div class=\"flex items-center mb-2\">\n                <span class=\"mr-2\">🧠</span>\n                <strong class=\"text-gray-900\">AI-Generated Briefs</strong>\n            </div>\n            <p class=\"text-gray-600\">Complete image concepts with titles, scenes, and overlay text</p>\n        </div>\n        <div class=\"bg-white p-3 rounded border\">\n            <div class=\"flex items-center mb-2\">\n         ",
+  "title_length": 163,
+  "description_length": 832,
+  "bullets_count": 1,
+  "fields_check": {
+    "hero_title": true,
+    "hero_content": true,
+    "features": true,
+    "trust_builders": true,
+    "faqs": true
+  }
+}

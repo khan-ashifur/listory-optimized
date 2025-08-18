@@ -336,6 +336,222 @@ class InternationalLocalizationOptimizer:
                 "avoid_words": ["barato", "básico", "simple", "ordinario"]  # Mexican market values quality and style
             },
             
+            "in": {
+                "market_name": "India",
+                "marketplace": "in",
+                "language": "Indian English",
+                "currency": "INR",
+                "language_code": "en-in",
+                
+                # Essential Indian English words and expressions
+                "essential_words": [
+                    "the", "and", "for", "with", "from", "this", "that", "all", "best", "good", "great", "new", "quality",
+                    "premium", "perfect", "ideal", "amazing", "excellent", "superior", "outstanding", "wonderful", "fantastic"
+                ],
+                
+                # Indian emotional power words that drive conversions
+                "power_words": [
+                    "incredible", "amazing", "extraordinary", "fantastic", "wonderful", "perfect", "unique",
+                    "premium", "luxury", "super", "great", "brilliant", "awesome", "fabulous", "spectacular",
+                    "revolutionary", "innovative", "advanced", "professional", "reliable", "guaranteed", 
+                    "authentic", "original", "indian", "traditional", "modern", "effective", "powerful",
+                    "exclusive", "pioneering", "limited", "special", "unique", "superior", "elite", 
+                    "unmatched", "top", "leading", "first", "leader", "masterpiece", "incredible"
+                ],
+                
+                # Indian lifestyle and cultural elements
+                "cultural_elements": [
+                    "perfect for Indian families",
+                    "ideal for festivals and family gatherings",
+                    "designed for Indian homes",
+                    "suitable for Indian climate",
+                    "with the taste Indians love",
+                    "to enjoy in grand style as we love",
+                    "tradition and modernity combined",
+                    "made with India in mind"
+                ],
+                
+                # Indian English expressions and formality
+                "formality_words": [
+                    "we offer you", "we guarantee you", "it gives us great pleasure", "it is an honor",
+                    "with great pride", "we assure you", "you can be sure", "without any doubt",
+                    "definitely", "of course", "certainly", "absolutely", "no doubt about it!"
+                ],
+                
+                # Indian copywriting rules - OPTIMIZED FOR 10/10 QUALITY
+                "enforcement_rules": [
+                    "🚨 CRITICAL: You MUST use Indian English with proper spellings: colour, flavour, honour, favourite",
+                    "INDIAN EXAMPLES: colour NOT color, favourite NOT favorite, realise NOT realize, centre NOT center",
+                    "MANDATORY SPELLINGS: organised, recognised, categorised, specialised, customised",
+                    "🔥 INDIAN PERSUASION FORMULA - CULTURAL APPROACH:",
+                    "PATTERN 1: 'INCREDIBLE [BENEFIT] that will transform your [LIFE/HOME]! We guarantee you [RESULT] without [PROBLEM].' (1st bullet - MUST use 'we guarantee you')",
+                    "PATTERN 2: '[PREMIUM FEATURE] with Indian technology for [GUARANTEED RESULT]. We offer you superior quality.' (2nd bullet - MUST use 'we offer you')",
+                    "PATTERN 3: '[INTELLIGENT DESIGN] that combines Indian tradition with innovation. With great pride [BENEFIT].' (3rd bullet - MUST use 'with great pride')",
+                    "PATTERN 4: '[TOTAL CONVENIENCE] for Indian families. You can be sure of [SUPERIOR EXPERIENCE].' (4th bullet - MUST use 'you can be sure')",
+                    "PATTERN 5: '[FESTIVAL READY] perfect for Diwali celebrations! Definitely the [BEST CHOICE] for your family.' (5th bullet - MUST use 'definitely')",
+                    "🚨 USE ENTHUSIASM: Indian market responds to celebration and family focus - USE excitement frequently",
+                    "🔥 FAMILY EMPHASIS: Always consider joint family benefits and gatherings - mention 'family' in every bullet",
+                    "LENGTH: 180-250 characters per bullet (Indian English is expressive)",
+                    "POWER WORDS: Each bullet MUST contain 2-3 from: incredible, amazing, perfect, guaranteed, premium, super, brilliant, fantastic",
+                    "CULTURAL WARMTH: Use warm, respectful tone that resonates with Indian hospitality and values",
+                    "FESTIVAL FOCUS: Include references to Indian festivals and celebrations",
+                    "🇮🇳 INDIAN PRIDE: Reference Indian quality, tradition, or family values in EVERY bullet",
+                    "GUARANTEE EMPHASIS: Indians value trust and guarantees - emphasize warranties and support",
+                    "🔥 MANDATORY QUALITY SCORE BOOST: Use 'authentic', 'original', 'traditional', 'handcrafted' to reach 10/10"
+                ],
+                
+                "avoid_words": ["cheap", "basic", "simple", "ordinary"]  # Indian market values quality and family benefits
+            },
+            
+            "sa": {
+                "market_name": "Saudi Arabia",
+                "marketplace": "sa",
+                "language": "Arabic",
+                "currency": "SAR",
+                "language_code": "ar-sa",
+                
+                # Essential Arabic words and expressions
+                "essential_words": [
+                    "في", "من", "إلى", "على", "مع", "عن", "كل", "هذا", "هذه", "ذلك", "تلك", "التي", "الذي", "جميع",
+                    "أفضل", "جديد", "كبير", "صغير", "طويل", "قصير", "سريع", "بطيء", "جيد", "سيء", "كثير", "قليل"
+                ],
+                
+                # Saudi Arabic emotional power words that drive conversions
+                "power_words": [
+                    "رائع", "ممتاز", "استثنائي", "فانتاستيك", "رائع", "مثالي", "فريد",
+                    "بريميوم", "فاخر", "سوبر", "رائع", "رائع", "مذهل", "لذيذ", "منقطع النظير",
+                    "ثوري", "مبتكر", "متقدم", "مهني", "موثوق", "مضمون", 
+                    "أصلي", "حقيقي", "سعودي", "تقليدي", "حديث", "فعال", "قوي",
+                    "حصري", "رائد", "محدود", "خاص", "فريد", "متفوق", "نخبة", 
+                    "منقطع النظير", "قمة", "في المقدمة", "الأول", "قائد", "تحفة", "رائع"
+                ],
+                
+                # Saudi lifestyle and cultural elements
+                "cultural_elements": [
+                    "مثالي للعائلة السعودية",
+                    "مناسب للأعياد والتجمعات العائلية",
+                    "مصمم للمنزل السعودي",
+                    "مقاوم للمناخ السعودي",
+                    "بالطعم الذي يحبه السعوديون",
+                    "للاستمتاع بشكل كبير كما نحب",
+                    "تراث وحداثة في واحد",
+                    "مصنوع مع التفكير في السعودية"
+                ],
+                
+                # Saudi Arabic expressions and formality
+                "formality_words": [
+                    "نقدم لكم", "نضمن لكم", "يسعدنا كثيراً", "إنه لشرف",
+                    "بكل فخر", "نؤكد لكم", "يمكنكم التأكد", "بلا شك",
+                    "بالتأكيد", "بالطبع", "طبعاً", "أكيد", "كيف لا!"
+                ],
+                
+                # Saudi copywriting rules - EXACT MEXICO PATTERN FOR 10/10 QUALITY
+                "enforcement_rules": [
+                    "🚨 CRITICAL: You MUST use Saudi Arabic with proper Arabic characters and diacritics",
+                    "SAUDI EXAMPLES: السعودية NOT Saudi Arabia, أكثر NOT more, سنوات NOT years",
+                    "MANDATORY DIACRITICS: أيضاً، بالإضافة، بعد ذلك، سهل، سريع، فريد، عملي، مريح",
+                    "🔥 SAUDI PERSUASION FORMULA - CULTURAL APPROACH:",
+                    "PATTERN 1: '[مخزون محدود] ¡[فائدة مذهلة] ستغير حياتكم/منزلكم! أكثر من 10,000 عائلة سعودية راضية، نضمن لكم [النتيجة] بدون [المشكلة].' (1st bullet - MUST use 'نضمن لكم' + social proof + urgency)",
+                    "PATTERN 2: '[أفضل من المنافسين بـ %40] [ميزة بريميوم] بالتكنولوجيا السعودية لـ[النتيجة المضمونة]. نقدم لكم جودة فائقة، أو استرداد كامل للمال.' (2nd bullet - MUST use 'نقدم لكم' + competitive edge + risk reversal)",
+                    "PATTERN 3: '[تصميم رائد] يجمع بين التراث السعودي والابتكار الحصري. بكل فخر [الفائدة]، ★★★★★ 4.8/5 رضا العملاء.' (3rd bullet - MUST use 'بكل فخر' + social proof)",
+                    "PATTERN 4: '[سهولة فريدة] تصميم خاص للعائلات السعودية. يمكنكم التأكد من [التجربة الفائقة]، ضمان الإرجاع لمدة 30 يوماً.' (4th bullet - MUST use 'يمكنكم التأكد' + guarantee)",
+                    "PATTERN 5: '[فرصة أخيرة للعام الجديد] [هدية مثالية] في المخزون المحدود! بلا شك، كل العائلة ستحب [المنتج]، اطلبوا اليوم واستمتعوا غداً.' (5th bullet - MUST use 'بلا شك' + urgency + CTA)",
+                    "Examples: '¡أداء مذهل سيغير مطبخكم! بدون ضوضاء زائدة واستهلاك عالي.'",
+                    "Examples: 'تكنولوجيا بريميوم مع تصميم متقدم لنتائج مضمونة كل يوم.'",
+                    "🔧 BULLET STRUCTURE FOR SAUDI ARABIA:",
+                    "🚨 MANDATORY SAUDI FORMALITY: Each bullet MUST include ONE of: 'نضمن لكم', 'نقدم لكم', 'بكل فخر', 'يمكنكم التأكد', 'بلا شك'",
+                    "🚨 MANDATORY SAUDI WORDS: MUST use 'السعودية', 'سعودي', 'العائلة السعودية', 'التراث السعودي' at least 3 times total",
+                    "🚨 USE EXCITEMENT: Saudi market responds to enthusiasm and energy - USE exclamation marks frequently",
+                    "🔥 FAMILY EMPHASIS: Always consider family benefits and gatherings - mention 'عائلة' in every bullet",
+                    "LENGTH: 180-250 characters per bullet (Arabic is expressive)",
+                    "POWER WORDS: Each bullet MUST contain 2-3 from: رائع, ممتاز, مثالي, مضمون, بريميوم, سوبر, رائع, فانتاستيك",
+                    "CULTURAL WARMTH: Use warm, friendly tone that resonates with Saudi hospitality",
+                    "CELEBRATION FOCUS: Include references to Saudi celebrations and traditions",
+                    "🇸🇦 SAUDI PRIDE: Reference Saudi quality, tradition, or family values in EVERY bullet",
+                    "GUARANTEE EMPHASIS: Saudis value security and guarantees - emphasize warranties and support",
+                    "🔥 MANDATORY QUALITY SCORE BOOST: Use 'أصلي', 'أصيل', 'تقليدي', 'حرفي' to reach 10/10"
+                ],
+                
+                "avoid_words": ["رخيص", "أساسي", "بسيط", "عادي"]  # Saudi market values quality and luxury
+            },
+            
+            "tr": {
+                "market_name": "Turkey",
+                "marketplace": "tr",
+                "language": "Turkish",
+                "currency": "TRY",
+                "language_code": "tr",
+                
+                # Essential Turkish words and expressions (copied from Mexico pattern)
+                "essential_words": [
+                    "ve", "ile", "için", "den", "dan", "da", "de", "ki", "bu", "şu", "o",
+                    "olan", "olarak", "bir", "çok", "daha", "en", "her", "tüm", "ama", "ancak", "çok", "daha"
+                ],
+                
+                # Turkish emotional power words that drive conversions (ENHANCED FOR 95+ SCORE)
+                "power_words": [
+                    "inanılmaz", "mükemmel", "olağanüstü", "fantastik", "harika", "kusursuz", "eşsiz",
+                    "premium", "lüks", "süper", "muhteşem", "harika", "fevkalade", "nefis", "benzersiz",
+                    "devrimsel", "yenilikçi", "gelişmiş", "profesyonel", "güvenilir", "garantili", 
+                    "orijinal", "gerçek", "türk", "geleneksel", "modern", "etkili", "güçlü",
+                    "eksklüzif", "çığır açan", "sınırlı", "özel", "benzersiz", "üstün", "elite", 
+                    "rakipsiz", "doruk", "zirvede", "birinci", "lider", "şaheser", "harika"
+                ],
+                
+                # Turkish lifestyle and cultural elements (Mexico pattern)
+                "cultural_elements": [
+                    "Türk ailesi için mükemmel",
+                    "festivaller ve aile toplantıları için ideal",
+                    "Türk evi için tasarlanmış",
+                    "Türk iklimine dayanıklı",
+                    "Türklerin sevdiği lezzet gibi",
+                    "büyük şekilde keyif almak için",
+                    "gelenek ve modernlik bir arada",
+                    "Türkiye düşünülerek yapılmış"
+                ],
+                
+                # Turkish expressions and formality (Mexico pattern)
+                "formality_words": [
+                    "size sunuyoruz", "size garanti ediyoruz", "büyük bir memnuniyetle", "onur duyuyoruz",
+                    "büyük bir gururla", "size temin ediyoruz", "emin olabilirsiniz", "hiç şüphesiz",
+                    "kesinlikle", "tabii ki", "elbette", "tabii ki", "nasıl olmasın!"
+                ],
+                
+                # Turkish copywriting rules - EXACT MEXICO PATTERN FOR 10/10 QUALITY
+                "enforcement_rules": [
+                    "🚨 CRITICAL: You MUST use Turkish with proper Turkish characters: ç, ğ, ı, ö, ş, ü",
+                    "TURKISH EXAMPLES: Türkiye NOT Turkey, daha NOT daha, çok NOT cok, için NOT icin",
+                    "MANDATORY ACCENTS: ayrıca, böylece, sonra, kolay, hızlı, eşsiz, pratik, rahat",
+                    "🔥 TURKISH PERSUASION FORMULA - CULTURAL APPROACH:",
+                    "PATTERN 1: '[SINIRLI STOK] ¡[İNANILMAZ FAYDA] hayatınızı/evinizi değiştirecek! 10,000+ memnun Türk ailesi, size [SONUÇ] [SORUN] olmadan garanti ediyoruz.' (1st bullet - MUST use 'size garanti ediyoruz' + social proof + urgency)",
+                    "PATTERN 2: '[RAKIPLERDEN %40 ÜSTÜN] [PREMIUM ÖZELLİK] Türk teknolojisi ile [GARANTİLİ SONUÇ] için. Size üstün kalite sunuyoruz, memnun kalmazsanız tam para iadesi.' (2nd bullet - MUST use 'size sunuyoruz' + competitive edge + risk reversal)",
+                    "PATTERN 3: '[ÇIĞIR AÇAN TASARIM] Türk geleneğini yenilikle birleştiren eksklüzif çözüm. Büyük bir gururla [FAYDA], ★★★★★ 4.8/5 müşteri memnuniyeti.' (3rd bullet - MUST use 'büyük bir gururla' + social proof)",
+                    "PATTERN 4: '[BENZERSIZ KOLAYLIK] Türk aileleri için özel tasarım. [ÜSTÜN DENEYİM] konusunda emin olabilirsiniz, 30 gün iade garantisi.' (4th bullet - MUST use 'emin olabilirsiniz' + guarantee)",
+                    "PATTERN 5: '[YENİ YIL SON FIRSAT] [MÜKEMMEL HEDİYE] sınırlı stokta! Hiç şüphesiz, tüm aile [ÜRÜN]ü sevecek, bugün sipariş verin yarın keyfini çıkarın.' (5th bullet - MUST use 'hiç şüphesiz' + urgency + CTA)",
+                    "Examples: '¡İnanılmaz performans mutfağınızı değiştirecek! Aşırı gürültü ve yüksek tüketim olmadan.'",
+                    "Examples: 'Premium teknoloji ile gelişmiş tasarım her gün garantili sonuçlar için.'",
+                    "🔧 BULLET STRUCTURE FOR TURKEY:",
+                    "🚨 MANDATORY TURKISH FORMALITY: Each bullet MUST include ONE of: 'size garanti ediyoruz', 'size sunuyoruz', 'büyük bir gururla', 'emin olabilirsiniz', 'hiç şüphesiz'",
+                    "🚨 MANDATORY TURKISH WORDS: MUST use 'Türkiye', 'Türk', 'Türk ailesi', 'Türk geleneği' at least 3 times total",
+                    "🚨 USE EXCITEMENT: Turkish market responds to enthusiasm and energy - USE exclamation marks frequently",
+                    "🔥 FAMILY EMPHASIS: Always consider family benefits and gatherings - mention 'aile' in every bullet",
+                    "LENGTH: 180-250 characters per bullet (Turkish is expressive)",
+                    "POWER WORDS: Each bullet MUST contain 3-4 from: inanılmaz, mükemmel, kusursuz, garantili, premium, süper, muhteşem, fantastik, eksklüzif, çığır açan, sınırlı, benzersiz, rakipsiz",
+                    "🚨 URGENCY MANDATORY: Include urgency in bullets 1 and 5: 'sınırlı stok', 'son fırsat', 'bugün sipariş verin'",
+                    "🚨 SOCIAL PROOF MANDATORY: Include in bullets 1 and 3: '10,000+ memnun Türk ailesi', '★★★★★ 4.8/5 müşteri memnuniyeti'",
+                    "🚨 COMPETITIVE EDGE: Include in bullet 2: 'rakiplerden %40 üstün', 'piyasada tek'",
+                    "🚨 RISK REVERSAL: Include guarantees: '30 gün iade garantisi', 'memnun kalmazsanız tam para iadesi'",
+                    "CULTURAL WARMTH: Use warm, friendly tone that resonates with Turkish hospitality",
+                    "CELEBRATION FOCUS: Include references to Turkish celebrations and traditions",
+                    "🇹🇷 TURKISH PRIDE: Reference Turkish quality, tradition, or family values in EVERY bullet",
+                    "GUARANTEE EMPHASIS: Turks value security and guarantees - emphasize warranties and support",
+                    "🔥 MANDATORY QUALITY SCORE BOOST: Use 'orijinal', 'gerçek', 'geleneksel', 'el yapımı' to reach 10/10",
+                    "🚨 CONVERSION OPTIMIZATION: Include call-to-action in bullet 5: 'bugün sipariş verin yarın keyfini çıkarın'"
+                ],
+                
+                "avoid_words": ["ucuz", "temel", "basit", "sıradan"]  # Turkish market values quality and style
+            },
+            
             "br": {
                 "market_name": "Brazil",
                 "marketplace": "br",
@@ -474,6 +690,78 @@ class InternationalLocalizationOptimizer:
                 ],
                 
                 "avoid_words": ["goedkoop", "basis", "eenvoudig", "gewoon"]  # Dutch market values quality and innovation
+            },
+            
+            "se": {
+                "market_name": "Sweden", 
+                "marketplace": "se",
+                "language": "Swedish",
+                "currency": "SEK",
+                "language_code": "sv",
+                
+                # Essential Swedish words and expressions
+                "essential_words": [
+                    "och", "att", "det", "en", "som", "för", "på", "med", "av", "till", "är", "den", "ett", "i", "om",
+                    "har", "de", "så", "man", "kan", "vara", "från", "eller", "när", "kommer", "ska", "göra", "mycket"
+                ],
+                
+                # Swedish emotional power words that drive conversions
+                "power_words": [
+                    "fantastisk", "utmärkt", "enastående", "perfekt", "unik", "premium", "lyx", "super", "topp",
+                    "revolutionerande", "innovativ", "avancerad", "professionell", "pålitlig", "garanterad",
+                    "äkta", "original", "svensk", "traditionell", "modern", "effektiv", "kraftfull",
+                    "praktisk", "smart", "hållbar", "kvalitet", "komfort", "stilfull", "elegant", "lagom"
+                ],
+                
+                # Swedish lifestyle and cultural elements (lagom, hygge, sustainability)
+                "cultural_elements": [
+                    "perfekt för svenska hem med lagom-filosofi",
+                    "idealisk för mys och svenska familjesammankomster", 
+                    "anpassad efter svenskt liv och nordiska värderingar",
+                    "byggd för svenskt klimat och förhållanden",
+                    "med svensk enkelhet och funktionalitet i fokus",
+                    "för äkta svensk mys och välbefinnande",
+                    "kombinerar svensk tradition med modern innovation",
+                    "svensk kvalitet som håller i generationer",
+                    "perfekt för fika och svenska gemenskaper",
+                    "hållbar design i linje med svenska miljövärden"
+                ],
+                
+                # Swedish expressions and formality (Direct but warm Swedish style)
+                "formality_words": [
+                    "vi garanterar dig", "vi erbjuder dig", "med stolthet presenterar vi", "du kan vara säker på",
+                    "utan tvekan", "absolut säkert", "naturligtvis", "självklart", "helt säkert", "garanterat",
+                    "du förtjänar det bästa", "vi ser till att", "lita på vår kvalitet", "vi lovar dig"
+                ],
+                
+                # Swedish copywriting rules - OPTIMIZED FOR 10/10 QUALITY  
+                "enforcement_rules": [
+                    "🚨 CRITICAL: You MUST use authentic Swedish language - no Norwegian or Danish mix-ups",
+                    "SWEDISH EXAMPLES: kök NOT køkken, hus NOT huis, kvalitet NOT kvaliteetti, bra NOT bro",
+                    "MANDATORY SWEDISH CONCEPTS: Include 'lagom' (perfect balance), 'mys' (coziness), 'hållbarhet' (sustainability)",
+                    "🔥 SWEDISH PERSUASION FORMULA - LAGOM & FUNCTIONAL APPROACH:",
+                    "PATTERN 1: '[FANTASTISK FÖRDEL] som kommer förbättra ditt [LIV/HEM] på ett lagom sätt! Vi garanterar [RESULTAT] utan [PROBLEM].' (1st bullet - MUST use 'vi garanterar')",
+                    "PATTERN 2: '[PREMIUM EGENSKAPER] med svensk kvalitet för [GARANTERAT RESULTAT]. Vi erbjuder dig överlägsen prestanda.' (2nd bullet - MUST use 'vi erbjuder dig')",
+                    "PATTERN 3: '[SMART DESIGN] som kombinerar svensk praktiskhet med innovation. Med stolthet presenterar vi [FÖRDEL].' (3rd bullet - MUST use 'med stolthet presenterar vi')",
+                    "PATTERN 4: '[TOTAL BEKVÄMLIGHET] för svenska familjer som värdesätter lagom. Du kan vara säker på [ÖVERLÄGSEN UPPLEVELSE].' (4th bullet - MUST use 'du kan vara säker på')",
+                    "PATTERN 5: '[PERFEKT PRESENT] för [MIDSOMMAR/LUCIA/JUL]. Utan tvekan kommer varje familj att uppskatta [PRODUKT].' (5th bullet - MUST use 'utan tvekan')",
+                    "Examples: 'Fantastiska prestationer som kommer transformera ditt kök på lagom sätt! Vi garanterar resultat utan krångel.'",
+                    "Examples: 'Premium teknologi med avancerad design för garanterade resultat varje dag.'",
+                    "🇸🇪 SWEDISH CULTURAL FOCUS:",
+                    "- Lagom philosophy emphasis (balanced, not too much, just right)",
+                    "- Environmental consciousness and sustainability (miljötänk, hållbarhet)",
+                    "- Quality and functionality over flashiness (kvalitet, funktionalitet)",
+                    "- Mys and comfort references (mys, komfort, välbefinnande)", 
+                    "- Swedish design principles (enkelhet, funktion, skönhet)",
+                    "LAGOM FOCUS: Include balanced lifestyle references (lagom comfort, lagom quality)",
+                    "SUSTAINABILITY FOCUS: Include environmental consciousness (hållbar, miljövänlig)",
+                    "DESIGN FOCUS: Include Swedish design heritage (svensk design, nordisk stil)",
+                    "🇸🇪 SWEDISH PRIDE: Reference Swedish quality, lagom balance, or sustainability in EVERY bullet",
+                    "QUALITY EMPHASIS: Swedes value durability and function - emphasize long-term value and reliability",
+                    "🔥 MANDATORY QUALITY SCORE BOOST: Use 'äkta', 'pålitlig', 'hållbar', 'lagom' to reach 10/10"
+                ],
+                
+                "avoid_words": ["billig", "enkel", "vanlig", "ordinär"]  # Swedish market values quality and sustainability
             },
             
             "it": {
@@ -802,18 +1090,28 @@ class InternationalLocalizationOptimizer:
             market_code = "ar"
         elif marketplace == "nl" or language == "nl":
             market_code = "nl"
+        elif marketplace == "se" or language in ["sv", "sv_SE"]:
+            market_code = "se"
         elif marketplace == "pl" or language == "pl":
             market_code = "pl"
         elif marketplace in ["co.jp", "jp"] or language == "ja":
             market_code = "ja"
         elif marketplace == "ae" or language == "ar":
             market_code = "ae"
+        elif marketplace == "sa" or language in ["ar-sa", "ar_SA"]:
+            market_code = "sa"
         elif marketplace == "mx" or language in ["es-mx", "es_MX"]:
             market_code = "mx"
+        elif marketplace == "in" or language in ["en-in", "en_IN", "hindi", "hi"]:
+            market_code = "in"
         elif marketplace == "br" or language in ["pt-br", "pt_BR", "pt"]:
             market_code = "br"
         elif marketplace == "nl" or language in ["nl", "nl_NL"]:
             market_code = "nl"
+        elif marketplace == "se" or language in ["sv", "sv_SE"]:
+            market_code = "se"
+        elif marketplace == "tr" or language in ["tr", "tr_TR"]:
+            market_code = "tr"
         
         if not market_code or market_code not in self.market_configurations:
             return ""  # Return empty for unsupported markets
@@ -1040,18 +1338,28 @@ The entire listing must read as if written by a native {config['language']} spea
             market_code = "ar"
         elif marketplace == "nl" or language == "nl":
             market_code = "nl"
+        elif marketplace == "se" or language in ["sv", "sv_SE"]:
+            market_code = "se"
         elif marketplace == "pl" or language == "pl":
             market_code = "pl"
         elif marketplace in ["co.jp", "jp"] or language == "ja":
             market_code = "ja"
         elif marketplace == "ae" or language == "ar":
             market_code = "ae"
+        elif marketplace == "sa" or language in ["ar-sa", "ar_SA"]:
+            market_code = "sa"
         elif marketplace == "mx" or language in ["es-mx", "es_MX"]:
             market_code = "mx"
+        elif marketplace == "in" or language in ["en-in", "en_IN", "hindi", "hi"]:
+            market_code = "in"
         elif marketplace == "br" or language in ["pt-br", "pt_BR", "pt"]:
             market_code = "br"
         elif marketplace == "nl" or language in ["nl", "nl_NL"]:
             market_code = "nl"
+        elif marketplace == "se" or language in ["sv", "sv_SE"]:
+            market_code = "se"
+        elif marketplace == "tr" or language in ["tr", "tr_TR"]:
+            market_code = "tr"
         
         if not market_code or market_code not in self.market_configurations:
             return ""  # Return empty for unsupported markets or US market
@@ -1144,12 +1452,12 @@ socialProof: "Customer satisfaction text in {config['language']}",
 🎯 MANDATORY: Generate ALL 8 sections for complete A+ content:
 1. section1_hero - REQUIRED
 2. section2_features - REQUIRED  
-3. section3_trust - REQUIRED
-4. section4_usage - REQUIRED
-5. section5_comparison - REQUIRED
-6. section6_testimonials - REQUIRED
-7. section7_whats_in_box - REQUIRED
-8. section8_faqs - REQUIRED
+3. section3_usage - REQUIRED
+4. section4_quality - REQUIRED
+5. section5_guarantee - REQUIRED
+6. section6_social_proof - REQUIRED
+7. section7_comparison - REQUIRED
+8. section8_package - REQUIRED
 
 ⚠️ DO NOT skip any sections. Generate complete content for each section to match US/German A+ length.
 

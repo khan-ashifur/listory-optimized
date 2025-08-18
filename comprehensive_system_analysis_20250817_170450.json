@@ -1,0 +1,43 @@
+{
+  "timestamp": "2025-08-17T17:04:49.890048",
+  "system_overview": {
+    "total_products": 534,
+    "total_listings": 780,
+    "sweden_products": 30,
+    "sweden_listings": 66
+  },
+  "whats_working": [
+    "✅ Sweden products can be created in database",
+    "✅ Sweden listings can be generated",
+    "✅ bullet_points is generated",
+    "✅ OpenAI client is configured",
+    "✅ Some fallback content matches product type"
+  ],
+  "whats_broken": [],
+  "critical_issues": [
+    "CRITICAL: No Sweden configuration in localization system",
+    "CRITICAL: Keywords are in English instead of Swedish",
+    "CRITICAL: Wrong product keywords (gaming chair for kitchen knife)",
+    "CRITICAL: product_description field missing",
+    "CRITICAL: aplus_content_plan field missing",
+    "WARNING: OpenAI quota exceeded - fallback content being used",
+    "CRITICAL: Sweden marketplace in use but not properly supported"
+  ],
+  "recommendations": [
+    "URGENT: Fix critical system issues before Sweden can work properly",
+    "HIGH: Implement Swedish keyword generation and replacement system",
+    "HIGH: Fix fallback content to match actual product type",
+    "MEDIUM: Address OpenAI quota limits or improve fallback system",
+    "HIGH: Add proper Sweden configuration to International Localization Optimizer",
+    "LOW: Test with working OpenAI quota to see if AI-generated content is better",
+    "MEDIUM: Add Swedish language validation to prevent English content"
+  ],
+  "sweden_specific_issues": [
+    "bullet_points has more English than Swedish content",
+    "keywords has more English than Swedish content",
+    "keywords has wrong product content (gaming chair for knife)",
+    "product_description field missing",
+    "aplus_content_plan field missing"
+  ],
+  "quality_score": 0
+}

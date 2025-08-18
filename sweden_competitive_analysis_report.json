@@ -1,0 +1,74 @@
+{
+  "analysis_date": "2025-08-15T20:18:07.409160",
+  "overall_score": 8.1,
+  "market": "Sweden (SE)",
+  "categories_tested": 3,
+  "results": [
+    {
+      "category": "Audio",
+      "product_name": "NordicSound Bluetooth Hörlurar",
+      "occasion": "Fika",
+      "scores": {
+        "keyword_optimization": 5.0,
+        "cultural_relevance": 3.6,
+        "conversion_psychology": 6.0,
+        "technical_seo": 10,
+        "trust_building": 10,
+        "mobile_optimization": 8,
+        "aplus_content": 6.5,
+        "occasion_targeting": 10,
+        "competitive_advantage": 3.7,
+        "overall": 7.0
+      },
+      "sample_content": {
+        "title": "NordicSound Premium Bluetooth Hörlurar Pro-Level Brusreducering 30h Batteri Svensk Design CE-märkt 2...",
+        "first_bullet": "CERTIFIED QUALITY: 30 timmars batteritid ger stabil användning under arbetsdagar, resor eller fika-s...",
+        "keywords_sample": "fika present hörlurar bluetooth gåva julklapp bröllop student presentidé premium headset ljud brusre..."
+      }
+    },
+    {
+      "category": "Kitchen",
+      "product_name": "SwedenBrew Kaffebryggare",
+      "occasion": "Jul",
+      "scores": {
+        "keyword_optimization": 5.5,
+        "cultural_relevance": 10,
+        "conversion_psychology": 10,
+        "technical_seo": 10,
+        "trust_building": 10,
+        "mobile_optimization": 8,
+        "aplus_content": 6.5,
+        "occasion_targeting": 10,
+        "competitive_advantage": 10,
+        "overall": 8.9
+      },
+      "sample_content": {
+        "title": "Advanced Professional SwedenBrew Kaffebryggare med termisk kanna, expertkalibrerad automation, energ...",
+        "first_bullet": "INDUSTRY STANDARD: Automatisk bryggning → jämn extraktion av kaffet → alltid professionell kvalitet ...",
+        "keywords_sample": "julpresent kaffeautomat julklapp kaffebryggare automatic fika maskin premiumbryggare nordisk design ..."
+      }
+    },
+    {
+      "category": "Outdoor",
+      "product_name": "SwedishOutdoor Camping Tält",
+      "occasion": "Sommarstuga",
+      "scores": {
+        "keyword_optimization": 4.5,
+        "cultural_relevance": 10,
+        "conversion_psychology": 10,
+        "technical_seo": 10,
+        "trust_building": 10,
+        "mobile_optimization": 8,
+        "aplus_content": 3.0,
+        "occasion_targeting": 10,
+        "competitive_advantage": 10,
+        "overall": 8.4
+      },
+      "sample_content": {
+        "title": "Expert-Approved SwedishOutdoor Camping Tält 4-Personers Familjemodell • Certifierad för Svenskt Väde...",
+        "first_bullet": "PROVEN RELIABILITY: Vattentätt material (3000mm vattenpelare) → Skyddar mot regn i svenska fjällen →...",
+        "keywords_sample": "sommarstuga present camping gåva tält familjetält 4-personers vattenresistent vindtätt outdoor eco-f..."
+      }
+    }
+  ]
+}

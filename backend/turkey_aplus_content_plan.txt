@@ -1,0 +1,58 @@
+"aPlusContentPlan": {
+    "section1_hero": {
+      "title": "Premium Türk Kalitesi ile Mutfakta Hijyen",
+      "content": "Sayın müşterilerimiz, değerli mutfak severler için %99,9 saf titanyum yüzeyiyle hijyen ve dayanıklılığı bir araya getiren kzen kesme tahtasını gururla sunuyoruz. Türk ailesi sofralarına uygun, hem et-balık hem de sebze-meyve için çift taraflı kullanım kolaylığı sağlar, misafir ağırlamada güvenlidir.",
+      "keywords": ["mutfak hijyeni", "titanyum kesme tahtası", "türk mutfağı"],
+      "imageDescription": "ENGLISH: Turkish family in their 40s preparing dinner in a modern Istanbul apartment kitchen, evening warm light through large windows, father slicing meat on titanium side of cutting board, mother chopping vegetables on wheat straw surface, two children watching with excitement while setting table, traditional Turkish tea glasses on counter, product placed centrally, atmosphere of family warmth and hospitality, professional lifestyle photo style (970x600px)",
+      "seoOptimization": "ENGLISH: Focus keywords highlighting titanium cutting board, family, Turkish kitchen, hygiene, hospitality"
+    },
+    "section2_features": {
+      "title": "Özellikler ve Avantajlar",
+      "content": "• Çift taraflı kullanım: Et için titanyum, sebze için buğday samanı\n• Yapışmaz yüzey: Kolay temizlik\n• Dahili sıvı kanalı: 200ml kapasite\n• Sarımsak-zencefil rendeleme bölümü\n• Dayanıklı ve hijyenik tasarım\n• Geniş boyut: 40cm x 28cm\n• CE sertifikalı kalite\n• Premium ambalaj ile hediye seçeneği",
+      "keywords": ["özellik", "avantaj", "hijyenik"],
+      "imageDescription": "ENGLISH: Young Turkish professional woman (late 20s) in modern office kitchen during lunch break, close-up shots of cutting board details: juice groove filled with liquid, garlic grinding area in use, titanium surface shiny with reflection, dimensions marked visually, CE certification badge overlay, bright neutral lighting emphasizes product finish, technical photography (970x600px)",
+      "seoOptimization": "ENGLISH: Emphasize technical product benefits and specific feature-related keywords like juice groove, grinding surface, titanium"
+    },
+    "section3_usage": {
+      "title": "Kullanım Alanları",
+      "content": "Günlük mutfak hazırlıklarınızdan bayram sofralarına kadar geniş kullanım alanları sunar. Et, balık, sebze ve meyveler için güvenli ve pratik. Misafir ağırlama ritüelinde Türk misafirperverliğine modern katkı sağlar.",
+      "keywords": ["günlük kullanım", "misafir ağırlama", "pratik mutfak"],
+      "imageDescription": "ENGLISH: Turkish woman in her 50s wearing traditional patterned apron serving tea to guests in cozy home, cutting vegetables on wheat straw surface while daughters prepare salad, late afternoon warm indoor lighting, product visible next to Turkish baklava tray, emotional context of hospitality and family celebration, documentary lifestyle photography (970x600px)",
+      "seoOptimization": "ENGLISH: Target usage scenarios and cultural search intent for hospitality, family, daily cooking"
+    },
+    "section4_quality": {
+      "title": "Kalite Güvencesi",
+      "content": "Orijinal kzen titanyum kesme tahtası, CE sertifikalı kalite güvencesi sunar. Dayanıklı ve güvenilir üretim sürecinden geçmiştir. 2 yıl garanti kapsamında teslim edilmektedir.",
+      "keywords": ["kalite", "garanti", "sertifikalı"],
+      "imageDescription": "ENGLISH: Turkish engineer in lab coat age 35 performing durability test on titanium cutting board under bright fluorescent lab lighting, showing pressure equipment, measurement devices, notepad with CE certification stamp, product central on test bench, credibility-focused technical proof photo (970x600px)",
+      "seoOptimization": "ENGLISH: Keywords focused on certification, testing, warranty, Turkish quality assurance"
+    },
+    "section5_guarantee": {
+      "title": "Garanti ve Destek",
+      "content": "2 yıl ürün garantisi, 30 gün iade ve Türkçe müşteri desteği ile hizmetinizdeyiz. Türkiye'den hızlı kargo ve faturalı satış güvencesi ile güvenle satın alabilirsiniz.",
+      "keywords": ["garanti", "destek", "müşteri hizmeti"],
+      "imageDescription": "ENGLISH: Turkish female customer service representative in 20s helping customer on video call, headset on, working from Istanbul office with Bosphorus visible in background, daylight streaming through large window, warranty document framed on wall, product held by customer visible on other half of frame, supportive professional atmosphere (970x600px)",
+      "seoOptimization": "ENGLISH: SEO to highlight warranty terms, returns, Turkish support"
+    },
+    "section6_social_proof": {
+      "title": "Müşteri Memnuniyeti",
+      "content": "10.000+ mutlu müşteri! Türkiye'nin dört bir yanından doğrulanmış olumlu müşteri yorumları ve değerlendirmeleri ile güvenle tercih edilen ürün. Misafirperverlik kültürüne katkı sağladı.",
+      "keywords": ["müşteri memnuniyeti", "yorumlar", "tavsiye"],
+      "imageDescription": "ENGLISH: Grid of 5 Turkish customers from different cities: young student in Izmir kitchen, mother in Ankara preparing family dinner, chef in Istanbul restaurant, elderly couple in Bursa home, businessman in Gaziantep office, each holding or using cutting board, authentic emotional smiles, natural local backgrounds, testimonial overlay text (970x600px)",
+      "seoOptimization": "ENGLISH: Focus on customer satisfaction, reviews, testimonials for trust building"
+    },
+    "section7_comparison": {
+      "title": "Neden Bu Ürün",
+      "content": "Klasik ahşap tahtalara göre hijyenik avantaj sağlar, koku ve bakteri tutmaz. Plastik ürünlere göre dayanıklı ve çevre dostudur. TSE ve CE belgeli güvenli seçimdir.",
+      "keywords": ["üstünlük", "fark", "rekabet avantajı"],
+      "imageDescription": "ENGLISH: Tech expert in 40s wearing glasses analyzing comparison chart on tablet in bright modern workspace, overlays show differences between kzen titanium board and traditional wood/plastic alternatives, product placed on glass desk with tea glass nearby, midday bright lighting for clarity, evidence-based analysis visual (970x600px)",
+      "seoOptimization": "ENGLISH: Highlight advantages vs wood/plastic boards, emphasize hygiene and safety"
+    },
+    "section8_package": {
+      "title": "Paket İçeriği",
+      "content": "Kutu açılışında ürün şık ambalaj içerisinde gelir. 1 adet titanyum kesme tahtası, kullanım kılavuzu, garanti belgesi yer almaktadır. Premium hediye paketi mevcuttur.",
+      "keywords": ["paket içeriği", "kutu", "aksesuarlar"],
+      "imageDescription": "ENGLISH: Turkish family of four unboxing package in living room during evening, children aged 8 and 10 excitedly pulling out titanium cutting board from premium black and silver gift packaging, mother reading warranty booklet, father smiling proudly, warm indoor lighting with traditional Turkish carpet in background, product displayed clean and new on coffee table (970x600px)",
+      "seoOptimization": "ENGLISH: Emphasize package contents, unboxing experience, gifting suitability"
+    }
+  }

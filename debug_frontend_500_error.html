@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Frontend 500 Error</title>
+</head>
+<body>
+    <h1>Debug Frontend 500 Error</h1>
+    <button onclick="testProductCreation()">Test Product Creation</button>
+    <div id="result"></div>
+
+    <script>
+        async function testProductCreation() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+
+            try {
+                // Test data similar to what the frontend sends
+                const testData = {
+                    name: 'Test Product Sweden',
+                    description: 'Test description for Sweden market',
+                    brand_name: 'TestBrand',
+                    marketplace: 'se',
+                    target_platform: 'amazon',
+                    price: 99.99,
+                    categories: 'kitchen',
+                    features: 'test feature',
+                    brand_tone: 'professional',
+                    occasion: 'everyday'
+                };
+
+                console.log('Sending request with data:', testData);
+
+                const response = await fetch('http://localhost:8000/api/core/products/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData)
+                });
+
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+
+                const responseData = await response.text();
+                console.log('Response body:', responseData);
+
+                if (response.ok) {
+                    resultDiv.innerHTML = `<div style="color: green;">
+                        <h3>SUCCESS!</h3>
+                        <p>Status: ${response.status}</p>
+                        <p>Response: ${responseData}</p>
+                    </div>`;
+                } else {
+                    resultDiv.innerHTML = `<div style="color: red;">
+                        <h3>ERROR!</h3>
+                        <p>Status: ${response.status}</p>
+                        <p>Response: ${responseData}</p>
+                    </div>`;
+                }
+
+            } catch (error) {
+                console.error('Request failed:', error);
+                resultDiv.innerHTML = `<div style="color: red;">
+                    <h3>NETWORK ERROR!</h3>
+                    <p>${error.message}</p>
+                </div>`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "timestamp": "2025-08-17T19:17:20.295007",
+  "mexico_structure": {
+    "bullets": 5,
+    "description_length": 1219,
+    "aplus_length": 25787,
+    "title_length": 167
+  },
+  "turkey_structure": {
+    "bullets": 5,
+    "description_length": 1196,
+    "aplus_length": 5647,
+    "title_length": 143
+  },
+  "alignment_issues": [
+    "A+ content gap: MX=25787 vs TR=5647"
+  ],
+  "mexico_bullets_preview": [
+    "¡SONIDO PREMIUM AUTÉNTICO! Audio nítido con cancelación de ruido Bluetooth 5.3 → le garantizamos calidad garantizada → la familia mexicana disfruta música sin pausas. 30 horas con garantía de 2 años.",
+    "TECNOLOGÍA PREMIUM MEXICANA: Bluetooth 5.3 estable y confiable → le ofrecemos conexión sin cortes → excelente audio para reuniones familiares y tradiciones mexicanas. Garantía nacional y factura incluida.",
+    "DISEÑO INTELIGENTE Y ORGULLOSO: Estilo moderno hecho pensando en México → con mucho orgullo combina tradición mexicana con innovación → perfecto para escuchar música en familia. Certificado de calidad y originalidad."
+  ],
+  "turkey_bullets_preview": [
+    "SINIRLI STOK UZUN PİL ÖMRÜ: 30 saat kusursuz müzik deneyimi. Premium Bluetooth 5.3 teknolojisi sayesinde kesintisiz bağlantı. Ofis, seyahat ve aile buluşmalarınızda size garanti ediyoruz. 10.000+ memnun Türk ailesi tercihi.",
+    "RAKİPLERDEN %40 ÜSTÜN SES TEKNOLOJİSİ: Gürültü engelleme -35dB sessizlik sağlar. Premium mikrofon ile net konuşmalar. Piyasada tek CE sertifikalı model. Size sunuyoruz: memnun kalmazsanız tam para iadesi. 2 yıl garantiyle güvenle kullanın.",
+    "ÇIĞIR AÇAN TASARIM VE KONFOR: Ultra hafif, ergonomik ve Türk geleneği ile modern tasarım birleşti. Büyük bir gururla sunduğumuz bu kulaklık, aile sohbetlerinde veya misafir ağırlarken kusursuz deneyim sağlar. 4.8/5 müşteri memnuniyeti."
+  ]
+}

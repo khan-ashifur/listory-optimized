@@ -1,0 +1,59 @@
+{
+  "listing_id": 1051,
+  "product_name": "Professional Kitchen Knife Set",
+  "marketplace": "se",
+  "issues": [
+    "product_title field missing",
+    "More English (11) than Swedish (2) content",
+    "product_description field missing",
+    "Too few keywords",
+    "More English (4) than Swedish (0) content",
+    "aplus_content_plan field missing"
+  ],
+  "successes": [],
+  "content_analysis": {
+    "product_title": {
+      "exists": false,
+      "issues": [
+        "Field does not exist"
+      ],
+      "successes": []
+    },
+    "bullet_points": {
+      "exists": true,
+      "length": 652,
+      "english_words": 11,
+      "swedish_words": 2,
+      "issues": [
+        "More English (11) than Swedish (2) content"
+      ],
+      "successes": []
+    },
+    "product_description": {
+      "exists": false,
+      "issues": [
+        "Field does not exist"
+      ],
+      "successes": []
+    },
+    "keywords": {
+      "exists": true,
+      "length": 227,
+      "english_words": 4,
+      "swedish_words": 0,
+      "issues": [
+        "Too few keywords",
+        "More English (4) than Swedish (0) content"
+      ],
+      "successes": []
+    },
+    "aplus_content_plan": {
+      "exists": false,
+      "issues": [
+        "Field does not exist"
+      ],
+      "successes": []
+    }
+  },
+  "overall_quality": "Fair (4-6/10)"
+}

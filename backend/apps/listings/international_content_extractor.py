@@ -99,58 +99,64 @@ class InternationalContentExtractor:
         return ""
     
     def _extract_bullets(self, text):
-        """Extract bullet points array with international characters including Japanese"""
-        # Find the bulletPoints array
+        """Extract bullet points array with international characters including Turkish"""
+        # Clean approach: Find bulletPoints array with better boundary detection
         bullet_patterns = [
-            r'"bulletPoints":\s*\[(.*?)\]',
-            r'bulletPoints["\s]*:["\s]*\[(.*?)\]',
-            # More flexible pattern for malformed JSON
-            r'bulletPoints[^[]*\[(.*?)\]'
+            r'"bulletPoints":\s*\[\s*(.*?)\s*\](?=\s*[,}])',  # Proper JSON boundary
+            r'bulletPoints["\s]*:["\s]*\[\s*(.*?)\s*\](?=\s*[,}])',  # Flexible with boundary
         ]
         
         bullets = []
         for pattern in bullet_patterns:
             match = re.search(pattern, text, re.DOTALL | re.IGNORECASE)
             if match:
-                bullet_content = match.group(1)
+                bullet_content = match.group(1).strip()
                 
-                # Extract individual bullets from the array - more flexible patterns
+                # Extract individual bullets - strict patterns to avoid mixing content types
                 bullet_patterns_inner = [
-                    r'"([^"]+(?:\\"[^"]*)*)"',  # Standard quoted strings
-                    r'"([^"]*[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF][^"]*)"',  # Japanese content
-                    r'"([^"\n]{20,})"'  # Longer content (likely bullet points)
+                    r'"([^"]{30,}?)"(?=\s*[,\]])',  # Standard bullets (30+ chars, proper boundary)
+                    r'"([^"]*[üğıöşçÜĞIÖŞÇ][^"]{20,}?)"(?=\s*[,\]])',  # Turkish content (20+ chars with Turkish chars)
+                    r'"([^"]*[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF][^"]{15,}?)"(?=\s*[,\]])',  # Japanese content
                 ]
                 
                 for inner_pattern in bullet_patterns_inner:
                     bullet_matches = re.findall(inner_pattern, bullet_content)
                     if bullet_matches:
-                        bullets = [bullet.replace('\\"', '"').strip() for bullet in bullet_matches]
-                        # Accept bullets if we have at least 2 (sometimes one gets corrupted)
-                        if len(bullets) >= 2:
-                            return bullets[:5]  # Take max 5 bullets
+                        clean_bullets = []
+                        for bullet in bullet_matches:
+                            bullet = bullet.replace('\\"', '"').strip()
+                            # Filter out HTML fragments and corrupted content
+                            if (not bullet.startswith('<') and 
+                                not bullet.endswith('>') and 
+                                '</h' not in bullet and 
+                                'aplus-' not in bullet and
+                                len(bullet.split()) >= 3):  # At least 3 words
+                                clean_bullets.append(bullet)
+                        
+                        if len(clean_bullets) >= 2:
+                            return clean_bullets[:5]  # Take max 5 bullets
         
         return []
     
     def _extract_description(self, text):
-        """Extract product description with international characters including Japanese"""
+        """Extract product description with international characters including Turkish"""
         patterns = [
-            r'"productDescription":\s*"([^"]+(?:\\"[^"]*)*)"',
-            r'"productDescription":\s*"(.*?)"(?=\s*[,}])',
-            r'productDescription["\s]*:["\s]*(.*?)["]*(?=\s*[,}])',
-            # Japanese-specific patterns
-            r'"productDescription":\s*"([^"]*[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF][^"]*)"',
-            # More flexible pattern for multiline descriptions
-            r'productDescription[^:]*:\s*"([^"]{50,})"'
+            r'"productDescription":\s*"([^"]{50,}?)"(?=\s*[,}])',  # Standard with boundary
+            r'"productDescription":\s*"([^"]*[üğıöşçÜĞIÖŞÇ][^"]{30,}?)"(?=\s*[,}])',  # Turkish content
+            r'"productDescription":\s*"([^"]*[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF][^"]{20,}?)"(?=\s*[,}])',  # Japanese content
+            r'productDescription["\s]*:["\s]*"([^"]{50,}?)"(?=\s*[,}])',  # Flexible with boundary
         ]
         
         for pattern in patterns:
             matches = re.finditer(pattern, text, re.DOTALL | re.IGNORECASE)
             for match in matches:
                 description = match.group(1).replace('\\"', '"').strip()
-                # Accept shorter descriptions for Japanese (more concise)
-                if len(description) > 30 and any(ord(c) > 127 for c in description):
-                    return description
-                elif len(description) > 50:  # Standard length check
+                # Filter out HTML fragments and corrupted content
+                if (not description.startswith('<') and 
+                    not description.endswith('>') and 
+                    '</h' not in description and 
+                    'aplus-' not in description and
+                    len(description.split()) >= 5):  # At least 5 words
                     return description
         
         return ""

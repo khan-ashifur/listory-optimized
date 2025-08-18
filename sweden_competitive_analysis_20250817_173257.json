@@ -1,0 +1,18 @@
+{
+  "scores": {
+    "title": 7.142857142857143,
+    "bullets": 3.333333333333333,
+    "description": 1.6666666666666665,
+    "aplus": 0.0,
+    "keywords": 0.0,
+    "cultural": 0.0,
+    "conversion": 0.0
+  },
+  "overall_score": 1.7346938775510203,
+  "competitive_analysis": {
+    "beats_helium10": false,
+    "beats_copy_monkey": false,
+    "beats_jasper_ai": false
+  },
+  "analysis_timestamp": "20250817_173257"
+}
