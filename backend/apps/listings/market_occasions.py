@@ -189,6 +189,44 @@ class MarketOccasions:
                 'vacaciones': 'Vacaciones'  # Vacation
             },
             
+            'in': {  # India
+                'diwali': 'Diwali',  # Festival of Lights (most important)
+                'holi': 'Holi',  # Festival of Colors
+                'navratri': 'Navratri',  # Nine Nights Festival
+                'dussehra': 'Dussehra',  # Victory of Good over Evil
+                'karva_chauth': 'Karva Chauth',  # Festival for married women
+                'raksha_bandhan': 'Raksha Bandhan',  # Brother-Sister festival
+                'janmashtami': 'Janmashtami',  # Krishna's Birthday
+                'ganesha_chaturthi': 'Ganesha Chaturthi',  # Lord Ganesha festival
+                'eid_ul_fitr': 'Eid ul-Fitr',  # End of Ramadan
+                'eid_ul_adha': 'Eid ul-Adha',  # Festival of Sacrifice
+                'christmas': 'Christmas',  # Christmas
+                'new_year': 'New Year',  # New Year
+                'guru_nanak_jayanti': 'Guru Nanak Jayanti',  # Sikh festival
+                'maha_shivratri': 'Maha Shivratri',  # Lord Shiva festival
+                'ram_navami': 'Ram Navami',  # Lord Rama's birthday
+                'hanuman_jayanti': 'Hanuman Jayanti',  # Lord Hanuman's birthday
+                'republic_day': 'Republic Day',  # January 26
+                'independence_day': 'Independence Day',  # August 15
+                'gandhi_jayanti': 'Gandhi Jayanti',  # October 2
+                'mothers_day': 'Mother\'s Day',  # Mother's Day
+                'fathers_day': 'Father\'s Day',  # Father's Day
+                'childrens_day': 'Children\'s Day',  # November 14
+                'valentines_day': 'Valentine\'s Day',  # Valentine's Day
+                'wedding_season': 'Wedding Season',  # November-February
+                'monsoon_festival': 'Monsoon Festival',  # Monsoon celebrations
+                'harvest_festival': 'Harvest Festival',  # Regional harvest festivals
+                'back_to_school': 'Back to School',  # School reopening
+                'family_gathering': 'Family Gathering',  # Joint family occasions
+                'housewarming': 'Griha Pravesh',  # House blessing ceremony
+                'baby_shower': 'Godh Bharai',  # Indian baby shower
+                'birthday': 'Birthday',  # Birthday celebrations
+                'anniversary': 'Anniversary',  # Wedding anniversary
+                'big_billion_days': 'Big Billion Days',  # Flipkart sale
+                'great_indian_festival': 'Great Indian Festival',  # Amazon sale
+                'summer_vacation': 'Summer Vacation'  # Summer holidays
+            },
+            
             'br': {  # Brazil
                 'carnaval': 'Carnaval',  # Carnival (most important Brazilian celebration)
                 'natal': 'Natal',  # Christmas
@@ -223,6 +261,56 @@ class MarketOccasions:
                 'inverno': 'Inverno',  # Winter
                 'ferias': 'Férias',  # Vacation
                 'final_de_semana': 'Final de Semana'  # Weekend
+            },
+            
+            'sa': {  # Saudi Arabia
+                'eid_al_fitr': 'عيد الفطر',  # Eid al-Fitr (most important)
+                'eid_al_adha': 'عيد الأضحى',  # Eid al-Adha (Feast of Sacrifice)
+                'ramadan': 'شهر رمضان',  # Ramadan (Holy Month)
+                'hijri_new_year': 'رأس السنة الهجرية',  # Hijri New Year
+                'saudi_national_day': 'اليوم الوطني السعودي',  # Saudi National Day (September 23)
+                'founding_day': 'يوم التأسيس',  # Saudi Founding Day (February 22)
+                'mothers_day': 'يوم الأم',  # Mother's Day
+                'fathers_day': 'يوم الأب',  # Father's Day
+                'back_to_school': 'العودة إلى المدرسة',  # Back to School
+                'summer_vacation': 'العطلة الصيفية',  # Summer Vacation
+                'winter_shopping': 'تسوق الشتاء',  # Winter Shopping
+                'iftar_gathering': 'تجمع الإفطار',  # Iftar Gathering
+                'suhoor_preparation': 'تحضير السحور',  # Suhoor Preparation
+                'hajj_preparation': 'تحضيرات الحج',  # Hajj Preparation
+                'umrah_preparation': 'تحضيرات العمرة',  # Umrah Preparation
+                'graduation_season': 'موسم التخرج',  # Graduation Season
+                'wedding_season': 'موسم الأعراس',  # Wedding Season
+                'black_friday': 'الجمعة البيضاء',  # Black Friday
+                'white_friday': 'الجمعة البيضاء',  # White Friday (regional name)
+                'riyadh_season': 'موسم الرياض',  # Riyadh Season
+                'ramadan_iftar': 'إفطار رمضان',  # Ramadan Iftar
+                'family_gathering': 'تجمع العائلة',  # Family Gathering
+                'housewarming': 'حفل افتتاح المنزل',  # Housewarming
+                'new_year': 'رأس السنة الميلادية',  # New Year
+                'vision_2030': 'رؤية 2030',  # Vision 2030
+                'qurban': 'قربان',  # Sacrifice
+                'zakat_al_fitr': 'زكاة الفطر',  # Zakat al-Fitr
+                'laylat_al_qadr': 'ليلة القدر',  # Night of Power
+                'mawlid_nabawi': 'المولد النبوي',  # Prophet's Birthday
+                'ashura': 'عاشوراء',  # Day of Ashura
+                'isra_miraj': 'الإسراء والمعراج',  # Night Journey
+                'dia_del_estudiante': 'يوم الطالب',  # Student Day
+                'womens_day': 'يوم المرأة',  # Women's Day
+                'youth_day': 'يوم الشباب',  # Youth Day
+                'teachers_day': 'يوم المعلم',  # Teachers Day
+                'cyber_monday': 'الاثنين الإلكتروني',  # Cyber Monday
+                'valentine_day': 'عيد الحب',  # Valentine's Day
+                'spring_season': 'فصل الربيع',  # Spring Season
+                'autumn_season': 'فصل الخريف',  # Autumn Season
+                'weekend': 'نهاية الأسبوع',  # Weekend
+                'vacation': 'إجازة',  # Vacation
+                'birthday': 'عيد ميلاد',  # Birthday
+                'anniversary': 'ذكرى سنوية',  # Anniversary
+                'engagement': 'خطوبة',  # Engagement
+                'baby_shower': 'حفلة استقبال المولود',  # Baby Shower
+                'business_meeting': 'اجتماع عمل',  # Business Meeting
+                'office_gift': 'هدية المكتب'  # Office Gift
             },
             
             'nl': {  # Netherlands
@@ -374,6 +462,41 @@ class MarketOccasions:
                 'chichi_no_hi': ['父の日ギフト', 'お父さんプレゼント', '父の日感謝', '父の日限定'],
                 'barentain_de': ['バレンタインギフト', 'バレンタイン限定', '特別な人へ'],
                 'howaito_de': ['ホワイトデーお返し', 'ホワイトデーギフト', 'お返しプレゼント']
+            },
+            'sa': {
+                'eid_al_fitr': ['هدية عيد الفطر', 'عيد الفطر المبارك', 'هدايا العيد', 'عيدية', 'فرحة العيد'],
+                'eid_al_adha': ['هدية عيد الأضحى', 'عيد الأضحى المبارك', 'أضحى مبارك', 'عيد الحج', 'عيد القربان'],
+                'ramadan': ['رمضان مبارك', 'شهر رمضان', 'رمضان كريم', 'إفطار رمضان', 'سحور رمضان'],
+                'saudi_national_day': ['اليوم الوطني السعودي', 'هدية اليوم الوطني', 'السعودية', 'فخر السعودية'],
+                'mothers_day': ['هدية يوم الأم', 'هدية أمي', 'عيد الأم', 'أمي الحبيبة'],
+                'fathers_day': ['هدية يوم الأب', 'هدية أبي', 'عيد الأب', 'أبي العزيز'],
+                'wedding_season': ['هدية زفاف', 'موسم الأعراس', 'هدايا العرس', 'زفاف سعودي'],
+                'graduation_season': ['هدية تخرج', 'موسم التخرج', 'تهنئة التخرج', 'نجاح وتفوق']
+            },
+            'in': {
+                'diwali': ['diwali gift', 'festival of lights', 'deepavali', 'diwali hamper', 'lakshmi puja', 'kitchen gift diwali', 'ghar ke liye gift', 'festival cooking gift'],
+                'holi': ['holi gift', 'festival of colors', 'rangwali holi', 'holi celebration', 'color festival', 'kitchen holi gift'],
+                'navratri': ['navratri gift', 'durga puja', 'nine nights', 'garba', 'dandiya', 'cooking navratri gift'],
+                'dussehra': ['dussehra gift', 'vijayadashami', 'victory festival', 'ravan dahan', 'good over evil', 'kitchen dussehra'],
+                'karva_chauth': ['karva chauth gift', 'wife gift', 'fasting gift', 'married women festival', 'patni ke liye gift', 'kitchen karva chauth'],
+                'raksha_bandhan': ['rakhi gift', 'brother sister', 'raksha bandhan', 'sibling love', 'bhai gift', 'bhai ke liye kitchen gift'],
+                'janmashtami': ['janmashtami gift', 'krishna jayanti', 'lord krishna', 'gokulashtami', 'krishna birthday', 'kitchen janmashtami'],
+                'ganesha_chaturthi': ['ganesh chaturthi', 'lord ganesha', 'vinayaka chavithi', 'modak', 'elephant god', 'kitchen ganesh gift'],
+                'wedding_season': ['wedding gift', 'shaadi gift', 'marriage gift', 'dulhan gift', 'couple gift', 'shaadi ka tohfa', 'kitchen shaadi gift', 'new bride gift', 'ghar basane gift'],
+                'housewarming': ['housewarming gift', 'griha pravesh', 'new home gift', 'ghar warming gift', 'kitchen naya ghar', 'home blessing gift'],
+                'birthday': ['birthday gift', 'janmadin gift', 'happy birthday', 'bday gift', 'celebration', 'kitchen birthday gift'],
+                'anniversary': ['anniversary gift', 'wedding anniversary', 'love anniversary', 'couple gift', 'relationship', 'kitchen anniversary'],
+                'mothers_day': ['mothers day gift', 'mom gift', 'mata gift', 'mother love', 'best mom', 'mummy ke liye gift', 'kitchen mom gift'],
+                'fathers_day': ['fathers day gift', 'dad gift', 'papa gift', 'father love', 'best dad', 'papa ke liye gift'],
+                'republic_day': ['republic day gift', 'january 26', 'tricolor', 'indian flag', 'patriotic', 'desh bhakti gift'],
+                'independence_day': ['independence day', 'august 15', 'freedom fighter', 'indian independence', 'flag hoisting', 'azadi gift'],
+                'valentines_day': ['valentine gift', 'love gift', 'romantic gift', 'february 14', 'couple gift', 'pyaar gift'],
+                'christmas': ['christmas gift', 'xmas gift', 'santa gift', 'christian festival', 'december 25', 'kitchen christmas'],
+                'new_year': ['new year gift', 'happy new year', 'january 1', 'new year resolution', 'celebration', 'naya saal gift'],
+                'eid_ul_fitr': ['eid gift', 'ramadan gift', 'muslim festival', 'eid mubarak', 'eid celebration', 'kitchen eid gift'],
+                'eid_ul_adha': ['eid ul adha', 'bakrid gift', 'qurbani eid', 'sacrifice festival', 'muslim eid', 'kitchen bakrid'],
+                'big_billion_days': ['flipkart sale', 'big billion days', 'festival sale', 'discount offer', 'mega sale', 'kitchen sale'],
+                'great_indian_festival': ['amazon sale', 'great indian festival', 'festival offers', 'diwali sale', 'mega discount', 'kitchen festival sale']
             }
         }
         

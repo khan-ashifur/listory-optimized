@@ -155,6 +155,28 @@ class ListingGeneratorService:
         # Enhanced default Swedish keywords - DOMINATES ALL COMPETITORS
         return "bäst i test 2024, premium kvalitet certifierad, klimatsmart koldioxidneutral, lagom design perfekt, hygge komfort premium, allemansrätten kompatibel, 15000+ svenska kunder, hållbar för framtiden, CE-certifierad garanti 2 år, sverige frakt 24h, europeisk kvalitet standard, begränsat lager specialpris, missa inte idag, din drömkvalitet garanterad"
     
+    def get_indian_industry_keywords(self, product):
+        """Get Indian industry-specific high-intent keywords for India market - EXACT MEXICO PATTERN FOR 10/10 QUALITY"""
+        category = product.categories.lower() if product.categories else ""
+        
+        # Enhanced Indian keywords by category - MEXICO PATTERN APPLIED - DOMINATES HELIUM 10, JASPER AI, COPY MONKEY
+        industry_keywords = {
+            "kitchen": "incredible indian kitchen knife set, perfect for daily cooking dal sabzi roti, ideal diwali wedding housewarming gift, premium stainless steel sharp blades, ginger garlic paste chopping onions, beginner friendly safe handles, traditional indian cooking made easy, 50000+ satisfied indian families, dishwasher safe easy maintenance, GST bill included 2 year warranty, perfect for gifting festivals ceremonies, india express delivery same day",
+            "knife": "perfect indian cooking knife set, daily dal sabzi preparation, ideal diwali festival gift, sharp stainless steel blades, chopping onions ginger garlic, beginner safe ergonomic handles, traditional indian kitchen essential, wedding housewarming gift perfect, 1 lakh happy indian cooks, easy cleaning dishwasher safe, GST invoice 2 year guarantee, festival gifting ceremony ready",
+            "audio": "fantastic sound experience, active noise cancellation technology, perfect bluetooth 5.3 connection, premium stereo music quality, designed for indian families, traditional comfort modern technology, 35000+ music lovers, battery life 40 hours guaranteed, hands free comfortable usage, india express delivery, professional sound engineering, diwali festival gift perfect",
+            "electronics": "revolutionary technology innovation, certified premium quality, perfect performance guaranteed, indian technology enthusiasts, sustainable eco-friendly production, original indian distributor warranty, 40000+ happy technology users, 2 year manufacturer warranty, family safety certified, india nationwide delivery, professional technical support, festival gifting ready",
+            "home": "wonderful home comfort, energy efficient smart design, perfect living quality enhancer, designed for indian homes, environmental consciousness sustainable solution, traditional indian hospitality, 30000+ happy home owners, silent operation guaranteed, family health priority production, india fast delivery, premium living standard, diwali housewarming gift ideal",
+            "sports": "amazing sports performance, waterproof IPX7 certified, extraordinary ergonomic design, indian athlete's choice, sustainable sports equipment, traditional durability modern style, 28000+ active indian sportsmen, ultra light premium material, fit lifestyle health guarantee, india sports delivery, professional trainer approved, festival gift special edition"
+        }
+        
+        # Find matching category keywords
+        for key, keywords in industry_keywords.items():
+            if key in category:
+                return keywords
+        
+        # Default MEXICO-STYLE Indian keywords - BEATS ALL COMPETITORS WITH CULTURAL DEPTH + HINDI-FRIENDLY
+        return "incredible quality experience, premium indian engineering, perfect family design, original india manufacturer warranty, diwali wedding housewarming gift ideal, traditional indian gharelu use, 1 lakh+ happy indian families, certified premium standard ISI mark, professional expert approved, india express delivery free shipping, premium lifestyle quality, shaadi ceremony gift perfect, festival gifting ready, ghar kitchen essential, your dream indian quality"
+    
     def get_marketplace_title_format(self, marketplace, brand_name):
         """Get marketplace-specific title formatting instructions"""
         
@@ -361,6 +383,28 @@ HIGH-CONVERTING MEXICAN KEYWORDS:
 ✓ envío gratis (free shipping)
 ✓ original (producto original)
 ✓ calidad (quality focus)"""
+
+        elif marketplace == 'in':
+            return f"""🇮🇳 AMAZON INDIA TITLE OPTIMIZATION - INDIAN MARKET:
+            
+FORMAT (MAX 200 CHARS - Indian English priority):
+[{brand_name}] [Product Category] [Key Feature] [Benefit] [Warranty/Certification]
+
+CRITICAL INDIAN SEO + CULTURAL RULES:
+1. BRAND FIRST - Family trust is fundamental (joint family values)
+2. PRODUCT CATEGORY in Indian English (Bluetooth Headphones, Portable Charger)
+3. KEY FEATURE with benefit (Noise Cancellation, Fast Charging)
+4. TRUST SIGNALS (warranty, quality certificate, bill included)
+5. SHIPPING/GUARANTEE (free delivery, India warranty, local service)
+
+HIGH-CONVERTING INDIAN KEYWORDS:
+✓ incredible (incredible quality)
+✓ guarantee (guarantee essential)
+✓ certified (certified quality)
+✓ indian/india (local relevance)
+✓ free delivery (free delivery - conversion driver)
+✓ original (authentic product)
+✓ quality (quality focus)"""
 
         elif marketplace == 'sa':
             return f"""🇸🇦 AMAZON SAUDI ARABIA TITLE OPTIMIZATION - السوق السعودي:
@@ -584,6 +628,17 @@ TURKISH CULTURAL VALUES:
             }
             
             return f"🇲🇽 FORMATO MEXICANO (MAX 200 CHARS): [LABEL EN MAYÚSCULA]: [Beneficio en español]. [Especificación]. [Garantía/Certificado]. Bullet {bullet_number}: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
+
+        elif marketplace == 'in':
+            bullet_examples = {
+                1: "INCREDIBLE INDIAN QUALITY: Superior stainless steel perfect for daily Indian cooking - dal, sabzi, roti preparation made effortless. We guarantee you professional results every time with 2-year warranty.",
+                2: "PERFECT DIWALI GIFT: Premium knife set ideal for gifting during festivals, weddings, and housewarming ceremonies. Beautifully packaged for Indian families who value quality cooking.",
+                3: "INDIAN KITCHEN SPECIALIST: Designed specifically for Indian cooking styles - chopping onions, ginger-garlic paste, cutting vegetables for curry. Traditional comfort meets modern precision.",
+                4: "FAMILY SAFETY PRIORITY: Ergonomic handles perfect for beginners and experienced cooks - safe for daily use in Indian households. Dishwasher safe for easy maintenance after cooking.",
+                5: "COMPLETE INDIAN SUPPORT: 24/7 customer service in English/Hindi - original bill included with GST. Perfect for gifting with confidence, over 1 lakh satisfied Indian families."
+            }
+            
+            return f"🇮🇳 INDIAN FORMAT (MAX 200 CHARS): [LABEL IN CAPITALS]: [Benefit in English]. [Specification]. [Warranty/Certificate]. Bullet {bullet_number}: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
 
         elif marketplace == 'sa':
             bullet_examples = {
@@ -854,6 +909,17 @@ Párrafo 3 (350-400 chars): Escenarios de uso en el estilo de vida mexicano
 Párrafo 4 (300-350 chars): Satisfacción del cliente y call-to-action con garantía
 
 Use certificaciones mexicanas, garantía nacional, soporte local. Enfoque en familia y tradición."""
+
+        elif marketplace == 'in':
+            return f"""🇮🇳 CRITICAL INDIAN DESCRIPTION: Write {brand_tone} product description of 1300-1600 characters in EXACTLY 4 separate paragraphs. MANDATORY: Each paragraph MUST be separated by double line breaks (\\n\\n).
+
+STRUCTURE FOR INDIAN MARKET:
+Paragraph 1 (300-350 chars): Attractive opening - highlight quality and Indian trust
+Paragraph 2 (350-400 chars): Product benefits with Indian family emphasis
+Paragraph 3 (350-400 chars): Usage scenarios in Indian lifestyle
+Paragraph 4 (300-350 chars): Customer satisfaction and call-to-action with guarantee
+
+Use Indian certifications, national warranty, local support. Focus on family and tradition."""
 
         elif marketplace == 'sa':
             return f"""🇸🇦 وصف سعودي حاسم: اكتب وصف منتج {brand_tone} من 1300-1600 حرف في 4 فقرات منفصلة بالضبط. إجباري: كل فقرة يجب أن تكون مفصولة بفواصل سطر مزدوجة (\\n\\n).
@@ -3059,6 +3125,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "premium kalite, güvenilir marka, müşteri memnuniyeti"
                         elif marketplace_code == 'sa':
                             section_keywords = "جودة فائقة، علامة موثوقة، رضا العملاء"
+                        elif marketplace_code == 'in':
+                            section_keywords = "premium quality, trusted brand, customer satisfaction"
                         else:
                             section_keywords = "premium quality, trusted brand, customer satisfaction"
                     elif 'feature' in section_key.lower() or 'section2' in section_key:
@@ -3082,6 +3150,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "yenilikçi tasarım, yüksek performans, kullanıcı dostu"
                         elif marketplace_code == 'sa':
                             section_keywords = "تصميم مبتكر، أداء عالي، سهل الاستخدام"
+                        elif marketplace_code == 'in':
+                            section_keywords = "innovative design, high performance, user-friendly"
                         else:
                             section_keywords = "innovative design, high performance, user-friendly"
                     elif 'trust' in section_key.lower() or 'quality' in section_key.lower() or 'guarantee' in section_key.lower():
@@ -3100,6 +3170,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "5 yıldızlı değerlendirmeler, para iade garantisi, müşteri memnuniyeti"
                         elif marketplace_code == 'sa':
                             section_keywords = "تقييمات 5 نجوم، ضمان استرداد المال، رضا العملاء"
+                        elif marketplace_code == 'in':
+                            section_keywords = "5-star reviews, money-back guarantee, customer satisfaction"
                         else:
                             section_keywords = "5-star reviews, money-back guarantee, customer satisfaction"
                     elif 'usage' in section_key.lower() or 'section3' in section_key:
@@ -3118,6 +3190,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "günlük kullanım, çok amaçlı, pratik, kullanışlı"
                         elif marketplace_code == 'sa':
                             section_keywords = "استخدام يومي، تطبيقات متنوعة، عملي، مريح"
+                        elif marketplace_code == 'in':
+                            section_keywords = "everyday use, versatile applications, practical, convenient"
                         else:
                             section_keywords = "everyday use, versatile applications, practical, convenient"
                     elif 'quality' in section_key.lower() or 'section4' in section_key:
@@ -3136,6 +3210,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "kalite kontrol, TSE belgesi, CE sertifikası, 2 yıl garanti"
                         elif marketplace_code == 'sa':
                             section_keywords = "مراقبة الجودة، معايير سعودية، تصنيع معتمد، ضمان سنتين"
+                        elif marketplace_code == 'in':
+                            section_keywords = "quality control, manufacturing standards, certified excellence"
                         else:
                             section_keywords = "quality control, manufacturing standards, certified excellence"
                     elif 'social' in section_key.lower() or 'proof' in section_key.lower() or 'section6' in section_key:
@@ -3154,6 +3230,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "müşteri yorumları, doğrulanmış incelemeler, memnuniyet garantili"
                         elif marketplace_code == 'sa':
                             section_keywords = "شهادات العملاء، مراجعات موثقة، رضا مضمون"
+                        elif marketplace_code == 'in':
+                            section_keywords = "customer testimonials, verified reviews, satisfaction guaranteed"
                         else:
                             section_keywords = "customer testimonials, verified reviews, satisfaction guaranteed"
                     elif 'comparison' in section_key.lower() or 'section7' in section_key:
@@ -3172,6 +3250,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "rekabet avantajı, üstün seçim, temel farklılıklar"
                         elif marketplace_code == 'sa':
                             section_keywords = "ميزة تنافسية، خيار متفوق، مميزات رئيسية"
+                        elif marketplace_code == 'in':
+                            section_keywords = "competitive advantage, superior choice, key differentiators"
                         else:
                             section_keywords = "competitive advantage, superior choice, key differentiators"
                     elif 'package' in section_key.lower() or 'section8' in section_key:
@@ -3190,6 +3270,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "paket içeriği, premium ambalaj, dahil aksesuarlar"
                         elif marketplace_code == 'sa':
                             section_keywords = "محتويات العبوة، تغليف فاخر، إكسسوارات مدرجة"
+                        elif marketplace_code == 'in':
+                            section_keywords = "package contents, premium packaging, included accessories"
                         else:
                             section_keywords = "package contents, premium packaging, included accessories"
                     elif 'faq' in section_key.lower() or 'support' in section_key.lower():
@@ -3208,6 +3290,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "sık sorulan sorular, Türkçe destek, kullanım kılavuzu, problem çözümü"
                         elif marketplace_code == 'sa':
                             section_keywords = "أسئلة شائعة، دعم باللغة العربية، دليل الاستخدام، حل المشاكل"
+                        elif marketplace_code == 'in':
+                            section_keywords = "quick answers, troubleshooting, user guide"
                         else:
                             section_keywords = "quick answers, troubleshooting, user guide"
                     
@@ -3424,6 +3508,12 @@ Technical specifications include comprehensive compatibility, robust build quali
                         seo_text = "استراتيجية تحسين محركات البحث المركزة على الجودة"
                         premium_label = "تجربة فاخرة"
                         premium_desc = "تصميم متفوق وفقاً للمعايير السعودية العالية"
+                    elif marketplace_code == 'in':
+                        keywords_text = "premium quality, trusted brand, customer satisfaction"
+                        image_text = "Indian family in modern kitchen during festival preparation, mother using premium knife set to prepare dal sabzi while family gathers around, traditional spices and fresh vegetables visible, warm festive lighting with rangoli in background, perfect gifting moment (970x600px)"
+                        seo_text = "Indian cooking and festival gifting focused SEO strategy"
+                        premium_label = "Premium Experience"
+                        premium_desc = "Superior design perfect for Indian cooking and festival gifting"
                     elif marketplace_code == 'nl':
                         keywords_text = "premium kwaliteit, betrouwbaar merk, klanttevredenheid"
                         image_text = "ENGLISH: Dutch lifestyle hero image with product (970x600px)"
@@ -3551,6 +3641,22 @@ Technical specifications include comprehensive compatibility, robust build quali
                         else:
                             features_image = "Gráfico de características con diseño mexicano colorido (1500x1500px)"
                         features_seo = "SEO optimizado para características técnicas en México"
+                    elif marketplace_code == 'in':
+                        # India culture: daily cooking, gifting, family traditions
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_keywords = "superior sound, festival music, family entertainment, diwali gift perfect"
+                        elif 'kitchen' in product_category or 'knife' in product_category:
+                            features_keywords = "daily indian cooking, dal sabzi preparation, ginger garlic chopping, festival gifting ideal"
+                        else:
+                            features_keywords = "certified quality, indian warranty, festival gift ready, local service"
+                        # India image descriptions focused on Indian cooking lifestyle
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_image = "Indian family enjoying festival music at home, features highlighted with rangoli decorations (1500x1500px)"
+                        elif 'kitchen' in product_category or 'knife' in product_category:
+                            features_image = "Indian mother preparing dal sabzi in traditional kitchen, knife set prominently displayed with fresh vegetables like onions ginger garlic, warm lighting (1500x1500px)"
+                        else:
+                            features_image = "Feature infographic with Indian festival motifs and family cooking focus (1500x1500px)"
+                        features_seo = "SEO optimised for Indian cooking and gifting keywords"
                     elif marketplace_code == 'sa':
                         # Saudi culture: family values, luxury, tradition
                         if 'audio' in product_category or 'headphone' in product_category:
@@ -3730,6 +3836,12 @@ Technical specifications include comprehensive compatibility, robust build quali
                         # Mexico trust image descriptions in Spanish
                         trust_image = "Certificaciones mexicanas visibles, testimonios familias mexicanas, sellos de garantía (1200x800px)"
                         trust_seo = "Estrategia SEO de confianza y calidad"
+                    elif marketplace_code == 'in':
+                        # India culture: trust through family recommendations and gifting confidence
+                        trust_keywords = "indian warranty ISI certified, quality certificate genuine, recommended by families, perfect gifting confidence, local service support"
+                        # India trust image descriptions focused on Indian quality and gifting
+                        trust_image = "Indian quality certifications ISI BIS visible, happy Indian families using product during festival cooking, warranty certificate with GST invoice (1200x800px)"
+                        trust_seo = "SEO strategy for Indian trust and gifting confidence"
                     elif marketplace_code == 'sa':
                         # Saudi culture: trust through family recommendations
                         trust_keywords = "ضمان سعودي، شهادة جودة، موصى به من العائلات، خدمة محلية"
@@ -4055,6 +4167,12 @@ Technical specifications include comprehensive compatibility, robust build quali
                         # Mexico FAQ image descriptions in Spanish
                         faq_image = "Servicio al cliente mexicano sonriente, guía visual paso a paso, iconos amigables (800x600px)"
                         faq_seo = "SEO para preguntas frecuentes México"
+                    elif marketplace_code == 'in':
+                        # India culture: cooking help, safety for beginners, gifting guidance
+                        faq_keywords = "indian cooking questions, beginner safety tips, stainless steel care, gifting guide help, family kitchen support"
+                        # India FAQ image descriptions focused on cooking and safety
+                        faq_image = "Indian customer service team explaining knife safety to beginner cook, step-by-step Indian cooking guide, kitchen safety icons (800x600px)"
+                        faq_seo = "SEO for Indian cooking questions and gifting guidance"
                     elif marketplace_code == 'sa':
                         # Saudi culture: family-friendly help and warm support
                         faq_keywords = "أسئلة شائعة، مساعدة عائلية، دليل سهل، دعم سعودي"
@@ -4304,7 +4422,7 @@ Technical specifications include comprehensive compatibility, robust build quali
                     features_html = '<ul>' + ''.join(f'<li>{feature.strip()}</li>' for feature in features_list if feature.strip()) + '</ul>'
                     localized_sections.append(f"""
 <div class="aplus-section features-section-localized">
-    <h2 class="section-title">{'Özellikler' if marketplace_code == 'tr' else 'Características' if marketplace_code == 'mx' else 'الميزات' if marketplace_code == 'sa' else 'Features'}</h2>
+    <h2 class="section-title">{'Özellikler' if marketplace_code == 'tr' else 'Características' if marketplace_code == 'mx' else 'الميزات' if marketplace_code == 'sa' else 'Features' if marketplace_code == 'in' else 'Features'}</h2>
     <div class="section-content">
         {features_html}
     </div>
@@ -4322,7 +4440,7 @@ Technical specifications include comprehensive compatibility, robust build quali
                     
                     localized_sections.append(f"""
 <div class="aplus-section trust-section-localized">
-    <h2 class="section-title">{'Güven' if marketplace_code == 'tr' else 'Confianza' if marketplace_code == 'mx' else 'الثقة' if marketplace_code == 'sa' else 'Trust'}</h2>
+    <h2 class="section-title">{'Güven' if marketplace_code == 'tr' else 'Confianza' if marketplace_code == 'mx' else 'الثقة' if marketplace_code == 'sa' else 'Trust' if marketplace_code == 'in' else 'Trust'}</h2>
     <div class="section-content">
         {trust_html}
     </div>
@@ -4333,7 +4451,7 @@ Technical specifications include comprehensive compatibility, robust build quali
                     faqs_content = listing.faqs.replace('\n\n', '</p><p>').replace('\n', '<br>')
                     localized_sections.append(f"""
 <div class="aplus-section faqs-section-localized">
-    <h2 class="section-title">{'Sık Sorulan Sorular' if marketplace_code == 'tr' else 'Preguntas Frecuentes' if marketplace_code == 'mx' else 'الأسئلة الشائعة' if marketplace_code == 'sa' else 'FAQs'}</h2>
+    <h2 class="section-title">{'Sık Sorulan Sorular' if marketplace_code == 'tr' else 'Preguntas Frecuentes' if marketplace_code == 'mx' else 'الأسئلة الشائعة' if marketplace_code == 'sa' else 'FAQs' if marketplace_code == 'in' else 'FAQs'}</h2>
     <div class="section-content">
         <p>{faqs_content}</p>
     </div>
@@ -4354,7 +4472,7 @@ Technical specifications include comprehensive compatibility, robust build quali
             else:
                 # For Turkey and Mexico: use comprehensive template WITHOUT simple sections
                 # For US market: use full template WITH simple sections
-                if marketplace_code in ['tr', 'mx', 'sa']:
+                if marketplace_code in ['tr', 'mx', 'sa', 'in']:
                     # Turkey and Mexico get comprehensive sections only, no simple sections
                     comprehensive_only_html = f"""<div class="aplus-introduction bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 p-4 sm:p-6 rounded-lg mb-6">
     <div class="flex items-center mb-4">
