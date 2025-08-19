@@ -1,0 +1,109 @@
+{
+  "timestamp": "20250819_184038",
+  "marketplace": "Australia (amazon.com.au)",
+  "language": "English (en-au)",
+  "occasion": "Australia Day",
+  "brand_tone": "Luxury",
+  "cultural_analysis": {
+    "elements_found": {
+      "australia_day_references": 0,
+      "aussie_slang_usage": 0,
+      "mateship_references": 0,
+      "fair_dinkum_usage": 0,
+      "bbq_culture_references": 0,
+      "outback_references": 0,
+      "iconic_landmarks": 0,
+      "australian_lifestyle": 0
+    },
+    "total_cultural_elements": 0,
+    "cultural_integration_score": 0.0,
+    "assessment": "Poor"
+  },
+  "localization_analysis": {
+    "aspects_analyzed": {
+      "currency_format": false,
+      "australian_spelling": 0,
+      "local_standards": 0,
+      "measurement_units": 0,
+      "pricing_context": false,
+      "shipping_references": 0
+    },
+    "localization_score": 0.0,
+    "assessment": "Poor"
+  },
+  "aplus_content_analysis": {
+    "analysis_details": {
+      "sections_count": 0,
+      "has_hero_section": false,
+      "has_features_section": false,
+      "has_comparison_section": false,
+      "has_lifestyle_section": false,
+      "has_trust_section": false,
+      "has_specifications_section": false,
+      "has_faq_section": false,
+      "has_guarantee_section": false,
+      "english_image_descriptions": 0,
+      "australian_context_images": 0
+    },
+    "sections_found": 0,
+    "english_descriptions": 0,
+    "australian_context": 0,
+    "aplus_score": 0.0,
+    "assessment": "Poor"
+  },
+  "competitive_analysis": {
+    "individual_metrics": {
+      "title_optimization": 0,
+      "keyword_density": 0,
+      "bullet_point_quality": 0,
+      "description_engagement": 0,
+      "emotional_triggers": 7.5,
+      "conversion_elements": 8,
+      "brand_positioning": 6,
+      "market_differentiation": 3.0
+    },
+    "overall_competitive_score": 3.1,
+    "helium10_comparison": "Needs Improvement",
+    "jasper_ai_comparison": "Needs Improvement",
+    "copy_monkey_comparison": "Needs Improvement"
+  },
+  "quality_scores": {
+    "individual_scores": {
+      "cultural_integration": 0.0,
+      "localization_quality": 0.0,
+      "aplus_content": 0.0,
+      "competitive_positioning": 3.1,
+      "title_quality": 0,
+      "description_quality": 0,
+      "bullet_quality": 0,
+      "keyword_optimization": 0
+    },
+    "overall_quality_score": 0.4,
+    "grade": "D",
+    "strengths": [
+      "Competitive Positioning: 3.1/10",
+      "Cultural Integration: 0.0/10",
+      "Localization Quality: 0.0/10"
+    ],
+    "areas_for_improvement": [
+      "Cultural Integration: 0.0/10",
+      "Localization Quality: 0.0/10",
+      "Aplus Content: 0.0/10"
+    ]
+  },
+  "overall_assessment": {
+    "overall_score": "0.4/10",
+    "grade": "D",
+    "market_readiness": "Needs Improvement",
+    "competitive_position": "Needs Improvement",
+    "cultural_adaptation": "Poor",
+    "localization_quality": "Poor",
+    "recommendation": "Significant improvements required before market deployment.",
+    "next_steps": [
+      "Enhance Australian cultural elements and local references",
+      "Improve Australian English localization and local standards",
+      "Expand A+ content to include all 8 recommended sections",
+      "Strengthen competitive positioning and unique value propositions"
+    ]
+  }
+}

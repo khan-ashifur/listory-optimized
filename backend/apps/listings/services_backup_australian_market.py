@@ -1838,46 +1838,6 @@ DESCRIPTION VARIATION: Show conviction through evidence and specific benefits
             self.logger.info(f"Applied international localization for: {marketplace} ({marketplace_lang})")
             self.logger.info(f"Applied A+ content international enhancement for: {marketplace} ({marketplace_lang})")
         
-        # Add Australian BBQ culture enhancement for better localization
-        australian_enhancement = ""
-        if marketplace == 'au':
-            if 'kitchen' in str(product.categories).lower() or 'knife' in product.name.lower():
-                australian_enhancement = """
-AUSTRALIAN BBQ CULTURE INTEGRATION REQUIRED:
-- Emphasize outdoor cooking, BBQ prep, and grilling applications
-- Reference Australian BBQ traditions, outdoor entertaining, summer cookouts
-- Include backyard gatherings, meat preparation, outdoor cooking precision
-- Use Aussie terminology: "barbie", "prawns", "snags", "outdoor cooking", "backyard entertaining"  
-- Connect product to weekend BBQ traditions and outdoor family gatherings
-- Make content scan-friendly for mobile with short, punchy opening phrases in bullets
-- Keep sentences under 20 words for mobile readability
-- Lead each bullet with 6-8 word benefit phrases followed by details
-
-"""
-            elif 'audio' in str(product.categories).lower() or 'headphone' in product.name.lower():
-                australian_enhancement = """
-AUSTRALIAN LIFESTYLE INTEGRATION REQUIRED:
-- Connect to outdoor adventures, beach sessions, camping trips, outback travel
-- Reference Aussie sporting culture: footy, cricket, rugby, outdoor activities
-- Include fair dinkum quality, extreme climate durability, adventure-ready features
-- Use authentic Aussie language naturally without overdoing it
-- Make content scan-friendly for mobile with short, punchy opening phrases in bullets
-- Keep sentences under 20 words for mobile readability
-- Lead each bullet with 6-8 word benefit phrases followed by details
-
-"""
-            else:
-                australian_enhancement = """
-AUSTRALIAN CULTURAL INTEGRATION REQUIRED:
-- Emphasize fair dinkum quality, no-nonsense practical benefits
-- Reference Australian lifestyle: outdoor living, extreme weather durability
-- Include mateship, family values, practical everyday use
-- Make content extremely mobile-friendly with concise, scannable format
-- Keep sentences under 20 words for mobile readability
-- Lead each bullet with 6-8 word benefit phrases followed by details
-
-"""
-
         # Now create the completely new human-focused prompt
         prompt = f"""
 {language_instruction}
@@ -1885,7 +1845,6 @@ AUSTRALIAN CULTURAL INTEGRATION REQUIRED:
 {aplus_enhancement}
 {brand_tone_enhancement}
 {occasion_enhancement}
-{australian_enhancement}
 {base_prompt}
 CRITICAL: USE ONLY THE FOLLOWING INFORMATION - NO GENERIC CONTENT!
 DO NOT MAKE UP FEATURES OR BENEFITS NOT PROVIDED BELOW!

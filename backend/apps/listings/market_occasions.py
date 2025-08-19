@@ -561,6 +561,66 @@ class MarketOccasions:
                 'renovation': 'Home Renovation',  # Home improvement
                 'staycation': 'Staycation',  # Local vacation
                 'overseas_travel': 'Overseas Travel'  # International travel
+            },
+            
+            'au': {  # Australia
+                'australia_day': 'Australia Day',  # January 26 - Most important national celebration
+                'anzac_day': 'ANZAC Day',  # April 25 - Remembrance day
+                'queens_birthday': "Queen's Birthday",  # Second Monday in June (varies by state)
+                'melbourne_cup': 'Melbourne Cup Day',  # First Tuesday in November
+                'christmas': 'Christmas',  # December 25
+                'boxing_day': 'Boxing Day',  # December 26 - Major shopping day
+                'new_year': "New Year's Day",  # January 1
+                'good_friday': 'Good Friday',  # Good Friday
+                'easter_monday': 'Easter Monday',  # Easter Monday
+                'labour_day': 'Labour Day',  # Varies by state (March/May/October)
+                'mothers_day': "Mother's Day",  # Second Sunday of May
+                'fathers_day': "Father's Day",  # First Sunday of September
+                'valentines_day': "Valentine's Day",  # February 14
+                'black_friday': 'Black Friday',  # Black Friday sales
+                'cyber_monday': 'Cyber Monday',  # Cyber Monday online sales
+                'click_frenzy': 'Click Frenzy',  # Major Australian online shopping event
+                'end_of_financial_year': 'End of Financial Year',  # June 30 - EOFY sales
+                'back_to_school': 'Back to School',  # February school term starts
+                'footy_season': 'Footy Season',  # AFL/NRL season
+                'spring_racing_carnival': 'Spring Racing Carnival',  # Melbourne racing season
+                'grand_final_day': 'Grand Final Day',  # AFL Grand Final (September/October)
+                'state_of_origin': 'State of Origin',  # Rugby League series
+                'cricket_season': 'Cricket Season',  # Summer cricket season
+                'big_bash_league': 'Big Bash League',  # Cricket T20 competition
+                'tennis_open': 'Australian Open',  # Tennis Grand Slam (January)
+                'formula_1_gp': 'Formula 1 Australian Grand Prix',  # F1 race (March/April)
+                'easter_show': 'Royal Easter Show',  # Agricultural shows
+                'schoolies_week': 'Schoolies Week',  # Post-graduation celebrations
+                'wedding_season': 'Wedding Season',  # Spring/Summer weddings
+                'graduation_season': 'Graduation Season',  # University graduations
+                'housewarming': 'Housewarming',  # New home celebrations
+                'baby_shower': 'Baby Shower',  # Baby celebrations
+                'birthday': 'Birthday',  # Birthday celebrations
+                'anniversary': 'Anniversary',  # Wedding anniversaries
+                'retirement': 'Retirement',  # Retirement celebrations
+                'promotion': 'Job Promotion',  # Career advancement
+                'weekend': 'Weekend',  # Weekend gatherings
+                'public_holiday': 'Public Holiday',  # Long weekends
+                'school_holiday': 'School Holidays',  # Term break periods
+                'summer_season': 'Summer Season',  # December-February
+                'winter_season': 'Winter Season',  # June-August
+                'bushfire_season': 'Bushfire Season',  # Fire danger period
+                'cyclone_season': 'Cyclone Season',  # Tropical cyclone season
+                'drought_season': 'Drought Season',  # Dry periods
+                'flood_season': 'Flood Season',  # Wet season
+                'tax_time': 'Tax Time',  # July-October tax returns
+                'bonus_season': 'Bonus Season',  # End of year bonuses
+                'harvest_season': 'Harvest Season',  # Agricultural harvest
+                'camping_season': 'Camping Season',  # Outdoor recreation
+                'fishing_season': 'Fishing Season',  # Recreational fishing
+                'surfing_season': 'Surfing Season',  # Peak surf conditions
+                'road_trip_season': 'Road Trip Season',  # Travel season
+                'festival_season': 'Festival Season',  # Music and arts festivals
+                'outback_travel': 'Outback Travel',  # Inland exploration
+                'reef_diving_season': 'Reef Diving Season',  # Great Barrier Reef
+                'wine_harvest': 'Wine Harvest',  # Vintage season
+                'farmers_market': 'Farmers Market Season'  # Local produce markets
             }
         }
         
@@ -814,6 +874,46 @@ class MarketOccasions:
                 'back_to_school': ['back to school gift', 'school gift', 'student gift', 'education gift'],
                 'staycation': ['staycation gift', 'local travel', 'singapore holiday', 'weekend getaway'],
                 'durian_season': ['durian season gift', 'fruit lover gift', 'singapore durian', 'tropical fruit']
+            },
+            'au': {
+                'australia_day': ['australia day gift', 'aussie day gift', 'australia day present', 'patriotic gift', 'national day gift', 'fair dinkum gift', 'true blue gift'],
+                'anzac_day': ['anzac day gift', 'remembrance gift', 'lest we forget', 'military gift', 'veteran gift', 'commemoration gift', 'respect gift'],
+                'queens_birthday': ['queens birthday gift', 'royal celebration', 'long weekend gift', 'monarchy gift', 'british heritage'],
+                'melbourne_cup': ['melbourne cup gift', 'horse racing gift', 'cup day gift', 'racing carnival', 'spring racing'],
+                'christmas': ['christmas gift', 'xmas gift', 'holiday gift', 'aussie christmas', 'summer christmas', 'festive gift'],
+                'boxing_day': ['boxing day gift', 'boxing day sales', 'post christmas gift', 'aussie boxing day', 'summer sale'],
+                'anzac_day': ['anzac day gift', 'remembrance day', 'military tribute', 'veteran gift', 'dawn service'],
+                'mothers_day': ['mothers day gift', 'mum gift', 'aussie mum', 'mother gift', 'mama gift'],
+                'fathers_day': ['fathers day gift', 'dad gift', 'aussie dad', 'father gift', 'papa gift'],
+                'valentines_day': ['valentine gift', 'romantic gift', 'love gift', 'couple gift', 'aussie romance'],
+                'black_friday': ['black friday australia', 'black friday deals', 'cyber deals', 'aussie black friday'],
+                'click_frenzy': ['click frenzy gift', 'aussie online sale', 'click frenzy deals', 'australian cyber sale'],
+                'end_of_financial_year': ['eofy gift', 'end of financial year', 'tax time gift', 'june sale', 'financial year end'],
+                'back_to_school': ['back to school gift', 'school gift', 'student gift', 'aussie school', 'term gift'],
+                'footy_season': ['footy gift', 'afl gift', 'nrl gift', 'football gift', 'aussie sport', 'team gift'],
+                'grand_final_day': ['grand final gift', 'afl grand final', 'footy final', 'championship gift'],
+                'state_of_origin': ['state of origin gift', 'origin gift', 'rugby league', 'nsw qld gift'],
+                'cricket_season': ['cricket gift', 'aussie cricket', 'summer cricket', 'test match gift'],
+                'big_bash_league': ['big bash gift', 'bbl gift', 't20 cricket', 'cricket league'],
+                'tennis_open': ['australian open gift', 'tennis gift', 'grand slam gift', 'melbourne tennis'],
+                'formula_1_gp': ['f1 gift', 'australian gp', 'formula one gift', 'racing gift', 'melbourne gp'],
+                'wedding_season': ['wedding gift', 'aussie wedding', 'marriage gift', 'couple gift', 'bridal gift'],
+                'graduation_season': ['graduation gift', 'uni gift', 'achievement gift', 'success gift', 'aussie graduate'],
+                'housewarming': ['housewarming gift', 'new home gift', 'house blessing', 'aussie home', 'moving gift'],
+                'baby_shower': ['baby shower gift', 'new baby gift', 'aussie baby', 'pregnancy gift'],
+                'birthday': ['birthday gift', 'bday gift', 'aussie birthday', 'celebration gift', 'party gift'],
+                'anniversary': ['anniversary gift', 'relationship gift', 'aussie couple', 'milestone gift'],
+                'retirement': ['retirement gift', 'farewell gift', 'career end', 'aussie retirement'],
+                'summer_season': ['summer gift', 'aussie summer', 'beach gift', 'hot weather', 'outdoor gift'],
+                'winter_season': ['winter gift', 'aussie winter', 'cold weather', 'cozy gift', 'indoor gift'],
+                'camping_season': ['camping gift', 'outdoor gift', 'bush camping', 'aussie adventure', 'wilderness gift'],
+                'fishing_season': ['fishing gift', 'angling gift', 'aussie fishing', 'catch gift', 'rod gift'],
+                'surfing_season': ['surfing gift', 'surf gift', 'beach gift', 'wave rider', 'aussie surf'],
+                'road_trip_season': ['road trip gift', 'travel gift', 'aussie adventure', 'journey gift', 'outback trip'],
+                'outback_travel': ['outback gift', 'bush gift', 'rural gift', 'red centre', 'aussie outback'],
+                'reef_diving_season': ['diving gift', 'reef gift', 'underwater gift', 'great barrier reef', 'scuba gift'],
+                'wine_harvest': ['wine gift', 'vintage gift', 'aussie wine', 'vineyard gift', 'harvest gift'],
+                'tax_time': ['tax time gift', 'refund gift', 'accountant gift', 'financial gift', 'ato gift']
             }
         }
         
