@@ -221,6 +221,7 @@ class ListingGeneratorService:
         # Default MEXICO-STYLE Polish keywords - BEATS ALL COMPETITORS WITH CULTURAL DEPTH + POLISH-FRIENDLY
         return "doświadczenie jakość niesamowita, inżynieria polska premium, projekt rodzinny idealny, gwarancja producent polski oryginalny, prezent Boże Narodzenie Wielkanoc ślub idealny, użytkowanie tradycja polska, 2 miliony+ polska rodzina szczęśliwa, standard premium certyfikowany znak jakości, certyfikowany ekspert profesjonalny, dostawa ekspresowa Polska darmowa wysyłka, jakość styl życia premium, prezent uroczystość ślub idealny, gotowy prezenty święta, niezbędny dom kuchnia, marzenie jakość polska"
     
+    
     def get_marketplace_title_format(self, marketplace, brand_name):
         """Get marketplace-specific title formatting instructions"""
         
@@ -496,30 +497,6 @@ HIGH-CONVERTING EGYPTIAN KEYWORDS:
 ✓ تراثي (heritage quality)
 ✓ عائلي (family-focused)"""
 
-        elif marketplace == 'pl':
-            return f"""🇵🇱 AMAZON POLAND TITLE OPTIMIZATION - RYNEK POLSKI:
-            
-FORMAT (MAX 200 CHARS - Polish mobile priority):
-[{brand_name}] [Kategoria Produktu] [Główna Cecha] [Korzyść] [Gwarancja/Certyfikat]
-
-CRITICAL POLISH SEO + CULTURAL RULES:
-1. BRAND FIRST - polskie zaufanie rodzinne jest kluczowe (Polish family trust is key)
-2. PRODUCT CATEGORY w naturalnym polskim (słuchawki bluetooth, ładowarka przenośna)
-3. KEY FEATURE z korzyścią (redukcja hałasu, szybkie ładowanie)
-4. TRUST SIGNALS (gwarancja, certyfikat jakości, faktura VAT)
-5. SHIPPING/GUARANTEE (dostawa Polska, gwarancja polska, serwis lokalny)
-
-HIGH-CONVERTING POLISH KEYWORDS:
-✓ premium (jakość premium)
-✓ gwarancja (guarantee essential)
-✓ certyfikowany (certified quality)
-✓ polska/polski (local relevance)
-✓ darmowa dostawa (free delivery)
-✓ oryginalny (produkt oryginalny)
-✓ jakość (quality focus)
-✓ tradycyjny (traditional quality)
-✓ rodzinny (family-focused)
-✓ prezent (gift-ready)"""
 
         elif marketplace == 'nl':
             return f"""🇳🇱 AMAZON NETHERLANDS TITLE OPTIMIZATION - NEDERLANDSE MARKT:
@@ -755,16 +732,6 @@ TURKISH CULTURAL VALUES:
             
             return f"🇪🇬 الصيغة المصرية (MAX 200 CHARS): [تسمية بالأحرف الكبيرة]: [فائدة باللغة العربية المصرية]. [مواصفات]. [ضمان/شهادة]. Bullet {bullet_number}: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
 
-        elif marketplace == 'pl':
-            bullet_examples = {
-                1: "JAKOŚĆ PREMIUM POLSKA: Doskonały dźwięk z redukcją hałasu dla polskich rodzin - bateria 30 godzin do nieprzerwanego słuchania. Certyfikat CE z 2-letnią gwarancją.",
-                2: "KOMFORT RODZINNY: Lekka konstrukcja 193g idealna dla polskich spotkań - miękkie nauszniki do długiego użytkowania. Wygodne i pasujące dla całej polskiej rodziny.",
-                3: "BLUETOOTH 5.3 POŁĄCZENIE: Zasięg 15 metrów bez przerw - stabilne połączenie do rozmów i muzyki. Kompatybilne z wszystkimi urządzeniami iPhone i Android.",
-                4: "WODOODPORNE IPX5: Idealne do sportu i polskiego klimatu - odporne na wilgoć i pot. Składana konstrukcja do podróży i wycieczek polskich.",
-                5: "PEŁNA GWARANCJA POLSKA: Wsparcie techniczne 24/7 w języku polskim - faktura VAT i 30 dni na zwrot. Ponad 100,000 zadowolonych klientów w całej Polsce."
-            }
-            
-            return f"🇵🇱 FORMAT POLSKI (MAX 200 CHARS): [ETYKIETA WIELKIMI LITERAMI]: [Korzyść po polsku]. [Specyfikacja]. [Gwarancja/Certyfikat]. Bullet {bullet_number}: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
 
         elif marketplace == 'nl':
             bullet_examples = {
@@ -2809,7 +2776,7 @@ Write each section in a completely different style and tone. Use unexpected but 
                     result[field] = defaults.get(field, "Content available")
             
             # Get title and preserve international characters (umlauts, accents, etc.)
-            raw_title = result.get('productTitle', f"{product.name} - Premium Quality")
+            raw_title = result.get('productTitle', '')
             
             # Debug logging for umlaut preservation
             print(f"🔍 TITLE PROCESSING DEBUG:")
@@ -3018,29 +2985,35 @@ Technical specifications include comprehensive compatibility, robust build quali
             listing.features = '\n'.join(features_list)
             
             # Save comprehensive content from new structure with A+ plan priority
-            listing.whats_in_box = '\n'.join(result.get('whatsInBox', [f'{product.name}', 'User manual', 'Warranty information', 'Quality assurance certificate']))
+            listing.whats_in_box = '\n'.join(result.get('whatsInBox', []))
             
             # Extract trust builders from A+ plan or fallback to direct result
             trust_section = aplus_plan.get('section3_trust', {}) or aplus_plan.get('trustSection', {})
             trust_content = trust_section.get('content', []) or trust_section.get('trust_builders', [])
             if not trust_content:
-                trust_content = result.get('trustBuilders', ['30-day satisfaction guarantee', 'Quality tested and certified', '24/7 customer support', 'Manufacturer warranty included'])
+                trust_content = result.get('trustBuilders', [])
             listing.trust_builders = '\n'.join(trust_content)
-            listing.social_proof = result.get('socialProof', f'Thousands of satisfied customers choose {product.brand_name} for quality and reliability.')
-            listing.guarantee = result.get('guarantee', f'100% satisfaction guarantee - if you are not completely satisfied, return within 30 days for full refund.')
+            listing.social_proof = result.get('socialProof', '')
+            listing.guarantee = result.get('guarantee', '')
             
             # Parse comprehensive FAQ structure
             faqs_list = result.get('faqs', [])
             if faqs_list:
-                listing.faqs = '\n\n'.join(faqs_list)
+                faqs_content = '\n\n'.join(faqs_list)
+                
+                # Fix FAQ format for Polish market
+                marketplace_code = getattr(product, 'marketplace', 'com')
+                if marketplace_code == 'pl':
+                    # Convert Q: → P: and A: → O: for Polish format
+                    faqs_content = faqs_content.replace('Q:', 'P:').replace('A:', 'O:')
+                elif marketplace_code == 'tr':
+                    # Convert Q: → S: and A: → C: for Turkish format
+                    faqs_content = faqs_content.replace('Q:', 'S:').replace('A:', 'C:')
+                
+                listing.faqs = faqs_content
             else:
-                # Create default FAQs if none provided
-                default_faqs = [
-                    f"Q: Is this {product.name.lower()} compatible with my needs? A: Yes, this {product.name.lower()} is designed to work with a wide variety of applications and requirements.",
-                    f"Q: What makes {product.brand_name} different from other brands? A: {product.brand_name} focuses on quality, reliability, and customer satisfaction with rigorous testing and premium materials.",
-                    f"Q: What is included with my purchase? A: You receive the complete {product.name.lower()}, comprehensive documentation, warranty coverage, and dedicated customer support."
-                ]
-                listing.faqs = '\n\n'.join(default_faqs)
+                # No fallback - use empty if AI doesn't provide FAQs
+                listing.faqs = ''
             
             # Enhanced SEO keyword processing from comprehensive structure - RE-ENABLED WITH BALANCE FIX
             # Re-enabling to get 75+ keywords but with proper short/long-tail balance
@@ -3738,6 +3711,19 @@ Technical specifications include comprehensive compatibility, robust build quali
                         seo_text = "Kwaliteit gerichte SEO strategie"
                         premium_label = "Premium Ervaring"
                         premium_desc = "Superieur ontwerp volgens Nederlandse normen"
+                    elif marketplace_code == 'pl':
+                        keywords_text = "premium jakość, zaufana marka, zadowolenie klientów"
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            image_text = "ENGLISH: Polish family in cozy living room during Christmas preparations, father gaming with premium headset while children watch excitedly, warm festive lighting with Christmas tree in background, RGB headset glowing, quality time together, traditional Polish decorations visible (970x600px)"
+                        elif 'kitchen' in product_category:
+                            image_text = "ENGLISH: Traditional Polish kitchen during Christmas Eve preparation, grandmother using premium knife sharpener while family gathers around traditional wigilia table, warm lighting, fresh bread and traditional Polish dishes, multi-generational cooking moment, heritage elements visible (970x600px)"
+                        elif 'water' in product_category or 'bottle' in product_category:
+                            image_text = "ENGLISH: Active Polish family at outdoor park during weekend, father drinking from large water bottle after cycling, children playing nearby, morning sunlight, healthy lifestyle focus, Polish nature in background, fitness and family values combined (970x600px)"
+                        else:
+                            image_text = "ENGLISH: Polish family in modern home showcasing premium product, quality lifestyle focus, warm lighting, traditional values with modern functionality (970x600px)"
+                        seo_text = "Strategia SEO skoncentrowana na jakości polskiej"
+                        premium_label = "Premium Doświadczenie"
+                        premium_desc = "Najwyższa jakość zgodna z polskimi standardami i tradycjami rodzinnymi"
                     else:
                         keywords_text = "premium, quality, trust"
                         image_text = "Hero lifestyle image (970x600px)"
@@ -3891,22 +3877,6 @@ Technical specifications include comprehensive compatibility, robust build quali
                         else:
                             features_image = "رسوم بيانية للميزات بتصميم مصري ملون، رموز فرعونية (1500x1500px)"
                         features_seo = "تحسين محركات البحث للميزات التقنية في مصر"
-                    elif marketplace_code == 'pl':
-                        # Poland culture: family values, Catholic traditions, quality focus
-                        if 'audio' in product_category or 'headphone' in product_category:
-                            features_keywords = "dźwięk doskonały, redukcja hałasu, bateria długotrwała, komfort rodzinny polski"
-                        elif 'kitchen' in product_category:
-                            features_keywords = "kuchnia polska, tradycja rodzinna, wytrzymały, praktyczny"
-                        else:
-                            features_keywords = "jakość certyfikowana, gwarancja polska, serwis lokalny, tradycja katolicka"
-                        # Poland image descriptions in English (like Mexico)
-                        if 'audio' in product_category or 'headphone' in product_category:
-                            features_image = "ENGLISH: Grid of 6 feature images: 1) Close-up on noise-canceling switch, 2) 50mm driver cross-section with sound waves, 3) battery indicator showing 30h, 4) RGB lights glowing, 5) bluetooth connected to phone and console, 6) Polish user wearing comfortably during gaming session"
-                        elif 'kitchen' in product_category:
-                            features_image = "ENGLISH: Traditional Polish kitchen with product prominently displayed, Polish family gathered, heritage elements (1500x1500px)"
-                        else:
-                            features_image = "ENGLISH: Feature infographic with Polish colorful design elements (1500x1500px)"
-                        features_seo = "SEO zoptymalizowane dla cech technicznych w Polsce"
                     elif marketplace_code == 'sa':
                         # Saudi culture: family values, luxury, tradition
                         if 'audio' in product_category or 'headphone' in product_category:
@@ -3923,6 +3893,22 @@ Technical specifications include comprehensive compatibility, robust build quali
                         else:
                             features_image = "رسوم بيانية للميزات بتصميم سعودي ملون (1500x1500px)"
                         features_seo = "تحسين محركات البحث للميزات التقنية في السعودية"
+                    elif marketplace_code == 'pl':
+                        # Poland culture: family values, Catholic traditions, quality focus
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_keywords = "dźwięk doskonały, redukcja hałasu, bateria długotrwała, komfort rodzinny polski"
+                        elif 'kitchen' in product_category:
+                            features_keywords = "kuchnia polska, tradycja rodzinna, wytrzymały, praktyczny"
+                        else:
+                            features_keywords = "jakość certyfikowana, gwarancja polska, serwis lokalny, tradycja katolicka"
+                        # Poland image descriptions in English (like Mexico)
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_image = "ENGLISH: Grid of 6 feature images: 1) Close-up on noise-canceling switch, 2) 50mm driver cross-section with sound waves, 3) battery indicator showing 30h, 4) RGB lights glowing, 5) bluetooth connected to phone and console, 6) Polish user wearing comfortably during gaming session"
+                        elif 'kitchen' in product_category:
+                            features_image = "ENGLISH: Traditional Polish kitchen with product prominently displayed, Polish family gathered, heritage elements (1500x1500px)"
+                        else:
+                            features_image = "ENGLISH: Feature infographic with Polish colorful design elements (1500x1500px)"
+                        features_seo = "SEO zoptymalizowane dla cech technicznych w Polsce"
                     elif marketplace_code == 'nl':
                         # Netherlands culture: practical, quality-conscious, direct
                         if 'audio' in product_category or 'headphone' in product_category:
@@ -4098,18 +4084,18 @@ Technical specifications include comprehensive compatibility, robust build quali
                         # Egypt trust image descriptions in Arabic with cultural elements
                         trust_image = "شهادات مصرية مرئية، شهادات من العائلات المصرية، أختام الضمان المصري، رموز تراثية (1200x800px)"
                         trust_seo = "استراتيجية تحسين محركات البحث للثقة والجودة المصرية"
-                    elif marketplace_code == 'pl':
-                        # Poland culture: trust through family recommendations and Catholic values
-                        trust_keywords = "gwarancja polska, certyfikat jakości, polecane rodzinom polskim, serwis lokalny, tradycja katolicka"
-                        # Poland trust image descriptions in English (like Mexico)
-                        trust_image = "ENGLISH: Display of Polish certification badge, Poland flag icon, 2-year warranty card, customer review average 4.8 stars, presented in premium style with Catholic heritage elements"
-                        trust_seo = "Strategia SEO dla zaufania i jakości polskiej"
                     elif marketplace_code == 'sa':
                         # Saudi culture: trust through family recommendations
                         trust_keywords = "ضمان سعودي، شهادة جودة، موصى به من العائلات، خدمة محلية"
                         # Saudi trust image descriptions in Arabic
                         trust_image = "شهادات سعودية مرئية، شهادات من العائلات السعودية، أختام الضمان (1200x800px)"
                         trust_seo = "استراتيجية تحسين محركات البحث للثقة والجودة"
+                    elif marketplace_code == 'pl':
+                        # Poland culture: trust through family recommendations and Catholic values
+                        trust_keywords = "gwarancja polska, certyfikat jakości, polecane rodzinom polskim, serwis lokalny, tradycja katolicka"
+                        # Poland trust image descriptions in English (like Mexico)
+                        trust_image = "ENGLISH: Display of Polish certification badge, Poland flag icon, 2-year warranty card, customer review average 4.8 stars, presented in premium style with Catholic heritage elements"
+                        trust_seo = "Strategia SEO dla zaufania i jakości polskiej"
                     elif marketplace_code == 'nl':
                         # Netherlands culture: trust through quality and reliability
                         trust_keywords = "CE keurmerk, Nederlandse garantie, betrouwbare kwaliteit, klantenservice"
@@ -4191,13 +4177,20 @@ Technical specifications include comprehensive compatibility, robust build quali
                 
                 # Create Usage/Applications section (Section 4)
                 if listing.features or listing.hero_content:
-                    usage_content = "Günlük kullanım, çok amaçlı uygulamalar, pratik ve kullanışlı çözümler sunar."
                     if marketplace_code == 'tr':
-                        usage_keywords = "günlük kullanım, çok amaçlı, pratik, kullanışlı"
+                        usage_content = "Günlük kullanım, çok amaçlı uygulamalar, pratik ve kullanışlı çözümler sunar."
+                        usage_keywords = "günlük kullanım, çok amaçlı, praktik, kullanışlı"
                         usage_image = "Türk ailesi ürünü farklı durumlarda kullanırken, günlük yaşam sahneleri (1500x1500px)"
                         usage_seo = "Kullanım senaryoları SEO optimizasyonu"
                         usage_title = "Kullanım Alanları"
+                    elif marketplace_code == 'pl':
+                        usage_content = "Codzienne użytkowanie, wszechstronne zastosowania, praktyczne i wygodne rozwiązania dla polskiej rodziny."
+                        usage_keywords = "codzienne użycie, wszechstronne zastosowania, praktyczny, wygodny"
+                        usage_image = "ENGLISH: Polish family using product in various daily situations, home lifestyle applications (1500x1500px)"
+                        usage_seo = "Strategia SEO dla zastosowań codziennych"
+                        usage_title = "Zastosowania"
                     else:
+                        usage_content = "Everyday use, versatile applications, practical and convenient solutions."
                         usage_keywords = "everyday use, versatile applications, practical, convenient"
                         usage_image = "Product in various use cases, lifestyle applications (1500x1500px)"
                         usage_seo = "Usage-focused SEO strategy"
@@ -4245,13 +4238,20 @@ Technical specifications include comprehensive compatibility, robust build quali
                 
                 # Create Comparison section (Section 5)
                 if listing.features or listing.hero_content:
-                    comparison_content = "Rakiplerinden üstün özellikler, daha iyi performans ve değer sunar."
                     if marketplace_code == 'tr':
+                        comparison_content = "Rakiplerinden üstün özellikler, daha iyi performans ve değer sunar."
                         comparison_keywords = "rekabet avantajı, üstün seçim, temel farklılıklar"
                         comparison_image = "Karşılaştırma tablosu, ürün avantajları vurgulanmış (1200x800px)"
                         comparison_seo = "Karşılaştırma odaklı SEO"
                         comparison_title = "Neden Bu Ürünü Seçmelisiniz"
+                    elif marketplace_code == 'pl':
+                        comparison_content = "Przewaga nad konkurencją dzięki lepszym funkcjom, wydajności i wartości dla polskich rodzin."
+                        comparison_keywords = "przewaga konkurencyjna, najlepszy wybór, kluczowe różnice"
+                        comparison_image = "ENGLISH: Comparison table highlighting product advantages, Polish quality standards (1200x800px)"
+                        comparison_seo = "SEO dla przewagi konkurencyjnej"
+                        comparison_title = "Dlaczego Wybrać Ten Produkt"
                     else:
+                        comparison_content = "Superior features, better performance and value compared to competitors."
                         comparison_keywords = "competitive advantage, superior choice, key differentiators"
                         comparison_image = "Comparison table highlighting advantages (1200x800px)"
                         comparison_seo = "Comparison-focused SEO"
@@ -4299,13 +4299,20 @@ Technical specifications include comprehensive compatibility, robust build quali
                 
                 # Create Customer testimonials section (Section 6)
                 if listing.hero_content:
-                    testimonials_content = "Müşteri memnuniyeti garantili, doğrulanmış yorumlar ve 5 yıldızlı deneyimler."
                     if marketplace_code == 'tr':
+                        testimonials_content = "Müşteri memnuniyeti garantili, doğrulanmış yorumlar ve 5 yıldızlı deneyimler."
                         testimonials_keywords = "müşteri yorumları, doğrulanmış incelemeler, memnuniyet garantili"
                         testimonials_image = "Mutlu Türk müşterileri, 5 yıldızlı değerlendirmeler (1200x800px)"
                         testimonials_seo = "Sosyal kanıt SEO stratejisi"
                         testimonials_title = "Müşteri Deneyimleri"
+                    elif marketplace_code == 'pl':
+                        testimonials_content = "Zadowolenie klientów gwarantowane, zweryfikowane opinie i 5-gwiazdkowe doświadczenia polskich rodzin."
+                        testimonials_keywords = "opinie klientów, zweryfikowane recenzje, zadowolenie gwarantowane"
+                        testimonials_image = "ENGLISH: Happy Polish customers with 5-star ratings, family testimonials (1200x800px)"
+                        testimonials_seo = "Strategia SEO dowodów społecznych"
+                        testimonials_title = "Zadowolenie Klientów"
                     else:
+                        testimonials_content = "Customer satisfaction guaranteed, verified reviews and 5-star experiences."
                         testimonials_keywords = "customer testimonials, verified reviews, satisfaction guaranteed"
                         testimonials_image = "Happy customers with 5-star ratings (1200x800px)"
                         testimonials_seo = "Social proof SEO strategy"
@@ -4353,13 +4360,20 @@ Technical specifications include comprehensive compatibility, robust build quali
                 
                 # Create Package contents section (Section 7)
                 if listing.features:
-                    package_content = "Paket içeriği eksiksiz, premium ambalaj ve dahil edilen aksesuarlar."
                     if marketplace_code == 'tr':
+                        package_content = "Paket içeriği eksiksiz, premium ambalaj ve dahil edilen aksesuarlar."
                         package_keywords = "paket içeriği, premium ambalaj, dahil aksesuarlar"
                         package_image = "Kutu içeriği düzenli sergilenmiş, ürünler temiz yüzeyde (1200x800px)"
                         package_seo = "Paket içeriği SEO optimizasyonu"
                         package_title = "Paket İçeriği"
+                    elif marketplace_code == 'pl':
+                        package_content = "Kompletna zawartość opakowania, premium pakowanie i dołączone akcesoria dla polskich klientów."
+                        package_keywords = "zawartość opakowania, premium pakowanie, dołączone akcesoria"
+                        package_image = "ENGLISH: Unboxing view with contents neatly displayed, Polish quality packaging (1200x800px)"
+                        package_seo = "SEO dla zawartości opakowania"
+                        package_title = "Zawartość Zestawu"
                     else:
+                        package_content = "Complete package contents, premium packaging and included accessories."
                         package_keywords = "package contents, premium packaging, included accessories"
                         package_image = "Unboxing view with contents displayed (1200x800px)"
                         package_seo = "Package contents SEO"
@@ -4441,18 +4455,18 @@ Technical specifications include comprehensive compatibility, robust build quali
                         # Egypt FAQ image descriptions in Arabic with cultural elements
                         faq_image = "خدمة عملاء مصرية مبتسمة، دليل مرئي خطوة بخطوة، أيقونات ودية مصرية، رموز تراثية (800x600px)"
                         faq_seo = "تحسين محركات البحث للأسئلة الشائعة المصرية"
-                    elif marketplace_code == 'pl':
-                        # Poland culture: family-friendly help and warm support with Catholic traditions
-                        faq_keywords = "często zadawane pytania, pomoc rodzinna polska, przewodnik łatwy, wsparcie polskie, tradycja katolicka"
-                        # Poland FAQ image descriptions in English (like Mexico)
-                        faq_image = "ENGLISH: Smiling Polish customer service team explaining product features to Polish family, step-by-step visual guide, friendly Polish icons with Catholic heritage symbols (800x600px)"
-                        faq_seo = "SEO dla często zadawanych pytań polskich"
                     elif marketplace_code == 'sa':
                         # Saudi culture: family-friendly help and warm support
                         faq_keywords = "أسئلة شائعة، مساعدة عائلية، دليل سهل، دعم سعودي"
                         # Saudi FAQ image descriptions in Arabic
                         faq_image = "خدمة عملاء سعودية مبتسمة، دليل مرئي خطوة بخطوة، أيقونات ودية (800x600px)"
                         faq_seo = "تحسين محركات البحث للأسئلة الشائعة السعودية"
+                    elif marketplace_code == 'pl':
+                        # Poland culture: family-friendly help and warm support with Catholic traditions
+                        faq_keywords = "często zadawane pytania, pomoc rodzinna polska, przewodnik łatwy, wsparcie polskie, tradycja katolicka"
+                        # Poland FAQ image descriptions in English (like Mexico)
+                        faq_image = "ENGLISH: Smiling Polish customer service team explaining product features to Polish family, step-by-step visual guide, friendly Polish icons with Catholic heritage symbols (800x600px)"
+                        faq_seo = "SEO dla często zadawanych pytań polskich"
                     elif marketplace_code == 'nl':
                         # Netherlands culture: direct and practical information
                         faq_keywords = "veelgestelde vragen, praktische hulp, gebruiksaanwijzing, probleemoplossing"
@@ -4714,7 +4728,7 @@ Technical specifications include comprehensive compatibility, robust build quali
                     
                     localized_sections.append(f"""
 <div class="aplus-section trust-section-localized">
-    <h2 class="section-title">{'Güven' if marketplace_code == 'tr' else 'Confianza' if marketplace_code == 'mx' else 'الثقة' if marketplace_code == 'sa' else 'Trust' if marketplace_code == 'in' else 'Trust'}</h2>
+    <h2 class="section-title">{'Güven' if marketplace_code == 'tr' else 'Confianza' if marketplace_code == 'mx' else 'الثقة' if marketplace_code == 'sa' else 'Zaufanie' if marketplace_code == 'pl' else 'Trust' if marketplace_code == 'in' else 'Trust'}</h2>
     <div class="section-content">
         {trust_html}
     </div>
@@ -4725,7 +4739,7 @@ Technical specifications include comprehensive compatibility, robust build quali
                     faqs_content = listing.faqs.replace('\n\n', '</p><p>').replace('\n', '<br>')
                     localized_sections.append(f"""
 <div class="aplus-section faqs-section-localized">
-    <h2 class="section-title">{'Sık Sorulan Sorular' if marketplace_code == 'tr' else 'Preguntas Frecuentes' if marketplace_code == 'mx' else 'الأسئلة الشائعة' if marketplace_code == 'sa' else 'FAQs' if marketplace_code == 'in' else 'FAQs'}</h2>
+    <h2 class="section-title">{'Sık Sorulan Sorular' if marketplace_code == 'tr' else 'Preguntas Frecuentes' if marketplace_code == 'mx' else 'الأسئلة الشائعة' if marketplace_code == 'sa' else 'Często Zadawane Pytania' if marketplace_code == 'pl' else 'FAQs' if marketplace_code == 'in' else 'FAQs'}</h2>
     <div class="section-content">
         <p>{faqs_content}</p>
     </div>
