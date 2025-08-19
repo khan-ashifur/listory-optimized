@@ -3689,7 +3689,14 @@ Technical specifications include comprehensive compatibility, robust build quali
                         premium_desc = "Conception supérieure aux normes françaises"
                     elif marketplace_code == 'tr':
                         keywords_text = "premium kalite, güvenilir marka, müşteri memnuniyeti"
-                        image_text = "Türk ailesi yaşam tarzı görseli, ürün kullanımda gösterilmiş (970x600px)"
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            image_text = "ENGLISH: Turkish family in modern home during New Year celebration, father gaming with premium headset while children watch excitedly, warm festive lighting with traditional decorations in background, RGB headset glowing, quality time together, Turkish hospitality atmosphere visible (970x600px)"
+                        elif 'kitchen' in product_category:
+                            image_text = "ENGLISH: Traditional Turkish kitchen during family gathering, grandmother using premium knife sharpener while family prepares feast together, warm lighting, fresh ingredients and traditional Turkish dishes, multi-generational cooking moment, hospitality elements visible (970x600px)"
+                        elif 'water' in product_category or 'bottle' in product_category:
+                            image_text = "ENGLISH: Active Turkish family at Bosphorus park during weekend, father drinking from large water bottle after outdoor activity, children playing nearby, golden sunset lighting, healthy lifestyle focus, Istanbul skyline in background, family values combined (970x600px)"
+                        else:
+                            image_text = "ENGLISH: Turkish family in modern home showcasing premium product, quality lifestyle focus, warm lighting, traditional hospitality values with modern functionality (970x600px)"
                         seo_text = "Kalite odaklı SEO stratejisi"
                         premium_label = "Premium Deneyim"
                         premium_desc = "Türk standartlarına göre üstün tasarım ve kalite"
@@ -3933,14 +3940,14 @@ Technical specifications include comprehensive compatibility, robust build quali
                             features_keywords = "Türk mutfağı, aile boyu, dayanıklı, kolay temizlik"
                         else:
                             features_keywords = "kalite belgeli, Türkiye garantisi, yerli destek"
-                        # Turkey image descriptions in Turkish
+                        # Turkey detailed ENGLISH image descriptions like Poland
                         if 'audio' in product_category or 'headphone' in product_category:
-                            features_image = "Türk ailesi müzik dinlerken, teknik özellikler Türkçe etiketlerle gösterilmiş (1500x1500px)"
+                            features_image = "ENGLISH: Grid of 6 feature images: 1) Close-up on noise-canceling switch, 2) 50mm driver cross-section with sound waves, 3) battery indicator showing 30h, 4) RGB lights glowing, 5) bluetooth connected to phone and console, 6) Turkish user wearing comfortably during gaming session"
                         elif 'kitchen' in product_category:
-                            features_image = "Türk mutfağında ürün kullanımı, misafirperverlik sahnesinde sergilenmiş (1500x1500px)"
+                            features_image = "ENGLISH: Traditional Turkish kitchen with product prominently displayed, Turkish family gathered around dining table, heritage elements and warm hospitality atmosphere (1500x1500px)"
                         else:
-                            features_image = "Türk tasarım motifli özellikler infografiği (1500x1500px)"
-                        features_seo = "Teknik özellikler için SEO optimizasyonu"
+                            features_image = "ENGLISH: Turkish family using product in daily situations, home lifestyle applications with traditional hospitality elements (1500x1500px)"
+                        features_seo = "Teknik özellikler için SEO optimizasyonu Türkiye'de"
                     elif marketplace_code == 'es':
                         # Spanish culture: emphasizes family, passion, and value
                         if 'audio' in product_category or 'headphone' in product_category:
@@ -4105,9 +4112,9 @@ Technical specifications include comprehensive compatibility, robust build quali
                     elif marketplace_code == 'tr':
                         # Turkey culture: trust through certifications and local support
                         trust_keywords = "TSE belgesi, CE sertifikası, 2 yıl garanti, Türkiye destek"
-                        # Turkey trust image descriptions in Turkish
-                        trust_image = "TSE ve CE sertifikaları görünür, Türk müşteri yorumları, garanti rozetleri (1200x800px)"
-                        trust_seo = "Güven odaklı SEO stratejisi"
+                        # Turkey trust image descriptions with detailed ENGLISH descriptions like Poland
+                        trust_image = "ENGLISH: Display of Turkish certification badge, Turkey flag icon, 2-year warranty card, customer review average 4.8 stars, presented in premium style with Turkish hospitality elements"
+                        trust_seo = "Güven ve kalite için SEO stratejisi Türkiye'de"
                     elif marketplace_code == 'es':
                         # Spanish culture: trust through family recommendations and community
                         trust_keywords = "recomendado por familias, garantía extendida, servicio al cliente"
@@ -4180,8 +4187,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                     if marketplace_code == 'tr':
                         usage_content = "Günlük kullanım, çok amaçlı uygulamalar, pratik ve kullanışlı çözümler sunar."
                         usage_keywords = "günlük kullanım, çok amaçlı, praktik, kullanışlı"
-                        usage_image = "Türk ailesi ürünü farklı durumlarda kullanırken, günlük yaşam sahneleri (1500x1500px)"
-                        usage_seo = "Kullanım senaryoları SEO optimizasyonu"
+                        usage_image = "ENGLISH: Turkish family using product in various daily situations, home lifestyle applications with traditional hospitality elements (1500x1500px)"
+                        usage_seo = "Kullanım senaryoları için SEO optimizasyonu"
                         usage_title = "Kullanım Alanları"
                     elif marketplace_code == 'pl':
                         usage_content = "Codzienne użytkowanie, wszechstronne zastosowania, praktyczne i wygodne rozwiązania dla polskiej rodziny."
@@ -4241,7 +4248,7 @@ Technical specifications include comprehensive compatibility, robust build quali
                     if marketplace_code == 'tr':
                         comparison_content = "Rakiplerinden üstün özellikler, daha iyi performans ve değer sunar."
                         comparison_keywords = "rekabet avantajı, üstün seçim, temel farklılıklar"
-                        comparison_image = "Karşılaştırma tablosu, ürün avantajları vurgulanmış (1200x800px)"
+                        comparison_image = "ENGLISH: Comparison table highlighting product advantages, Turkish quality standards (1200x800px)"
                         comparison_seo = "Karşılaştırma odaklı SEO"
                         comparison_title = "Neden Bu Ürünü Seçmelisiniz"
                     elif marketplace_code == 'pl':
@@ -4302,7 +4309,7 @@ Technical specifications include comprehensive compatibility, robust build quali
                     if marketplace_code == 'tr':
                         testimonials_content = "Müşteri memnuniyeti garantili, doğrulanmış yorumlar ve 5 yıldızlı deneyimler."
                         testimonials_keywords = "müşteri yorumları, doğrulanmış incelemeler, memnuniyet garantili"
-                        testimonials_image = "Mutlu Türk müşterileri, 5 yıldızlı değerlendirmeler (1200x800px)"
+                        testimonials_image = "ENGLISH: Happy Turkish customers with 5-star ratings, family testimonials with hospitality elements (1200x800px)"
                         testimonials_seo = "Sosyal kanıt SEO stratejisi"
                         testimonials_title = "Müşteri Deneyimleri"
                     elif marketplace_code == 'pl':
@@ -4363,7 +4370,7 @@ Technical specifications include comprehensive compatibility, robust build quali
                     if marketplace_code == 'tr':
                         package_content = "Paket içeriği eksiksiz, premium ambalaj ve dahil edilen aksesuarlar."
                         package_keywords = "paket içeriği, premium ambalaj, dahil aksesuarlar"
-                        package_image = "Kutu içeriği düzenli sergilenmiş, ürünler temiz yüzeyde (1200x800px)"
+                        package_image = "ENGLISH: Unboxing view with contents neatly displayed, Turkish quality packaging (1200x800px)"
                         package_seo = "Paket içeriği SEO optimizasyonu"
                         package_title = "Paket İçeriği"
                     elif marketplace_code == 'pl':
@@ -4476,9 +4483,9 @@ Technical specifications include comprehensive compatibility, robust build quali
                     elif marketplace_code == 'tr':
                         # Turkey culture: detailed support with hospitality
                         faq_keywords = "sık sorulan sorular, Türkçe destek, kullanım kılavuzu, problem çözümü"
-                        # Turkey FAQ image descriptions in Turkish
-                        faq_image = "Gülümseyen Türk müşteri hizmetleri, adım adım görsel kılavuz, yardımcı simgeler (800x600px)"
-                        faq_seo = "SSS için SEO optimizasyonu"
+                        # Turkey FAQ image descriptions with detailed ENGLISH descriptions like Poland
+                        faq_image = "ENGLISH: Smiling Turkish customer service team explaining product features to Turkish family, step-by-step visual guide, friendly Turkish icons with hospitality elements (800x600px)"
+                        faq_seo = "Sık sorulan sorular için SEO optimizasyonu Türkiye'de"
                     elif marketplace_code == 'es':
                         # Spanish culture: community help and family-friendly guidance
                         faq_keywords = "ayuda familiar, dudas comunes, consejos prácticos, guía fácil"
