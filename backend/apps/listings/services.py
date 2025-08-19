@@ -3245,6 +3245,15 @@ Technical specifications include comprehensive compatibility, robust build quali
                         'trust_title': 'Qualité et Confiance',
                         'faqs_title': 'Questions Fréquemment Posées'
                     }
+                elif market_code == 'sg':
+                    return {
+                        'keywords': 'Keywords',
+                        'image_strategy': 'Image Strategy',
+                        'seo_focus': 'SEO Focus',
+                        'features_title': 'Key Features & Benefits',
+                        'trust_title': 'Quality & Trust',
+                        'faqs_title': 'Frequently Asked Questions'
+                    }
                 else:
                     return {
                         'keywords': 'Keywords',
@@ -3298,6 +3307,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "jakość premium, zaufana marka, zadowolenie klienta"
                         elif marketplace_code == 'be':
                             section_keywords = "qualité premium, marque de confiance, satisfaction client"
+                        elif marketplace_code == 'sg':
+                            section_keywords = "premium quality Singapore, trusted brand excellence, customer satisfaction guarantee, multicultural harmony"
                         elif marketplace_code == 'in':
                             section_keywords = "premium quality, trusted brand, customer satisfaction"
                         else:
@@ -3329,6 +3340,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "innowacyjny design, wysoka wydajność, przyjazny użytkownikowi"
                         elif marketplace_code == 'be':
                             section_keywords = "design innovant, haute performance, convivial"
+                        elif marketplace_code == 'sg':
+                            section_keywords = "innovative design excellence, high performance technology, user-friendly interface, Singapore lifestyle integration"
                         elif marketplace_code == 'in':
                             section_keywords = "innovative design, high performance, user-friendly"
                         else:
@@ -3355,6 +3368,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "5-gwiazdkowe recenzje, gwarancja zwrotu pieniędzy, zadowolenie klientów"
                         elif marketplace_code == 'be':
                             section_keywords = "avis 5 étoiles, garantie de remboursement, satisfaction client"
+                        elif marketplace_code == 'sg':
+                            section_keywords = "5-star Singapore reviews, money-back guarantee, customer satisfaction excellence, trusted by families"
                         elif marketplace_code == 'in':
                             section_keywords = "5-star reviews, money-back guarantee, customer satisfaction"
                         else:
@@ -3381,6 +3396,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "codzienne użycie, wszechstronne zastosowania, praktyczny, wygodny"
                         elif marketplace_code == 'be':
                             section_keywords = "usage quotidien, applications polyvalentes, pratique, pratique"
+                        elif marketplace_code == 'sg':
+                            section_keywords = "everyday Singapore lifestyle, versatile HDB applications, practical urban living, convenient MRT-friendly"
                         elif marketplace_code == 'in':
                             section_keywords = "everyday use, versatile applications, practical, convenient"
                         else:
@@ -3407,6 +3424,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "kontrola jakości, polskie standardy, certyfikowana doskonałość"
                         elif marketplace_code == 'be':
                             section_keywords = "contrôle qualité, normes belges, excellence certifiée"
+                        elif marketplace_code == 'sg':
+                            section_keywords = "quality control Singapore, SPRING standards, certified excellence, tropical climate tested"
                         elif marketplace_code == 'in':
                             section_keywords = "quality control, manufacturing standards, certified excellence"
                         else:
@@ -3433,6 +3452,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "opinie klientów, zweryfikowane recenzje, zadowolenie gwarantowane"
                         elif marketplace_code == 'be':
                             section_keywords = "témoignages clients, avis vérifiés, satisfaction garantie"
+                        elif marketplace_code == 'sg':
+                            section_keywords = "Singapore customer testimonials, verified family reviews, satisfaction guaranteed, multicultural trust"
                         elif marketplace_code == 'in':
                             section_keywords = "customer testimonials, verified reviews, satisfaction guaranteed"
                         else:
@@ -3459,6 +3480,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "przewaga konkurencyjna, najlepszy wybór, kluczowe różnice"
                         elif marketplace_code == 'be':
                             section_keywords = "avantage concurrentiel, choix supérieur, différenciateurs clés"
+                        elif marketplace_code == 'sg':
+                            section_keywords = "competitive advantage Singapore, superior choice excellence, key differentiators, Lion City quality"
                         elif marketplace_code == 'in':
                             section_keywords = "competitive advantage, superior choice, key differentiators"
                         else:
@@ -3485,6 +3508,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "zawartość opakowania, premium pakowanie, dołączone akcesoria"
                         elif marketplace_code == 'be':
                             section_keywords = "contenu emballage, emballage premium, accessoires inclus"
+                        elif marketplace_code == 'sg':
+                            section_keywords = "complete package contents, premium Singapore packaging, included accessories, tropical-ready materials"
                         elif marketplace_code == 'in':
                             section_keywords = "package contents, premium packaging, included accessories"
                         else:
@@ -3772,6 +3797,19 @@ Technical specifications include comprehensive compatibility, robust build quali
                         seo_text = "Stratégie SEO axée sur la qualité belge"
                         premium_label = "Expérience Premium"
                         premium_desc = "Qualité supérieure conforme aux standards belges et traditions européennes"
+                    elif marketplace_code == 'sg':
+                        keywords_text = "premium quality Singapore excellence, trusted brand multicultural, customer satisfaction guaranteed Singapore"
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            image_text = "ENGLISH: Elegant Singaporean family in premium HDB apartment during Chinese New Year reunion celebration, father experiencing luxury gaming headset while multi-generational family shares prosperity feast, authentic red lanterns with Singapore skyline view, warm festive lighting, RGB headset illuminating modern Asian décor, harmony between traditional values and cutting-edge technology, Merlion visible through window, Singapore multicultural unity and hospitality essence captured (970x600px)"
+                        elif 'kitchen' in product_category:
+                            image_text = "ENGLISH: Contemporary Singapore HDB kitchen during festive meal preparation, experienced grandmother demonstrating premium knife sharpener while family prepares traditional laksa and bak kwa, efficient modern kitchen with Marina Bay view, fresh tropical ingredients and local hawker-inspired specialties, multi-generational cooking wisdom, Singapore's rich food heritage and innovation visible, authentic Lion City atmosphere (970x600px)"
+                        elif 'water' in product_category or 'bottle' in product_category:
+                            image_text = "ENGLISH: Active Singaporean family exercising at Marina Bay Sands area during golden hour weekend, father hydrating from premium water bottle after MRT commute and jogging, children playing with Gardens by the Bay backdrop, golden tropical sunlight filtering through urban canopy, healthy Singapore lifestyle focus, iconic landmarks including Singapore Flyer visible, modern tropical city living excellence (970x600px)"
+                        else:
+                            image_text = "ENGLISH: Sophisticated Singaporean family in modern executive HDB showcasing premium product, quality lifestyle excellence focus, contemporary lighting with tropical ambiance, perfect blend of traditional Asian family values with Singapore's technological innovation and efficiency, multicultural harmony and Lion City prosperity visible, authentic Singapore living standard (970x600px)"
+                        seo_text = "Advanced SEO strategy optimized for Singapore market excellence and multicultural search patterns"
+                        premium_label = "Singapore Premium Excellence"
+                        premium_desc = "Superior quality engineered for Singapore standards, tropical climate durability, and multicultural family traditions"
                     else:
                         keywords_text = "premium, quality, trust"
                         image_text = "Hero lifestyle image (970x600px)"
@@ -4037,6 +4075,22 @@ Technical specifications include comprehensive compatibility, robust build quali
                         else:
                             features_image = "Infographie sophistiquée, style français raffiné (1500x1500px)"
                         features_seo = "Stratégie SEO des fonctionnalités"
+                    elif marketplace_code == 'sg':
+                        # Singapore culture: emphasizes efficiency, multiculturalism, technology integration, tropical lifestyle
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_keywords = "premium Singapore sound excellence, wireless MRT-friendly, all-day tropical comfort, multicultural audio experience"
+                        elif 'kitchen' in product_category:
+                            features_keywords = "professional hawker-grade quality, easy tropical cleanup, modern HDB kitchen design, Singapore culinary innovation"
+                        else:
+                            features_keywords = "innovative Singapore design, high-performance tropical durability, user-friendly Lion City technology, premium multicultural quality"
+                        # Singapore image: efficient urban lifestyle, tropical innovation, multicultural harmony
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_image = "ENGLISH: Grid of 6 premium feature images: 1) Close-up noise-canceling switch with Singapore skyline reflection, 2) 50mm driver cross-section with sound waves over Marina Bay, 3) Battery indicator showing 30h with tropical humidity resistance, 4) RGB lights glowing against HDB apartment evening, 5) Bluetooth connected to phone and gaming console in modern Singapore home, 6) Multicultural Singaporean family wearing comfortably during gaming session with Gardens by the Bay backdrop (1500x1500px)"
+                        elif 'kitchen' in product_category:
+                            features_image = "ENGLISH: Contemporary Singapore kitchen features grid: 1) Diamond disc precision with tropical durability coating, 2) Ceramic disc with anti-humidity protection, 3) Premium walnut handle with Singapore climate resistance, 4) 15/20 degree angle guides for Asian and Western cuisine, 5) Hawker-chef demonstrating professional technique, 6) Modern HDB kitchen with Marina Bay view showcasing efficiency (1500x1500px)"
+                        else:
+                            features_image = "ENGLISH: Dynamic Singapore features showcase: innovative design meeting tropical climate demands, efficiency-focused urban lifestyle, multicultural family harmony, Lion City quality standards, modern technology integration with traditional Asian values, Singapore excellence visible (1500x1500px)"
+                        features_seo = "Advanced feature SEO strategy optimized for Singapore market and tropical lifestyle"
                     else:
                         # USA/International: emphasizes innovation, performance, convenience
                         if 'audio' in product_category or 'headphone' in product_category:
@@ -4808,7 +4862,7 @@ Technical specifications include comprehensive compatibility, robust build quali
             else:
                 # For Turkey and Mexico: use comprehensive template WITHOUT simple sections
                 # For US market: use full template WITH simple sections
-                if marketplace_code in ['tr', 'mx', 'sa', 'eg', 'in', 'pl', 'be']:
+                if marketplace_code in ['tr', 'mx', 'sa', 'eg', 'in', 'pl', 'be', 'sg']:
                     # Turkey and Mexico get comprehensive sections only, no simple sections
                     comprehensive_only_html = f"""<div class="aplus-introduction bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 p-4 sm:p-6 rounded-lg mb-6">
     <div class="flex items-center mb-4">
@@ -6213,6 +6267,15 @@ Return ONLY valid JSON:
                         'features_title': 'Caractéristiques et Avantages Clés',
                         'trust_title': 'Qualité et Confiance',
                         'faqs_title': 'Questions Fréquemment Posées'
+                    }
+                elif market_code == 'sg':
+                    return {
+                        'keywords': 'Keywords',
+                        'image_strategy': 'Image Strategy',
+                        'seo_focus': 'SEO Focus',
+                        'features_title': 'Key Features & Benefits',
+                        'trust_title': 'Quality & Trust',
+                        'faqs_title': 'Frequently Asked Questions'
                     }
                 else:
                     return {

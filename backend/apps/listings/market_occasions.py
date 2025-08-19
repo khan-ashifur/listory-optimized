@@ -506,6 +506,61 @@ class MarketOccasions:
                 'ete': 'Été',  # Summer
                 'automne': 'Automne',  # Autumn
                 'hiver': 'Hiver'  # Winter
+            },
+            
+            'sg': {  # Singapore
+                'chinese_new_year': 'Chinese New Year',  # Most important celebration in Singapore
+                'chinese_valentine': "Chinese Valentine's Day",  # Qixi Festival
+                'valentines_day': "Valentine's Day",  # Valentine's Day
+                'mothers_day': "Mother's Day",  # Mother's Day (second Sunday of May)
+                'fathers_day': "Father's Day",  # Father's Day (third Sunday of June)
+                'national_day': 'National Day',  # Singapore National Day (August 9)
+                'new_year': "New Year's Day",  # New Year's Day
+                'deepavali': 'Deepavali',  # Festival of Lights (October/November)
+                'hari_raya_puasa': 'Hari Raya Puasa',  # Eid al-Fitr
+                'hari_raya_haji': 'Hari Raya Haji',  # Eid al-Adha
+                'christmas': 'Christmas',  # Christmas
+                'good_friday': 'Good Friday',  # Good Friday
+                'vesak_day': 'Vesak Day',  # Buddha's Birthday
+                'labour_day': 'Labour Day',  # May 1
+                'back_to_school': 'Back to School',  # School term starts
+                'mid_autumn_festival': 'Mid-Autumn Festival',  # Mooncake Festival
+                'dragon_boat_festival': 'Dragon Boat Festival',  # Duanwu Festival
+                'hungry_ghost_festival': 'Hungry Ghost Festival',  # Zhongyuan Festival
+                'black_friday': 'Black Friday',  # Black Friday
+                'cyber_monday': 'Cyber Monday',  # Cyber Monday
+                'singles_day': "Singles' Day",  # 11.11 Shopping Festival
+                'great_singapore_sale': 'Great Singapore Sale',  # Annual shopping event
+                'f1_singapore_gp': 'Formula 1 Singapore Grand Prix',  # F1 race weekend
+                'singapore_food_festival': 'Singapore Food Festival',  # Food culture celebration
+                'chingay_parade': 'Chingay Parade',  # Street parade after CNY
+                'hungry_ghost_month': 'Hungry Ghost Month',  # Seventh lunar month
+                'mooncake_season': 'Mooncake Season',  # Leading up to Mid-Autumn
+                'wedding_season': 'Wedding Season',  # Popular wedding periods
+                'graduation_season': 'Graduation Season',  # School/university graduations
+                'housewarming': 'Housewarming',  # New home celebrations
+                'baby_shower': 'Baby Shower',  # Baby celebrations
+                'birthday': 'Birthday',  # Birthday celebrations
+                'anniversary': 'Anniversary',  # Wedding anniversaries
+                'retirement': 'Retirement',  # Retirement celebrations
+                'promotion': 'Job Promotion',  # Career advancement
+                'weekend': 'Weekend',  # Weekend gatherings
+                'public_holiday': 'Public Holiday',  # General public holidays
+                'school_holiday': 'School Holiday',  # School vacation periods
+                'monsoon_season': 'Monsoon Season',  # Rainy season (Nov-Jan)
+                'dry_season': 'Dry Season',  # Hot season (Feb-Apr)
+                'haze_season': 'Haze Season',  # Seasonal haze period
+                'durian_season': 'Durian Season',  # Durian fruit season
+                'year_end_bonus': 'Year-End Bonus',  # 13th month bonus period
+                'cny_bonus': 'CNY Bonus',  # Chinese New Year bonus
+                'exam_season': 'Exam Season',  # School examination periods
+                'ns_enlistment': 'NS Enlistment',  # National Service
+                'university_admission': 'University Admission',  # Higher education
+                'job_hunting': 'Job Hunting',  # Employment search
+                'property_viewing': 'Property Viewing',  # Real estate
+                'renovation': 'Home Renovation',  # Home improvement
+                'staycation': 'Staycation',  # Local vacation
+                'overseas_travel': 'Overseas Travel'  # International travel
             }
         }
         
@@ -729,6 +784,36 @@ class MarketOccasions:
                 'week_end': ['cadeau week-end', 'détente week-end', 'famille week-end', 'repos week-end', 'plaisir week-end'],
                 'vacances_ete': ['cadeau vacances été', 'vacances famille', 'plaisir vacances', 'détente été', 'congés été'],
                 'rentree_scolaire': ['cadeau rentrée scolaire', 'nouvelle année scolaire', 'école cadeau', 'enfant école', 'rentrée septembre']
+            },
+            'sg': {
+                'chinese_new_year': ['cny gift', 'chinese new year gift', 'ang bao gift', 'reunion dinner gift', 'auspicious gift', 'prosperity gift', 'red packet gift'],
+                'chinese_valentine': ['chinese valentine gift', 'qixi gift', 'romantic gift', 'couple gift', 'love gift'],
+                'valentines_day': ['valentine gift', 'romantic gift', 'couple gift', 'love gift', 'singapore valentine'],
+                'mothers_day': ['mothers day gift', 'mom gift', 'mother gift', 'mama gift', 'singapore mom'],
+                'fathers_day': ['fathers day gift', 'dad gift', 'father gift', 'papa gift', 'singapore dad'],
+                'national_day': ['national day gift', 'singapore national day', 'ndp gift', 'patriotic gift', 'singapore pride'],
+                'deepavali': ['deepavali gift', 'diwali gift', 'festival of lights', 'hindu festival', 'indian celebration'],
+                'hari_raya_puasa': ['hari raya gift', 'eid gift', 'muslim festival', 'ramadan gift', 'singapore eid'],
+                'hari_raya_haji': ['hari raya haji gift', 'eid adha gift', 'pilgrimage festival', 'sacrifice festival'],
+                'christmas': ['christmas gift', 'xmas gift', 'holiday gift', 'singapore christmas', 'festive gift'],
+                'mid_autumn_festival': ['mid autumn gift', 'mooncake festival', 'lantern festival', 'chinese festival'],
+                'dragon_boat_festival': ['dragon boat gift', 'dumpling festival', 'traditional festival'],
+                'singles_day': ['singles day gift', '11.11 gift', 'self gift', 'treat yourself'],
+                'great_singapore_sale': ['gss gift', 'singapore sale', 'shopping festival', 'discount gift'],
+                'f1_singapore_gp': ['f1 gift', 'racing gift', 'singapore gp', 'motorsport gift'],
+                'singapore_food_festival': ['food festival gift', 'culinary gift', 'foodie gift', 'singapore cuisine'],
+                'wedding_season': ['wedding gift', 'bridal gift', 'couple gift', 'marriage gift', 'singapore wedding'],
+                'graduation_season': ['graduation gift', 'achievement gift', 'success gift', 'student gift'],
+                'housewarming': ['housewarming gift', 'new home gift', 'house blessing', 'moving gift'],
+                'baby_shower': ['baby shower gift', 'new baby gift', 'pregnancy gift', 'expecting gift'],
+                'birthday': ['birthday gift', 'bday gift', 'celebration gift', 'party gift'],
+                'anniversary': ['anniversary gift', 'relationship gift', 'milestone gift', 'couple anniversary'],
+                'black_friday': ['black friday singapore', 'black friday deals', 'cyber deals', 'online shopping'],
+                'year_end_bonus': ['bonus gift', '13th month bonus', 'year end treat', 'reward gift'],
+                'cny_bonus': ['cny bonus gift', 'chinese new year bonus', 'festive bonus', 'prosperity bonus'],
+                'back_to_school': ['back to school gift', 'school gift', 'student gift', 'education gift'],
+                'staycation': ['staycation gift', 'local travel', 'singapore holiday', 'weekend getaway'],
+                'durian_season': ['durian season gift', 'fruit lover gift', 'singapore durian', 'tropical fruit']
             }
         }
         
