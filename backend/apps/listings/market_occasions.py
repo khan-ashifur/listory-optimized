@@ -460,6 +460,52 @@ class MarketOccasions:
                 'reprezentacja': 'Mecz Reprezentacji',  # National team match
                 'dzien_flagi': 'Dzień Flagi',  # Flag Day (May 2)
                 'dzien_polonii': 'Dzień Polonii'  # Polonia Day (May 2)
+            },
+            
+            'be': {  # Belgium
+                'noel': 'Noël',  # Christmas (most important Belgian celebration)
+                'saint_valentin': 'Saint-Valentin',  # Valentine's Day
+                'paques': 'Pâques',  # Easter (major Belgian holiday)
+                'fete_des_meres': 'Fête des Mères',  # Mother's Day (second Sunday of May)
+                'fete_des_peres': 'Fête des Pères',  # Father's Day (second Sunday of June)
+                'fete_nationale': 'Fête Nationale Belge',  # Belgian National Day (July 21)
+                'jour_de_lan': "Jour de l'An",  # New Year's Day
+                'saint_nicolas': 'Saint-Nicolas',  # St. Nicholas Day (December 6)
+                'epiphanie': 'Épiphanie',  # Epiphany (January 6)
+                'ascension': 'Ascension',  # Ascension Day
+                'pentecote': 'Pentecôte',  # Whit Monday
+                'assomption': 'Assomption',  # Assumption of Mary (August 15)
+                'toussaint': 'Toussaint',  # All Saints' Day (November 1)
+                'armistice': 'Armistice',  # Armistice Day (November 11)
+                'rentree_scolaire': 'Rentrée Scolaire',  # Back to School
+                'soldes_hiver': "Soldes d'Hiver",  # Winter Sales
+                'soldes_ete': "Soldes d'Été",  # Summer Sales
+                'black_friday': 'Black Friday',  # Black Friday
+                'cyber_monday': 'Cyber Monday',  # Cyber Monday
+                'carnaval': 'Carnaval',  # Carnival (Binche and other Belgian carnivals)
+                'ducasse': 'Ducasse',  # Local festivals (Mons, Ath)
+                'ommegang': 'Ommegang',  # Brussels Historical Pageant
+                'gentse_feesten': 'Gentse Feesten',  # Ghent Festival (if targeting Flemish)
+                'braderie': 'Braderie',  # Street sales/markets
+                'kermesse': 'Kermesse',  # Village fair
+                'communion': 'Première Communion',  # First Communion
+                'confirmation': 'Confirmation',  # Confirmation
+                'mariage': 'Mariage',  # Wedding
+                'anniversaire': 'Anniversaire',  # Anniversary
+                'anniversaire_naissance': 'Anniversaire de Naissance',  # Birthday
+                'pendaison_cremaillere': 'Pendaison de Crémaillère',  # Housewarming
+                'diplome': 'Remise de Diplôme',  # Graduation
+                'retraite': 'Départ en Retraite',  # Retirement
+                'week_end': 'Week-end',  # Weekend
+                'vacances_ete': "Vacances d'Été",  # Summer Holidays
+                'vacances_hiver': "Vacances d'Hiver",  # Winter Holidays
+                'vacances_paques': 'Vacances de Pâques',  # Easter Holidays
+                'euro_football': "Championnat d'Europe de Football",  # European Football Championship
+                'diables_rouges': 'Diables Rouges',  # Belgian National Football Team
+                'printemps': 'Printemps',  # Spring
+                'ete': 'Été',  # Summer
+                'automne': 'Automne',  # Autumn
+                'hiver': 'Hiver'  # Winter
             }
         }
         
@@ -660,6 +706,29 @@ class MarketOccasions:
                 'wakacje': ['prezent wakacyjny', 'wakacje prezent', 'urlop prezent', 'lato prezent', 'podróż prezent'],
                 'parapetówka': ['prezent parapetówka', 'nowe mieszkanie', 'dom prezent', 'housewarming prezent', 'nowy dom prezent'],
                 'baby_shower': ['prezent baby shower', 'dziecko w drodze', 'przyszła mama', 'noworodek prezent', 'brzuszek prezent']
+            },
+            'be': {
+                'noel': ['cadeau noël', 'cadeau de noël', 'idée cadeau noël', 'père noël', 'réveillon de noël', 'sapin de noël', "fêtes de fin d'année"],
+                'saint_valentin': ['cadeau saint valentin', 'cadeau amour', 'cadeau romantique', 'cadeau couple', 'idée cadeau saint valentin', 'amoureux cadeau'],
+                'paques': ['cadeau pâques', 'cadeau de pâques', 'lapin de pâques', 'œufs de pâques', 'chocolats pâques', 'fêtes de pâques'],
+                'fete_des_meres': ['cadeau fête des mères', 'cadeau maman', 'idée cadeau maman', 'cadeau mère', 'bonne fête maman', 'maman adorée'],
+                'fete_des_peres': ['cadeau fête des pères', 'cadeau papa', 'idée cadeau papa', 'cadeau père', 'bonne fête papa', 'papa adoré'],
+                'fete_nationale': ['cadeau fête nationale belge', 'belgique fête', 'fierté belge', 'tradition belge', '21 juillet belgique'],
+                'saint_nicolas': ['cadeau saint nicolas', 'saint nicolas belgique', 'tradition saint nicolas', 'enfants saint nicolas', 'père noël belge'],
+                'communion': ['cadeau première communion', 'communion solennelle', 'cadeau communion', 'tradition catholique', 'communion belge'],
+                'mariage': ['cadeau mariage', 'cadeau de mariage', 'liste mariage', 'noces', 'félicitations mariage', 'couple belge'],
+                'anniversaire': ['cadeau anniversaire', "cadeau d'anniversaire", 'fête anniversaire', 'joyeux anniversaire', 'surprise anniversaire'],
+                'diplome': ['cadeau diplôme', 'remise diplôme', 'félicitations diplôme', 'cadeau graduation', 'succès scolaire', 'réussite études'],
+                'pendaison_cremaillere': ['cadeau pendaison crémaillère', 'nouveau logement', 'nouvelle maison', 'emménagement', 'bienvenue maison'],
+                'carnaval': ['cadeau carnaval', 'carnaval binche', 'tradition carnaval', 'fête carnaval', 'carnaval belge', 'déguisement carnaval'],
+                'ducasse': ['cadeau ducasse', 'tradition ducasse', 'fête locale belge', 'folklore belge', 'culture belge'],
+                'diables_rouges': ['cadeau diables rouges', 'équipe belgique', 'football belge', 'supporter belgique', 'fierté belge football'],
+                'soldes_hiver': ['cadeau soldes hiver', 'bonnes affaires hiver', 'promotions hiver', 'réductions hiver'],
+                'soldes_ete': ['cadeau soldes été', 'bonnes affaires été', 'promotions été', 'réductions été'],
+                'black_friday': ['black friday belgique', 'promotions black friday', 'bonnes affaires black friday', 'shopping black friday'],
+                'week_end': ['cadeau week-end', 'détente week-end', 'famille week-end', 'repos week-end', 'plaisir week-end'],
+                'vacances_ete': ['cadeau vacances été', 'vacances famille', 'plaisir vacances', 'détente été', 'congés été'],
+                'rentree_scolaire': ['cadeau rentrée scolaire', 'nouvelle année scolaire', 'école cadeau', 'enfant école', 'rentrée septembre']
             }
         }
         

@@ -3009,6 +3009,9 @@ Technical specifications include comprehensive compatibility, robust build quali
                 elif marketplace_code == 'tr':
                     # Convert Q: → S: and A: → C: for Turkish format
                     faqs_content = faqs_content.replace('Q:', 'S:').replace('A:', 'C:')
+                elif marketplace_code == 'be':
+                    # Convert Q: → Q: and A: → R: for Belgian French format
+                    faqs_content = faqs_content.replace('A:', 'R:')
                 
                 listing.faqs = faqs_content
             else:
@@ -3233,6 +3236,15 @@ Technical specifications include comprehensive compatibility, robust build quali
                         'trust_title': 'Jakość i Zaufanie',
                         'faqs_title': 'Często Zadawane Pytania'
                     }
+                elif market_code == 'be':
+                    return {
+                        'keywords': 'Mots-clés',
+                        'image_strategy': 'Stratégie d\'Image',
+                        'seo_focus': 'Focus SEO',
+                        'features_title': 'Caractéristiques et Avantages Clés',
+                        'trust_title': 'Qualité et Confiance',
+                        'faqs_title': 'Questions Fréquemment Posées'
+                    }
                 else:
                     return {
                         'keywords': 'Keywords',
@@ -3284,6 +3296,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "جودة ممتازة، علامة تجارية موثوقة، رضا العملاء"
                         elif marketplace_code == 'pl':
                             section_keywords = "jakość premium, zaufana marka, zadowolenie klienta"
+                        elif marketplace_code == 'be':
+                            section_keywords = "qualité premium, marque de confiance, satisfaction client"
                         elif marketplace_code == 'in':
                             section_keywords = "premium quality, trusted brand, customer satisfaction"
                         else:
@@ -3313,6 +3327,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "تصميم مبدع، أداء عالي الجودة، سهل الاستعمال"
                         elif marketplace_code == 'pl':
                             section_keywords = "innowacyjny design, wysoka wydajność, przyjazny użytkownikowi"
+                        elif marketplace_code == 'be':
+                            section_keywords = "design innovant, haute performance, convivial"
                         elif marketplace_code == 'in':
                             section_keywords = "innovative design, high performance, user-friendly"
                         else:
@@ -3337,6 +3353,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "تقييمات خمس نجوم، ضمان إرجاع الأموال، رضا العملاء"
                         elif marketplace_code == 'pl':
                             section_keywords = "5-gwiazdkowe recenzje, gwarancja zwrotu pieniędzy, zadowolenie klientów"
+                        elif marketplace_code == 'be':
+                            section_keywords = "avis 5 étoiles, garantie de remboursement, satisfaction client"
                         elif marketplace_code == 'in':
                             section_keywords = "5-star reviews, money-back guarantee, customer satisfaction"
                         else:
@@ -3361,6 +3379,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "استعمال يومي، تطبيقات متعددة، عملي، مريح"
                         elif marketplace_code == 'pl':
                             section_keywords = "codzienne użycie, wszechstronne zastosowania, praktyczny, wygodny"
+                        elif marketplace_code == 'be':
+                            section_keywords = "usage quotidien, applications polyvalentes, pratique, pratique"
                         elif marketplace_code == 'in':
                             section_keywords = "everyday use, versatile applications, practical, convenient"
                         else:
@@ -3385,6 +3405,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "مراقبة الجودة، معايير مصرية، تصنيع معتمد، ضمان سنتان"
                         elif marketplace_code == 'pl':
                             section_keywords = "kontrola jakości, polskie standardy, certyfikowana doskonałość"
+                        elif marketplace_code == 'be':
+                            section_keywords = "contrôle qualité, normes belges, excellence certifiée"
                         elif marketplace_code == 'in':
                             section_keywords = "quality control, manufacturing standards, certified excellence"
                         else:
@@ -3409,6 +3431,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "شهادات العملاء، مراجعات موثقة، رضا مضمون"
                         elif marketplace_code == 'pl':
                             section_keywords = "opinie klientów, zweryfikowane recenzje, zadowolenie gwarantowane"
+                        elif marketplace_code == 'be':
+                            section_keywords = "témoignages clients, avis vérifiés, satisfaction garantie"
                         elif marketplace_code == 'in':
                             section_keywords = "customer testimonials, verified reviews, satisfaction guaranteed"
                         else:
@@ -3433,6 +3457,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "ميزة تنافسية، الخيار الأفضل، مزايا أساسية"
                         elif marketplace_code == 'pl':
                             section_keywords = "przewaga konkurencyjna, najlepszy wybór, kluczowe różnice"
+                        elif marketplace_code == 'be':
+                            section_keywords = "avantage concurrentiel, choix supérieur, différenciateurs clés"
                         elif marketplace_code == 'in':
                             section_keywords = "competitive advantage, superior choice, key differentiators"
                         else:
@@ -3457,6 +3483,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "محتويات الحزمة، تعبئة فاخرة، اكسسوارات مشمولة"
                         elif marketplace_code == 'pl':
                             section_keywords = "zawartość opakowania, premium pakowanie, dołączone akcesoria"
+                        elif marketplace_code == 'be':
+                            section_keywords = "contenu emballage, emballage premium, accessoires inclus"
                         elif marketplace_code == 'in':
                             section_keywords = "package contents, premium packaging, included accessories"
                         else:
@@ -3731,6 +3759,19 @@ Technical specifications include comprehensive compatibility, robust build quali
                         seo_text = "Strategia SEO skoncentrowana na jakości polskiej"
                         premium_label = "Premium Doświadczenie"
                         premium_desc = "Najwyższa jakość zgodna z polskimi standardami i tradycjami rodzinnymi"
+                    elif marketplace_code == 'be':
+                        keywords_text = "qualité premium, marque de confiance, satisfaction client"
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            image_text = "ENGLISH: Belgian family in elegant home during holiday celebration, father enjoying premium headset while family gathers around, warm festive lighting with European decorations, RGB headset glowing, quality time together, Belgian hospitality and sophistication visible (970x600px)"
+                        elif 'kitchen' in product_category:
+                            image_text = "ENGLISH: Traditional Belgian kitchen during family meal preparation, grandmother using premium knife sharpener while family prepares European feast, warm lighting, fresh ingredients and traditional Belgian specialties, multi-generational cooking moment, European heritage elements visible (970x600px)"
+                        elif 'water' in product_category or 'bottle' in product_category:
+                            image_text = "ENGLISH: Active Belgian family at European countryside during weekend, father drinking from large water bottle after cycling, children playing nearby, golden sunlight, healthy lifestyle focus, Belgian landscapes in background, family values combined (970x600px)"
+                        else:
+                            image_text = "ENGLISH: Belgian family in modern European home showcasing premium product, quality lifestyle focus, warm lighting, traditional European values with modern functionality (970x600px)"
+                        seo_text = "Stratégie SEO axée sur la qualité belge"
+                        premium_label = "Expérience Premium"
+                        premium_desc = "Qualité supérieure conforme aux standards belges et traditions européennes"
                     else:
                         keywords_text = "premium, quality, trust"
                         image_text = "Hero lifestyle image (970x600px)"
@@ -4767,7 +4808,7 @@ Technical specifications include comprehensive compatibility, robust build quali
             else:
                 # For Turkey and Mexico: use comprehensive template WITHOUT simple sections
                 # For US market: use full template WITH simple sections
-                if marketplace_code in ['tr', 'mx', 'sa', 'eg', 'in', 'pl']:
+                if marketplace_code in ['tr', 'mx', 'sa', 'eg', 'in', 'pl', 'be']:
                     # Turkey and Mexico get comprehensive sections only, no simple sections
                     comprehensive_only_html = f"""<div class="aplus-introduction bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 p-4 sm:p-6 rounded-lg mb-6">
     <div class="flex items-center mb-4">
@@ -6163,6 +6204,15 @@ Return ONLY valid JSON:
                         'features_title': 'Kluczowe Cechy i Korzyści',
                         'trust_title': 'Jakość i Zaufanie',
                         'faqs_title': 'Często Zadawane Pytania'
+                    }
+                elif market_code == 'be':
+                    return {
+                        'keywords': 'Mots-clés',
+                        'image_strategy': 'Stratégie d\'Image',
+                        'seo_focus': 'Focus SEO',
+                        'features_title': 'Caractéristiques et Avantages Clés',
+                        'trust_title': 'Qualité et Confiance',
+                        'faqs_title': 'Questions Fréquemment Posées'
                     }
                 else:
                     return {
