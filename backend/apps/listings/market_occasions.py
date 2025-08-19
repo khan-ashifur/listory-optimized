@@ -405,6 +405,61 @@ class MarketOccasions:
                 'voetbal': 'Voetbal',  # Football season
                 'ek_wk': 'EK/WK',  # European/World Championship
                 'oranje': 'Oranje'  # Dutch national team events
+            },
+            
+            'pl': {  # Poland
+                'boze_narodzenie': 'Boże Narodzenie',  # Christmas (most important Polish celebration)
+                'wielkanoc': 'Wielkanoc',  # Easter (major Polish holiday)
+                'swieto_niepodleglosci': 'Święto Niepodległości',  # Independence Day (November 11)
+                'swieto_konstytucji': 'Święto Konstytucji 3 Maja',  # Constitution Day (May 3)
+                'dzien_matki': 'Dzień Matki',  # Mother's Day (May 26)
+                'dzien_ojca': 'Dzień Ojca',  # Father's Day (June 23)
+                'dzien_dziecka': 'Dzień Dziecka',  # Children's Day (June 1)
+                'walentynki': 'Walentynki',  # Valentine's Day
+                'andrzejki': 'Andrzejki',  # St. Andrew's Day (November 30)
+                'mikolajki': 'Mikołajki',  # St. Nicholas Day (December 6)
+                'nowy_rok': 'Nowy Rok',  # New Year
+                'sylwester': 'Sylwester',  # New Year's Eve
+                'dzien_babci': 'Dzień Babci',  # Grandmother's Day (January 21)
+                'dzien_dziadka': 'Dzień Dziadka',  # Grandfather's Day (January 22)
+                'dzien_kobiet': 'Dzień Kobiet',  # Women's Day (March 8)
+                'dzien_nauczyciela': 'Dzień Nauczyciela',  # Teacher's Day (October 14)
+                'wszystkich_swietych': 'Wszystkich Świętych',  # All Saints' Day (November 1)
+                'zaduszki': 'Zaduszki',  # All Souls' Day (November 2)
+                'wigilia': 'Wigilia',  # Christmas Eve
+                'trzech_kroli': 'Trzech Króli',  # Epiphany (January 6)
+                'tlusty_czwartek': 'Tłusty Czwartek',  # Fat Thursday
+                'powrot_do_szkoly': 'Powrót do Szkoły',  # Back to School
+                'urlop_letni': 'Urlop Letni',  # Summer Vacation
+                'ferie_zimowe': 'Ferie Zimowe',  # Winter Break
+                'slub': 'Ślub',  # Wedding
+                'wesele': 'Wesele',  # Wedding Reception
+                'chrzciny': 'Chrzciny',  # Baptism
+                'pierwsza_komunia': 'Pierwsza Komunia',  # First Communion
+                'bierzmowanie': 'Bierzmowanie',  # Confirmation
+                'studniowka': 'Studniówka',  # Prom/100 days before graduation
+                'matura': 'Matura',  # High School Finals
+                'promocja': 'Promocja',  # University Graduation
+                'urodziny': 'Urodziny',  # Birthday
+                'rocznica': 'Rocznica',  # Anniversary
+                'imieniny': 'Imieniny',  # Name Day (very important in Poland)
+                'baby_shower': 'Baby Shower',  # Baby Shower
+                'panieński': 'Wieczór Panieński',  # Bachelorette Party
+                'kawalerski': 'Wieczór Kawalerski',  # Bachelor Party
+                'housewarming': 'Parapetówka',  # Housewarming
+                'black_friday': 'Black Friday',  # Black Friday
+                'cyber_monday': 'Cyber Monday',  # Cyber Monday
+                'lato': 'Lato',  # Summer
+                'zima': 'Zima',  # Winter
+                'wiosna': 'Wiosna',  # Spring
+                'jesien': 'Jesień',  # Autumn
+                'weekend': 'Weekend',  # Weekend
+                'wakacje': 'Wakacje',  # Holidays
+                'majowka': 'Majówka',  # May holidays (long weekend)
+                'euro_mistrzostwa': 'Euro/Mistrzostwa Świata',  # European/World Championship
+                'reprezentacja': 'Mecz Reprezentacji',  # National team match
+                'dzien_flagi': 'Dzień Flagi',  # Flag Day (May 2)
+                'dzien_polonii': 'Dzień Polonii'  # Polonia Day (May 2)
             }
         }
         
@@ -581,6 +636,30 @@ class MarketOccasions:
                 'eid_ul_adha': ['eid ul adha', 'bakrid gift', 'qurbani eid', 'sacrifice festival', 'muslim eid', 'kitchen bakrid'],
                 'big_billion_days': ['flipkart sale', 'big billion days', 'festival sale', 'discount offer', 'mega sale', 'kitchen sale'],
                 'great_indian_festival': ['amazon sale', 'great indian festival', 'festival offers', 'diwali sale', 'mega discount', 'kitchen festival sale']
+            },
+            'pl': {
+                'boze_narodzenie': ['prezent świąteczny', 'boże narodzenie prezent', 'wigilia prezent', 'choinka prezent', 'mikołaj prezent'],
+                'wielkanoc': ['prezent wielkanocny', 'wielkanoc prezent', 'śmigus dyngus', 'święcone prezent', 'zajączek wielkanocny'],
+                'dzien_matki': ['prezent dzień matki', 'prezent dla mamy', 'mama prezent', 'dzień matki prezent', 'podziękowanie mama'],
+                'dzien_ojca': ['prezent dzień ojca', 'prezent dla taty', 'tata prezent', 'dzień ojca prezent', 'podziękowanie tata'],
+                'dzien_dziecka': ['prezent dzień dziecka', 'prezent dla dzieci', 'dziecko prezent', 'radość dziecka', 'zabawa dla dzieci'],
+                'walentynki': ['prezent walentynkowy', 'walentynki prezent', 'prezent miłosny', 'romantyczny prezent', 'dla ukochanej'],
+                'imieniny': ['prezent imieninowy', 'imieniny prezent', 'z okazji imienin', 'imieniny życzenia', 'święto imion'],
+                'slub': ['prezent ślubny', 'ślub prezent', 'prezent weselny', 'para młoda prezent', 'wesele prezent'],
+                'urodziny': ['prezent urodzinowy', 'urodziny prezent', 'z okazji urodzin', 'tort urodzinowy', 'świętowanie urodzin'],
+                'pierwsza_komunia': ['prezent komunijny', 'pierwsza komunia prezent', 'komunia święta', 'pamiątka komunia', 'dziecko komunia'],
+                'studniowka': ['prezent studniówka', 'studniówka prezent', 'bal maturalny', 'elegancki prezent', 'młodzież prezent'],
+                'matura': ['prezent maturalny', 'matura prezent', 'egzamin prezent', 'sukces matura', 'absolwent prezent'],
+                'swieto_niepodleglosci': ['prezent patriotyczny', 'polska niepodległość', 'biało czerwony', 'polska tradycja', 'dumny polak'],
+                'andrzejki': ['prezent andrzejki', 'andrzejki prezent', 'wróżby andrzejki', 'tradycja polska', 'zabawa andrzejki'],
+                'mikolajki': ['prezent mikołajki', 'mikołajki prezent', 'święty mikołaj', 'buty pod choinkę', 'dzieci mikołaj'],
+                'powrot_do_szkoly': ['przybory szkolne', 'szkoła prezent', 'plecak szkolny', 'ucznia prezent', 'rok szkolny'],
+                'sylwester': ['prezent sylwestrowy', 'sylwester prezent', 'nowy rok prezent', 'zabawa sylwestrowa', 'noworoczny prezent'],
+                'black_friday': ['black friday polska', 'promocja black friday', 'wyprzedaż black friday', 'okazja zakupy', 'taniej zakupy'],
+                'weekend': ['prezent weekend', 'relaks weekend', 'odpoczynek prezent', 'wolny czas', 'rodzina czas'],
+                'wakacje': ['prezent wakacyjny', 'wakacje prezent', 'urlop prezent', 'lato prezent', 'podróż prezent'],
+                'parapetówka': ['prezent parapetówka', 'nowe mieszkanie', 'dom prezent', 'housewarming prezent', 'nowy dom prezent'],
+                'baby_shower': ['prezent baby shower', 'dziecko w drodze', 'przyszła mama', 'noworodek prezent', 'brzuszek prezent']
             }
         }
         

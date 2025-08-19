@@ -199,6 +199,28 @@ class ListingGeneratorService:
         # Default MEXICO-STYLE Egyptian keywords - BEATS ALL COMPETITORS WITH CULTURAL DEPTH + ARABIC-FRIENDLY
         return "تجربة جودة رائعة, هندسة مصرية فاخرة, تصميم عائلي مثالي, ضمان مصنع مصري أصلي, هدية رمضان عيد زفاف مثالية, استخدام مصري تقليدي, 1 مليون+ عائلة مصرية سعيدة, معيار فاخر معتمد علامة جودة, معتمد خبير محترف, توصيل سريع مصر شحن مجاني, جودة نمط حياة فاخر, هدية حفل زفاف مثالية, جاهز هدايا أعياد, ضروري بيت مطبخ, حلم الجودة المصرية"
     
+    def get_polish_industry_keywords(self, product):
+        """Get Polish industry-specific high-intent keywords for Poland market - EXACT MEXICO PATTERN FOR 10/10 QUALITY"""
+        category = product.categories.lower() if product.categories else ""
+        
+        # Enhanced Polish keywords by category - MEXICO PATTERN APPLIED - DOMINATES HELIUM 10, JASPER AI, COPY MONKEY
+        industry_keywords = {
+            "kitchen": "zestaw noży kuchennych premium, idealny polski dom rodzinny, prezent Boże Narodzenie Wielkanoc, ostrza stal nierdzewna trwałe, krojenie cebuli czosnku mięsa, uchwyty bezpieczne początkujący, niezbędny polska kuchnia tradycyjna, prezent ślub chrzciny nowy dom, 100000+ szczęśliwa polska rodzina, łatwe czyszczenie zmywarka, faktura gwarancja 2 lata, idealny prezenty polskie święta, szybka dostawa cała Polska",
+            "knife": "noże kuchennie polskie premium, przygotowanie jedzenia codzienne, prezent idealny święta imieniny, stal nierdzewna ostre trwałe, krojenie warzywa mięso owoce, uchwyty ergonomiczne wygodne, konieczność polska kuchnia, prezent ślub dom mały idealny, 150000+ kucharz polski zadowolony, czyszczenie proste bezpieczne, faktura polska gwarancja dwuletnia, gotowy prezenty wszystkie okazje",
+            "audio": "doświadczenie dźwięk niesamowite, technologia redukcja hałasu, połączenie bluetooth doskonałe 5.3, jakość muzyka stereo luksusowa, zaprojektowany polska rodzina, komfort tradycyjny nowoczesna technologia, 50000+ miłośnik muzyki polski, żywotność bateria 40 godzin gwarantowana, użytkowanie wygodne bezprzewodowe, dostawa szybka Polska, inżynieria dźwięk profesjonalna, prezent Boże Narodzenie święta idealny",
+            "electronics": "technologia rewolucyjna innowacyjna, jakość premium certyfikowana, wydajność idealna gwarantowana, entuzjaści technologia polscy, produkcja przyjazna środowisko zrównoważona, gwarancja dystrybutor polski oryginalny, 60000+ użytkownik technologia szczęśliwy, gwarancja producent dwa lata, bezpieczeństwo rodzinne certyfikowane, dostawa cała Polska, wsparcie techniczne profesjonalne, gotowy prezenty wszystkie święta",
+            "home": "komfort domowy niesamowity, projekt inteligentny oszczędność energii, poprawiony jakość życia idealny, zaprojektowany polskie domy, rozwiązanie trwałe świadomość ekologiczna, gościnność polska tradycyjna, 40000+ właściciel domu szczęśliwy, działanie ciche gwarantowane, produkcja priorytet zdrowie rodzinne, dostawa szybka Polska, poziom życia luksusowy, prezent Wielkanoc nowy dom",
+            "sports": "wydajność sportowa niesamowita, wodoodporny IPX7 certyfikowany, projekt środowisko pracy wyjątkowy, wybór sportowiec polski, sprzęt sportowy zrównoważony, trwałość tradycyjna styl nowoczesny, 35000+ sportowiec polski aktywny, materiał premium lekki bardzo, gwarancja styl życia fitness, dostawa sport Polska, certyfikowany trener profesjonalny, edycja specjalna prezent święto"
+        }
+        
+        # Find matching category keywords
+        for key, keywords in industry_keywords.items():
+            if key in category:
+                return keywords
+        
+        # Default MEXICO-STYLE Polish keywords - BEATS ALL COMPETITORS WITH CULTURAL DEPTH + POLISH-FRIENDLY
+        return "doświadczenie jakość niesamowita, inżynieria polska premium, projekt rodzinny idealny, gwarancja producent polski oryginalny, prezent Boże Narodzenie Wielkanoc ślub idealny, użytkowanie tradycja polska, 2 miliony+ polska rodzina szczęśliwa, standard premium certyfikowany znak jakości, certyfikowany ekspert profesjonalny, dostawa ekspresowa Polska darmowa wysyłka, jakość styl życia premium, prezent uroczystość ślub idealny, gotowy prezenty święta, niezbędny dom kuchnia, marzenie jakość polska"
+    
     def get_marketplace_title_format(self, marketplace, brand_name):
         """Get marketplace-specific title formatting instructions"""
         
@@ -474,6 +496,31 @@ HIGH-CONVERTING EGYPTIAN KEYWORDS:
 ✓ تراثي (heritage quality)
 ✓ عائلي (family-focused)"""
 
+        elif marketplace == 'pl':
+            return f"""🇵🇱 AMAZON POLAND TITLE OPTIMIZATION - RYNEK POLSKI:
+            
+FORMAT (MAX 200 CHARS - Polish mobile priority):
+[{brand_name}] [Kategoria Produktu] [Główna Cecha] [Korzyść] [Gwarancja/Certyfikat]
+
+CRITICAL POLISH SEO + CULTURAL RULES:
+1. BRAND FIRST - polskie zaufanie rodzinne jest kluczowe (Polish family trust is key)
+2. PRODUCT CATEGORY w naturalnym polskim (słuchawki bluetooth, ładowarka przenośna)
+3. KEY FEATURE z korzyścią (redukcja hałasu, szybkie ładowanie)
+4. TRUST SIGNALS (gwarancja, certyfikat jakości, faktura VAT)
+5. SHIPPING/GUARANTEE (dostawa Polska, gwarancja polska, serwis lokalny)
+
+HIGH-CONVERTING POLISH KEYWORDS:
+✓ premium (jakość premium)
+✓ gwarancja (guarantee essential)
+✓ certyfikowany (certified quality)
+✓ polska/polski (local relevance)
+✓ darmowa dostawa (free delivery)
+✓ oryginalny (produkt oryginalny)
+✓ jakość (quality focus)
+✓ tradycyjny (traditional quality)
+✓ rodzinny (family-focused)
+✓ prezent (gift-ready)"""
+
         elif marketplace == 'nl':
             return f"""🇳🇱 AMAZON NETHERLANDS TITLE OPTIMIZATION - NEDERLANDSE MARKT:
             
@@ -707,6 +754,17 @@ TURKISH CULTURAL VALUES:
             }
             
             return f"🇪🇬 الصيغة المصرية (MAX 200 CHARS): [تسمية بالأحرف الكبيرة]: [فائدة باللغة العربية المصرية]. [مواصفات]. [ضمان/شهادة]. Bullet {bullet_number}: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
+
+        elif marketplace == 'pl':
+            bullet_examples = {
+                1: "JAKOŚĆ PREMIUM POLSKA: Doskonały dźwięk z redukcją hałasu dla polskich rodzin - bateria 30 godzin do nieprzerwanego słuchania. Certyfikat CE z 2-letnią gwarancją.",
+                2: "KOMFORT RODZINNY: Lekka konstrukcja 193g idealna dla polskich spotkań - miękkie nauszniki do długiego użytkowania. Wygodne i pasujące dla całej polskiej rodziny.",
+                3: "BLUETOOTH 5.3 POŁĄCZENIE: Zasięg 15 metrów bez przerw - stabilne połączenie do rozmów i muzyki. Kompatybilne z wszystkimi urządzeniami iPhone i Android.",
+                4: "WODOODPORNE IPX5: Idealne do sportu i polskiego klimatu - odporne na wilgoć i pot. Składana konstrukcja do podróży i wycieczek polskich.",
+                5: "PEŁNA GWARANCJA POLSKA: Wsparcie techniczne 24/7 w języku polskim - faktura VAT i 30 dni na zwrot. Ponad 100,000 zadowolonych klientów w całej Polsce."
+            }
+            
+            return f"🇵🇱 FORMAT POLSKI (MAX 200 CHARS): [ETYKIETA WIELKIMI LITERAMI]: [Korzyść po polsku]. [Specyfikacja]. [Gwarancja/Certyfikat]. Bullet {bullet_number}: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
 
         elif marketplace == 'nl':
             bullet_examples = {
@@ -999,6 +1057,17 @@ Use Indian certifications, national warranty, local support. Focus on family and
 الفقرة 4 (300-350 chars): رضا العملاء ودعوة للعمل مع الضمان المصري
 
 استخدم الشهادات المصرية، الضمان الوطني، الدعم المحلي باللغة العربية. التركيز على الأسرة المصرية والحضارة الفرعونية."""
+
+        elif marketplace == 'pl':
+            return f"""🇵🇱 KLUCZOWY OPIS POLSKI: Napisz {brand_tone} opis produktu od 1300-1600 znaków w DOKŁADNIE 4 oddzielnych akapitach. OBOWIĄZKOWE: Każdy akapit MUSI być oddzielony podwójnymi zakończeniami linii (\\n\\n).
+
+STRUKTURA DLA RYNKU POLSKIEGO:
+Akapit 1 (300-350 chars): Angażujące otwarcie - nacisk na jakość polską i zaufanie rodzinne
+Akapit 2 (350-400 chars): Korzyści produktu z fokusem na polską rodzinę i tradycje
+Akapit 3 (350-400 chars): Scenariusze użycia w polskim stylu życia i kulturze
+Akapit 4 (300-350 chars): Zadowolenie klientów i wezwanie do działania z polską gwarancją
+
+Używaj certyfikatów CE, polskiej gwarancji, lokalnego serwisu w języku polskim. Skup się na polskiej rodzinie i tradycjach katolickich."""
 
         elif marketplace == 'nl':
             return f"""🇳🇱 KRITIEKE NEDERLANDSE BESCHRIJVING: Schrijf {brand_tone} productbeschrijving van 1300-1600 karakters in PRECIES 4 aparte paragrafen. VERPLICHT: Elke paragraaf MOET gescheiden worden door dubbele regeleinden (\\n\\n).
@@ -3182,6 +3251,15 @@ Technical specifications include comprehensive compatibility, robust build quali
                         'trust_title': 'Trust & Quality',
                         'faqs_title': 'Frequently Asked Questions'
                     }
+                elif market_code == 'pl':
+                    return {
+                        'keywords': 'Słowa Kluczowe',
+                        'image_strategy': 'Strategia Obrazów',
+                        'seo_focus': 'Skupienie SEO',
+                        'features_title': 'Kluczowe Cechy i Korzyści',
+                        'trust_title': 'Jakość i Zaufanie',
+                        'faqs_title': 'Często Zadawane Pytania'
+                    }
                 else:
                     return {
                         'keywords': 'Keywords',
@@ -3231,6 +3309,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "جودة فائقة، علامة موثوقة، رضا العملاء"
                         elif marketplace_code == 'eg':
                             section_keywords = "جودة ممتازة، علامة تجارية موثوقة، رضا العملاء"
+                        elif marketplace_code == 'pl':
+                            section_keywords = "jakość premium, zaufana marka, zadowolenie klienta"
                         elif marketplace_code == 'in':
                             section_keywords = "premium quality, trusted brand, customer satisfaction"
                         else:
@@ -3258,6 +3338,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "تصميم مبتكر، أداء عالي، سهل الاستخدام"
                         elif marketplace_code == 'eg':
                             section_keywords = "تصميم مبدع، أداء عالي الجودة، سهل الاستعمال"
+                        elif marketplace_code == 'pl':
+                            section_keywords = "innowacyjny design, wysoka wydajność, przyjazny użytkownikowi"
                         elif marketplace_code == 'in':
                             section_keywords = "innovative design, high performance, user-friendly"
                         else:
@@ -3280,6 +3362,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "تقييمات 5 نجوم، ضمان استرداد المال، رضا العملاء"
                         elif marketplace_code == 'eg':
                             section_keywords = "تقييمات خمس نجوم، ضمان إرجاع الأموال، رضا العملاء"
+                        elif marketplace_code == 'pl':
+                            section_keywords = "5-gwiazdkowe recenzje, gwarancja zwrotu pieniędzy, zadowolenie klientów"
                         elif marketplace_code == 'in':
                             section_keywords = "5-star reviews, money-back guarantee, customer satisfaction"
                         else:
@@ -3302,6 +3386,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "استخدام يومي، تطبيقات متنوعة، عملي، مريح"
                         elif marketplace_code == 'eg':
                             section_keywords = "استعمال يومي، تطبيقات متعددة، عملي، مريح"
+                        elif marketplace_code == 'pl':
+                            section_keywords = "codzienne użycie, wszechstronne zastosowania, praktyczny, wygodny"
                         elif marketplace_code == 'in':
                             section_keywords = "everyday use, versatile applications, practical, convenient"
                         else:
@@ -3324,6 +3410,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "مراقبة الجودة، معايير سعودية، تصنيع معتمد، ضمان سنتين"
                         elif marketplace_code == 'eg':
                             section_keywords = "مراقبة الجودة، معايير مصرية، تصنيع معتمد، ضمان سنتان"
+                        elif marketplace_code == 'pl':
+                            section_keywords = "kontrola jakości, polskie standardy, certyfikowana doskonałość"
                         elif marketplace_code == 'in':
                             section_keywords = "quality control, manufacturing standards, certified excellence"
                         else:
@@ -3346,6 +3434,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "شهادات العملاء، مراجعات موثقة، رضا مضمون"
                         elif marketplace_code == 'eg':
                             section_keywords = "شهادات العملاء، مراجعات موثقة، رضا مضمون"
+                        elif marketplace_code == 'pl':
+                            section_keywords = "opinie klientów, zweryfikowane recenzje, zadowolenie gwarantowane"
                         elif marketplace_code == 'in':
                             section_keywords = "customer testimonials, verified reviews, satisfaction guaranteed"
                         else:
@@ -3368,6 +3458,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "ميزة تنافسية، خيار متفوق، مميزات رئيسية"
                         elif marketplace_code == 'eg':
                             section_keywords = "ميزة تنافسية، الخيار الأفضل، مزايا أساسية"
+                        elif marketplace_code == 'pl':
+                            section_keywords = "przewaga konkurencyjna, najlepszy wybór, kluczowe różnice"
                         elif marketplace_code == 'in':
                             section_keywords = "competitive advantage, superior choice, key differentiators"
                         else:
@@ -3390,6 +3482,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "محتويات العبوة، تغليف فاخر، إكسسوارات مدرجة"
                         elif marketplace_code == 'eg':
                             section_keywords = "محتويات الحزمة، تعبئة فاخرة، اكسسوارات مشمولة"
+                        elif marketplace_code == 'pl':
+                            section_keywords = "zawartość opakowania, premium pakowanie, dołączone akcesoria"
                         elif marketplace_code == 'in':
                             section_keywords = "package contents, premium packaging, included accessories"
                         else:
@@ -3412,6 +3506,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "أسئلة شائعة، دعم باللغة العربية، دليل الاستخدام، حل المشاكل"
                         elif marketplace_code == 'eg':
                             section_keywords = "أسئلة شائعة، دعم باللغة العربية، دليل الاستعمال، حل المشاكل"
+                        elif marketplace_code == 'pl':
+                            section_keywords = "szybkie odpowiedzi, rozwiązywanie problemów, przewodnik użytkownika"
                         elif marketplace_code == 'in':
                             section_keywords = "quick answers, troubleshooting, user guide"
                         else:
@@ -3795,6 +3891,22 @@ Technical specifications include comprehensive compatibility, robust build quali
                         else:
                             features_image = "رسوم بيانية للميزات بتصميم مصري ملون، رموز فرعونية (1500x1500px)"
                         features_seo = "تحسين محركات البحث للميزات التقنية في مصر"
+                    elif marketplace_code == 'pl':
+                        # Poland culture: family values, Catholic traditions, quality focus
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_keywords = "dźwięk doskonały, redukcja hałasu, bateria długotrwała, komfort rodzinny polski"
+                        elif 'kitchen' in product_category:
+                            features_keywords = "kuchnia polska, tradycja rodzinna, wytrzymały, praktyczny"
+                        else:
+                            features_keywords = "jakość certyfikowana, gwarancja polska, serwis lokalny, tradycja katolicka"
+                        # Poland image descriptions in English (like Mexico)
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_image = "ENGLISH: Grid of 6 feature images: 1) Close-up on noise-canceling switch, 2) 50mm driver cross-section with sound waves, 3) battery indicator showing 30h, 4) RGB lights glowing, 5) bluetooth connected to phone and console, 6) Polish user wearing comfortably during gaming session"
+                        elif 'kitchen' in product_category:
+                            features_image = "ENGLISH: Traditional Polish kitchen with product prominently displayed, Polish family gathered, heritage elements (1500x1500px)"
+                        else:
+                            features_image = "ENGLISH: Feature infographic with Polish colorful design elements (1500x1500px)"
+                        features_seo = "SEO zoptymalizowane dla cech technicznych w Polsce"
                     elif marketplace_code == 'sa':
                         # Saudi culture: family values, luxury, tradition
                         if 'audio' in product_category or 'headphone' in product_category:
@@ -3986,6 +4098,12 @@ Technical specifications include comprehensive compatibility, robust build quali
                         # Egypt trust image descriptions in Arabic with cultural elements
                         trust_image = "شهادات مصرية مرئية، شهادات من العائلات المصرية، أختام الضمان المصري، رموز تراثية (1200x800px)"
                         trust_seo = "استراتيجية تحسين محركات البحث للثقة والجودة المصرية"
+                    elif marketplace_code == 'pl':
+                        # Poland culture: trust through family recommendations and Catholic values
+                        trust_keywords = "gwarancja polska, certyfikat jakości, polecane rodzinom polskim, serwis lokalny, tradycja katolicka"
+                        # Poland trust image descriptions in English (like Mexico)
+                        trust_image = "ENGLISH: Display of Polish certification badge, Poland flag icon, 2-year warranty card, customer review average 4.8 stars, presented in premium style with Catholic heritage elements"
+                        trust_seo = "Strategia SEO dla zaufania i jakości polskiej"
                     elif marketplace_code == 'sa':
                         # Saudi culture: trust through family recommendations
                         trust_keywords = "ضمان سعودي، شهادة جودة، موصى به من العائلات، خدمة محلية"
@@ -4323,6 +4441,12 @@ Technical specifications include comprehensive compatibility, robust build quali
                         # Egypt FAQ image descriptions in Arabic with cultural elements
                         faq_image = "خدمة عملاء مصرية مبتسمة، دليل مرئي خطوة بخطوة، أيقونات ودية مصرية، رموز تراثية (800x600px)"
                         faq_seo = "تحسين محركات البحث للأسئلة الشائعة المصرية"
+                    elif marketplace_code == 'pl':
+                        # Poland culture: family-friendly help and warm support with Catholic traditions
+                        faq_keywords = "często zadawane pytania, pomoc rodzinna polska, przewodnik łatwy, wsparcie polskie, tradycja katolicka"
+                        # Poland FAQ image descriptions in English (like Mexico)
+                        faq_image = "ENGLISH: Smiling Polish customer service team explaining product features to Polish family, step-by-step visual guide, friendly Polish icons with Catholic heritage symbols (800x600px)"
+                        faq_seo = "SEO dla często zadawanych pytań polskich"
                     elif marketplace_code == 'sa':
                         # Saudi culture: family-friendly help and warm support
                         faq_keywords = "أسئلة شائعة، مساعدة عائلية، دليل سهل، دعم سعودي"
@@ -4622,7 +4746,7 @@ Technical specifications include comprehensive compatibility, robust build quali
             else:
                 # For Turkey and Mexico: use comprehensive template WITHOUT simple sections
                 # For US market: use full template WITH simple sections
-                if marketplace_code in ['tr', 'mx', 'sa', 'eg', 'in']:
+                if marketplace_code in ['tr', 'mx', 'sa', 'eg', 'in', 'pl']:
                     # Turkey and Mexico get comprehensive sections only, no simple sections
                     comprehensive_only_html = f"""<div class="aplus-introduction bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 p-4 sm:p-6 rounded-lg mb-6">
     <div class="flex items-center mb-4">
@@ -6009,6 +6133,15 @@ Return ONLY valid JSON:
                         'features_title': 'Key Features & Benefits',
                         'trust_title': 'Trust & Quality',
                         'faqs_title': 'Frequently Asked Questions'
+                    }
+                elif market_code == 'pl':
+                    return {
+                        'keywords': 'Słowa Kluczowe',
+                        'image_strategy': 'Strategia Obrazów',
+                        'seo_focus': 'Skupienie SEO',
+                        'features_title': 'Kluczowe Cechy i Korzyści',
+                        'trust_title': 'Jakość i Zaufanie',
+                        'faqs_title': 'Często Zadawane Pytania'
                     }
                 else:
                     return {
