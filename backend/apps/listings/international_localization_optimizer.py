@@ -336,6 +336,75 @@ class InternationalLocalizationOptimizer:
                 "avoid_words": ["barato", "básico", "simple", "ordinario"]  # Mexican market values quality and style
             },
             
+            "eg": {
+                "market_name": "Egypt",
+                "marketplace": "eg",
+                "language": "Egyptian Arabic",
+                "currency": "EGP",
+                "language_code": "ar-eg",
+                
+                # Essential Egyptian Arabic words and expressions
+                "essential_words": [
+                    "في", "من", "إلى", "على", "مع", "عن", "هذا", "هذه", "التي", "الذي",
+                    "كل", "بعض", "أفضل", "جديد", "ممتاز", "رائع", "مميز", "خاص", "عالي", "كبير"
+                ],
+                
+                # Egyptian Arabic emotional power words that drive conversions
+                "power_words": [
+                    "رائع", "ممتاز", "استثنائي", "مذهل", "جميل", "مثالي", "فريد",
+                    "فاخر", "راقي", "عالي الجودة", "مميز", "خاص", "متطور", "احترافي", "موثوق", "مضمون",
+                    "أصلي", "تراثي", "مصري", "تقليدي", "حديث", "فعال", "قوي", "مريح"
+                ],
+                
+                # Egyptian lifestyle and cultural elements
+                "cultural_elements": [
+                    "مثالي للعائلة المصرية",
+                    "مناسب للمناسبات والتجمعات العائلية",
+                    "مصمم للبيت المصري",
+                    "يتحمل المناخ المصري",
+                    "بالطعم اللي بنحبه كمصريين",
+                    "للاستمتاع بأجمل الأوقات",
+                    "تراث وحداثة في منتج واحد",
+                    "مصنوع خصيصاً لمصر"
+                ],
+                
+                # Egyptian Arabic expressions and formality
+                "formality_words": [
+                    "بنقدملكم", "بنضمنلكم", "يشرفنا", "بكل فخر",
+                    "بنأكدلكم", "تقدروا تتأكدوا", "من غير شك", "أكيد",
+                    "بالتأكيد", "طبعاً", "بالطبع", "ايوه كده", "مفيش مشكلة"
+                ],
+                
+                # Egyptian Arabic copywriting rules - OPTIMIZED FOR 10/10 QUALITY
+                "enforcement_rules": [
+                    "🚨 CRITICAL: You MUST use Egyptian Arabic with proper Arabic script and diacritics",
+                    "EGYPTIAN EXAMPLES: مصر NOT Egypt, أكثر NOT اكتر, سنين NOT years, أطفال NOT اطفال",
+                    "MANDATORY PROPER ARABIC: أيضاً, بعدين, سهل, سريع, فريد, عملي, مريح",
+                    "🔥 EGYPTIAN PERSUASION FORMULA - CULTURAL APPROACH:",
+                    "PATTERN 1: '[منفعة رائعة] هتغير [حياتك/بيتك]! بنضمنلكم [نتيجة] من غير [مشكلة].' (1st bullet - MUST use 'بنضمنلكم')",
+                    "PATTERN 2: '[خاصية فاخرة] بتكنولوجيا مصرية لـ [نتيجة مضمونة]. بنقدملكم جودة عالية.' (2nd bullet - MUST use 'بنقدملكم')",
+                    "PATTERN 3: '[تصميم ذكي] بيجمع بين التراث المصري والابتكار. بكل فخر [منفعة].' (3rd bullet - MUST use 'بكل فخر')",
+                    "PATTERN 4: '[سهولة تامة] للعائلات المصرية. تقدروا تتأكدوا من [تجربة متميزة].' (4th bullet - MUST use 'تقدروا تتأكدوا')",
+                    "PATTERN 5: '[هدية مثالية] لـ [رمضان/العيد]. من غير شك، كل العيلة هتحب [المنتج].' (5th bullet - MUST use 'من غير شك')",
+                    "Examples: 'أداء رائع هيغير مطبخك! من غير ضوضا ولا استهلاك عالي.'",
+                    "Examples: 'تكنولوجيا فاخرة بتصميم متطور لنتايج مضمونة كل يوم.'",
+                    "🔧 BULLET STRUCTURE FOR EGYPT:",
+                    "🚨 MANDATORY EGYPTIAN FORMALITY: Each bullet MUST include ONE of: 'بنضمنلكم', 'بنقدملكم', 'بكل فخر', 'تقدروا تتأكدوا', 'من غير شك'",
+                    "🚨 MANDATORY EGYPTIAN WORDS: MUST use 'مصر', 'مصرية/مصري', 'العائلة المصرية', 'التراث المصري' at least 3 times total",
+                    "🚨 USE EGYPTIAN ENTHUSIASM: Egyptian market responds to warmth and pride - USE exclamation marks frequently",
+                    "🔥 FAMILY EMPHASIS: Always consider family benefits and gatherings - mention 'عيلة' or 'عائلة' in every bullet",
+                    "LENGTH: 180-250 characters per bullet (Egyptian Arabic is expressive)",
+                    "POWER WORDS: Each bullet MUST contain 2-3 from: رائع, ممتاز, مثالي, مضمون, فاخر, مميز, مذهل, استثنائي",
+                    "CULTURAL WARMTH: Use warm, friendly tone that resonates with Egyptian hospitality",
+                    "CELEBRATION FOCUS: Include references to Egyptian celebrations and traditions",
+                    "🇪🇬 EGYPTIAN PRIDE: Reference Egyptian quality, tradition, or family values in EVERY bullet",
+                    "GUARANTEE EMPHASIS: Egyptians value security and guarantees - emphasize warranties and support",
+                    "🔥 MANDATORY QUALITY SCORE BOOST: Use 'أصلي', 'تراثي', 'تقليدي', 'حرفي' to reach 10/10"
+                ],
+                
+                "avoid_words": ["رخيص", "بسيط", "عادي", "ضعيف"]  # Egyptian market values quality and heritage
+            },
+            
             "in": {
                 "market_name": "India",
                 "marketplace": "in",
@@ -1102,6 +1171,8 @@ class InternationalLocalizationOptimizer:
             market_code = "sa"
         elif marketplace == "mx" or language in ["es-mx", "es_MX"]:
             market_code = "mx"
+        elif marketplace == "eg" or language in ["ar-eg", "ar_EG", "arabic", "ar"]:
+            market_code = "eg"
         elif marketplace == "in" or language in ["en-in", "en_IN", "hindi", "hi"]:
             market_code = "in"
         elif marketplace == "br" or language in ["pt-br", "pt_BR", "pt"]:
@@ -1350,6 +1421,8 @@ The entire listing must read as if written by a native {config['language']} spea
             market_code = "sa"
         elif marketplace == "mx" or language in ["es-mx", "es_MX"]:
             market_code = "mx"
+        elif marketplace == "eg" or language in ["ar-eg", "ar_EG", "arabic", "ar"]:
+            market_code = "eg"
         elif marketplace == "in" or language in ["en-in", "en_IN", "hindi", "hi"]:
             market_code = "in"
         elif marketplace == "br" or language in ["pt-br", "pt_BR", "pt"]:

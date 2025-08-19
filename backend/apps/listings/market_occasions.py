@@ -313,6 +313,55 @@ class MarketOccasions:
                 'office_gift': 'هدية المكتب'  # Office Gift
             },
             
+            'eg': {  # Egypt
+                'ramadan': 'رمضان',  # Ramadan (most important)
+                'eid_al_fitr': 'عيد الفطر',  # Eid al-Fitr
+                'eid_al_adha': 'عيد الأضحى',  # Eid al-Adha
+                'coptic_christmas': 'عيد الميلاد القبطي',  # Coptic Christmas (January 7)
+                'sham_el_nessim': 'شم النسيم',  # Sham el-Nessim (Spring festival)
+                'milad_nabawi': 'المولد النبوي',  # Prophet's Birthday
+                'mother_day': 'عيد الأم',  # Mother's Day (March 21)
+                'revolution_day': 'يوم ثورة 25 يناير',  # Revolution Day (January 25)
+                'sinai_liberation': 'عيد تحرير سيناء',  # Sinai Liberation Day (April 25)
+                'coptic_easter': 'عيد القيامة القبطي',  # Coptic Easter
+                'isra_miraj': 'الإسراء والمعراج',  # Night Journey
+                'ashura': 'عاشوراء',  # Day of Ashura
+                'laylat_al_qadr': 'ليلة القدر',  # Night of Power
+                'wedding_season': 'موسم الأعراس',  # Wedding Season
+                'graduation': 'التخرج',  # Graduation
+                'engagement': 'الخطوبة',  # Engagement
+                'baby_shower': 'حفلة استقبال المولود',  # Baby Shower
+                'housewarming': 'احتفال المنزل الجديد',  # Housewarming
+                'birthday': 'عيد ميلاد',  # Birthday
+                'anniversary': 'ذكرى سنوية',  # Anniversary
+                'new_year': 'رأس السنة الميلادية',  # New Year
+                'valentine_day': 'عيد الحب',  # Valentine's Day
+                'father_day': 'عيد الأب',  # Father's Day
+                'teachers_day': 'يوم المعلم',  # Teachers Day
+                'womens_day': 'يوم المرأة العالمي',  # International Women's Day
+                'children_day': 'يوم الطفل',  # Children's Day
+                'youth_day': 'يوم الشباب',  # Youth Day
+                'back_to_school': 'العودة للمدارس',  # Back to School
+                'summer_vacation': 'أجازة الصيف',  # Summer Vacation
+                'winter_season': 'فصل الشتاء',  # Winter Season
+                'spring_season': 'فصل الربيع',  # Spring Season
+                'nile_flood': 'فيضان النيل',  # Nile Flood (historical)
+                'pharaonic_heritage': 'التراث الفرعوني',  # Pharaonic Heritage
+                'cairo_festival': 'مهرجان القاهرة',  # Cairo Festival
+                'family_gathering': 'تجمع العائلة',  # Family Gathering
+                'ramadan_iftar': 'إفطار رمضان',  # Ramadan Iftar
+                'ramadan_suhoor': 'سحور رمضان',  # Ramadan Suhoor
+                'black_friday': 'الجمعة السوداء',  # Black Friday
+                'cyber_monday': 'الاثنين الإلكتروني',  # Cyber Monday
+                'weekend': 'نهاية الأسبوع',  # Weekend
+                'vacation': 'إجازة',  # Vacation
+                'business_meeting': 'اجتماع عمل',  # Business Meeting
+                'office_gift': 'هدية المكتب',  # Office Gift
+                'egyptian_culture': 'الثقافة المصرية',  # Egyptian Culture
+                'alexandria_heritage': 'تراث الإسكندرية',  # Alexandria Heritage
+                'coptic_culture': 'الثقافة القبطية'  # Coptic Culture
+            },
+            
             'nl': {  # Netherlands
                 'koningsdag': 'Koningsdag',  # King's Day (most important Dutch celebration - April 27)
                 'sinterklaas': 'Sinterklaas',  # Sinterklaas (December 5/6 - uniquely Dutch)
@@ -472,6 +521,41 @@ class MarketOccasions:
                 'fathers_day': ['هدية يوم الأب', 'هدية أبي', 'عيد الأب', 'أبي العزيز'],
                 'wedding_season': ['هدية زفاف', 'موسم الأعراس', 'هدايا العرس', 'زفاف سعودي'],
                 'graduation_season': ['هدية تخرج', 'موسم التخرج', 'تهنئة التخرج', 'نجاح وتفوق']
+            },
+            'eg': {
+                'ramadan': ['رمضان مبارك', 'شهر رمضان', 'رمضان كريم', 'إفطار رمضان', 'سحور رمضان', 'المائدة المصرية'],
+                'eid_al_fitr': ['هدية عيد الفطر', 'عيد الفطر المبارك', 'هدايا العيد', 'عيدية', 'فرحة العيد', 'كحك العيد'],
+                'eid_al_adha': ['هدية عيد الأضحى', 'عيد الأضحى المبارك', 'أضحى مبارك', 'عيد الحج', 'عيد القربان', 'الأضحية'],
+                'sham_el_nessim': ['شم النسيم', 'عيد الربيع', 'فسيخ ورنجة', 'نزهة شم النسيم', 'التراث المصري'],
+                'coptic_christmas': ['عيد الميلاد المجيد', 'الكريسماس القبطي', 'هدية عيد الميلاد', 'احتفال قبطي'],
+                'mother_day': ['هدية عيد الأم', 'هدية أمي', 'عيد الأم', 'أمي الحبيبة', 'المرأة المصرية'],
+                'wedding_season': ['هدية زفاف', 'عرس مصري', 'هدايا العرس', 'زفة مصرية', 'ليلة الحناء'],
+                'graduation': ['هدية تخرج', 'تهنئة التخرج', 'نجاح وتفوق', 'فرحة التخرج', 'دفعة جديدة'],
+                'revolution_day': ['ثورة 25 يناير', 'اليوم الوطني', 'الثورة المصرية', 'فخر مصري'],
+                'sinai_liberation': ['تحرير سيناء', 'النصر المصري', 'الجيش المصري', 'أرض مصر'],
+                'coptic_easter': ['عيد القيامة', 'عيد الفصح', 'احتفال مسيحي', 'فرحة القيامة'],
+                'housewarming': ['احتفال المنزل الجديد', 'بيت جديد', 'هدية البيت', 'تهنئة المنزل'],
+                'engagement': ['خطوبة مصرية', 'هدية خطوبة', 'ليلة الخطوبة', 'فرحة الخطوبة'],
+                'baby_shower': ['حفلة استقبال المولود', 'هدية المولود', 'البيبي الجديد', 'فرحة الولادة'],
+                'birthday': ['عيد ميلاد', 'هدية عيد ميلاد', 'حفلة عيد ميلاد', 'فرحة الميلاد'],
+                'anniversary': ['ذكرى سنوية', 'عيد زواج', 'ذكرى الزواج', 'احتفال سنوي'],
+                'new_year': ['رأس السنة', 'سنة جديدة سعيدة', 'هدية رأس السنة', 'احتفال السنة الجديدة'],
+                'valentine_day': ['عيد الحب', 'هدية عيد الحب', 'فالنتاين', 'حب ورومانسية'],
+                'father_day': ['عيد الأب', 'هدية أبي', 'بابا العزيز', 'تقدير الأب'],
+                'teachers_day': ['يوم المعلم', 'هدية المعلم', 'تقدير المعلم', 'شكر للمعلم'],
+                'womens_day': ['يوم المرأة', 'تكريم المرأة', 'المرأة المصرية', 'فخر المرأة'],
+                'children_day': ['يوم الطفل', 'هدية الأطفال', 'فرحة الطفولة', 'حب الأطفال'],
+                'back_to_school': ['العودة للمدارس', 'بداية العام الدراسي', 'هدية المدرسة', 'تحضير المدرسة'],
+                'pharaonic_heritage': ['التراث الفرعوني', 'الحضارة المصرية', 'أهرامات مصر', 'عظمة مصر'],
+                'nile_flood': ['فيضان النيل', 'بركة النيل', 'خير النيل', 'نهر الحياة'],
+                'cairo_festival': ['مهرجان القاهرة', 'فعاليات القاهرة', 'ثقافة مصرية', 'تراث القاهرة'],
+                'alexandria_heritage': ['تراث الإسكندرية', 'عروس البحر المتوسط', 'إسكندرية التاريخية'],
+                'coptic_culture': ['الثقافة القبطية', 'التراث القبطي', 'المسيحية في مصر'],
+                'family_gathering': ['تجمع العائلة', 'لم الشمل', 'فرحة العائلة', 'حب الأهل'],
+                'ramadan_iftar': ['إفطار رمضان', 'مائدة الإفطار', 'روحانية رمضان', 'إفطار جماعي'],
+                'black_friday': ['الجمعة السوداء', 'تخفيضات كبيرة', 'عروض مميزة', 'تسوق ذكي'],
+                'weekend': ['نهاية الأسبوع', 'استراحة الأسبوع', 'وقت العائلة', 'راحة واسترخاء'],
+                'vacation': ['إجازة صيفية', 'عطلة سعيدة', 'سفر وترفيه', 'راحة واستجمام']
             },
             'in': {
                 'diwali': ['diwali gift', 'festival of lights', 'deepavali', 'diwali hamper', 'lakshmi puja', 'kitchen gift diwali', 'ghar ke liye gift', 'festival cooking gift'],

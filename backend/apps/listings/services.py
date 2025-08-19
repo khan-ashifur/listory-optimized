@@ -177,6 +177,28 @@ class ListingGeneratorService:
         # Default MEXICO-STYLE Indian keywords - BEATS ALL COMPETITORS WITH CULTURAL DEPTH + HINDI-FRIENDLY
         return "incredible quality experience, premium indian engineering, perfect family design, original india manufacturer warranty, diwali wedding housewarming gift ideal, traditional indian gharelu use, 1 lakh+ happy indian families, certified premium standard ISI mark, professional expert approved, india express delivery free shipping, premium lifestyle quality, shaadi ceremony gift perfect, festival gifting ready, ghar kitchen essential, your dream indian quality"
     
+    def get_egyptian_industry_keywords(self, product):
+        """Get Egyptian industry-specific high-intent keywords for Egypt market - EXACT MEXICO PATTERN FOR 10/10 QUALITY"""
+        category = product.categories.lower() if product.categories else ""
+        
+        # Enhanced Egyptian keywords by category - MEXICO PATTERN APPLIED - DOMINATES HELIUM 10, JASPER AI, COPY MONKEY
+        industry_keywords = {
+            "kitchen": "مجموعة سكاكين مطبخ مصرية رائعة, مثالية للطبخ اليومي المصري, هدية مثالية رمضان عيد الفطر, شفرات ستانلس ستيل حادة, تقطيع بصل ثوم طماطم, مقابض آمنة للمبتدئين, أساسي المطبخ المصري التقليدي, هدية زفاف احتفال بيت جديد, 50000+ عائلة مصرية راضية, سهل التنظيف غسالة أطباق, فاتورة ضريبية ضمان سنتين, مثالي هدايا المناسبات المصرية, توصيل سريع مصر كلها",
+            "knife": "مجموعة سكاكين طبخ مصرية مثالية, إعداد الطعام المصري اليومي, هدية مثالية عيد رمضان, شفرات ستانلس ستيل حادة, تقطيع خضار لحوم فواكه, مقابض آمنة مريحة, ضرورة المطبخ المصري, هدية زفاف بيت جديد مثالية, 100000+ طباخ مصري سعيد, تنظيف سهل آمن, فاتورة ضمان سنتان, جاهز هدايا المناسبات",
+            "audio": "تجربة صوت رائعة استثنائية, تكنولوجيا إلغاء الضوضاء, اتصال بلوتوث مثالي 5.3, جودة موسيقى ستيريو فاخرة, مصمم للعائلات المصرية, راحة تقليدية تكنولوجيا حديثة, 35000+ عاشق موسيقى مصري, عمر بطارية 40 ساعة مضمون, استخدام مريح حر اليدين, توصيل سريع مصر, هندسة صوت احترافية, هدية رمضان عيد مثالية",
+            "electronics": "تكنولوجيا ثورية مبتكرة, جودة فاخرة معتمدة, أداء مثالي مضمون, عشاق التكنولوجيا المصريين, إنتاج صديق البيئة مستدام, ضمان موزع مصري أصلي, 40000+ مستخدم تكنولوجيا سعيد, ضمان مصنع سنتان, أمان عائلي معتمد, توصيل مصر كلها, دعم فني احترافي, جاهز هدايا الأعياد",
+            "home": "راحة منزلية رائعة, تصميم ذكي موفر طاقة, محسن جودة معيشة مثالي, مصمم للبيوت المصرية, حل مستدام وعي بيئي, ضيافة مصرية تقليدية, 30000+ صاحب منزل سعيد, تشغيل صامت مضمون, إنتاج أولوية صحة عائلية, توصيل سريع مصر, مستوى معيشة فاخر, هدية رمضان بيت جديد",
+            "sports": "أداء رياضي مذهل, مقاوم ماء IPX7 معتمد, تصميم بيئة عمل استثنائي, اختيار الرياضي المصري, معدات رياضية مستدامة, متانة تقليدية أسلوب حديث, 28000+ رياضي مصري نشط, مادة فاخرة خفيفة جداً, ضمان نمط حياة لياقة, توصيل رياضة مصر, معتمد مدرب محترف, إصدار خاص هدية عيد"
+        }
+        
+        # Find matching category keywords
+        for key, keywords in industry_keywords.items():
+            if key in category:
+                return keywords
+        
+        # Default MEXICO-STYLE Egyptian keywords - BEATS ALL COMPETITORS WITH CULTURAL DEPTH + ARABIC-FRIENDLY
+        return "تجربة جودة رائعة, هندسة مصرية فاخرة, تصميم عائلي مثالي, ضمان مصنع مصري أصلي, هدية رمضان عيد زفاف مثالية, استخدام مصري تقليدي, 1 مليون+ عائلة مصرية سعيدة, معيار فاخر معتمد علامة جودة, معتمد خبير محترف, توصيل سريع مصر شحن مجاني, جودة نمط حياة فاخر, هدية حفل زفاف مثالية, جاهز هدايا أعياد, ضروري بيت مطبخ, حلم الجودة المصرية"
+    
     def get_marketplace_title_format(self, marketplace, brand_name):
         """Get marketplace-specific title formatting instructions"""
         
@@ -428,6 +450,30 @@ HIGH-CONVERTING SAUDI KEYWORDS:
 ✓ أصلي (منتج أصلي)
 ✓ جودة (quality focus)"""
 
+        elif marketplace == 'eg':
+            return f"""🇪🇬 AMAZON EGYPT TITLE OPTIMIZATION - السوق المصري:
+            
+FORMAT (MAX 200 CHARS - Arabic Egyptian mobile priority):
+[{brand_name}] [فئة المنتج الرئيسية] [الميزة الأساسية] [الفائدة] [الضمان/الشهادة]
+
+CRITICAL EGYPTIAN SEO + CULTURAL RULES:
+1. BRAND FIRST - الثقة العائلية المصرية أساسية (Egyptian family trust is key)
+2. PRODUCT CATEGORY in Egyptian Arabic (سماعات بلوتوث، شاحن محمول)
+3. KEY FEATURE with benefit (إلغاء الضوضاء، شحن سريع)
+4. TRUST SIGNALS (ضمان، شهادة جودة، فاتورة ضريبية)
+5. SHIPPING/GUARANTEE (توصيل مصر، ضمان مصري، خدمة محلية)
+
+HIGH-CONVERTING EGYPTIAN KEYWORDS:
+✓ ممتاز (جودة ممتازة)
+✓ ضمان (guarantee essential)
+✓ معتمد (certified quality)
+✓ مصر/مصري (local relevance)
+✓ توصيل مجاني (free delivery)
+✓ أصلي (منتج أصلي)
+✓ جودة (quality focus)
+✓ تراثي (heritage quality)
+✓ عائلي (family-focused)"""
+
         elif marketplace == 'nl':
             return f"""🇳🇱 AMAZON NETHERLANDS TITLE OPTIMIZATION - NEDERLANDSE MARKT:
             
@@ -650,6 +696,17 @@ TURKISH CULTURAL VALUES:
             }
             
             return f"🇸🇦 الصيغة السعودية (MAX 200 CHARS): [تسمية بالأحرف الكبيرة]: [فائدة باللغة العربية]. [مواصفات]. [ضمان/شهادة]. Bullet {bullet_number}: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
+
+        elif marketplace == 'eg':
+            bullet_examples = {
+                1: "جودة مصرية ممتازة: صوت استثنائي مع إلغاء الضوضاء للعائلات المصرية - بطارية 30 ساعة للاستماع بلا حدود. شهادة جودة وضمان وطني مصري لمدة سنتين.",
+                2: "راحة عائلية كاملة: تصميم خفيف 193 جرام مثالي للتجمعات المصرية - وسائد ناعمة للاستخدام المطول. ملائم ومريح لجميع أفراد العيلة المصرية.",
+                3: "اتصال بلوتوث 5.3: مدى 15 متر بدون انقطاع - اتصال مستقر للمكالمات والموسيقى. متوافق مع جميع أجهزة آيفون وأندرويد المصرية.",
+                4: "مقاوم للعرق IPX5: مثالي للرياضة والمناخ المصري - مقاوم للرطوبة والعرق النيلي. تصميم قابل للطي للسفر والرحلات المصرية.",
+                5: "ضمان مصري كامل: دعم تقني باللغة العربية 24/7 - فاتورة ضريبية شاملة و30 يوم لإرجاع المنتج. أكثر من 50,000 عميل سعيد في مصر كلها."
+            }
+            
+            return f"🇪🇬 الصيغة المصرية (MAX 200 CHARS): [تسمية بالأحرف الكبيرة]: [فائدة باللغة العربية المصرية]. [مواصفات]. [ضمان/شهادة]. Bullet {bullet_number}: '{bullet_examples.get(bullet_number, bullet_examples[1])}'"
 
         elif marketplace == 'nl':
             bullet_examples = {
@@ -931,6 +988,17 @@ Use Indian certifications, national warranty, local support. Focus on family and
 الفقرة 4 (300-350 chars): رضا العملاء ودعوة للعمل مع الضمان
 
 استخدم الشهادات السعودية، الضمان الوطني، الدعم المحلي. التركيز على الأسرة والتقاليد."""
+
+        elif marketplace == 'eg':
+            return f"""🇪🇬 وصف مصري حاسم: اكتب وصف منتج {brand_tone} من 1300-1600 حرف في 4 فقرات منفصلة بالضبط. إجباري: كل فقرة يجب أن تكون مفصولة بفواصل سطر مزدوجة (\\n\\n).
+
+هيكل للسوق المصري:
+الفقرة 1 (300-350 chars): افتتاحية جذابة - تسليط الضوء على الجودة والثقة المصرية
+الفقرة 2 (350-400 chars): فوائد المنتج مع التركيز على العائلة المصرية والتراث
+الفقرة 3 (350-400 chars): سيناريوهات الاستخدام في نمط الحياة المصري وثقافة النيل
+الفقرة 4 (300-350 chars): رضا العملاء ودعوة للعمل مع الضمان المصري
+
+استخدم الشهادات المصرية، الضمان الوطني، الدعم المحلي باللغة العربية. التركيز على الأسرة المصرية والحضارة الفرعونية."""
 
         elif marketplace == 'nl':
             return f"""🇳🇱 KRITIEKE NEDERLANDSE BESCHRIJVING: Schrijf {brand_tone} productbeschrijving van 1300-1600 karakters in PRECIES 4 aparte paragrafen. VERPLICHT: Elke paragraaf MOET gescheiden worden door dubbele regeleinden (\\n\\n).
@@ -1911,7 +1979,7 @@ RESPONSE FORMAT: Return COMPREHENSIVE JSON with ALL fields populated with MAXIMU
   "productDescription": "{self.get_marketplace_description_format(product.marketplace, product.brand_tone)}",
   
   "seoKeywords": {{
-    "primary": ["{product.name.lower().replace(' ', '_')}", "{product.brand_name.lower()}", "{self.get_japanese_industry_keywords(product) if product.marketplace == 'jp' else self.get_spanish_industry_keywords(product) if product.marketplace == 'es' else self.get_turkish_industry_keywords(product) if product.marketplace == 'tr' else self.get_swedish_industry_keywords(product) if product.marketplace == 'se' else 'THEN_ADD_13_MORE: category, color, size, material, feature1, feature2, use1, use2, style, type, model, variant, application'}"],
+    "primary": ["{product.name.lower().replace(' ', '_')}", "{product.brand_name.lower()}", "{self.get_japanese_industry_keywords(product) if product.marketplace == 'jp' else self.get_spanish_industry_keywords(product) if product.marketplace == 'es' else self.get_turkish_industry_keywords(product) if product.marketplace == 'tr' else self.get_swedish_industry_keywords(product) if product.marketplace == 'se' else self.get_egyptian_industry_keywords(product) if product.marketplace == 'eg' else self.get_indian_industry_keywords(product) if product.marketplace == 'in' else 'THEN_ADD_13_MORE: category, color, size, material, feature1, feature2, use1, use2, style, type, model, variant, application'}"],
     "longTail": ["GENERATE_25_PHRASES: {'[ürün] [kullanım] için ideal' if product.marketplace == 'tr' else '[product] [用途]に最適' if product.marketplace == 'jp' else 'mejor [product] para [uso]' if product.marketplace == 'es' else '[product] perfekt för [användning]' if product.marketplace == 'se' else 'best [product] for [use]'}", "{'[marka] [ürün] orijinal' if product.marketplace == 'tr' else '[brand] [product] 正規品' if product.marketplace == 'jp' else '[brand] [product] original certificado' if product.marketplace == 'es' else '[brand] [product] äkta kvalitet' if product.marketplace == 'se' else '[brand] [product] with [feature]'}", "{'[ürün] kaliteli [özellik]' if product.marketplace == 'tr' else '[product] 高品質 [機能]' if product.marketplace == 'jp' else '[product] profesional [aplicación]' if product.marketplace == 'es' else '[product] kvalitet [funktion]' if product.marketplace == 'se' else '[product] that [solves problem]'}", "{'[ürün] premium kalite' if product.marketplace == 'tr' else '[product] プレミアム品質' if product.marketplace == 'jp' else '[product] premium calidad' if product.marketplace == 'es' else '[product] premium kvalitet' if product.marketplace == 'se' else 'professional [product] for [application]'}", "{'[ürün] Türkiye kargo' if product.marketplace == 'tr' else '[product] 送料無料' if product.marketplace == 'jp' else 'oferta [product] [beneficio]' if product.marketplace == 'es' else '[product] sverige frakt' if product.marketplace == 'se' else 'high quality [product] [benefit]'}", "etc"],
     "problemSolving": ["GENERATE_15_PROBLEM_KEYWORDS: {'problemas españoles específicos' if product.marketplace == 'es' else 'based on what issues this product solves from description'}"],
     "rufusConversational": ["GENERATE_15_RUFUS_PHRASES: {'bueno para [uso real]' if product.marketplace == 'es' else 'good for [real use]'}", "{'funciona con [items compatibles]' if product.marketplace == 'es' else 'works with [compatible items]'}", "{'perfecto para [escenarios]' if product.marketplace == 'es' else 'perfect for [scenarios]'}", "{'mejor que [alternativas]' if product.marketplace == 'es' else 'better than [alternatives]'}", "{'ideal para [situaciones]' if product.marketplace == 'es' else 'ideal for [situations]'}"],
@@ -3078,6 +3146,42 @@ Technical specifications include comprehensive compatibility, robust build quali
                         'trust_title': 'Trust & Quality',
                         'faqs_title': 'Frequently Asked Questions'
                     }
+                elif market_code == 'eg':
+                    return {
+                        'keywords': 'الكلمات المفتاحية',
+                        'image_strategy': 'استراتيجية الصور',
+                        'seo_focus': 'تركيز تحسين محركات البحث',
+                        'features_title': 'الميزات والفوائد الرئيسية',
+                        'trust_title': 'الجودة والثقة',
+                        'faqs_title': 'الأسئلة الشائعة'
+                    }
+                elif market_code == 'mx':
+                    return {
+                        'keywords': 'Palabras Clave',
+                        'image_strategy': 'Estrategia de Imagen',
+                        'seo_focus': 'Enfoque SEO',
+                        'features_title': 'Características y Beneficios Clave',
+                        'trust_title': 'Calidad y Confianza',
+                        'faqs_title': 'Preguntas Frecuentes'
+                    }
+                elif market_code == 'sa':
+                    return {
+                        'keywords': 'الكلمات المفتاحية',
+                        'image_strategy': 'استراتيجية الصور',
+                        'seo_focus': 'تركيز تحسين محركات البحث',
+                        'features_title': 'الميزات والفوائد الرئيسية',
+                        'trust_title': 'الجودة والثقة',
+                        'faqs_title': 'الأسئلة الشائعة'
+                    }
+                elif market_code == 'in':
+                    return {
+                        'keywords': 'Keywords',
+                        'image_strategy': 'Image Strategy',
+                        'seo_focus': 'SEO Focus',
+                        'features_title': 'Key Features & Benefits',
+                        'trust_title': 'Trust & Quality',
+                        'faqs_title': 'Frequently Asked Questions'
+                    }
                 else:
                     return {
                         'keywords': 'Keywords',
@@ -3125,6 +3229,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "premium kalite, güvenilir marka, müşteri memnuniyeti"
                         elif marketplace_code == 'sa':
                             section_keywords = "جودة فائقة، علامة موثوقة، رضا العملاء"
+                        elif marketplace_code == 'eg':
+                            section_keywords = "جودة ممتازة، علامة تجارية موثوقة، رضا العملاء"
                         elif marketplace_code == 'in':
                             section_keywords = "premium quality, trusted brand, customer satisfaction"
                         else:
@@ -3150,6 +3256,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "yenilikçi tasarım, yüksek performans, kullanıcı dostu"
                         elif marketplace_code == 'sa':
                             section_keywords = "تصميم مبتكر، أداء عالي، سهل الاستخدام"
+                        elif marketplace_code == 'eg':
+                            section_keywords = "تصميم مبدع، أداء عالي الجودة، سهل الاستعمال"
                         elif marketplace_code == 'in':
                             section_keywords = "innovative design, high performance, user-friendly"
                         else:
@@ -3170,6 +3278,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "5 yıldızlı değerlendirmeler, para iade garantisi, müşteri memnuniyeti"
                         elif marketplace_code == 'sa':
                             section_keywords = "تقييمات 5 نجوم، ضمان استرداد المال، رضا العملاء"
+                        elif marketplace_code == 'eg':
+                            section_keywords = "تقييمات خمس نجوم، ضمان إرجاع الأموال، رضا العملاء"
                         elif marketplace_code == 'in':
                             section_keywords = "5-star reviews, money-back guarantee, customer satisfaction"
                         else:
@@ -3190,6 +3300,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "günlük kullanım, çok amaçlı, pratik, kullanışlı"
                         elif marketplace_code == 'sa':
                             section_keywords = "استخدام يومي، تطبيقات متنوعة، عملي، مريح"
+                        elif marketplace_code == 'eg':
+                            section_keywords = "استعمال يومي، تطبيقات متعددة، عملي، مريح"
                         elif marketplace_code == 'in':
                             section_keywords = "everyday use, versatile applications, practical, convenient"
                         else:
@@ -3210,6 +3322,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "kalite kontrol, TSE belgesi, CE sertifikası, 2 yıl garanti"
                         elif marketplace_code == 'sa':
                             section_keywords = "مراقبة الجودة، معايير سعودية، تصنيع معتمد، ضمان سنتين"
+                        elif marketplace_code == 'eg':
+                            section_keywords = "مراقبة الجودة، معايير مصرية، تصنيع معتمد، ضمان سنتان"
                         elif marketplace_code == 'in':
                             section_keywords = "quality control, manufacturing standards, certified excellence"
                         else:
@@ -3229,6 +3343,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                         elif marketplace_code == 'tr':
                             section_keywords = "müşteri yorumları, doğrulanmış incelemeler, memnuniyet garantili"
                         elif marketplace_code == 'sa':
+                            section_keywords = "شهادات العملاء، مراجعات موثقة، رضا مضمون"
+                        elif marketplace_code == 'eg':
                             section_keywords = "شهادات العملاء، مراجعات موثقة، رضا مضمون"
                         elif marketplace_code == 'in':
                             section_keywords = "customer testimonials, verified reviews, satisfaction guaranteed"
@@ -3250,6 +3366,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "rekabet avantajı, üstün seçim, temel farklılıklar"
                         elif marketplace_code == 'sa':
                             section_keywords = "ميزة تنافسية، خيار متفوق، مميزات رئيسية"
+                        elif marketplace_code == 'eg':
+                            section_keywords = "ميزة تنافسية، الخيار الأفضل، مزايا أساسية"
                         elif marketplace_code == 'in':
                             section_keywords = "competitive advantage, superior choice, key differentiators"
                         else:
@@ -3270,6 +3388,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "paket içeriği, premium ambalaj, dahil aksesuarlar"
                         elif marketplace_code == 'sa':
                             section_keywords = "محتويات العبوة، تغليف فاخر، إكسسوارات مدرجة"
+                        elif marketplace_code == 'eg':
+                            section_keywords = "محتويات الحزمة، تعبئة فاخرة، اكسسوارات مشمولة"
                         elif marketplace_code == 'in':
                             section_keywords = "package contents, premium packaging, included accessories"
                         else:
@@ -3290,6 +3410,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "sık sorulan sorular, Türkçe destek, kullanım kılavuzu, problem çözümü"
                         elif marketplace_code == 'sa':
                             section_keywords = "أسئلة شائعة، دعم باللغة العربية، دليل الاستخدام، حل المشاكل"
+                        elif marketplace_code == 'eg':
+                            section_keywords = "أسئلة شائعة، دعم باللغة العربية، دليل الاستعمال، حل المشاكل"
                         elif marketplace_code == 'in':
                             section_keywords = "quick answers, troubleshooting, user guide"
                         else:
@@ -3657,6 +3779,22 @@ Technical specifications include comprehensive compatibility, robust build quali
                         else:
                             features_image = "Feature infographic with Indian festival motifs and family cooking focus (1500x1500px)"
                         features_seo = "SEO optimised for Indian cooking and gifting keywords"
+                    elif marketplace_code == 'eg':
+                        # Egypt culture: family values, Nile heritage, tradition
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_keywords = "صوت فائق، إلغاء الضوضاء، بطارية طويلة، راحة العائلة المصرية"
+                        elif 'kitchen' in product_category:
+                            features_keywords = "مطبخ مصري، تقاليد عائلية، تراث النيل، مقاوم، عملي"
+                        else:
+                            features_keywords = "جودة معتمدة، ضمان مصري، خدمة محلية، تراث فرعوني"
+                        # Egypt image descriptions in Arabic
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_image = "مستخدم مصري يستمتع بالموسيقى في صالة عائلية مصرية، ميزات بارزة مع أيقونات مصرية (1500x1500px)"
+                        elif 'kitchen' in product_category:
+                            features_image = "مطبخ مصري تقليدي مع المنتج البارز، عائلة مصرية مجتمعة، تراث النيل (1500x1500px)"
+                        else:
+                            features_image = "رسوم بيانية للميزات بتصميم مصري ملون، رموز فرعونية (1500x1500px)"
+                        features_seo = "تحسين محركات البحث للميزات التقنية في مصر"
                     elif marketplace_code == 'sa':
                         # Saudi culture: family values, luxury, tradition
                         if 'audio' in product_category or 'headphone' in product_category:
@@ -3842,6 +3980,12 @@ Technical specifications include comprehensive compatibility, robust build quali
                         # India trust image descriptions focused on Indian quality and gifting
                         trust_image = "Indian quality certifications ISI BIS visible, happy Indian families using product during festival cooking, warranty certificate with GST invoice (1200x800px)"
                         trust_seo = "SEO strategy for Indian trust and gifting confidence"
+                    elif marketplace_code == 'eg':
+                        # Egypt culture: trust through family recommendations and cultural heritage
+                        trust_keywords = "ضمان مصري، شهادة جودة، موصى به من العائلات المصرية، خدمة محلية، تراث فرعوني"
+                        # Egypt trust image descriptions in Arabic with cultural elements
+                        trust_image = "شهادات مصرية مرئية، شهادات من العائلات المصرية، أختام الضمان المصري، رموز تراثية (1200x800px)"
+                        trust_seo = "استراتيجية تحسين محركات البحث للثقة والجودة المصرية"
                     elif marketplace_code == 'sa':
                         # Saudi culture: trust through family recommendations
                         trust_keywords = "ضمان سعودي، شهادة جودة، موصى به من العائلات، خدمة محلية"
@@ -4173,6 +4317,12 @@ Technical specifications include comprehensive compatibility, robust build quali
                         # India FAQ image descriptions focused on cooking and safety
                         faq_image = "Indian customer service team explaining knife safety to beginner cook, step-by-step Indian cooking guide, kitchen safety icons (800x600px)"
                         faq_seo = "SEO for Indian cooking questions and gifting guidance"
+                    elif marketplace_code == 'eg':
+                        # Egypt culture: family-friendly help and warm support with cultural heritage
+                        faq_keywords = "أسئلة شائعة، مساعدة عائلية مصرية، دليل سهل، دعم مصري، تراث عائلي"
+                        # Egypt FAQ image descriptions in Arabic with cultural elements
+                        faq_image = "خدمة عملاء مصرية مبتسمة، دليل مرئي خطوة بخطوة، أيقونات ودية مصرية، رموز تراثية (800x600px)"
+                        faq_seo = "تحسين محركات البحث للأسئلة الشائعة المصرية"
                     elif marketplace_code == 'sa':
                         # Saudi culture: family-friendly help and warm support
                         faq_keywords = "أسئلة شائعة، مساعدة عائلية، دليل سهل، دعم سعودي"
@@ -4472,7 +4622,7 @@ Technical specifications include comprehensive compatibility, robust build quali
             else:
                 # For Turkey and Mexico: use comprehensive template WITHOUT simple sections
                 # For US market: use full template WITH simple sections
-                if marketplace_code in ['tr', 'mx', 'sa', 'in']:
+                if marketplace_code in ['tr', 'mx', 'sa', 'eg', 'in']:
                     # Turkey and Mexico get comprehensive sections only, no simple sections
                     comprehensive_only_html = f"""<div class="aplus-introduction bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 p-4 sm:p-6 rounded-lg mb-6">
     <div class="flex items-center mb-4">
@@ -5819,6 +5969,42 @@ Return ONLY valid JSON:
                     return {
                         'keywords': 'Trefwoorden',
                         'image_strategy': 'Beeld Strategie',
+                        'seo_focus': 'SEO Focus',
+                        'features_title': 'Key Features & Benefits',
+                        'trust_title': 'Trust & Quality',
+                        'faqs_title': 'Frequently Asked Questions'
+                    }
+                elif market_code == 'eg':
+                    return {
+                        'keywords': 'الكلمات المفتاحية',
+                        'image_strategy': 'استراتيجية الصور',
+                        'seo_focus': 'تركيز تحسين محركات البحث',
+                        'features_title': 'الميزات والفوائد الرئيسية',
+                        'trust_title': 'الجودة والثقة',
+                        'faqs_title': 'الأسئلة الشائعة'
+                    }
+                elif market_code == 'mx':
+                    return {
+                        'keywords': 'Palabras Clave',
+                        'image_strategy': 'Estrategia de Imagen',
+                        'seo_focus': 'Enfoque SEO',
+                        'features_title': 'Características y Beneficios Clave',
+                        'trust_title': 'Calidad y Confianza',
+                        'faqs_title': 'Preguntas Frecuentes'
+                    }
+                elif market_code == 'sa':
+                    return {
+                        'keywords': 'الكلمات المفتاحية',
+                        'image_strategy': 'استراتيجية الصور',
+                        'seo_focus': 'تركيز تحسين محركات البحث',
+                        'features_title': 'الميزات والفوائد الرئيسية',
+                        'trust_title': 'الجودة والثقة',
+                        'faqs_title': 'الأسئلة الشائعة'
+                    }
+                elif market_code == 'in':
+                    return {
+                        'keywords': 'Keywords',
+                        'image_strategy': 'Image Strategy',
                         'seo_focus': 'SEO Focus',
                         'features_title': 'Key Features & Benefits',
                         'trust_title': 'Trust & Quality',
