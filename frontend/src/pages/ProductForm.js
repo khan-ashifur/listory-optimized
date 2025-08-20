@@ -15,7 +15,7 @@ const ProductForm = () => {
     name: '',
     description: '',
     brand_name: '',
-    marketplace: 'us',
+    marketplace: selectedPlatform === 'walmart' ? 'walmart_usa' : 'us',
     price: '',
     categories: '',
     features: '',
@@ -35,30 +35,54 @@ const ProductForm = () => {
     { value: 'professional', label: 'Professional' },
     { value: 'casual', label: 'Casual' },
     { value: 'luxury', label: 'Luxury' },
-    { value: 'playful', label: 'Playful' },
-    { value: 'minimal', label: 'Minimal' },
-    { value: 'bold', label: 'Bold' }
+    { value: 'trendy', label: 'Trendy' },
+    ...(selectedPlatform !== 'walmart' ? [
+      { value: 'playful', label: 'Playful' },
+      { value: 'minimal', label: 'Minimal' },
+      { value: 'bold', label: 'Bold' }
+    ] : [])
   ];
 
-  const occasions = [
-    { value: '', label: 'Select an Occasion (Optional)' },
-    { value: 'christmas', label: '🎄 Christmas' },
-    { value: 'valentines', label: '💝 Valentine\'s Day' },
-    { value: 'mothers_day', label: '🌸 Mother\'s Day' },
-    { value: 'fathers_day', label: '👔 Father\'s Day' },
-    { value: 'halloween', label: '🎃 Halloween' },
-    { value: 'thanksgiving', label: '🦃 Thanksgiving' },
-    { value: 'easter', label: '🐰 Easter' },
-    { value: 'birthday', label: '🎂 Birthday' },
-    { value: 'graduation', label: '🎓 Graduation' },
-    { value: 'wedding', label: '💍 Wedding' },
-    { value: 'anniversary', label: '💕 Anniversary' },
-    { value: 'new_year', label: '🎉 New Year' },
-    { value: 'back_to_school', label: '📚 Back to School' },
-    { value: 'black_friday', label: '🛍️ Black Friday' },
-    { value: 'cyber_monday', label: '💻 Cyber Monday' },
-    { value: 'custom', label: '✏️ Other (Custom)' }
-  ];
+  const getOccasions = () => {
+    const baseOccasions = [
+      { value: '', label: 'Select an Occasion (Optional)' },
+      { value: 'christmas', label: '🎄 Christmas' },
+      { value: 'black_friday', label: '🛍️ Black Friday' },
+      { value: 'cyber_monday', label: '💻 Cyber Monday' },
+      { value: 'mothers_day', label: '🌸 Mother\'s Day' },
+      { value: 'fathers_day', label: '👔 Father\'s Day' },
+      { value: 'halloween', label: '🎃 Halloween' },
+      { value: 'easter', label: '🐰 Easter' },
+      { value: 'birthday', label: '🎂 Birthday' },
+      { value: 'graduation', label: '🎓 Graduation' },
+      { value: 'anniversary', label: '💕 Anniversary' },
+      { value: 'new_year', label: '🎉 New Year' },
+      { value: 'back_to_school', label: '📚 Back to School' }
+    ];
+
+    if (selectedPlatform === 'walmart') {
+      return [
+        ...baseOccasions,
+        { value: 'thanksgiving', label: '🦃 Thanksgiving' },
+        { value: 'independence_day', label: '🇺🇸 Independence Day (July 4th)' },
+        { value: 'memorial_day', label: '🎖️ Memorial Day' },
+        { value: 'labor_day', label: '🔨 Labor Day' },
+        { value: 'valentines_day', label: '💝 Valentine\'s Day' },
+        { value: 'wedding_season', label: '💍 Wedding Season' },
+        { value: 'baby_shower', label: '🍼 Baby Shower' },
+        { value: 'housewarming', label: '🏠 Housewarming' },
+        { value: 'custom', label: '✏️ Other (Custom)' }
+      ];
+    } else {
+      return [
+        ...baseOccasions,
+        { value: 'valentines', label: '💝 Valentine\'s Day' },
+        { value: 'thanksgiving', label: '🦃 Thanksgiving' },
+        { value: 'wedding', label: '💍 Wedding' },
+        { value: 'custom', label: '✏️ Other (Custom)' }
+      ];
+    }
+  };
 
   const amazonMarketplaces = [
     { value: 'us', label: 'United States', flag: '🇺🇸', language: 'en', domain: 'amazon.com' },
@@ -82,6 +106,12 @@ const ProductForm = () => {
     { value: 'au', label: 'Australia', flag: '🇦🇺', language: 'en', domain: 'amazon.com.au' },
     { value: 'tr', label: 'Turkey', flag: '🇹🇷', language: 'tr', domain: 'amazon.com.tr' },
     { value: 'eg', label: 'Egypt', flag: '🇪🇬', language: 'ar', domain: 'amazon.eg' }
+  ];
+
+  const walmartMarketplaces = [
+    { value: 'walmart_usa', label: 'United States', flag: '🇺🇸', language: 'en-us', domain: 'walmart.com' },
+    { value: 'walmart_canada', label: 'Canada', flag: '🇨🇦', language: 'en-ca', domain: 'walmart.ca' },
+    { value: 'walmart_mexico', label: 'Mexico', flag: '🇲🇽', language: 'es-mx', domain: 'walmart.com.mx' }
   ];
 
   const handleInputChange = (e) => {
@@ -114,7 +144,15 @@ const ProductForm = () => {
   };
 
   const getSelectedMarketplace = () => {
-    return amazonMarketplaces.find(m => m.value === formData.marketplace);
+    if (selectedPlatform === 'walmart') {
+      return walmartMarketplaces.find(m => m.value === formData.marketplace);
+    } else {
+      return amazonMarketplaces.find(m => m.value === formData.marketplace);
+    }
+  };
+
+  const getCurrentMarketplaces = () => {
+    return selectedPlatform === 'walmart' ? walmartMarketplaces : amazonMarketplaces;
   };
 
 
@@ -259,35 +297,39 @@ const ProductForm = () => {
           className="bg-white rounded-lg shadow-sm border border-gray-200"
         >
           <form onSubmit={handleSubmit} className="p-8 space-y-6">
-            {/* Amazon Marketplace Selection - Only for Amazon */}
-            {selectedPlatform === 'amazon' && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  <Globe className="inline h-4 w-4 mr-1" />
-                  Amazon Marketplace *
-                </label>
-                <select
-                  name="marketplace"
-                  value={formData.marketplace}
-                  onChange={handleInputChange}
-                  className="form-input"
-                  required
-                >
-                  {amazonMarketplaces.map(market => (
-                    <option key={market.value} value={market.value}>
-                      {market.flag} {market.label} ({market.domain})
-                    </option>
-                  ))}
-                </select>
-                {formData.marketplace && (
-                  <p className="text-sm text-blue-600 mt-2">
-                    <Info className="inline h-3 w-3 mr-1" />
-                    Listing will be generated in {getSelectedMarketplace()?.language === 'en' ? 'English' : 
-                      `${getSelectedMarketplace()?.label}'s local language`}
-                  </p>
-                )}
-              </div>
-            )}
+            {/* Marketplace Selection - For both Amazon and Walmart */}
+            <div className={`${selectedPlatform === 'amazon' ? 'bg-blue-50 border-blue-200' : 'bg-green-50 border-green-200'} border rounded-lg p-4 mb-6`}>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                <Globe className="inline h-4 w-4 mr-1" />
+                {selectedPlatform === 'amazon' ? 'Amazon' : 'Walmart'} Marketplace *
+              </label>
+              <select
+                name="marketplace"
+                value={formData.marketplace}
+                onChange={handleInputChange}
+                className="form-input"
+                required
+              >
+                {getCurrentMarketplaces().map(market => (
+                  <option key={market.value} value={market.value}>
+                    {market.flag} {market.label} ({market.domain})
+                  </option>
+                ))}
+              </select>
+              {formData.marketplace && (
+                <p className={`text-sm mt-2 ${selectedPlatform === 'amazon' ? 'text-blue-600' : 'text-green-600'}`}>
+                  <Info className="inline h-3 w-3 mr-1" />
+                  Listing will be generated in {getSelectedMarketplace()?.language === 'en' || getSelectedMarketplace()?.language === 'en-us' || getSelectedMarketplace()?.language === 'en-ca' ? 'English' : 
+                    getSelectedMarketplace()?.language === 'es-mx' ? 'Spanish (Mexico)' :
+                    `${getSelectedMarketplace()?.label}'s local language`}
+                  {selectedPlatform === 'walmart' && (
+                    <span className="block mt-1 text-xs">
+                      💡 Brand tone helps optimize Walmart content quality
+                    </span>
+                  )}
+                </p>
+              )}
+            </div>
 
             {/* Required Fields Section */}
             <div className="border-b pb-6">
@@ -418,6 +460,7 @@ const ProductForm = () => {
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Brand Tone
+                        {selectedPlatform === 'walmart' && <span className="text-xs text-green-600 block">Recommended for better Walmart optimization</span>}
                       </label>
                       <select
                         name="brand_tone"
@@ -431,6 +474,11 @@ const ProductForm = () => {
                           </option>
                         ))}
                       </select>
+                      {selectedPlatform === 'walmart' && formData.brand_tone && (
+                        <p className="text-xs text-green-600 mt-1">
+                          ✓ Walmart content will be optimized for {brandTones.find(t => t.value === formData.brand_tone)?.label.toLowerCase()} tone
+                        </p>
+                      )}
                     </div>
 
                     <div>
@@ -464,7 +512,7 @@ const ProductForm = () => {
                       }}
                       className="form-input"
                     >
-                      {occasions.map(occasion => (
+                      {getOccasions().map(occasion => (
                         <option key={occasion.value} value={occasion.value}>
                           {occasion.label}
                         </option>

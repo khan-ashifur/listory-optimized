@@ -732,12 +732,23 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                   <div className="bg-yellow-50 rounded-lg p-4 border border-yellow-200">
                     <h3 className="font-semibold text-yellow-900 mb-3">🔧 Product Attributes</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {Object.entries(JSON.parse(currentListing.walmart_attributes)).map(([key, value]) => (
-                        <div key={key} className="flex justify-between bg-white p-2 rounded border">
-                          <span className="font-medium text-gray-700 capitalize">{key.replace('_', ' ')}:</span>
-                          <span className="text-gray-900">{Array.isArray(value) ? value.join(', ') : value}</span>
-                        </div>
-                      ))}
+                      {(() => {
+                        try {
+                          const attributes = JSON.parse(currentListing.walmart_attributes);
+                          return Object.entries(attributes).map(([key, value]) => (
+                            <div key={key} className="flex justify-between bg-white p-2 rounded border">
+                              <span className="font-medium text-gray-700 capitalize">{key.replace('_', ' ')}:</span>
+                              <span className="text-gray-900">{Array.isArray(value) ? value.join(', ') : value}</span>
+                            </div>
+                          ));
+                        } catch (e) {
+                          return (
+                            <div className="bg-gray-100 text-gray-700 px-3 py-2 rounded text-sm">
+                              {currentListing.walmart_attributes}
+                            </div>
+                          );
+                        }
+                      })()}
                     </div>
                   </div>
                 )}
@@ -813,12 +824,72 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                 {currentListing.walmart_compliance_certifications && (
                   <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
                     <h3 className="font-semibold text-blue-900 mb-3">✅ Compliance & Certifications</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {JSON.parse(currentListing.walmart_compliance_certifications).map((cert, index) => (
-                        <span key={index} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-300">
-                          {cert}
-                        </span>
-                      ))}
+                    <div className="space-y-3">
+                      {(() => {
+                        try {
+                          const complianceData = JSON.parse(currentListing.walmart_compliance_certifications);
+                          
+                          // Handle both array format (legacy) and object format (current)
+                          if (Array.isArray(complianceData)) {
+                            return (
+                              <div className="flex flex-wrap gap-2">
+                                {complianceData.map((cert, index) => (
+                                  <span key={index} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-300">
+                                    {cert}
+                                  </span>
+                                ))}
+                              </div>
+                            );
+                          } else {
+                            // New object format with certifications, safety_warnings, etc.
+                            return (
+                              <>
+                                {complianceData.certifications && complianceData.certifications.length > 0 && (
+                                  <div>
+                                    <h4 className="text-sm font-medium text-gray-700 mb-2">Certifications:</h4>
+                                    <div className="flex flex-wrap gap-2">
+                                      {complianceData.certifications.map((cert, index) => (
+                                        <span key={index} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-300">
+                                          {cert}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                                
+                                {complianceData.safety_warnings && complianceData.safety_warnings.length > 0 && (
+                                  <div>
+                                    <h4 className="text-sm font-medium text-gray-700 mb-2">Safety Warnings:</h4>
+                                    <div className="space-y-1">
+                                      {complianceData.safety_warnings.map((warning, index) => (
+                                        <div key={index} className="bg-orange-100 text-orange-800 px-3 py-2 rounded text-sm border border-orange-300">
+                                          ⚠️ {warning}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                                
+                                {complianceData.age_restrictions && (
+                                  <div>
+                                    <h4 className="text-sm font-medium text-gray-700 mb-2">Age Restrictions:</h4>
+                                    <div className="bg-yellow-100 text-yellow-800 px-3 py-2 rounded text-sm border border-yellow-300">
+                                      {complianceData.age_restrictions}
+                                    </div>
+                                  </div>
+                                )}
+                              </>
+                            );
+                          }
+                        } catch (e) {
+                          // Fallback for malformed JSON
+                          return (
+                            <div className="bg-gray-100 text-gray-700 px-3 py-2 rounded text-sm">
+                              {currentListing.walmart_compliance_certifications}
+                            </div>
+                          );
+                        }
+                      })()}
                     </div>
                   </div>
                 )}
@@ -846,11 +917,30 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                     <div className="mb-4">
                       <h4 className="text-sm font-medium text-gray-700 mb-2">Suggested Video Content:</h4>
                       <div className="space-y-2">
-                        {JSON.parse(currentListing.walmart_video_urls).map((video, index) => (
-                          <div key={index} className="bg-white p-2 rounded border text-sm">
-                            {video}
-                          </div>
-                        ))}
+                        {(() => {
+                          try {
+                            const videos = JSON.parse(currentListing.walmart_video_urls);
+                            if (Array.isArray(videos)) {
+                              return videos.map((video, index) => (
+                                <div key={index} className="bg-white p-2 rounded border text-sm">
+                                  {video}
+                                </div>
+                              ));
+                            } else {
+                              return (
+                                <div className="bg-white p-2 rounded border text-sm">
+                                  {JSON.stringify(videos)}
+                                </div>
+                              );
+                            }
+                          } catch (e) {
+                            return (
+                              <div className="bg-gray-100 text-gray-700 px-3 py-2 rounded text-sm">
+                                {currentListing.walmart_video_urls}
+                              </div>
+                            );
+                          }
+                        })()}
                       </div>
                     </div>
                   )}
@@ -860,11 +950,30 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                     <div>
                       <h4 className="text-sm font-medium text-gray-700 mb-2">Additional Image Types:</h4>
                       <div className="flex flex-wrap gap-2">
-                        {JSON.parse(currentListing.walmart_swatch_images).map((img, index) => (
-                          <span key={index} className="bg-purple-100 text-purple-800 px-3 py-1 rounded text-sm border border-purple-300">
-                            {img}
-                          </span>
-                        ))}
+                        {(() => {
+                          try {
+                            const images = JSON.parse(currentListing.walmart_swatch_images);
+                            if (Array.isArray(images)) {
+                              return images.map((img, index) => (
+                                <span key={index} className="bg-purple-100 text-purple-800 px-3 py-1 rounded text-sm border border-purple-300">
+                                  {img}
+                                </span>
+                              ));
+                            } else {
+                              return (
+                                <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded text-sm border border-purple-300">
+                                  {JSON.stringify(images)}
+                                </span>
+                              );
+                            }
+                          } catch (e) {
+                            return (
+                              <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded text-sm">
+                                {currentListing.walmart_swatch_images}
+                              </span>
+                            );
+                          }
+                        })()}
                       </div>
                     </div>
                   )}

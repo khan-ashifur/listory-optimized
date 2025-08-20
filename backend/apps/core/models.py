@@ -15,6 +15,7 @@ class Product(models.Model):
         ('professional', 'Professional'),
         ('casual', 'Casual'),
         ('luxury', 'Luxury'),
+        ('trendy', 'Trendy'),
         ('playful', 'Playful'),
         ('minimal', 'Minimal'),
         ('bold', 'Bold'),
@@ -43,17 +44,25 @@ class Product(models.Model):
         ('tr', 'Turkey'),
         ('eg', 'Egypt'),
     ]
+    
+    WALMART_MARKETPLACES = [
+        ('walmart_usa', 'Walmart USA'),
+        ('walmart_canada', 'Walmart Canada'),
+        ('walmart_mexico', 'Walmart Mexico'),
+    ]
+    
+    ALL_MARKETPLACES = AMAZON_MARKETPLACES + WALMART_MARKETPLACES
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField()
     brand_name = models.CharField(max_length=100)
-    brand_tone = models.CharField(max_length=20, choices=BRAND_TONES)
+    brand_tone = models.CharField(max_length=20, choices=BRAND_TONES, blank=True, default="")
     target_platform = models.CharField(max_length=20, choices=PLATFORMS)
     
-    # Amazon-specific fields
+    # Platform-specific fields
     asin = models.CharField(max_length=20, blank=True, default="", help_text="Amazon Standard Identification Number")
-    marketplace = models.CharField(max_length=5, choices=AMAZON_MARKETPLACES, default='us', help_text="Amazon marketplace/country")
+    marketplace = models.CharField(max_length=15, choices=ALL_MARKETPLACES, default='us', help_text="Marketplace/country for the platform")
     marketplace_language = models.CharField(max_length=10, blank=True, default="en", help_text="Language for the selected marketplace")
     brand_persona = models.TextField(blank=True, default="", help_text="Brand personality, values, and voice")
     target_audience = models.TextField(blank=True, default="", help_text="Description of ideal customer demographics and psychographics")

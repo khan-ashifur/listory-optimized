@@ -1183,5 +1183,489 @@ REQUIREMENTS:
 - Add gift messaging and wrapping options
 - Create urgency around {occasion} timing
 """
+    
+    def get_walmart_usa_occasion_enhancement(self, occasion):
+        """Get Walmart USA specific occasion enhancements with American culture focus"""
+        walmart_occasions = {
+            "black_friday": """
+🛒 WALMART BLACK FRIDAY DOORBUSTER OPTIMIZATION 🛒
+
+CRITICAL WALMART BLACK FRIDAY REQUIREMENTS:
+✓ Title MUST include "Black Friday Deal" or "Doorbuster Price"  
+✓ Features emphasize VALUE: "Rollback Price", "Lowest Price of Year"
+✓ Description opens with "Black Friday Exclusive" or similar
+✓ Include urgency: "Limited Time", "While Supplies Last", "Doorbuster Hours Only"
+✓ Walmart integration: "Pickup Available", "Same Day Delivery", "Price Match Guarantee"
+✓ American values: "Made in USA", "Supporting American Families"
+
+WALMART BLACK FRIDAY POWER LANGUAGE:
+- "Rollback to Lowest Price" - "Early Bird Doorbuster" - "Black Friday Exclusive"
+- "Save Big This Friday" - "Thanksgiving Weekend Deal" - "Holiday Savings Start Now"
+- "Beat the Crowds - Order Online" - "Free Store Pickup" - "2-Day Free Shipping"
+
+DESCRIPTION STRUCTURE:
+Paragraph 1: Black Friday exclusive pricing and Walmart advantages
+Paragraph 2: Product benefits with savings emphasis  
+Paragraph 3: American family values and quality assurance
+Paragraph 4: Walmart pickup/delivery options and urgency
+
+MANDATORY ELEMENTS:
+□ Black Friday prominently in title and features
+□ Walmart-specific language (rollback, pickup, price match)
+□ American family benefits and values
+□ Urgency and scarcity messaging
+□ Free shipping and pickup options highlighted
+""",
+            
+            "christmas": """
+🎄 WALMART CHRISTMAS FAMILY GIFT OPTIMIZATION 🎄
+
+CRITICAL WALMART CHRISTMAS REQUIREMENTS:
+✓ Title includes "Christmas Gift" or "Holiday Special"
+✓ Features emphasize FAMILY: "Perfect for Families", "All Ages"
+✓ Description focuses on American Christmas traditions
+✓ Include gift messaging: "Gift Receipt Included", "Easy Returns"
+✓ Walmart advantages: "Free Gift Wrap", "Christmas Eve Pickup Available"
+✓ American Christmas: "Under the Tree", "Christmas Morning Magic"
+
+WALMART CHRISTMAS POWER LANGUAGE:
+- "Christmas Morning Surprise" - "Under the Christmas Tree" - "Holiday Magic"
+- "Family Traditions" - "American Christmas" - "Santa Approved"
+- "Gift Wrap Available" - "Christmas Eve Pickup" - "Easy Gift Returns"
+
+DESCRIPTION STRUCTURE:
+Paragraph 1: Christmas magic and family gift appeal
+Paragraph 2: Product creates lasting Christmas memories
+Paragraph 3: American family Christmas traditions
+Paragraph 4: Walmart gift services and hassle-free returns
+
+MANDATORY ELEMENTS:
+□ Christmas prominently featured in title and bullets
+□ American family Christmas traditions referenced
+□ Walmart gift services highlighted (wrap, pickup, returns)
+□ Family togetherness and memory-making emphasized
+□ Easy gift-giving process with Walmart advantages
+""",
+            
+            "thanksgiving": """
+🦃 WALMART THANKSGIVING FAMILY GATHERING OPTIMIZATION 🦃
+
+CRITICAL WALMART THANKSGIVING REQUIREMENTS:
+✓ Title includes "Thanksgiving" or "Family Gathering"
+✓ Features emphasize HOSTING: "Perfect for Entertaining", "Family Dinners"
+✓ Description focuses on gratitude and American traditions
+✓ Include family benefits: "Brings Family Together", "Creates Memories"
+✓ Walmart convenience: "Same Day Pickup", "Last Minute Shopping"
+✓ American values: "Grateful Families", "Thanksgiving Traditions"
+
+WALMART THANKSGIVING POWER LANGUAGE:
+- "Thanksgiving Memories" - "Family Gathering Essential" - "Grateful Hearts"
+- "American Tradition" - "Thanksgiving Dinner" - "Family Togetherness"
+- "Last Minute Pickup" - "Thanksgiving Day Delivery" - "Family Approved"
+
+DESCRIPTION STRUCTURE:
+Paragraph 1: Thanksgiving family gathering enhancement
+Paragraph 2: Product brings families together with gratitude
+Paragraph 3: American Thanksgiving traditions and memories
+Paragraph 4: Walmart convenience for busy families
+
+MANDATORY ELEMENTS:
+□ Thanksgiving family focus in title and features
+□ American gratitude and tradition references
+□ Family gathering and hosting benefits
+□ Walmart convenience for holiday preparations
+□ Memory-making and togetherness emphasis
+""",
+            
+            "independence_day": """
+🇺🇸 WALMART JULY 4TH PATRIOTIC OPTIMIZATION 🇺🇸
+
+CRITICAL WALMART JULY 4TH REQUIREMENTS:
+✓ Title includes "July 4th", "Independence Day", or "Patriotic"
+✓ Features emphasize AMERICAN PRIDE: "Made in USA", "Supports Veterans"
+✓ Description celebrates American freedom and family
+✓ Include patriotic elements: "Red White Blue", "Star Spangled"
+✓ Walmart American values: "Supporting American Workers", "Local Communities"
+✓ Celebration focus: "Backyard BBQ", "Family Celebration", "Freedom Party"
+
+WALMART JULY 4TH POWER LANGUAGE:
+- "Celebrate America" - "Independence Day Special" - "Patriotic Pride"
+- "Red White and Blue" - "Freedom Celebration" - "American Made"
+- "Support Our Troops" - "Land of the Free" - "American Family Values"
+
+DESCRIPTION STRUCTURE:
+Paragraph 1: Independence Day celebration and American pride
+Paragraph 2: Product enhances patriotic gatherings and family fun
+Paragraph 3: American values, quality, and supporting local communities
+Paragraph 4: Walmart's commitment to American families and values
+
+MANDATORY ELEMENTS:
+□ July 4th/Independence Day prominently featured
+□ American patriotic values and pride emphasized
+□ Red, white, blue color schemes or themes
+□ Family celebration and gathering focus
+□ Made in USA or American quality highlighted
+""",
+            
+            "mothers_day": """
+👩 WALMART MOTHER'S DAY APPRECIATION OPTIMIZATION 👩
+
+CRITICAL WALMART MOTHER'S DAY REQUIREMENTS:
+✓ Title includes "Mother's Day Gift" or "For Mom"
+✓ Features emphasize MOM APPRECIATION: "Shows You Care", "Mom Deserves Best"
+✓ Description honors hardworking American mothers
+✓ Include emotional appeal: "Thank You Mom", "Mother's Love"
+✓ Walmart convenience: "Easy Gift Pickup", "Mom-Approved Quality"
+✓ Family values: "Family Hero", "Supermom", "American Motherhood"
+
+WALMART MOTHER'S DAY POWER LANGUAGE:
+- "Thank You Mom" - "Mother's Day Special" - "Mom Appreciation"
+- "Supermom Deserves" - "Best Mom Ever" - "Mother's Love"
+- "Easy Gift Pickup" - "Mom-Approved" - "Family First"
+
+DESCRIPTION STRUCTURE:
+Paragraph 1: Mother's Day appreciation and gift appeal
+Paragraph 2: Product shows love and appreciation for mom
+Paragraph 3: American mom values and family importance
+Paragraph 4: Walmart makes gift-giving easy for busy families
+
+MANDATORY ELEMENTS:
+□ Mother's Day gift focus in title and features
+□ Mom appreciation and love emphasized
+□ American family values and motherhood
+□ Easy gift-giving with Walmart convenience
+□ Quality that shows mom she's valued
+""",
+            
+            "super_bowl": """
+🏈 WALMART SUPER BOWL PARTY OPTIMIZATION 🏈
+
+CRITICAL WALMART SUPER BOWL REQUIREMENTS:
+✓ Title includes "Super Bowl" or "Game Day"
+✓ Features emphasize PARTY HOSTING: "Perfect for Parties", "Game Day Essential"
+✓ Description focuses on American football traditions
+✓ Include party benefits: "Crowd Pleaser", "Party MVP"
+✓ Walmart party convenience: "Party Supplies Available", "Same Day Pickup"
+✓ American sports culture: "Football Sunday", "Team Spirit", "Championship"
+
+WALMART SUPER BOWL POWER LANGUAGE:
+- "Game Day Ready" - "Super Bowl Party" - "Football Sunday"
+- "Team Spirit" - "Championship Quality" - "Party MVP"
+- "Touchdown Deal" - "Game Time" - "All-American Fun"
+
+DESCRIPTION STRUCTURE:
+Paragraph 1: Super Bowl party enhancement and game day excitement
+Paragraph 2: Product makes you the party MVP with team spirit
+Paragraph 3: American football culture and championship quality
+Paragraph 4: Walmart party convenience and sports fan support
+
+MANDATORY ELEMENTS:
+□ Super Bowl/Game Day prominently featured
+□ American football culture and team spirit
+□ Party hosting and entertainment focus
+□ Walmart convenience for party planning
+□ Championship quality and winning attitude
+"""
+        }
+        
+        return walmart_occasions.get(occasion.lower(), None)
+    
+    def get_walmart_canada_occasion_enhancement(self, occasion):
+        """Get Walmart Canada specific occasion enhancements with Canadian culture focus and bilingual compliance"""
+        walmart_canada_occasions = {
+            "boxing_day": """
+🇨🇦 WALMART CANADA BOXING DAY MEGA SALE OPTIMIZATION 🇨🇦
+
+CRITICAL WALMART CANADA BOXING DAY REQUIREMENTS:
+✓ Title MUST include "Boxing Day Sale" or "Boxing Day Special"
+✓ Features emphasize CANADIAN VALUE: "Rollback Price Canada", "Coast to Coast Savings"
+✓ Description opens with "Boxing Day Exclusive Canada" or similar
+✓ Include urgency: "December 26th Only", "Limited Time Canada", "While Supplies Last"
+✓ Walmart Canada integration: "Free Pickup Canada", "Same Day Delivery", "Price Match Canada"
+✓ Canadian values: "Canadian Quality", "Supporting Canadian Families"
+
+WALMART CANADA BOXING DAY POWER LANGUAGE:
+- "Rollback to Lowest Canadian Price" - "Boxing Day Doorbuster Canada" - "Post-Christmas Exclusive"
+- "Coast to Coast Savings" - "Canadian Boxing Day Tradition" - "Holiday Clearance Event"
+- "Beat the Crowds - Order Online Canada" - "Free Store Pickup" - "Bilingual Customer Service"
+
+BILINGUAL COMPLIANCE NOTES:
+- Ready for French translation per Canadian law
+- Use clear, translatable language structure
+- Avoid idioms that don't translate well
+""",
+            
+            "canada_day": """
+🇨🇦 WALMART CANADA DAY CELEBRATION OPTIMIZATION 🇨🇦
+
+CRITICAL WALMART CANADA DAY REQUIREMENTS:
+✓ Title MUST include "Canada Day Special" or "July 1st Celebration"
+✓ Features emphasize PATRIOTIC CANADIAN VALUE: "True North Strong", "Coast to Coast Pride"
+✓ Description opens with "Celebrate Canada Day" or "Oh Canada Special"
+✓ Include Canadian pride: "Made in Canada", "Canadian Heritage", "From Sea to Sea"
+✓ Walmart Canada integration: "Available Nationwide", "Canadian Customers", "Bilingual Service"
+✓ Canadian values: "Maple Leaf Quality", "Canadian Family Values"
+
+WALMART CANADA DAY POWER LANGUAGE:
+- "True North Strong and Free" - "Coast to Coast Celebration" - "Canadian Pride Special"
+- "From Sea to Sea Savings" - "Oh Canada Deals" - "Red and White Sale"
+- "Canadian Heritage Quality" - "Bilingual Customer Support" - "Canadian Family Tradition"
+
+CANADIAN CULTURAL ELEMENTS:
+- Reference maple syrup, hockey, cottage country, winter sports
+- Include "eh" appropriately and sparingly for authenticity
+- Mention Canadian symbols: maple leaf, beaver, loon
+""",
+            
+            "victoria_day": """
+🇨🇦 WALMART CANADA VICTORIA DAY LONG WEEKEND OPTIMIZATION 🇨🇦
+
+CRITICAL WALMART VICTORIA DAY REQUIREMENTS:
+✓ Title MUST include "Victoria Day Sale" or "May Long Weekend"
+✓ Features emphasize LONG WEEKEND VALUE: "May Two-Four Special", "Long Weekend Savings"
+✓ Description opens with "Victoria Day Long Weekend" or "May Long Celebration"
+✓ Include cottage prep: "Cottage Season Ready", "May Long Tradition", "Weekend Getaway"
+✓ Walmart Canada integration: "Perfect for Cottage Country", "Canadian Outdoor Life"
+✓ Canadian values: "Royal Heritage", "Canadian Tradition", "Coast to Coast Quality"
+
+WALMART VICTORIA DAY POWER LANGUAGE:
+- "May Long Weekend Special" - "Cottage Season Kickoff" - "Victoria Day Tradition"
+- "Long Weekend Savings" - "May Two-Four Deals" - "Canadian Outdoor Ready"
+- "Cottage Country Quality" - "Weekend Warrior Approved" - "Royal Quality Standards"
+
+CANADIAN COTTAGE CULTURE:
+- Reference cottage life, lake activities, camping
+- Include May long weekend traditions
+- Mention Canadian outdoor lifestyle
+""",
+            
+            "thanksgiving": """
+🇨🇦 WALMART CANADA THANKSGIVING OPTIMIZATION (OCTOBER) 🇨🇦
+
+CRITICAL WALMART CANADA THANKSGIVING REQUIREMENTS:
+✓ Title MUST include "Canadian Thanksgiving" or "October Thanksgiving"
+✓ Features emphasize GRATITUDE & HARVEST: "Harvest Festival", "Canadian Thanksgiving Tradition"
+✓ Description opens with "Canadian Thanksgiving Celebration" or "October Harvest"
+✓ Include family gathering: "Family Feast", "Thanksgiving Dinner", "Grateful Hearts"
+✓ Walmart Canada integration: "Coast to Coast Gratitude", "Canadian Family Tradition"
+✓ Canadian values: "Harvest Abundance", "Family Unity", "Canadian Hospitality"
+
+WALMART CANADA THANKSGIVING POWER LANGUAGE:
+- "Canadian Thanksgiving Tradition" - "October Harvest Celebration" - "Family Feast Ready"
+- "Grateful Hearts, Canadian Style" - "Coast to Coast Thanksgiving" - "Harvest Festival Quality"
+- "Canadian Family Gathering" - "Thanksgiving Dinner Perfection" - "Autumn Celebration"
+
+CANADIAN THANKSGIVING DISTINCTIONS:
+- Emphasize October timing (not November like US)
+- Reference Canadian harvest traditions
+- Include maple syrup, Canadian agriculture
+""",
+            
+            "christmas": """
+🇨🇦 WALMART CANADA CHRISTMAS/NOËL OPTIMIZATION 🇨🇦
+
+CRITICAL WALMART CANADA CHRISTMAS REQUIREMENTS:
+✓ Title MUST include "Christmas Special" or "Holiday Gift Canada"
+✓ Features emphasize CANADIAN CHRISTMAS: "Canadian Christmas Magic", "Coast to Coast Joy"
+✓ Description opens with "Canadian Christmas Tradition" or "Holiday Magic Canada"
+✓ Include bilingual elements: "Merry Christmas / Joyeux Noël"
+✓ Walmart Canada integration: "Canadian Holiday Tradition", "Bilingual Gift Service"
+✓ Canadian values: "Canadian Christmas Spirit", "Family Traditions", "Winter Wonderland"
+
+WALMART CANADA CHRISTMAS POWER LANGUAGE:
+- "Canadian Christmas Magic" - "Holiday Tradition Coast to Coast" - "Merry Christmas Canada"
+- "Joyeux Noël Special" - "Canadian Winter Wonderland" - "Holiday Gift Perfection"
+- "Canadian Family Christmas" - "Bilingual Holiday Service" - "True North Christmas Spirit"
+
+BILINGUAL CHRISTMAS ELEMENTS:
+- Ready for French translation: "Joyeux Noël"
+- Reference Canadian Christmas traditions
+- Include winter sports, skating, sledding
+""",
+            
+            "hockey_season": """
+🇨🇦 WALMART CANADA HOCKEY SEASON OPTIMIZATION 🇨🇦
+
+CRITICAL WALMART CANADA HOCKEY REQUIREMENTS:
+✓ Title MUST include "Hockey Season" or "Hockey Night Canada"
+✓ Features emphasize HOCKEY CULTURE: "Hockey Night Ready", "Canadian Hockey Heritage"
+✓ Description opens with "Hockey Season Special" or "Canadian Hockey Tradition"
+✓ Include hockey terms: "On Ice Performance", "Hat Trick Quality", "Championship Grade"
+✓ Walmart Canada integration: "Hockey Mom/Dad Approved", "Rink to Home Quality"
+✓ Canadian values: "Hockey Heritage", "Ice to Ice Excellence", "Canadian Championship"
+
+WALMART CANADA HOCKEY POWER LANGUAGE:
+- "Hockey Night in Canada Special" - "On Ice Excellence" - "Canadian Hockey Heritage"
+- "Hat Trick Performance" - "Championship Quality" - "Hockey Mom/Dad Approved"
+- "From Rink to Home" - "Canadian Ice Legend" - "Hockey Season Ready"
+
+CANADIAN HOCKEY CULTURE:
+- Reference NHL, hockey nights, arena culture
+- Include "hockey mom/dad" lifestyle
+- Mention community rink traditions
+""",
+            
+            "cottage_season": """
+🇨🇦 WALMART CANADA COTTAGE SEASON OPTIMIZATION 🇨🇦
+
+CRITICAL WALMART CANADA COTTAGE REQUIREMENTS:
+✓ Title MUST include "Cottage Season" or "Lake House Ready"
+✓ Features emphasize COTTAGE CULTURE: "Cottage Life Ready", "Muskoka Quality"
+✓ Description opens with "Cottage Season Special" or "Lake Life Canada"
+✓ Include cottage terms: "Dock to Cottage", "Lake Life Quality", "Cottage Country Grade"
+✓ Walmart Canada integration: "Cottage Country Approved", "Lake to Lake Quality"
+✓ Canadian values: "Cottage Heritage", "Lake Life Excellence", "Canadian Getaway"
+
+WALMART CANADA COTTAGE POWER LANGUAGE:
+- "Cottage Season Special Canada" - "Lake Life Excellence" - "Cottage Country Quality"
+- "Dock to Cottage Performance" - "Muskoka Grade" - "Canadian Lake Life"
+- "From City to Cottage" - "Lake House Legend" - "Cottage Weekend Ready"
+
+CANADIAN COTTAGE CULTURE:
+- Reference Muskoka, lake country, summer getaways
+- Include "cottage weekend" lifestyle
+- Mention fishing, boating, lake traditions
+""",
+            
+            "winter_carnival": """
+🇨🇦 WALMART CANADA WINTER CARNIVAL OPTIMIZATION 🇨🇦
+
+CRITICAL WALMART CANADA WINTER CARNIVAL REQUIREMENTS:
+✓ Title MUST include "Winter Carnival" or "Ice Festival"
+✓ Features emphasize WINTER CULTURE: "Winter Festival Ready", "Canadian Winter Spirit"
+✓ Description opens with "Winter Carnival Special" or "Ice Festival Canada"
+✓ Include winter terms: "Snow to Ice", "Winter Magic Quality", "Carnival Grade"
+✓ Walmart Canada integration: "Winter Festival Approved", "Coast to Coast Winter"
+✓ Canadian values: "Winter Heritage", "Ice Festival Excellence", "Canadian Winter Joy"
+
+WALMART CANADA WINTER CARNIVAL POWER LANGUAGE:
+- "Winter Carnival Special Canada" - "Ice Festival Excellence" - "Canadian Winter Magic"
+- "Snow to Ice Performance" - "Winter Festival Grade" - "Canadian Winter Spirit"
+- "From Snow to Celebration" - "Winter Magic Legend" - "Ice Festival Ready"
+
+CANADIAN WINTER CULTURE:
+- Reference winter festivals, ice sculptures, snow activities
+- Include winter sports culture
+- Mention community winter celebrations
+"""
+        }
+        
+        return walmart_canada_occasions.get(occasion.lower(), None)
+    
+    def get_walmart_mexico_occasion_enhancement(self, occasion):
+        """Get Walmart Mexico specific occasion enhancements with Mexican culture focus and Spanish localization"""
+        walmart_mexico_occasions = {
+            "dia_de_los_muertos": """
+🇲🇽 WALMART MÉXICO DÍA DE LOS MUERTOS OPTIMIZATION 🇲🇽
+
+CRITICAL WALMART MEXICO DÍA DE LOS MUERTOS REQUIREMENTS:
+✓ Title MUST include "Día de los Muertos" or "Día Muertos"
+✓ Features emphasize MEXICAN TRADITION: "Tradición Mexicana", "Cultura Ancestral"
+✓ Description opens with "Día de los Muertos Especial" or "Celebra Día Muertos"
+✓ Include cultural elements: "Altar de Muertos", "Ofrenda Especial", "Tradición Familiar"
+✓ Walmart México integration: "Disponible en Todo México", "Servicio Nacional"
+✓ Mexican values: "Tradición Mexicana", "Cultura Familiar", "Herencia Nacional"
+
+WALMART MÉXICO DÍA DE LOS MUERTOS POWER LANGUAGE:
+- "Día de los Muertos Especial México" - "Tradición Ancestral Mexicana" - "Altar Perfecto"
+- "Ofrenda Familiar Especial" - "Cultura Nacional México" - "Tradición de Noviembre"
+- "Recuerda a los Seres Queridos" - "Herencia Cultural" - "Mexicano y Orgulloso"
+
+MEXICAN CULTURAL ELEMENTS:
+- Reference altars, ofrendas, marigolds (cempasúchil), calaveras
+- Include family tradition and remembrance themes
+- Mention Mexican cultural heritage and UNESCO recognition
+""",
+            
+            "las_posadas": """
+🇲🇽 WALMART MÉXICO LAS POSADAS CELEBRATION OPTIMIZATION 🇲🇽
+
+CRITICAL WALMART MEXICO LAS POSADAS REQUIREMENTS:
+✓ Title MUST include "Las Posadas" or "Posadas Navideñas"
+✓ Features emphasize CHRISTMAS TRADITION: "Tradición Navideña", "Celebración Familiar"
+✓ Description opens with "Las Posadas Especial" or "Celebra Posadas"
+✓ Include tradition elements: "9 Días de Celebración", "Diciembre 16-24", "Piñata Tradicional"
+✓ Walmart México integration: "Perfecto para Posadas", "Celebración Nacional"
+✓ Mexican values: "Tradición Familiar", "Navidad Mexicana", "Unión Familiar"
+
+WALMART MÉXICO LAS POSADAS POWER LANGUAGE:
+- "Las Posadas Tradición México" - "Celebración Navideña Familiar" - "9 Días Especiales"
+- "Piñata y Diversión" - "Navidad Mexicana Auténtica" - "Diciembre Tradicional"
+- "Familia Unida en Navidad" - "Posadas Perfectas" - "Tradición de Diciembre"
+
+MEXICAN CHRISTMAS CULTURE:
+- Reference the 9-day celebration, piñatas, ponche
+- Include family gathering and Mexican Christmas traditions
+- Mention December 16-24 timing and religious significance
+""",
+            
+            "cinco_de_mayo": """
+🇲🇽 WALMART MÉXICO CINCO DE MAYO CELEBRATION OPTIMIZATION 🇲🇽
+
+CRITICAL WALMART MEXICO CINCO DE MAYO REQUIREMENTS:
+✓ Title MUST include "Cinco de Mayo" or "5 de Mayo"
+✓ Features emphasize MEXICAN PRIDE: "Orgullo Mexicano", "Victoria Histórica"
+✓ Description opens with "Cinco de Mayo Especial" or "Celebra 5 Mayo"
+✓ Include historical elements: "Victoria de Puebla", "Batalla Histórica", "Orgullo Nacional"
+✓ Walmart México integration: "Celebración Mexicana", "Orgullo Nacional"
+✓ Mexican values: "Patriotismo Mexicano", "Historia Nacional", "Valor Mexicano"
+
+WALMART MÉXICO CINCO DE MAYO POWER LANGUAGE:
+- "Cinco de Mayo Orgullo México" - "Victoria Histórica Puebla" - "Patriotismo Nacional"
+- "Celebración Mexicana Auténtica" - "Mayo Histórico" - "Orgullo y Tradición"
+- "México Victorioso" - "Batalla de Puebla" - "Honor Mexicano"
+
+MEXICAN PATRIOTIC CULTURE:
+- Reference Battle of Puebla, Mexican victory, national pride
+- Include patriotic colors (green, white, red)
+- Mention Mexican historical significance
+""",
+            
+            "dia_de_la_independencia": """
+🇲🇽 WALMART MÉXICO INDEPENDENCIA CELEBRATION OPTIMIZATION 🇲🇽
+
+CRITICAL WALMART MEXICO INDEPENDENCIA REQUIREMENTS:
+✓ Title MUST include "Independencia" or "16 Septiembre"
+✓ Features emphasize NATIONAL PRIDE: "Independencia Nacional", "Grito de Dolores"
+✓ Description opens with "Independencia México" or "16 Septiembre Especial"
+✓ Include patriotic elements: "Viva México", "Grito de Independencia", "Libertad Nacional"
+✓ Walmart México integration: "Celebra la Patria", "Independencia Nacional"
+✓ Mexican values: "Libertad Mexicana", "Patria Querida", "Independencia Nacional"
+
+WALMART MÉXICO INDEPENDENCIA POWER LANGUAGE:
+- "Independencia México Septiembre" - "Grito de Dolores Histórico" - "Viva México Libre"
+- "16 Septiembre Patrio" - "Libertad Nacional" - "Independencia Gloriosa"
+- "México Independiente" - "Patria y Libertad" - "Grito Libertador"
+
+MEXICAN INDEPENDENCE CULTURE:
+- Reference Grito de Dolores, Miguel Hidalgo, September 16th
+- Include patriotic celebration and Mexican flags
+- Mention national independence and freedom themes
+""",
+            
+            "christmas": """
+🇲🇽 WALMART MÉXICO NAVIDAD OPTIMIZATION 🇲🇽
+
+CRITICAL WALMART MEXICO NAVIDAD REQUIREMENTS:
+✓ Title MUST include "Navidad" or "Navideño"
+✓ Features emphasize MEXICAN CHRISTMAS: "Navidad Mexicana", "Tradición Familiar"
+✓ Description opens with "Navidad Especial México" or "Celebra Navidad"
+✓ Include Christmas elements: "Feliz Navidad", "Familia Unida", "Regalos Especiales"
+✓ Walmart México integration: "Navidad Perfecta", "Celebración Familiar"
+✓ Mexican values: "Familia Mexicana", "Navidad Tradicional", "Amor Familiar"
+
+WALMART MÉXICO NAVIDAD POWER LANGUAGE:
+- "Navidad Mexicana Especial" - "Familia Unida Navidad" - "Feliz Navidad México"
+- "Regalos Perfectos Navidad" - "Tradición Navideña" - "Celebración Familiar"
+- "Navidad Mexicana Auténtica" - "Amor y Familia" - "Navidad Perfecta"
+
+MEXICAN CHRISTMAS CULTURE:
+- Reference Mexican Christmas traditions, family unity
+- Include Nochebuena, piñatas, Mexican Christmas foods
+- Mention family celebration and gift-giving traditions
+"""
+        }
+        
+        return walmart_mexico_occasions.get(occasion.lower(), None)
 
 import random
