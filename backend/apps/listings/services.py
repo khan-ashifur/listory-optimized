@@ -1838,6 +1838,158 @@ DESCRIPTION VARIATION: Show conviction through evidence and specific benefits
             self.logger.info(f"Applied international localization for: {marketplace} ({marketplace_lang})")
             self.logger.info(f"Applied A+ content international enhancement for: {marketplace} ({marketplace_lang})")
         
+        # Add UK British culture enhancement for PERFECT 10/10 quality (following Mexico structure)
+        uk_enhancement = ""
+        if marketplace == 'uk':
+            # Get occasion for UK-specific formatting
+            occasion = getattr(product, 'occasion', 'general')
+            
+            # UK Cultural Enhancement - EXACT MEXICO PATTERN FOR GUARANTEED 10/10 QUALITY
+            uk_enhancement = f"""
+🇬🇧 UNITED KINGDOM MARKET - EXACT MEXICO PATTERN REPLICATION FOR 10/10 QUALITY
+=================================================================================
+
+🚨🚨🚨 MANDATORY REQUIREMENTS - NO EXCEPTIONS ALLOWED 🚨🚨🚨
+
+⭐ CRITICAL SUCCESS FACTORS - FOLLOW MEXICO'S PROVEN FORMULA EXACTLY:
+
+1. BULLET STRUCTURE - EXACT MEXICO REPLICATION:
+   🎯 ALL 5 bullets MUST start with ★ symbol
+   🎯 Follow Mexico's emotional intensity pattern exactly
+   🎯 Each bullet MUST contain ONE British formality phrase
+   🎯 Length: 180-250 characters per bullet (Mexico standard)
+
+2. MANDATORY BRITISH FORMALITY PHRASES (USE ONE PER BULLET):
+   ✓ "We're delighted to offer" ✓ "Rest assured" ✓ "You'll find" 
+   ✓ "We're confident" ✓ "Proudly British" ✓ "You can be certain"
+   ✓ "It's our pleasure to provide" ✓ "We guarantee you'll notice"
+
+3. BRITISH CULTURAL INTEGRATION (MINIMUM 5 REFERENCES):
+   ✓ UK occasions: {occasion}, Boxing Day, Sunday roast, afternoon tea
+   ✓ British weather/climate considerations ✓ British homes/lifestyle
+   ✓ UK families/customers ✓ British standards/engineering ✓ British heritage
+
+4. EMOTIONAL POWER UPGRADE (BEAT COMPETITORS):
+   ❌ good → ✓ brilliant/exceptional ❌ nice → ✓ splendid/outstanding
+   ❌ great → ✓ remarkable/superb ❌ quality → ✓ premium excellence
+
+🔥 MANDATORY 5-BULLET PATTERN (FOLLOW MEXICO'S EXACT STRUCTURE):
+
+★ BULLET 1 - BRITISH EXCELLENCE SHOWCASE:
+"★ BRITISH ENGINEERING EXCELLENCE: [Premium feature] engineered to British Standards for [exceptional result]. We're confident you'll find [refined benefit] that transforms your [UK lifestyle scenario]."
+
+★ BULLET 2 - HERITAGE MEETS INNOVATION:
+"★ HERITAGE CRAFTSMANSHIP: [Quality element] combining traditional British excellence with [modern innovation]. Rest assured, [guarantee/quality promise] with full UK warranty backing."
+
+★ BULLET 3 - PERFECT FOR BRITISH HOMES:
+"★ PERFECT FOR BRITISH LIFESTYLE: [Lifestyle feature] ideal for {occasion}, Sunday roasts, and [weather considerations]. You'll find it brilliant for [specific British use case]."
+
+★ BULLET 4 - TRUSTED BY UK FAMILIES:
+"★ TRUSTED ACROSS BRITAIN: [Social proof] chosen by thousands of British families from London to Edinburgh. We're delighted to offer [exclusive British benefit]."
+
+★ BULLET 5 - EXCEPTIONAL BRITISH GIFT:
+"★ THOUGHTFUL BRITISH GIFT: Perfect {occasion} present with [British packaging/service]. Proudly presented with British customer service excellence and next-day delivery."
+
+💪 MANDATORY ELEMENTS TO INCLUDE (10/10 QUALITY CHECKPOINT):
+🎯 5 bullets with ★ symbols ✓ 🎯 British formality in every bullet ✓
+🎯 UK cultural references (min 5) ✓ 🎯 Occasion integration: {occasion} ✓
+🎯 British spelling (colour, favourite) ✓ 🎯 Weather considerations ✓
+🎯 Trust signals (warranty, CE, standards) ✓ 🎯 Emotional intensity ✓
+
+🇬🇧 UK DESCRIPTION STRUCTURE (1400-1600 chars - FOLLOW EXACTLY):
+Para 1: "Experience the difference British excellence makes. [Product] represents the finest in [category] engineering, designed specifically for discerning British customers who appreciate [quality aspect]..."
+Para 2: "From [British scenario] to [UK lifestyle activity], this [sophisticated feature] delivers [premium benefit]. Perfect for British homes and weather conditions..."
+Para 3: "Whether you're preparing for {occasion} or enjoying [British tradition], you'll find [product] provides [exceptional benefit] that exceeds expectations..."
+Para 4: "Join thousands of satisfied British families. Rest assured, with [UK warranty] and British customer service, you're investing in proven excellence."
+
+🚨 FINAL QUALITY ASSURANCE - VERIFY BEFORE SUBMISSION:
+✅ All 5 bullets start with ★ ✅ British formality in each bullet
+✅ Cultural integration present ✅ Emotional power words used  
+✅ Trust signals included ✅ British spelling consistent
+✅ Occasion '{occasion}' referenced ✅ Weather considerations mentioned
+
+FAILURE TO MEET ALL REQUIREMENTS = AUTOMATIC REJECTION
+
+🚨🚨🚨 CRITICAL BULLET FORMAT REQUIREMENT 🚨🚨🚨
+JSON OUTPUT REQUIREMENT FOR UK MARKET:
+"bulletPoints": [
+    "★ BRITISH ENGINEERING EXCELLENCE: [content with British formality]",
+    "★ HERITAGE CRAFTSMANSHIP: [content with British formality]", 
+    "★ PERFECT FOR BRITISH LIFESTYLE: [content with British formality]",
+    "★ TRUSTED ACROSS BRITAIN: [content with British formality]",
+    "★ THOUGHTFUL BRITISH GIFT: [content with British formality]"
+]
+
+EVERY SINGLE BULLET MUST START WITH ★ SYMBOL - NO EXCEPTIONS!
+DO NOT USE "•" OR "-" OR ANY OTHER SYMBOL - ONLY ★
+THIS IS MANDATORY FOR UK MARKET COMPLIANCE
+Instead of "nice" → "superb", "magnificent", "splendid"
+Instead of "works well" → "performs brilliantly", "excels magnificently"
+
+DESCRIPTION REQUIREMENTS:
+- Minimum 800 words with British cultural integration
+- Include 3+ British formality phrases
+- Reference British lifestyle scenarios
+- Strong call-to-action with urgency
+- Mention British service and support
+- Include weather/climate considerations
+
+COMPETITIVE POSITIONING:
+Beat Helium 10: Superior emotional engagement + British localization
+Beat Jasper AI: Market-specific formality + proven conversion structure  
+Beat CopyMonkey: Authentic British culture + emotional appeal
+
+QUALITY CONTROL CHECKLIST:
+□ All 5 bullets start with ★
+□ Each bullet contains British formality phrase
+□ British cultural elements integrated throughout
+□ Emotional intensity words used extensively
+□ UK occasions and lifestyle referenced
+□ British spelling used consistently
+□ Trust signals included prominently
+□ Weather/climate considerations mentioned
+
+🏆 TARGET: 10/10 QUALITY SCORE - BEAT ALL COMPETITORS
+"""
+            
+            # Add specific UK lifestyle elements based on product category
+            if 'kitchen' in str(product.categories).lower() or 'knife' in product.name.lower():
+                uk_enhancement += """
+UK KITCHEN CULTURE INTEGRATION:
+- Emphasize Sunday roast preparation, traditional British cooking
+- Reference British culinary traditions: "Perfect for carving the Sunday joint"
+- Include entertaining: "Ideal for dinner parties and kitchen soirées"
+- Mention British cooking shows and chef culture
+- Connect to British home cooking renaissance
+"""
+            elif 'audio' in str(product.categories).lower() or 'headphone' in product.name.lower():
+                uk_enhancement += """
+UK AUDIO LIFESTYLE INTEGRATION:
+- Connect to commuting culture: London Underground, British Rail
+- Reference British music heritage: "From Beatles to Adele"
+- Include sports culture: Premier League, Wimbledon, Six Nations
+- Mention British broadcasting: BBC, podcasts, audiobooks
+- Link to British weather: "Weather-resistant for British climate"
+"""
+            elif 'home' in str(product.categories).lower() or 'garden' in product.name.lower():
+                uk_enhancement += """
+UK HOME & GARDEN INTEGRATION:
+- Emphasize British home pride and garden culture
+- Reference property shows and home improvement
+- Include British weather considerations
+- Mention Victorian homes to modern flats
+- Connect to British DIY and gardening traditions
+"""
+            else:
+                uk_enhancement += """
+UK GENERAL LIFESTYLE INTEGRATION:
+- Reference British daily life and traditions
+- Include weather-appropriate features
+- Mention British innovation and quality standards
+- Connect to British social occasions
+- Emphasize reliability and tradition
+"""
+
         # Add Australian BBQ culture enhancement for better localization
         australian_enhancement = ""
         if marketplace == 'au':
@@ -1885,6 +2037,7 @@ AUSTRALIAN CULTURAL INTEGRATION REQUIRED:
 {aplus_enhancement}
 {brand_tone_enhancement}
 {occasion_enhancement}
+{uk_enhancement}
 {australian_enhancement}
 {base_prompt}
 CRITICAL: USE ONLY THE FOLLOWING INFORMATION - NO GENERIC CONTENT!
@@ -3359,6 +3512,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "qualité premium, marque de confiance, satisfaction client"
                         elif marketplace_code == 'sg':
                             section_keywords = "premium quality Singapore, trusted brand excellence, customer satisfaction guarantee, multicultural harmony"
+                        elif marketplace_code == 'uk':
+                            section_keywords = "premium quality Britain, trusted British brand excellence, customer satisfaction guarantee, refined British lifestyle"
                         elif marketplace_code == 'au':
                             section_keywords = "premium quality Australia, trusted brand excellence, customer satisfaction guarantee, Aussie lifestyle"
                         elif marketplace_code == 'in':
@@ -3394,6 +3549,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "design innovant, haute performance, convivial"
                         elif marketplace_code == 'sg':
                             section_keywords = "innovative design excellence, high performance technology, user-friendly interface, Singapore lifestyle integration"
+                        elif marketplace_code == 'uk':
+                            section_keywords = "innovative British design excellence, high performance engineering, user-friendly interface, sophisticated British lifestyle integration"
                         elif marketplace_code == 'au':
                             section_keywords = "innovative design excellence, high performance technology, user-friendly interface, Australian lifestyle integration"
                         elif marketplace_code == 'in':
@@ -3424,6 +3581,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "avis 5 étoiles, garantie de remboursement, satisfaction client"
                         elif marketplace_code == 'sg':
                             section_keywords = "5-star Singapore reviews, money-back guarantee, customer satisfaction excellence, trusted by families"
+                        elif marketplace_code == 'uk':
+                            section_keywords = "5-star British reviews, money-back guarantee, customer satisfaction excellence, trusted by UK families nationwide"
                         elif marketplace_code == 'au':
                             section_keywords = "5-star Australian reviews, money-back guarantee, customer satisfaction excellence, trusted by Aussie families"
                         elif marketplace_code == 'in':
@@ -3454,6 +3613,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "usage quotidien, applications polyvalentes, pratique, pratique"
                         elif marketplace_code == 'sg':
                             section_keywords = "everyday Singapore lifestyle, versatile HDB applications, practical urban living, convenient MRT-friendly"
+                        elif marketplace_code == 'uk':
+                            section_keywords = "everyday British lifestyle, versatile home applications, practical weather durability, convenient commuter-friendly"
                         elif marketplace_code == 'au':
                             section_keywords = "everyday Australian lifestyle, versatile home applications, practical outback durability, convenient city-friendly"
                         elif marketplace_code == 'in':
@@ -3484,6 +3645,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "contrôle qualité, normes belges, excellence certifiée"
                         elif marketplace_code == 'sg':
                             section_keywords = "quality control Singapore, SPRING standards, certified excellence, tropical climate tested"
+                        elif marketplace_code == 'uk':
+                            section_keywords = "quality control Britain, British Standards Institution, certified excellence, UK weather tested"
                         elif marketplace_code == 'au':
                             section_keywords = "quality control Australia, ACMA standards, certified excellence, extreme climate tested"
                         elif marketplace_code == 'in':
@@ -3514,6 +3677,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "témoignages clients, avis vérifiés, satisfaction garantie"
                         elif marketplace_code == 'sg':
                             section_keywords = "Singapore customer testimonials, verified family reviews, satisfaction guaranteed, multicultural trust"
+                        elif marketplace_code == 'uk':
+                            section_keywords = "British customer testimonials, verified family reviews, satisfaction guaranteed, authentic British trust"
                         elif marketplace_code == 'au':
                             section_keywords = "Australian customer testimonials, verified family reviews, satisfaction guaranteed, fair dinkum trust"
                         elif marketplace_code == 'in':
@@ -3544,6 +3709,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "avantage concurrentiel, choix supérieur, différenciateurs clés"
                         elif marketplace_code == 'sg':
                             section_keywords = "competitive advantage Singapore, superior choice excellence, key differentiators, Lion City quality"
+                        elif marketplace_code == 'uk':
+                            section_keywords = "competitive advantage Britain, superior choice excellence, key differentiators, British innovation heritage"
                         elif marketplace_code == 'au':
                             section_keywords = "competitive advantage Australia, superior choice excellence, key differentiators, Aussie innovation"
                         elif marketplace_code == 'in':
@@ -3574,6 +3741,8 @@ Technical specifications include comprehensive compatibility, robust build quali
                             section_keywords = "contenu emballage, emballage premium, accessoires inclus"
                         elif marketplace_code == 'sg':
                             section_keywords = "complete package contents, premium Singapore packaging, included accessories, tropical-ready materials"
+                        elif marketplace_code == 'uk':
+                            section_keywords = "complete package contents, premium British packaging, included accessories, weather-resistant materials"
                         elif marketplace_code == 'au':
                             section_keywords = "complete package contents, premium Australian packaging, included accessories, extreme-weather materials"
                         elif marketplace_code == 'in':
@@ -3876,6 +4045,19 @@ Technical specifications include comprehensive compatibility, robust build quali
                         seo_text = "Advanced SEO strategy optimized for Singapore market excellence and multicultural search patterns"
                         premium_label = "Singapore Premium Excellence"
                         premium_desc = "Superior quality engineered for Singapore standards, tropical climate durability, and multicultural family traditions"
+                    elif marketplace_code == 'uk':
+                        keywords_text = "premium quality British excellence, trusted brand heritage, customer satisfaction guaranteed Britain"
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            image_text = "ENGLISH: Distinguished British family in elegant Georgian home during Boxing Day celebration, father enjoying premium gaming headset while multi-generational family gathers around traditional fireplace, festive Christmas decorations visible, warm ambient lighting, RGB headset complementing sophisticated British interior, harmony between British heritage and modern technology, Big Ben visible through window, authentic British refinement and tradition captured (970x600px)"
+                        elif 'kitchen' in product_category:
+                            image_text = "ENGLISH: Elegant British kitchen during Sunday roast preparation, experienced cook demonstrating premium knife sharpener while family prepares traditional Yorkshire pudding and beef roast, classic Shaker-style kitchen with countryside view, fresh British ingredients and seasonal vegetables, multi-generational cooking traditions, Britain's rich culinary heritage and innovation visible, authentic British home cooking excellence (970x600px)"
+                        elif 'water' in product_category or 'bottle' in product_category:
+                            image_text = "ENGLISH: Active British family exercising in Hyde Park during crisp autumn morning, father hydrating from premium water bottle after morning jog and cycling, children playing with London Eye backdrop, golden British sunlight filtering through changing leaves, healthy British outdoor lifestyle focus, iconic landmarks including Tower Bridge visible, modern British urban living excellence (970x600px)"
+                        else:
+                            image_text = "ENGLISH: Sophisticated British family in refined home showcasing premium product, quality lifestyle excellence focus, natural lighting with British countryside ambiance, perfect blend of traditional British values with Britain's technological innovation and reliability, authentic British heritage and modern prosperity visible, distinguished British living standard (970x600px)"
+                        seo_text = "Advanced SEO strategy optimized for British market excellence and sophisticated search patterns"
+                        premium_label = "British Premium Excellence"
+                        premium_desc = "Superior quality engineered for British standards, weather durability, and traditional British family values"
                     elif marketplace_code == 'au':
                         keywords_text = "premium quality Australian excellence, trusted brand fair dinkum, customer satisfaction guaranteed Australia"
                         if 'audio' in product_category or 'headphone' in product_category:
@@ -4170,6 +4352,22 @@ Technical specifications include comprehensive compatibility, robust build quali
                         else:
                             features_image = "ENGLISH: Dynamic Singapore features showcase: innovative design meeting tropical climate demands, efficiency-focused urban lifestyle, multicultural family harmony, Lion City quality standards, modern technology integration with traditional Asian values, Singapore excellence visible (1500x1500px)"
                         features_seo = "Advanced feature SEO strategy optimized for Singapore market and tropical lifestyle"
+                    elif marketplace_code == 'uk':
+                        # British culture: emphasizes heritage, sophistication, weather resilience, refined quality
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_keywords = "premium British sound excellence, wireless commuter-friendly, all-day refined comfort, sophisticated audio experience"
+                        elif 'kitchen' in product_category:
+                            features_keywords = "professional Sunday-roast quality, easy sophisticated cleanup, modern British kitchen design, refined culinary innovation"
+                        else:
+                            features_keywords = "innovative British design, high-performance weather durability, user-friendly sophisticated technology, premium refined quality"
+                        # British image: heritage lifestyle, weather innovation, family sophistication
+                        if 'audio' in product_category or 'headphone' in product_category:
+                            features_image = "ENGLISH: Grid of 6 premium British feature images: 1) Close-up noise-canceling switch with London Thames reflection, 2) 50mm driver cross-section with sound waves over Stonehenge, 3) Battery indicator showing 30h with UK weather resistance, 4) RGB lights glowing against Scottish Highlands sunset, 5) Bluetooth connected to phone and gaming console in refined British home, 6) Distinguished British family wearing comfortably during gaming session with Buckingham Palace backdrop (1500x1500px)"
+                        elif 'kitchen' in product_category:
+                            features_image = "ENGLISH: Classic British kitchen features grid: 1) Diamond disc precision with weather durability coating, 2) Ceramic disc with humidity and rain protection, 3) Premium oak handle with British climate resistance, 4) 15/20 degree angle guides for roast and traditional cuisine, 5) British chef demonstrating professional technique, 6) Traditional country kitchen with countryside view showcasing efficiency (1500x1500px)"
+                        else:
+                            features_image = "ENGLISH: Dynamic British features showcase: innovative design meeting changeable weather demands, heritage-focused lifestyle, sophisticated family harmony, British quality standards, modern technology integration with traditional British values, refined British excellence visible (1500x1500px)"
+                        features_seo = "Advanced feature SEO strategy optimized for British market and sophisticated lifestyle"
                     elif marketplace_code == 'au':
                         # Australian culture: emphasizes mateship, outdoor lifestyle, extreme climate durability, fair dinkum quality
                         if 'audio' in product_category or 'headphone' in product_category:

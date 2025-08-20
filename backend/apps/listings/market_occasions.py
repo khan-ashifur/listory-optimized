@@ -563,6 +563,80 @@ class MarketOccasions:
                 'overseas_travel': 'Overseas Travel'  # International travel
             },
             
+            'uk': {  # United Kingdom
+                'boxing_day': 'Boxing Day',  # December 26 - Major shopping day
+                'christmas': 'Christmas',  # December 25 - Most important UK celebration
+                'bonfire_night': 'Bonfire Night',  # November 5 - Guy Fawkes Night
+                'remembrance_day': 'Remembrance Day',  # November 11 - Poppy Day
+                'burns_night': 'Burns Night',  # January 25 - Scottish celebration
+                'st_patricks_day': "St Patrick's Day",  # March 17 - Irish celebration
+                'easter': 'Easter',  # Easter Sunday and Monday
+                'bank_holiday': 'Bank Holiday',  # Various UK bank holidays
+                'mothers_day': 'Mothering Sunday',  # Fourth Sunday of Lent
+                'fathers_day': "Father's Day",  # Third Sunday of June
+                'valentines_day': "Valentine's Day",  # February 14
+                'halloween': 'Halloween',  # October 31
+                'new_year': "New Year's Day",  # January 1
+                'hogmanay': 'Hogmanay',  # Scottish New Year's Eve
+                'pancake_day': 'Pancake Day',  # Shrove Tuesday
+                'queens_birthday': "Queen's Official Birthday",  # June celebration
+                'st_georges_day': "St George's Day",  # April 23 - England's patron saint
+                'st_andrews_day': "St Andrew's Day",  # November 30 - Scotland's patron saint
+                'st_davids_day': "St David's Day",  # March 1 - Wales' patron saint
+                'black_friday': 'Black Friday',  # November shopping event
+                'cyber_monday': 'Cyber Monday',  # Online shopping Monday
+                'january_sales': 'January Sales',  # Post-Christmas sales
+                'summer_sales': 'Summer Sales',  # July-August sales
+                'back_to_school': 'Back to School',  # September term start
+                'freshers_week': "Freshers' Week",  # University start
+                'graduation': 'Graduation Season',  # University ceremonies
+                'wedding_season': 'Wedding Season',  # May-September
+                'henley_regatta': 'Henley Royal Regatta',  # July rowing event
+                'wimbledon': 'Wimbledon Championships',  # Tennis tournament
+                'royal_ascot': 'Royal Ascot',  # Horse racing event
+                'chelsea_flower': 'Chelsea Flower Show',  # May gardening event
+                'edinburgh_festival': 'Edinburgh Festival',  # August arts festival
+                'notting_hill': 'Notting Hill Carnival',  # August Caribbean festival
+                'glastonbury': 'Glastonbury Festival',  # Music festival
+                'six_nations': 'Six Nations Rugby',  # Rugby championship
+                'fa_cup_final': 'FA Cup Final',  # Football cup final
+                'premier_league': 'Premier League Season',  # Football season
+                'cricket_season': 'Cricket Season',  # Summer cricket
+                'the_ashes': 'The Ashes',  # Cricket series
+                'grand_national': 'Grand National',  # Horse racing
+                'boat_race': 'The Boat Race',  # Oxford vs Cambridge
+                'commonwealth_day': 'Commonwealth Day',  # March celebration
+                'harvest_festival': 'Harvest Festival',  # Autumn celebration
+                'diwali': 'Diwali',  # Festival of Lights
+                'eid': 'Eid Celebrations',  # Muslim celebrations
+                'chinese_new_year': 'Chinese New Year',  # Lunar New Year
+                'pride': 'Pride Month',  # June LGBTQ+ celebrations
+                'movember': 'Movember',  # November men's health
+                'comic_relief': 'Comic Relief',  # Red Nose Day
+                'children_in_need': 'Children in Need',  # BBC charity event
+                'poppy_appeal': 'Poppy Appeal',  # Remembrance charity
+                'jubilee': 'Jubilee Celebrations',  # Royal celebrations
+                'coronation': 'Coronation Events',  # Royal events
+                'royal_wedding': 'Royal Wedding',  # Royal family weddings
+                'birthday': 'Birthday',  # Personal birthdays
+                'anniversary': 'Anniversary',  # Wedding anniversaries
+                'retirement': 'Retirement',  # Career milestone
+                'housewarming': 'Housewarming',  # New home celebration
+                'baby_shower': 'Baby Shower',  # Expecting celebration
+                'christening': 'Christening',  # Baby baptism
+                'communion': 'First Communion',  # Religious milestone
+                'bar_mitzvah': 'Bar/Bat Mitzvah',  # Jewish celebration
+                'weekend': 'Weekend',  # Weekend activities
+                'pub_night': 'Pub Night',  # British pub culture
+                'sunday_roast': 'Sunday Roast',  # Traditional Sunday meal
+                'afternoon_tea': 'Afternoon Tea',  # British tea tradition
+                'garden_party': 'Garden Party',  # Summer entertaining
+                'bbq_season': 'BBQ Season',  # British summer BBQs
+                'staycation': 'Staycation',  # UK holidays
+                'half_term': 'Half Term Holiday',  # School break
+                'summer_holiday': 'Summer Holidays'  # School summer break
+            },
+            
             'au': {  # Australia
                 'australia_day': 'Australia Day',  # January 26 - Most important national celebration
                 'anzac_day': 'ANZAC Day',  # April 25 - Remembrance day
@@ -874,6 +948,33 @@ class MarketOccasions:
                 'back_to_school': ['back to school gift', 'school gift', 'student gift', 'education gift'],
                 'staycation': ['staycation gift', 'local travel', 'singapore holiday', 'weekend getaway'],
                 'durian_season': ['durian season gift', 'fruit lover gift', 'singapore durian', 'tropical fruit']
+            },
+            'uk': {
+                'christmas': ['christmas gift', 'xmas present', 'festive gift', 'christmas stocking', 'secret santa', 'holiday gift', 'christmas must-have'],
+                'boxing_day': ['boxing day deals', 'boxing day bargain', 'post-christmas sale', 'boxing day special', 'december sale'],
+                'bonfire_night': ['bonfire night gift', 'guy fawkes gift', 'fireworks night', '5th november gift', 'sparkler night present'],
+                'mothers_day': ['mothers day gift', 'mothering sunday present', 'mum gift', 'mother present', 'special mum gift'],
+                'fathers_day': ['fathers day gift', 'dad gift', 'father present', 'daddy gift', 'special dad present'],
+                'easter': ['easter gift', 'easter present', 'easter basket', 'easter sunday gift', 'spring gift'],
+                'valentines_day': ['valentine gift', 'romantic gift', 'love present', 'valentine special', 'sweetheart gift'],
+                'halloween': ['halloween gift', 'spooky present', 'trick or treat', 'halloween party', 'october 31st gift'],
+                'black_friday': ['black friday deal', 'black friday uk', 'november sale', 'black friday bargain', 'mega deals'],
+                'january_sales': ['january sale', 'new year sale', 'winter sale', 'january bargain', 'post-christmas clearance'],
+                'back_to_school': ['back to school', 'school supplies', 'september start', 'school term', 'student essentials'],
+                'wedding_season': ['wedding gift', 'bridal present', 'wedding registry', 'wedding favour', 'marriage gift'],
+                'wimbledon': ['wimbledon gift', 'tennis present', 'championship gift', 'strawberries and cream', 'tennis fan gift'],
+                'royal_ascot': ['ascot gift', 'racing present', 'royal ascot style', 'race day gift', 'ladies day present'],
+                'premier_league': ['football gift', 'premier league present', 'football fan gift', 'match day essential', 'footie gift'],
+                'six_nations': ['rugby gift', 'six nations present', 'rugby fan gift', 'match day gift', 'rugby essential'],
+                'afternoon_tea': ['afternoon tea gift', 'tea time present', 'british tea gift', 'tea lover present', 'teatime essential'],
+                'sunday_roast': ['sunday roast essential', 'sunday dinner gift', 'roast dinner present', 'sunday lunch gift'],
+                'pub_night': ['pub night essential', 'pub gift', 'friday night gift', 'pub quiz present', 'local pub gift'],
+                'garden_party': ['garden party gift', 'summer party present', 'outdoor entertaining', 'garden essential', 'party host gift'],
+                'birthday': ['birthday gift', 'birthday present', 'special day gift', 'birthday surprise', 'celebration gift'],
+                'anniversary': ['anniversary gift', 'anniversary present', 'special milestone', 'romantic anniversary', 'celebration present'],
+                'graduation': ['graduation gift', 'university present', 'graduation celebration', 'achievement gift', 'degree celebration'],
+                'baby_shower': ['baby shower gift', 'expecting present', 'new baby gift', 'baby celebration', 'mum-to-be gift'],
+                'retirement': ['retirement gift', 'retirement present', 'farewell gift', 'career milestone', 'retirement celebration']
             },
             'au': {
                 'australia_day': ['australia day gift', 'aussie day gift', 'australia day present', 'patriotic gift', 'national day gift', 'fair dinkum gift', 'true blue gift'],
