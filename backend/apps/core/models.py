@@ -12,6 +12,7 @@ class Product(models.Model):
     ]
     
     BRAND_TONES = [
+        ('', 'Select'),  # Allow empty choice
         ('professional', 'Professional'),
         ('casual', 'Casual'),
         ('luxury', 'Luxury'),
