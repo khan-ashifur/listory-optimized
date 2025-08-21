@@ -20,6 +20,9 @@ class ProductSerializer(serializers.ModelSerializer):
         write_only=True
     )
     
+    # Explicitly define marketplace field to fix choices issue
+    marketplace = serializers.ChoiceField(choices=Product._meta.get_field('marketplace').choices)
+    
     class Meta:
         model = Product
         fields = '__all__'
