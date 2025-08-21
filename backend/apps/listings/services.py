@@ -6494,59 +6494,171 @@ RETURN ONLY VALID JSON:
     def _generate_etsy_listing(self, product, listing):
         if not self.client:
             raise Exception("OpenAI API key not configured. Please set a valid OpenAI API key to generate Etsy listings.")
-            
-        prompt = f"""You are an Etsy SEO expert specializing in handmade/vintage items. Create a story-driven Etsy listing.
+        
+        # Get marketplace and occasion context
+        marketplace_info = self._get_marketplace_context(product.marketplace)
+        occasion_context = self._get_occasion_context(product.occasion) if product.occasion else ""
+        
+        # Smart default for Etsy brand tone if not specified
+        etsy_brand_tone = product.brand_tone if product.brand_tone else 'handmade'
+        
+        # Advanced Etsy prompt - superior to Helium 10, Jasper AI, CopyMonkey
+        prompt = f"""🎨 You are the WORLD'S BEST Etsy listing optimization expert, specializing in handmade, vintage, and creative items. Your listings consistently outperform Helium 10, Jasper AI, and CopyMonkey by focusing on emotional storytelling, authentic craftsmanship, and superior SEO optimization.
 
-PRODUCT INFO:
-- Name: {product.name}
+🌟 PRODUCT INFORMATION:
+- Product Name: {product.name}
 - Brand: {product.brand_name}
 - Description: {product.description}
-- Brand Tone: {product.brand_tone} 
+- Brand Tone: {etsy_brand_tone}
 - Features: {product.features}
-- Generate SEO Keywords automatically based on product details  
-- Generate Long-tail Keywords automatically based on product details
-- Generate FAQs automatically based on product details
-- Generate What is in the Box automatically based on product type
+- Price: ${product.price}
+- Categories: {product.categories}
+- Target Keywords: {product.target_keywords or 'Generate automatically based on product'}
+- Marketplace: {marketplace_info['country']} ({marketplace_info['language']})
+- Brand Persona: {product.brand_persona or 'Authentic artisan focused on quality and uniqueness'}
+- Target Audience: {product.target_audience or 'Creative individuals who value handmade quality and unique designs'}
+{occasion_context}
 
-ETSY REQUIREMENTS:
-- Title: 140 characters with 13 keywords naturally integrated
-- Description: Story-driven, personal, mentions process/materials
-- Tags: Exactly 13 tags, highly searched Etsy terms
-- Materials: What it is made from
-- Personal touch: Artist story, inspiration
+🎯 ETSY SUCCESS REQUIREMENTS (SUPERIOR TO COMPETITORS):
 
-Return ONLY valid JSON:
+📝 TITLE OPTIMIZATION (140 chars max, first 50-60 chars critical):
+- Front-load with highest-traffic keywords
+- Include brand tone keywords ({product.brand_tone})
+- Natural keyword integration (no keyword stuffing)
+- Appeal to gift-givers and collectors
+- Include occasion keywords if relevant
+
+🏷️ TAGS STRATEGY (Exactly 13 tags, 20 chars each):
+- Mix high-traffic broad terms with long-tail specifics
+- Include brand tone tags, occasion tags, style tags
+- Target gift-giving scenarios
+- Use buyer intent keywords (e.g., "gift for her", "wedding decor")
+- Include material and technique tags
+
+📖 DESCRIPTION STORYTELLING (First 160 chars for Google SEO):
+- Hook: Emotional connection in first line
+- Story: Creation process and inspiration
+- Benefits: Why this item is special
+- Materials: Detailed composition
+- Care: Maintenance instructions
+- Gift appeal: Why it makes perfect gifts
+- Processing time and shipping info
+
+🎨 BRAND TONE INTEGRATION:
+{self._get_etsy_brand_tone_guidance(etsy_brand_tone)}
+
+{marketplace_info['cultural_context']}
+
+📸 VISUAL OPTIMIZATION REQUIREMENTS:
+- Include specific photo suggestions in description (angles, lighting, styling)
+- Mention color variations, textures, and visual details
+- Suggest lifestyle context shots and size references
+- Describe how item looks in real-world settings
+
+🎨 PERSONALIZATION EXCELLENCE:
+- Clearly state ALL customization options available
+- Detail the personalization process and timeline
+- Provide specific examples of customizations
+- Emphasize made-to-order quality and uniqueness
+
+💰 VALUE POSITIONING STRATEGY:
+- Justify pricing with quality materials and craftsmanship
+- Position as investment/heirloom piece vs mass-produced
+- Emphasize gift value and emotional significance
+- Compare artisan quality to commercial alternatives
+
+🏆 COMPETITIVE SUPERIORITY REQUIREMENTS:
+- Explicitly contrast with mass-produced alternatives
+- Highlight artisan credentials and years of experience
+- Emphasize sustainable/ethical practices and eco-friendliness
+- Showcase unique design elements and limited availability
+
+Return ONLY valid JSON (no markdown formatting, no extra text) with comprehensive Etsy optimization:
 {{
-  "title": "Handcrafted [Product] | Unique [Style] | Perfect for [Use Case] | [Material] [Item Type]",
-  "description": "**The Story Behind This Piece**\n\nWhen I first dreamed up this [product], I wanted to create something truly special...\n\n**What Makes This Special:**\n• Handcrafted with love and attention to detail\n• Made from premium [materials]\n• Perfect for [specific use cases]\n\n**Care Instructions:**\n[How to maintain the product]\n\n**Shipping & Policies:**\n[Shipping timeline and shop policies]",
-  "tags": ["handmade jewelry", "boho necklace", "gift for her", "artisan made", "unique design", "natural stone", "bohemian style", "statement piece", "handcrafted", "one of a kind", "spiritual jewelry", "healing crystal", "custom jewelry"],
-  "materials": ["Sterling silver", "Natural gemstones", "Organic cotton cord"],
-  "sections": {{
-    "story": "Personal inspiration and creation process",
-    "features": "Unique qualities and benefits", 
-    "care": "How to maintain and store",
-    "shipping": "Processing time and shipping details"
-  }},
-  "seo_focus": "Long-tail keywords that Etsy buyers actually search for"
+  "etsy_title": "SEO-optimized title (max 140 chars, front-loaded keywords)",
+  "etsy_description": "Compelling description with storytelling, materials, care instructions, photo suggestions, size details (first 160 chars optimized for Google)",
+  "etsy_tags": ["tag1", "tag2", "tag3", "tag4", "tag5", "tag6", "tag7", "tag8", "tag9", "tag10", "tag11", "tag12", "tag13"],
+  "etsy_materials": "Detailed materials list (wood, metal, fabric, etc.)",
+  "etsy_processing_time": "1-3 business days" or "1-2 weeks" or "Made to order",
+  "etsy_personalization": "Detailed personalization options with examples and process explanation (required for all items)",
+  "etsy_who_made": "i_did" or "collective" or "someone_else",
+  "etsy_when_made": "made_to_order" or appropriate time period,
+  "etsy_category_path": "Appropriate Etsy category hierarchy",
+  "etsy_style_tags": "Style-specific keywords for better discovery",
+  "etsy_seasonal_keywords": "Season/occasion specific keywords",
+  "etsy_target_demographics": "Primary buyer personas and demographics",
+  "etsy_gift_suggestions": "Gift occasions this item is perfect for",
+  "etsy_care_instructions": "How to care for and maintain this item",
+  "etsy_story_behind": "Detailed personal story, artisan experience, and creative inspiration (required)",
+  "etsy_sustainability_info": "Comprehensive eco-friendly practices, ethical sourcing, and environmental benefits (required)",
+  "etsy_visual_suggestions": "Specific photo styling suggestions, angles, lighting, and presentation tips",
+  "etsy_value_proposition": "Quality justification, investment positioning, and comparison to mass-produced alternatives",
+  "quality_optimization": {{
+    "emotional_appeal": "How this creates emotional connection",
+    "uniqueness_factor": "What makes this different from mass-produced items",
+    "gift_positioning": "Why this makes an exceptional gift",
+    "search_optimization": "Primary SEO strategy for Etsy search"
+  }}
 }}"""
 
+        # Generate with enhanced parameters for superior quality
         response = self.client.chat.completions.create(
             model="gpt-5-chat-latest",
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.8,
-            max_completion_tokens=1500
+            temperature=0.7,  # Balanced creativity and consistency
+            max_completion_tokens=2500  # More space for comprehensive content
         )
         
         try:
-            result = json.loads(response.choices[0].message.content)
-            listing.title = result.get('title', '')[:500]
-            listing.long_description = result.get('description', '')
-            listing.etsy_tags = ', '.join(result.get('tags', [])[:13])
-            listing.etsy_materials = ', '.join(result.get('materials', []))
-            listing.keywords = ', '.join(result.get('tags', []))
-        except json.JSONDecodeError:
-            listing.title = f"Handmade {product.name} by {product.brand_name}"
-            listing.long_description = "AI generation failed - please regenerate"
+            # Extract JSON from potential markdown code blocks
+            content = response.choices[0].message.content.strip()
+            
+            # Remove markdown code block formatting if present
+            if content.startswith('```json'):
+                content = content[7:]  # Remove ```json
+            if content.startswith('```'):
+                content = content[3:]   # Remove ```
+            if content.endswith('```'):
+                content = content[:-3]  # Remove trailing ```
+            
+            content = content.strip()
+            result = json.loads(content)
+            
+            # Populate all Etsy-specific fields with comprehensive data
+            listing.etsy_title = result.get('etsy_title', '')[:140]
+            listing.etsy_description = result.get('etsy_description', '')
+            listing.etsy_tags = json.dumps(result.get('etsy_tags', [])[:13])  # Store as JSON array
+            listing.etsy_materials = result.get('etsy_materials', '')
+            listing.etsy_processing_time = result.get('etsy_processing_time', '1-3 business days')
+            listing.etsy_personalization = result.get('etsy_personalization', '')
+            listing.etsy_who_made = result.get('etsy_who_made', 'i_did')
+            listing.etsy_when_made = result.get('etsy_when_made', 'made_to_order')
+            listing.etsy_category_path = result.get('etsy_category_path', '')
+            listing.etsy_style_tags = result.get('etsy_style_tags', '')
+            listing.etsy_seasonal_keywords = result.get('etsy_seasonal_keywords', '')
+            listing.etsy_target_demographics = result.get('etsy_target_demographics', '')
+            listing.etsy_gift_suggestions = result.get('etsy_gift_suggestions', '')
+            listing.etsy_care_instructions = result.get('etsy_care_instructions', '')
+            listing.etsy_story_behind = result.get('etsy_story_behind', '')
+            listing.etsy_sustainability_info = result.get('etsy_sustainability_info', '')
+            listing.etsy_visual_suggestions = result.get('etsy_visual_suggestions', '')
+            listing.etsy_value_proposition = result.get('etsy_value_proposition', '')
+            
+            # Set common fields for backward compatibility
+            listing.title = listing.etsy_title
+            listing.long_description = listing.etsy_description
+            listing.keywords = ', '.join(result.get('etsy_tags', []))
+            
+            # Calculate quality scores
+            self._calculate_etsy_quality_scores(listing, result.get('quality_optimization', {}))
+            
+        except json.JSONDecodeError as e:
+            print(f"Etsy JSON parsing error: {e}")
+            # Enhanced fallback with brand tone consideration
+            listing.etsy_title = f"{self._get_brand_tone_prefix(product.brand_tone)} {product.name} | {product.brand_name}"[:140]
+            listing.etsy_description = f"Beautiful {product.brand_tone} {product.name} crafted with care. {product.description}"
+            listing.title = listing.etsy_title
+            listing.long_description = listing.etsy_description
 
     def _generate_tiktok_listing(self, product, listing):
         if not self.client:
@@ -7591,3 +7703,194 @@ Return ONLY valid JSON:
             if key in context:
                 return outcome
         return "superior performance and lasting satisfaction"
+
+    def _get_etsy_brand_tone_guidance(self, brand_tone):
+        """Get specific guidance for Etsy brand tone optimization."""
+        guidance = {
+            'handmade': """
+🖐️ HANDMADE TONE:
+- Emphasize personal craftsmanship and human touch
+- Use words like "lovingly crafted", "hand-finished", "artisan-made"
+- Highlight the time and care invested in each piece
+- Mention unique variations that show human craftsmanship""",
+            'artistic': """
+🎨 ARTISTIC TONE:
+- Focus on creative inspiration and artistic vision
+- Use expressive language about design and aesthetics
+- Mention artistic techniques and creative process
+- Appeal to buyers who appreciate art and creativity""",
+            'vintage': """
+🕰️ VINTAGE TONE:
+- Emphasize timeless quality and classic appeal
+- Use nostalgic language and historical references
+- Highlight enduring style and quality construction
+- Appeal to collectors and vintage enthusiasts""",
+            'bohemian': """
+🌸 BOHEMIAN TONE:
+- Use free-spirited and earthy language
+- Emphasize natural materials and organic shapes
+- Mention spiritual or wellness benefits
+- Appeal to alternative lifestyle and nature lovers""",
+            'minimalist': """
+⚪ MINIMALIST TONE:
+- Focus on clean lines and functional beauty
+- Use simple, clear language without excess
+- Emphasize quality over quantity
+- Appeal to modern, design-conscious buyers""",
+            'luxury_craft': """
+💎 LUXURY CRAFT TONE:
+- Emphasize premium materials and superior craftsmanship
+- Use sophisticated language about quality and exclusivity
+- Mention attention to detail and refinement
+- Appeal to discerning buyers seeking the finest""",
+            'eco_friendly': """
+🌱 ECO-FRIENDLY TONE:
+- Highlight sustainable materials and practices
+- Mention environmental benefits and responsibility
+- Use nature-inspired language
+- Appeal to environmentally conscious buyers""",
+            'whimsical': """
+🦄 WHIMSICAL TONE:
+- Use playful and imaginative language
+- Emphasize fun and magical qualities
+- Mention joy and wonder the item brings
+- Appeal to those seeking unique and delightful pieces""",
+            'rustic': """
+🏡 RUSTIC TONE:
+- Emphasize natural textures and countryside charm
+- Use warm, homey language
+- Mention traditional techniques and materials
+- Appeal to those seeking cozy, authentic pieces""",
+            'modern_craft': """
+🔸 MODERN CRAFT TONE:
+- Combine contemporary design with handmade quality
+- Use clean, professional language with personal touches
+- Emphasize innovation in traditional crafting
+- Appeal to modern design enthusiasts"""
+        }
+        return guidance.get(brand_tone, guidance['handmade'])
+
+    def _get_marketplace_context(self, marketplace):
+        """Get marketplace-specific context for Etsy listings."""
+        # Handle simplified Etsy marketplace (just 'etsy')
+        if not marketplace or marketplace == 'etsy':
+            return {
+                'country': 'Global',
+                'language': 'English',
+                'cultural_context': '🌍 Optimize for global Etsy marketplace with universal appeal and international gift-giving occasions.'
+            }
+        
+        # Legacy support for country-specific Etsy codes (if any remain)
+        if not marketplace.startswith('etsy_'):
+            return {
+                'country': 'Global',
+                'language': 'English',
+                'cultural_context': '🌍 Optimize for global Etsy marketplace with universal appeal and international gift-giving occasions.'
+            }
+        
+        marketplace_map = {
+            'etsy_us': {'country': 'United States', 'language': 'English', 'culture': 'American'},
+            'etsy_ca': {'country': 'Canada', 'language': 'English', 'culture': 'Canadian'},
+            'etsy_uk': {'country': 'United Kingdom', 'language': 'English', 'culture': 'British'},
+            'etsy_au': {'country': 'Australia', 'language': 'English', 'culture': 'Australian'},
+            'etsy_de': {'country': 'Germany', 'language': 'German', 'culture': 'German'},
+            'etsy_fr': {'country': 'France', 'language': 'French', 'culture': 'French'},
+            'etsy_it': {'country': 'Italy', 'language': 'Italian', 'culture': 'Italian'},
+            'etsy_es': {'country': 'Spain', 'language': 'Spanish', 'culture': 'Spanish'},
+            'etsy_nl': {'country': 'Netherlands', 'language': 'Dutch', 'culture': 'Dutch'},
+            'etsy_mx': {'country': 'Mexico', 'language': 'Spanish', 'culture': 'Mexican'},
+            'etsy_br': {'country': 'Brazil', 'language': 'Portuguese', 'culture': 'Brazilian'},
+            'etsy_jp': {'country': 'Japan', 'language': 'Japanese', 'culture': 'Japanese'},
+        }
+        
+        info = marketplace_map.get(marketplace, marketplace_map['etsy_us'])
+        info['cultural_context'] = f"🌍 Optimize for {info['country']} Etsy marketplace with {info['culture']} cultural references and local gift-giving occasions."
+        
+        return info
+
+    def _get_occasion_context(self, occasion):
+        """Get occasion-specific context for Etsy listings."""
+        occasion_guidance = {
+            'wedding': """
+💍 WEDDING OCCASION:
+- Emphasize romantic and elegant qualities
+- Mention bridal party gifts, wedding decor, or keepsakes
+- Use romantic language and wedding-specific keywords
+- Target gift-givers shopping for wedding celebrations""",
+            'baby_shower': """
+🍼 BABY SHOWER OCCASION:
+- Focus on nursery decor and baby-safe materials
+- Mention personalization for baby names
+- Use gentle, nurturing language
+- Target expecting parents and gift-givers""",
+            'valentines_day': """
+💝 VALENTINE'S DAY OCCASION:
+- Emphasize romantic and love-themed aspects
+- Mention couple gifts and romantic gestures
+- Use passionate and loving language
+- Target romantic gift-givers""",
+            'christmas': """
+🎄 CHRISTMAS OCCASION:
+- Highlight holiday spirit and festive qualities
+- Mention gift-giving and holiday decor
+- Use warm, celebratory language
+- Target Christmas shoppers and decorators""",
+            'mothers_day': """
+🌸 MOTHER'S DAY OCCASION:
+- Emphasize appreciation and love for mothers
+- Mention family connections and maternal themes
+- Use heartfelt, appreciative language
+- Target children buying for mothers""",
+            'graduation': """
+🎓 GRADUATION OCCASION:
+- Focus on achievement and milestone celebration
+- Mention career and future success
+- Use inspiring and congratulatory language
+- Target gift-givers celebrating graduates"""
+        }
+        
+        return occasion_guidance.get(occasion, "")
+
+    def _calculate_etsy_quality_scores(self, listing, quality_optimization):
+        """Calculate comprehensive quality scores for Etsy listings."""
+        # Emotion score based on storytelling and personal connection
+        emotion_indicators = ['story', 'inspiration', 'handmade', 'crafted', 'love', 'care', 'personal']
+        emotion_count = sum(1 for indicator in emotion_indicators if indicator.lower() in listing.etsy_description.lower())
+        listing.emotion_score = min(10.0, emotion_count * 1.5)
+        
+        # Conversion score based on SEO optimization and keywords
+        title_length = len(listing.etsy_title)
+        tags_count = len(json.loads(listing.etsy_tags)) if listing.etsy_tags else 0
+        conversion_base = 7.0
+        if 40 <= title_length <= 140: conversion_base += 1.0
+        if tags_count == 13: conversion_base += 1.0
+        if listing.etsy_materials: conversion_base += 0.5
+        if listing.etsy_processing_time: conversion_base += 0.5
+        listing.conversion_score = min(10.0, conversion_base)
+        
+        # Trust score based on detailed information and professionalism
+        trust_base = 6.0
+        if listing.etsy_care_instructions: trust_base += 1.0
+        if listing.etsy_materials: trust_base += 1.0
+        if listing.etsy_processing_time: trust_base += 1.0
+        if listing.etsy_story_behind: trust_base += 1.0
+        listing.trust_score = min(10.0, trust_base)
+        
+        # Overall quality score
+        listing.quality_score = (listing.emotion_score + listing.conversion_score + listing.trust_score) / 3.0
+
+    def _get_brand_tone_prefix(self, brand_tone):
+        """Get appropriate prefix for brand tone."""
+        prefixes = {
+            'handmade': 'Handcrafted',
+            'artistic': 'Artistic',
+            'vintage': 'Vintage',
+            'bohemian': 'Bohemian',
+            'minimalist': 'Minimalist',
+            'luxury_craft': 'Luxury',
+            'eco_friendly': 'Eco-Friendly',
+            'whimsical': 'Whimsical',
+            'rustic': 'Rustic',
+            'modern_craft': 'Modern'
+        }
+        return prefixes.get(brand_tone, 'Beautiful')

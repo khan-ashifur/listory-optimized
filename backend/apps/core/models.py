@@ -19,6 +19,17 @@ class Product(models.Model):
         ('playful', 'Playful'),
         ('minimal', 'Minimal'),
         ('bold', 'Bold'),
+        # Etsy-specific brand tones
+        ('handmade', 'Handmade'),
+        ('artistic', 'Artistic'),
+        ('vintage', 'Vintage'),
+        ('bohemian', 'Bohemian'),
+        ('minimalist', 'Minimalist'),
+        ('luxury_craft', 'Luxury Craft'),
+        ('eco_friendly', 'Eco-Friendly'),
+        ('whimsical', 'Whimsical'),
+        ('rustic', 'Rustic'),
+        ('modern_craft', 'Modern Craft'),
     ]
     
     AMAZON_MARKETPLACES = [
@@ -51,7 +62,11 @@ class Product(models.Model):
         ('walmart_mexico', 'Walmart Mexico'),
     ]
     
-    ALL_MARKETPLACES = AMAZON_MARKETPLACES + WALMART_MARKETPLACES
+    ETSY_MARKETPLACES = [
+        ('etsy', 'Etsy'),
+    ]
+    
+    ALL_MARKETPLACES = AMAZON_MARKETPLACES + WALMART_MARKETPLACES + ETSY_MARKETPLACES
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)

@@ -15,7 +15,7 @@ const ProductForm = () => {
     name: '',
     description: '',
     brand_name: '',
-    marketplace: selectedPlatform === 'walmart' ? 'walmart_usa' : 'us',
+    marketplace: selectedPlatform === 'walmart' ? 'walmart_usa' : selectedPlatform === 'etsy' ? 'etsy' : 'us',
     price: '',
     categories: '',
     features: '',
@@ -36,7 +36,18 @@ const ProductForm = () => {
     { value: 'casual', label: 'Casual' },
     { value: 'luxury', label: 'Luxury' },
     { value: 'trendy', label: 'Trendy' },
-    ...(selectedPlatform !== 'walmart' ? [
+    ...(selectedPlatform === 'etsy' ? [
+      { value: 'handmade', label: 'Handmade', description: 'Emphasizes craftsmanship and personal touch' },
+      { value: 'artistic', label: 'Artistic', description: 'Creative and expressive tone' },
+      { value: 'vintage', label: 'Vintage', description: 'Classic and timeless appeal' },
+      { value: 'bohemian', label: 'Bohemian', description: 'Free-spirited and eclectic style' },
+      { value: 'minimalist', label: 'Minimalist', description: 'Clean, simple, and refined' },
+      { value: 'luxury_craft', label: 'Luxury Craft', description: 'Premium handmade quality' },
+      { value: 'eco_friendly', label: 'Eco-Friendly', description: 'Sustainable and environmentally conscious' },
+      { value: 'whimsical', label: 'Whimsical', description: 'Playful and imaginative' },
+      { value: 'rustic', label: 'Rustic', description: 'Natural and countryside charm' },
+      { value: 'modern_craft', label: 'Modern Craft', description: 'Contemporary meets handmade' }
+    ] : selectedPlatform !== 'walmart' ? [
       { value: 'playful', label: 'Playful' },
       { value: 'minimal', label: 'Minimal' },
       { value: 'bold', label: 'Bold' }
@@ -60,7 +71,19 @@ const ProductForm = () => {
       { value: 'back_to_school', label: '📚 Back to School' }
     ];
 
-    if (selectedPlatform === 'walmart') {
+    if (selectedPlatform === 'etsy') {
+      return [
+        ...baseOccasions,
+        { value: 'wedding', label: '💍 Wedding' },
+        { value: 'baby_shower', label: '🍼 Baby Shower' },
+        { value: 'valentines_day', label: '💝 Valentine\'s Day' },
+        { value: 'housewarming', label: '🏠 Housewarming' },
+        { value: 'bridal_shower', label: '👰 Bridal Shower' },
+        { value: 'engagement', label: '💎 Engagement' },
+        { value: 'thanksgiving', label: '🦃 Thanksgiving' },
+        { value: 'custom', label: '✏️ Other (Custom)' }
+      ];
+    } else if (selectedPlatform === 'walmart') {
       return [
         ...baseOccasions,
         { value: 'thanksgiving', label: '🦃 Thanksgiving' },
@@ -114,6 +137,10 @@ const ProductForm = () => {
     { value: 'walmart_mexico', label: 'Mexico', flag: '🇲🇽', language: 'es-mx', domain: 'walmart.com.mx' }
   ];
 
+  const etsyMarketplaces = [
+    { value: 'etsy', label: 'Global Marketplace', flag: '🌍', language: 'en', domain: 'etsy.com' }
+  ];
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -146,13 +173,21 @@ const ProductForm = () => {
   const getSelectedMarketplace = () => {
     if (selectedPlatform === 'walmart') {
       return walmartMarketplaces.find(m => m.value === formData.marketplace);
+    } else if (selectedPlatform === 'etsy') {
+      return etsyMarketplaces.find(m => m.value === formData.marketplace);
     } else {
       return amazonMarketplaces.find(m => m.value === formData.marketplace);
     }
   };
 
   const getCurrentMarketplaces = () => {
-    return selectedPlatform === 'walmart' ? walmartMarketplaces : amazonMarketplaces;
+    if (selectedPlatform === 'walmart') {
+      return walmartMarketplaces;
+    } else if (selectedPlatform === 'etsy') {
+      return etsyMarketplaces;
+    } else {
+      return amazonMarketplaces;
+    }
   };
 
 
@@ -297,11 +332,18 @@ const ProductForm = () => {
           className="bg-white rounded-lg shadow-sm border border-gray-200"
         >
           <form onSubmit={handleSubmit} className="p-8 space-y-6">
-            {/* Marketplace Selection - For both Amazon and Walmart */}
-            <div className={`${selectedPlatform === 'amazon' ? 'bg-blue-50 border-blue-200' : 'bg-green-50 border-green-200'} border rounded-lg p-4 mb-6`}>
+            {/* Marketplace Selection - For Amazon, Walmart, and Etsy */}
+            <div className={`${
+              selectedPlatform === 'amazon' ? 'bg-blue-50 border-blue-200' : 
+              selectedPlatform === 'walmart' ? 'bg-green-50 border-green-200' : 
+              selectedPlatform === 'etsy' ? 'bg-orange-50 border-orange-200' : 
+              'bg-gray-50 border-gray-200'
+            } border rounded-lg p-4 mb-6`}>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 <Globe className="inline h-4 w-4 mr-1" />
-                {selectedPlatform === 'amazon' ? 'Amazon' : 'Walmart'} Marketplace *
+                {selectedPlatform === 'amazon' ? 'Amazon' : 
+                 selectedPlatform === 'walmart' ? 'Walmart' : 
+                 selectedPlatform === 'etsy' ? 'Etsy' : 'Platform'} Marketplace *
               </label>
               <select
                 name="marketplace"
@@ -317,7 +359,12 @@ const ProductForm = () => {
                 ))}
               </select>
               {formData.marketplace && (
-                <p className={`text-sm mt-2 ${selectedPlatform === 'amazon' ? 'text-blue-600' : 'text-green-600'}`}>
+                <p className={`text-sm mt-2 ${
+                  selectedPlatform === 'amazon' ? 'text-blue-600' : 
+                  selectedPlatform === 'walmart' ? 'text-green-600' : 
+                  selectedPlatform === 'etsy' ? 'text-orange-600' : 
+                  'text-gray-600'
+                }`}>
                   <Info className="inline h-3 w-3 mr-1" />
                   Listing will be generated in {getSelectedMarketplace()?.language === 'en' || getSelectedMarketplace()?.language === 'en-us' || getSelectedMarketplace()?.language === 'en-ca' ? 'English' : 
                     getSelectedMarketplace()?.language === 'es-mx' ? 'Spanish (Mexico)' :
@@ -325,6 +372,11 @@ const ProductForm = () => {
                   {selectedPlatform === 'walmart' && (
                     <span className="block mt-1 text-xs">
                       💡 Brand tone helps optimize Walmart content quality
+                    </span>
+                  )}
+                  {selectedPlatform === 'etsy' && (
+                    <span className="block mt-1 text-xs">
+                      🎨 Optimized for Etsy's handmade and artistic marketplace
                     </span>
                   )}
                 </p>
@@ -461,6 +513,7 @@ const ProductForm = () => {
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Brand Tone
                         {selectedPlatform === 'walmart' && <span className="text-xs text-green-600 block">Recommended for better Walmart optimization</span>}
+                        {selectedPlatform === 'etsy' && <span className="text-xs text-orange-600 block">Optional - defaults to 'handmade' if not selected</span>}
                       </label>
                       <select
                         name="brand_tone"
@@ -477,6 +530,12 @@ const ProductForm = () => {
                       {selectedPlatform === 'walmart' && formData.brand_tone && (
                         <p className="text-xs text-green-600 mt-1">
                           ✓ Walmart content will be optimized for {brandTones.find(t => t.value === formData.brand_tone)?.label.toLowerCase()} tone
+                        </p>
+                      )}
+                      {selectedPlatform === 'etsy' && formData.brand_tone && (
+                        <p className="text-xs text-orange-600 mt-1">
+                          ✓ {brandTones.find(t => t.value === formData.brand_tone)?.description || 
+                             `Etsy listing optimized for ${brandTones.find(t => t.value === formData.brand_tone)?.label.toLowerCase()} tone`}
                         </p>
                       )}
                     </div>
