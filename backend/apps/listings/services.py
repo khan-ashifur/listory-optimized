@@ -6500,7 +6500,43 @@ RETURN ONLY VALID JSON:
         occasion_context = self._get_occasion_context(product.occasion) if product.occasion else ""
         
         # Smart default for Etsy brand tone if not specified
-        etsy_brand_tone = product.brand_tone if product.brand_tone else 'handmade'
+        def get_smart_etsy_tone(product):
+            if product.brand_tone:
+                return product.brand_tone
+                
+            # Analyze product to determine best tone
+            name_lower = product.name.lower()
+            desc_lower = product.description.lower()
+            categories_lower = product.categories.lower() if product.categories else ''
+            
+            # Check for vintage/antique keywords
+            if any(word in name_lower + desc_lower for word in ['vintage', 'antique', 'retro', 'classic', '1950', '1960', '1970']):
+                return 'vintage'
+            
+            # Check for artistic keywords
+            if any(word in name_lower + desc_lower for word in ['art', 'artistic', 'painting', 'sculpture', 'canvas', 'creative']):
+                return 'artistic'
+            
+            # Check for luxury keywords
+            if any(word in name_lower + desc_lower for word in ['luxury', 'premium', 'high-end', 'exclusive', 'gold', 'silver']):
+                return 'luxury_craft'
+            
+            # Check for eco-friendly keywords
+            if any(word in name_lower + desc_lower for word in ['eco', 'organic', 'sustainable', 'bamboo', 'recycled', 'natural']):
+                return 'eco_friendly'
+            
+            # Check for bohemian keywords
+            if any(word in name_lower + desc_lower for word in ['boho', 'bohemian', 'macrame', 'tribal', 'ethnic']):
+                return 'bohemian'
+            
+            # Check for minimalist keywords
+            if any(word in name_lower + desc_lower for word in ['minimal', 'simple', 'clean', 'modern', 'sleek']):
+                return 'minimalist'
+            
+            # Default to handmade for general craft items
+            return 'handmade'
+        
+        etsy_brand_tone = get_smart_etsy_tone(product)
         
         # Advanced Etsy prompt - superior to Helium 10, Jasper AI, CopyMonkey
         prompt = f"""🎨 You are the WORLD'S BEST Etsy listing optimization expert, specializing in handmade, vintage, and creative items. Your listings consistently outperform Helium 10, Jasper AI, and CopyMonkey by focusing on emotional storytelling, authentic craftsmanship, and superior SEO optimization.

@@ -20,7 +20,7 @@ const ProductForm = () => {
     categories: '',
     features: '',
     // Optional fields
-    brand_tone: 'professional',
+    brand_tone: '',
     brand_persona: '',
     target_audience: '',
     target_keywords: '',
@@ -513,7 +513,7 @@ const ProductForm = () => {
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Brand Tone
                         {selectedPlatform === 'walmart' && <span className="text-xs text-green-600 block">Recommended for better Walmart optimization</span>}
-                        {selectedPlatform === 'etsy' && <span className="text-xs text-orange-600 block">Optional - defaults to 'handmade' if not selected</span>}
+                        {selectedPlatform === 'etsy' && <span className="text-xs text-orange-600 block">Optional - system will choose optimal tone if not selected</span>}
                       </label>
                       <select
                         name="brand_tone"
@@ -521,6 +521,7 @@ const ProductForm = () => {
                         onChange={handleInputChange}
                         className="form-input"
                       >
+                        <option value="">Select</option>
                         {brandTones.map(tone => (
                           <option key={tone.value} value={tone.value}>
                             {tone.label}
