@@ -11,8 +11,8 @@ class Product(models.Model):
         ('shopify', 'Shopify'),
     ]
     
-    BRAND_TONES = [
-        ('', 'Select'),  # Allow empty choice
+    # Universal brand tones for Amazon/Walmart
+    UNIVERSAL_BRAND_TONES = [
         ('professional', 'Professional'),
         ('casual', 'Casual'),
         ('luxury', 'Luxury'),
@@ -20,18 +20,27 @@ class Product(models.Model):
         ('playful', 'Playful'),
         ('minimal', 'Minimal'),
         ('bold', 'Bold'),
-        # Etsy-specific brand tones
-        ('handmade', 'Handmade'),
-        ('artistic', 'Artistic'),
-        ('vintage', 'Vintage'),
-        ('bohemian', 'Bohemian'),
-        ('minimalist', 'Minimalist'),
-        ('luxury_craft', 'Luxury Craft'),
-        ('eco_friendly', 'Eco-Friendly'),
-        ('whimsical', 'Whimsical'),
-        ('rustic', 'Rustic'),
-        ('modern_craft', 'Modern Craft'),
     ]
+    
+    # Etsy-specific brand tones based on 2025 research
+    ETSY_BRAND_TONES = [
+        ('handmade_artisan', 'Handmade Artisan'),
+        ('vintage_charm', 'Vintage Charm'),
+        ('bohemian_free', 'Bohemian Free-Spirit'),
+        ('cottagecore_cozy', 'Cottagecore Cozy'),
+        ('modern_minimalist', 'Modern Minimalist'),
+        ('whimsical_playful', 'Whimsical & Playful'),
+        ('rustic_farmhouse', 'Rustic Farmhouse'),
+        ('eco_conscious', 'Eco-Conscious'),
+        ('luxury_handcrafted', 'Luxury Handcrafted'),
+        ('artistic_creative', 'Artistic & Creative'),
+        ('messy_coquette', 'Messy Coquette'),  # 2025 trend
+        ('chateaucore', 'Châteaucore'),        # 2025 trend
+        ('galactic_metallic', 'Galactic Metallic'), # 2025 trend
+    ]
+    
+    # Combined brand tones - dynamically created based on platform
+    BRAND_TONES = [('', 'Select')] + UNIVERSAL_BRAND_TONES + ETSY_BRAND_TONES
     
     AMAZON_MARKETPLACES = [
         ('us', 'United States'),
@@ -68,12 +77,45 @@ class Product(models.Model):
     ]
     
     ALL_MARKETPLACES = AMAZON_MARKETPLACES + WALMART_MARKETPLACES + ETSY_MARKETPLACES
+    
+    # Etsy-specific occasions based on 2025 trends and research
+    ETSY_OCCASIONS = [
+        ('', 'Everyday/No Specific Occasion'),
+        # Major holidays
+        ('christmas_2025', 'Christmas 2025'),
+        ('valentine_day', "Valentine's Day"),
+        ('mothers_day', "Mother's Day"),
+        ('fathers_day', "Father's Day"),
+        ('easter', 'Easter'),
+        ('halloween', 'Halloween'),
+        ('thanksgiving', 'Thanksgiving'),
+        ('new_year', 'New Year'),
+        # Life events
+        ('wedding', 'Wedding'),
+        ('anniversary', 'Anniversary'),
+        ('birthday', 'Birthday'),
+        ('baby_shower', 'Baby Shower'),
+        ('graduation', 'Graduation'),
+        ('housewarming', 'Housewarming'),
+        # Seasonal trends based on research
+        ('spring_refresh', 'Spring Home Refresh'),
+        ('summer_vibes', 'Summer Vibes'),
+        ('fall_cozy', 'Fall Cozy Season'),
+        ('winter_comfort', 'Winter Comfort'),
+        # 2025 specific trends
+        ('galactic_theme', 'Galactic/Space Theme'),
+        ('cottagecore_trend', 'Cottagecore Aesthetic'),
+        ('vintage_revival', 'Vintage Revival'),
+        ('sustainability', 'Eco-Friendly/Sustainable'),
+        ('self_care', 'Self-Care & Wellness'),
+        ('work_from_home', 'Work From Home Setup'),
+    ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField()
     brand_name = models.CharField(max_length=100)
-    brand_tone = models.CharField(max_length=20, choices=BRAND_TONES, blank=True, default="")
+    brand_tone = models.CharField(max_length=30, choices=BRAND_TONES, blank=True, default="")
     target_platform = models.CharField(max_length=20, choices=PLATFORMS)
     
     # Platform-specific fields

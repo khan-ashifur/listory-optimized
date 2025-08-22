@@ -1,0 +1,96 @@
+[
+  {
+    "product": "Hand-Painted Ceramic Coffee Mug",
+    "brand_tone": "handmade_artisan",
+    "scores": {
+      "title": 8,
+      "tags": 8,
+      "description": 10,
+      "technical": 8,
+      "seo": 7
+    },
+    "total": 41,
+    "percentage": 82.0,
+    "quality": "\u2705 EXCELLENT - Professional Quality",
+    "issues": [
+      "Need more keywords (has 9)"
+    ]
+  },
+  {
+    "product": "Vintage Style Pearl Hair Pins",
+    "brand_tone": "vintage_charm",
+    "scores": {
+      "title": 8,
+      "tags": 6,
+      "description": 8,
+      "technical": 8,
+      "seo": 10
+    },
+    "total": 40,
+    "percentage": 80.0,
+    "quality": "\u2705 EXCELLENT - Professional Quality",
+    "issues": [
+      "Title should front-load primary keywords",
+      "Description needs emotional hook in first 160 chars",
+      "Description missing key sections (found 3/6)"
+    ]
+  },
+  {
+    "product": "Macrame Wall Hanging",
+    "brand_tone": "bohemian_free",
+    "scores": {
+      "title": 10,
+      "tags": 8,
+      "description": 8,
+      "technical": 10,
+      "seo": 7
+    },
+    "total": 43,
+    "percentage": 86.0,
+    "quality": "\u2705 EXCELLENT - Professional Quality",
+    "issues": [
+      "Description needs emotional hook in first 160 chars",
+      "Need more keywords (has 9)"
+    ]
+  },
+  {
+    "product": "Coquette Pink Bow Earrings",
+    "brand_tone": "messy_coquette",
+    "scores": {
+      "title": 8,
+      "tags": 9,
+      "description": 9,
+      "technical": 8,
+      "seo": 7
+    },
+    "total": 41,
+    "percentage": 82.0,
+    "quality": "\u2705 EXCELLENT - Professional Quality",
+    "issues": [
+      "Title should front-load primary keywords",
+      "Description missing key sections (found 3/6)",
+      "Need more keywords (has 9)"
+    ]
+  },
+  {
+    "product": "Sustainable Bamboo Cutting Board",
+    "brand_tone": "eco_conscious",
+    "scores": {
+      "title": 6,
+      "tags": 6,
+      "description": 7,
+      "technical": 10,
+      "seo": 7
+    },
+    "total": 36,
+    "percentage": 72.0,
+    "quality": "\ud83d\udc4d GOOD - Above Average",
+    "issues": [
+      "Title needs more power keywords (found 1)",
+      "Title should front-load primary keywords",
+      "Description needs emotional hook in first 160 chars",
+      "Description missing key sections (found 3/6)",
+      "Need more keywords (has 9)"
+    ]
+  }
+]

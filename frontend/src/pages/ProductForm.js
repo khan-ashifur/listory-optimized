@@ -19,8 +19,8 @@ const ProductForm = () => {
     price: '',
     categories: '',
     features: '',
-    // Optional fields
-    brand_tone: '',
+    // Optional fields (brand_tone defaults for Etsy)
+    brand_tone: selectedPlatform === 'etsy' ? 'handmade_artisan' : '',
     brand_persona: '',
     target_audience: '',
     target_keywords: '',
@@ -31,23 +31,27 @@ const ProductForm = () => {
   const [showOptionalFields, setShowOptionalFields] = useState(false);
   const [customOccasion, setCustomOccasion] = useState('');
 
-  const brandTones = [
+  const brandTones = selectedPlatform === 'etsy' ? [
+    // 2025 Trending Etsy Aesthetics
+    { value: 'handmade_artisan', label: '🎨 Handmade Artisan', description: 'Authentic craftsmanship and personal touch' },
+    { value: 'vintage_charm', label: '🕰️ Vintage Charm', description: 'Nostalgic, classic, and timeless appeal' },
+    { value: 'bohemian_free', label: '🌻 Bohemian Free-Spirit', description: 'Eclectic, free-spirited, and artistic' },
+    { value: 'cottagecore_cozy', label: '🌿 Cottagecore Cozy', description: '2025 Trend: Sustainable farmhouse luxury' },
+    { value: 'modern_minimalist', label: '⚡ Modern Minimalist', description: 'Clean, contemporary, and refined' },
+    { value: 'whimsical_playful', label: '✨ Whimsical & Playful', description: 'Magical, imaginative, and fun' },
+    { value: 'rustic_farmhouse', label: '🪵 Rustic Farmhouse', description: 'Natural, countryside, and homey' },
+    { value: 'eco_conscious', label: '♻️ Eco-Conscious', description: 'Sustainable, green, and earth-friendly' },
+    { value: 'luxury_handcrafted', label: '💎 Luxury Handcrafted', description: 'Premium artisan quality' },
+    { value: 'artistic_creative', label: '🎭 Artistic & Creative', description: 'Expressive, unique, and creative' },
+    { value: 'messy_coquette', label: '🎀 Messy Coquette', description: '2025 Hot: Feminine, romantic, bows & ruffles' },
+    { value: 'chateaucore', label: '🏰 Châteaucore', description: '2025 Luxury: French elegance meets cottage' },
+    { value: 'galactic_metallic', label: '🌌 Galactic Metallic', description: '2025 Y2K: Holographic, chrome, futuristic' }
+  ] : [
     { value: 'professional', label: 'Professional' },
     { value: 'casual', label: 'Casual' },
     { value: 'luxury', label: 'Luxury' },
     { value: 'trendy', label: 'Trendy' },
-    ...(selectedPlatform === 'etsy' ? [
-      { value: 'handmade', label: 'Handmade', description: 'Emphasizes craftsmanship and personal touch' },
-      { value: 'artistic', label: 'Artistic', description: 'Creative and expressive tone' },
-      { value: 'vintage', label: 'Vintage', description: 'Classic and timeless appeal' },
-      { value: 'bohemian', label: 'Bohemian', description: 'Free-spirited and eclectic style' },
-      { value: 'minimalist', label: 'Minimalist', description: 'Clean, simple, and refined' },
-      { value: 'luxury_craft', label: 'Luxury Craft', description: 'Premium handmade quality' },
-      { value: 'eco_friendly', label: 'Eco-Friendly', description: 'Sustainable and environmentally conscious' },
-      { value: 'whimsical', label: 'Whimsical', description: 'Playful and imaginative' },
-      { value: 'rustic', label: 'Rustic', description: 'Natural and countryside charm' },
-      { value: 'modern_craft', label: 'Modern Craft', description: 'Contemporary meets handmade' }
-    ] : selectedPlatform !== 'walmart' ? [
+    ...(selectedPlatform !== 'walmart' ? [
       { value: 'playful', label: 'Playful' },
       { value: 'minimal', label: 'Minimal' },
       { value: 'bold', label: 'Bold' }
@@ -482,6 +486,34 @@ const ProductForm = () => {
                   required
                 />
               </div>
+
+              {/* Etsy Aesthetic Style - Required for Etsy */}
+              {selectedPlatform === 'etsy' && (
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Aesthetic Style *
+                    <span className="text-xs text-purple-600 block">Choose your shop's aesthetic for optimal listing generation</span>
+                  </label>
+                  <select
+                    name="brand_tone"
+                    value={formData.brand_tone || 'handmade_artisan'}
+                    onChange={handleInputChange}
+                    className="form-input"
+                    required
+                  >
+                    {brandTones.map(tone => (
+                      <option key={tone.value} value={tone.value}>
+                        {tone.label}
+                      </option>
+                    ))}
+                  </select>
+                  {formData.brand_tone && (
+                    <p className="text-xs text-purple-600 mt-1">
+                      ✓ {brandTones.find(t => t.value === formData.brand_tone)?.description}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Optional Fields Section */}
@@ -509,37 +541,32 @@ const ProductForm = () => {
                   <h3 className="text-lg font-semibold text-gray-900">Optional Information</h3>
                   
                   <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Brand Tone
-                        {selectedPlatform === 'walmart' && <span className="text-xs text-green-600 block">Recommended for better Walmart optimization</span>}
-                        {selectedPlatform === 'etsy' && <span className="text-xs text-orange-600 block">Optional - system will choose optimal tone if not selected</span>}
-                      </label>
-                      <select
-                        name="brand_tone"
-                        value={formData.brand_tone}
-                        onChange={handleInputChange}
-                        className="form-input"
-                      >
-                        <option value="">Select</option>
-                        {brandTones.map(tone => (
-                          <option key={tone.value} value={tone.value}>
-                            {tone.label}
-                          </option>
-                        ))}
-                      </select>
-                      {selectedPlatform === 'walmart' && formData.brand_tone && (
-                        <p className="text-xs text-green-600 mt-1">
-                          ✓ Walmart content will be optimized for {brandTones.find(t => t.value === formData.brand_tone)?.label.toLowerCase()} tone
-                        </p>
-                      )}
-                      {selectedPlatform === 'etsy' && formData.brand_tone && (
-                        <p className="text-xs text-orange-600 mt-1">
-                          ✓ {brandTones.find(t => t.value === formData.brand_tone)?.description || 
-                             `Etsy listing optimized for ${brandTones.find(t => t.value === formData.brand_tone)?.label.toLowerCase()} tone`}
-                        </p>
-                      )}
-                    </div>
+                    {selectedPlatform !== 'etsy' && (
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Brand Tone
+                          {selectedPlatform === 'walmart' && <span className="text-xs text-green-600 block">Recommended for better Walmart optimization</span>}
+                        </label>
+                        <select
+                          name="brand_tone"
+                          value={formData.brand_tone}
+                          onChange={handleInputChange}
+                          className="form-input"
+                        >
+                          <option value="">Select</option>
+                          {brandTones.map(tone => (
+                            <option key={tone.value} value={tone.value}>
+                              {tone.label}
+                            </option>
+                          ))}
+                        </select>
+                        {selectedPlatform === 'walmart' && formData.brand_tone && (
+                          <p className="text-xs text-green-600 mt-1">
+                            ✓ Walmart content will be optimized for {brandTones.find(t => t.value === formData.brand_tone)?.label.toLowerCase()} tone
+                          </p>
+                        )}
+                      </div>
+                    )}
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">

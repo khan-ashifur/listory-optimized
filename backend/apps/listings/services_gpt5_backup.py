@@ -7,15 +7,12 @@ from django.conf import settings
 from .models import GeneratedListing, KeywordResearch
 from apps.core.models import Product
 from .backend_keyword_optimizer import BackendKeywordOptimizer
-# from .etsy_superior_2025 import EtsySuperiorGenerator2025
 
 
 class ListingGeneratorService:
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.backend_optimizer = BackendKeywordOptimizer()  # Initialize backend keyword optimizer
-        # Initialize AI-powered Etsy generator - NO FALLBACK
-        self.etsy_superior = True  # We'll generate with AI directly in this service
         try:
             self.logger.info("Checking OpenAI configuration...")
             self.logger.info(f"API Key exists: {bool(settings.OPENAI_API_KEY)}")
@@ -3014,10 +3011,7 @@ Write each section in a completely different style and tone. Use unexpected but 
                         clean_bullet = bullet.encode('ascii', errors='ignore').decode('ascii')
                         clean_bullet = ''.join(c for c in clean_bullet if 32 <= ord(c) <= 126)
                     cleaned_bullets.append(clean_bullet)
-                
-                # QUALITY ENHANCEMENT: Improve bullet points for 10/10 scoring
-                enhanced_bullets = self._enhance_bullet_points_quality(cleaned_bullets, product, marketplace)
-                listing.bullet_points = '\n\n'.join(enhanced_bullets)
+                listing.bullet_points = '\n\n'.join(cleaned_bullets)
             else:
                 listing.bullet_points = ''
             
@@ -3052,9 +3046,7 @@ Technical specifications include comprehensive compatibility, robust build quali
                 print(f"✅ Product description found: {len(product_description)} characters")
                 print(f"✅ Description preview: {product_description[:150]}...")
             
-            # QUALITY ENHANCEMENT: Improve description for 10/10 scoring
-            enhanced_description = self._enhance_description_quality(product_description, product, marketplace)
-            listing.long_description = enhanced_description
+            listing.long_description = product_description
             
             # Parse keywords from new structure with debugging
             print(f"🔍 DEBUG: Checking for keywords in result...")
@@ -3137,13 +3129,6 @@ Technical specifications include comprehensive compatibility, robust build quali
                 print(f"✅ {marketplace_code.upper()} backend keywords preserved: {len(backend_keywords)} characters (keeping original)")
             
             print(f"✅ Final keywords count: {len(all_keywords)} total keywords")
-            
-            # QUALITY ENHANCEMENT: Improve keywords for 10/10 scoring
-            enhanced_keywords = self._enhance_keywords_quality(listing, product, marketplace)
-            listing.keywords = enhanced_keywords['frontend']
-            listing.amazon_keywords = enhanced_keywords['frontend']
-            if enhanced_keywords.get('backend'):
-                listing.amazon_backend_keywords = enhanced_keywords['backend']
             
             # Parse A+ content from comprehensive new structure
             aplus_plan = result.get('aPlusContentPlan', {})
@@ -5670,428 +5655,6 @@ A: Most gamers feel the difference within their first session. Say goodbye to th
         
         listing.keywords = f"gaming chair, ergonomic chair, gaming chair with footrest for tall users, best gaming chair under $200, gaming chair for back pain relief, comfortable chair for long gaming sessions, gaming chair with lumbar support, {product.brand_name}"
 
-    def _get_walmart_marketplace_prompt(self, product, marketplace, occasion_enhancement, brand_details):
-        """Generate marketplace-specific Walmart prompt for USA, Canada, or Mexico"""
-        
-        # Common elements
-        base_info = f"""
-PRODUCT ANALYSIS:
-NAME: {product.name}
-BRAND: {product.brand_name}
-DESCRIPTION: {product.description}
-FEATURES: {product.features}
-PRICE: ${product.price}
-OCCASION: {getattr(product, 'occasion', 'general')}
-BRAND TONE: {brand_details['tone']} - {brand_details['style']}
-"""
-        
-        # Common optimization rules
-        common_rules = f"""
-EXPERT WALMART OPTIMIZATION RULES:
-✓ Clean occasion formatting: Replace underscores with spaces, proper capitalization
-✓ Price-tier value terms: Under $50="Great Value" | $50-200="Rollback" | $200+="Walmart Special"
-✓ Power keywords for search: "Best", "Pro", "Premium", "Professional" for premium items
-✓ Quantified benefits: Use specific numbers, percentages, certifications
-✓ Competitive positioning: "Better than", "Superior to", "Outperforms"
-
-🚨 CRITICAL BRAND TONE ENFORCEMENT - {brand_details['tone'].upper()} 🚨
-{brand_details['style']}
-
-BRAND TONE INTEGRATION REQUIREMENTS:
-✓ TITLE: Must use {brand_details['tone'].lower()} language and terminology
-✓ FEATURES: Each bullet must reflect {brand_details['tone'].lower()} positioning
-✓ DESCRIPTION: Tone and style must be consistent with {brand_details['tone'].lower()} brand
-✓ KEYWORDS: Include {brand_details['tone'].lower()}-specific terms and phrases
-"""
-        
-        if marketplace == 'walmart_mexico':
-            # Walmart Mexico specific prompt with Spanish localization
-            return f"""🇲🇽 WALMART MEXICO MARKETPLACE - PREMIUM SPANISH LISTING GENERATION 🇲🇽
-===============================================================================
-
-🚨🚨🚨 MANDATORY REQUIREMENTS - BEAT HELIUM 10, JASPER AI, COPYMONKEY 🚨🚨🚨
-
-⚠️ CRITICAL: ALL CONTENT MUST BE IN SPANISH (ESPAÑOL MEXICANO) ⚠️
-LANGUAGE: Spanish (es-MX) - Mexican Spanish ONLY
-DO NOT WRITE IN ENGLISH - TODO EL CONTENIDO DEBE ESTAR EN ESPAÑOL
-SPANISH LOCALIZATION REQUIRED: Content must be in Spanish for Mexican marketplace.
-
-{occasion_enhancement}
-
-{base_info}
-
-🎯 WALMART MEXICO OPTIMIZATION REQUIREMENTS:
-
-TITLE STRUCTURE (75-100 chars max) - MEXICAN WALMART OPTIMIZATION:
-✓ Format: Brand + Product + TOP BENEFIT + Occasion (clean) + Value Proposition
-✓ Mexican occasions: Día de los Muertos, Las Posadas, Cinco de Mayo, Independencia
-✓ Value terms by price tier: Under $50="Gran Valor" | $50-200="Precio Rebajado" | $200+="Especial Walmart"
-✓ Include searchable power keywords: "Mejor", "Pro", "Premium", "Profesional"
-✓ Example: "AudioPro Audífonos Premium Bluetooth Día Muertos Especial Walmart"
-
-KEY FEATURES (6-7 bullets, 65-80 chars each) - EN ESPAÑOL:
-✓ FEATURES 1-2: Primary value proposition + quantified benefits (EN ESPAÑOL)
-✓ FEATURES 3-4: Technical specifications + performance metrics (EN ESPAÑOL)
-✓ FEATURE 5: Convenience/ease-of-use + ONE Walmart Mexico service benefit (EN ESPAÑOL)
-✓ FEATURE 6: Warranty/quality assurance + customer peace of mind (EN ESPAÑOL)
-✓ FEATURE 7: Competitive advantage + value justification (EN ESPAÑOL)
-✓ Mexican elements: "Normas Mexicanas", "COFEPRIS approved" when applicable
-✓ Walmart Mexico integration: Maximum 1-2 subtle mentions across all features
-
-DESCRIPTION (225-275 words) - NATURAL WALMART MEXICO INTEGRATION:
-✓ Paragraph 1: Product excellence for {getattr(product, 'occasion', 'general').title()} + primary benefits
-✓ Paragraph 2: Technical specifications + quality details + materials/construction
-✓ Paragraph 3: Value proposition + warranty + ONE Walmart Mexico convenience mention
-✓ Write for PRODUCT VALUE first, Walmart Mexico benefits second
-✓ Include Mexican cultural references when appropriate
-✓ Spanish language structure with Mexican terminology
-✓ Include 2-3 total Walmart Mexico references
-
-SEO KEYWORDS (25 high-impact terms) - WALMART MEXICO FOCUSED:
-✓ Include: "walmart mexico {product.name.lower()}", "{getattr(product, 'occasion', 'general')} walmart", "walmart gran valor"
-✓ Include: "walmart pickup mexico", "precio rebajado", "envío gratis walmart mexico"
-✓ Mexican terms: "dia muertos", "las posadas", "cinco mayo", "independencia"
-✓ 5 Primary: walmart mexico + product variants (Spanish)
-✓ 5 Long-tail: walmart mexico + {getattr(product, 'occasion', 'general')} + benefit phrases (Spanish)
-✓ 15 Supporting: technical, brand, competitive, value terms with Mexican integration
-
-MANDATORY WALMART MEXICO ELEMENTS:
-🔹 WALMART BRAND: "Walmart México", "Gran Valor", "Precios Bajos Todos los Días"
-🔹 WALMART SERVICES: "Pickup Gratis México", "Recogida en Tienda", "Precio Rebajado"
-🔹 OCCASION INTEGRATION: "{getattr(product, 'occasion', 'general').title()}" must appear 3+ times
-🔹 BRAND TONE MANDATORY: EVERY field must reflect "{brand_details['tone']}" style
-🔹 MEXICAN VALUES: "Calidad Mexicana", "Servicio Nacional", "Tienda Local"
-🔹 PRICE ADVANTAGE: "Igualamos Precios", "Mejor Valor", "Precio Más Bajo"
-
-{common_rules}
-
-MEXICAN SPECIFIC REQUIREMENTS:
-✓ Use Mexican Spanish terminology and cultural references
-✓ Reference Mexican standards and certifications when relevant (NOM, COFEPRIS)
-✓ Include seasonal Mexican references (Día de Muertos, Posadas, etc.)
-✓ Mention Mexican customer service capability
-✓ Reference PROFECO consumer protection when applicable
-
-RETURN ONLY VALID JSON (TODO EN ESPAÑOL - NO ENGLISH):
-
-{{
-  "product_title": "Título convincente de 75-100 caracteres con marca, beneficio y señal de confianza mexicana (TODO EN ESPAÑOL)",
-  "key_features": [
-    "Precise technical spec with measurement (65-75 chars) (in Spanish)",
-    "Mexican safety certification with standard code (65-75 chars)", 
-    "Performance metric with exact numbers (65-75 chars) (in Spanish)",
-    "Material quality with durability claim (65-75 chars) (in Spanish)",
-    "Compatibility detail with device support (65-75 chars) (in Spanish)",
-    "Convenience benefit with time saving (65-75 chars) (in Spanish)",
-    "Warranty coverage with exact Mexican terms (65-75 chars) (in Spanish)"
-  ],
-  "description": "Professional 225-275 word description with 4 structured paragraphs: 1) Product excellence and primary benefits with emotional appeal, 2) Technical specifications with exact measurements and Mexican certifications, 3) Real-world user benefits and applications, 4) Trust signals with Mexican warranty and call-to-action. Include Mexican values and Walmart Mexico-specific language. ALL IN SPANISH.",
-  "seo_keywords": [
-    "primary product keyword 1 mexico",
-    "primary product keyword 2 mexicano", 
-    "primary product keyword 3 walmart mexico",
-    "primary product keyword 4 español",
-    "primary product keyword 5 nacional",
-    "problem solving long tail phrase 1 mexico",
-    "problem solving long tail phrase 2 mexicano",
-    "benefit focused long tail phrase 3 español",
-    "use case long tail phrase 4 mexico",
-    "application long tail phrase 5 mexicano",
-    "technical specification term 1 normas mexicanas",
-    "certification standard term 2 cofepris",
-    "measurement specification term 3 métrico",
-    "premium brand quality term 1 mexicano",
-    "professional grade term 2 mexico",
-    "trusted manufacturer term 3 español",
-    "home use case scenario mexico",
-    "office application scenario mexicano",
-    "travel convenience scenario nacional",
-    "competitive advantage vs brand A mexico",
-    "superior feature vs brand B mexicano",
-    "better value vs brand C español",
-    "affordable premium option mexico",
-    "best value for mexican customers",
-    "budget friendly quality normas mexicanas"
-  ],
-  "structured_data": {{
-    "brand": "{product.brand_name}",
-    "gtin_upc": "[SELLER TO PROVIDE] Get UPC from GS1 Mexico (gs1mexico.org)",
-    "manufacturer_part": "[SELLER TO PROVIDE] Your product's manufacturer part number",
-    "dimensions": "[SELLER TO PROVIDE] Exact L x W x H in cm (required for Mexican shipping)",
-    "weight": "[SELLER TO PROVIDE] Exact weight in kg (required for Mexican shipping)",
-    "material": "[SELLER TO PROVIDE] Primary construction material",
-    "color_options": ["[SELLER TO PROVIDE] List all available colors"],
-    "warranty_years": "[SELLER TO PROVIDE] Warranty period per Mexican consumer law",
-    "certifications": ["[SELLER TO PROVIDE] Get NOM certification if applicable", "[CHECK] COFEPRIS approval if needed"],
-    "made_in": "[SELLER TO PROVIDE] Country of manufacture (required by PROFECO)",
-    "assembly_required": "[SELLER TO SPECIFY] true/false",
-    "shipping_weight": "[SELLER TO PROVIDE] Weight with packaging for shipping calculations"
-  }},
-  "compliance_info": {{
-    "age_restrictions": "[SELLER TO PROVIDE] Check PROFECO or product category requirements",
-    "safety_warnings": ["[SELLER TO PROVIDE] Add required safety warnings - check NOM standards"],
-    "return_policy": "[SELLER TO PROVIDE] Must comply with Mexican consumer protection law - typically 30+ days",
-    "shipping_restrictions": "[SELLER TO PROVIDE] Check Correos de México restrictions for your product type",
-    "mexican_compliance": "[REQUIRED] Product must comply with NOM standards and PROFECO regulations"
-  }}
-}}"""
-        
-        elif marketplace == 'walmart_canada':
-            # Walmart Canada specific prompt with bilingual requirements
-            return f"""🇨🇦 WALMART CANADA MARKETPLACE - PREMIUM BILINGUAL LISTING GENERATION 🇨🇦
-===============================================================================
-
-🚨🚨🚨 MANDATORY REQUIREMENTS - BEAT HELIUM 10, JASPER AI, COPYMONKEY 🚨🚨🚨
-
-BILINGUAL COMPLIANCE REQUIRED: Content must support both English and French per Canadian law.
-
-{occasion_enhancement}
-
-{base_info}
-
-🎯 WALMART CANADA OPTIMIZATION REQUIREMENTS:
-
-TITLE STRUCTURE (75-100 chars max) - CANADIAN WALMART OPTIMIZATION:
-✓ Format: Brand + Product + TOP BENEFIT + Occasion (clean) + Value Proposition
-✓ Canadian occasions: Victoria Day, Canada Day, Boxing Day, Thanksgiving (Oct)
-✓ Value terms by price tier: Under $50="Great Value" | $50-200="Rollback" | $200+="Walmart Special"
-✓ Include searchable power keywords: "Best", "Pro", "Premium", "Professional"
-✓ Example: "HORL 2 Knife Sharpener German Precision Canada Day Walmart Special"
-
-KEY FEATURES (6-7 bullets, 65-80 chars each) - CANADIAN OPTIMIZATION:
-✓ FEATURES 1-2: Primary value proposition + quantified benefits
-✓ FEATURES 3-4: Technical specifications + performance metrics  
-✓ FEATURE 5: Convenience/ease-of-use + ONE Walmart Canada service benefit
-✓ FEATURE 6: Warranty/quality assurance + customer peace of mind
-✓ FEATURE 7: Competitive advantage + value justification
-✓ Canadian elements: "Canadian standards", "Health Canada approved" when applicable
-✓ Walmart Canada integration: Maximum 1-2 subtle mentions across all features
-
-DESCRIPTION (225-275 words) - NATURAL WALMART CANADA INTEGRATION:
-✓ Paragraph 1: Product excellence for {getattr(product, 'occasion', 'general').title()} + primary benefits
-✓ Paragraph 2: Technical specifications + quality details + materials/construction
-✓ Paragraph 3: Value proposition + warranty + ONE Walmart Canada convenience mention
-✓ Write for PRODUCT VALUE first, Walmart Canada benefits second
-✓ Include Canadian references: "Canadian customers", "coast to coast"
-✓ Bilingual readiness: Use clear, translatable language structure
-✓ Include 2-3 total Walmart Canada references
-
-SEO KEYWORDS (25 high-impact terms) - WALMART CANADA FOCUSED:
-✓ Include: "walmart canada {product.name.lower()}", "{getattr(product, 'occasion', 'general')} walmart", "walmart great value"
-✓ Include: "walmart pickup canada", "walmart rollback", "walmart free shipping canada"
-✓ Canadian terms: "victoria day", "canada day", "boxing day", "thanksgiving"
-✓ 5 Primary: walmart canada + product variants
-✓ 5 Long-tail: walmart canada + {getattr(product, 'occasion', 'general')} + benefit phrases
-✓ 15 Supporting: technical, brand, competitive, value terms with Canadian integration
-
-MANDATORY WALMART CANADA ELEMENTS:
-🔹 WALMART BRAND: "Walmart Canada", "Great Value", "Everyday Low Price"
-🔹 WALMART SERVICES: "Free Pickup Canada", "Store Pickup", "Rollback Price"
-🔹 OCCASION INTEGRATION: "{getattr(product, 'occasion', 'general').title()}" must appear 3+ times
-🔹 BRAND TONE MANDATORY: EVERY field must reflect "{brand_details['tone']}" style
-🔹 CANADIAN VALUES: "Canadian Quality", "Coast to Coast Service", "Local Store"
-🔹 PRICE ADVANTAGE: "Price Match Canada", "Best Value", "Lowest Price"
-
-{common_rules}
-
-CANADIAN SPECIFIC REQUIREMENTS:
-✓ Use Canadian spelling where applicable (colour, flavour, centre)
-✓ Reference Canadian standards and certifications when relevant
-✓ Include seasonal Canadian references (cottage season, winter sports)
-✓ Mention bilingual customer service capability
-✓ Reference Health Canada approval for applicable products
-
-RETURN ONLY VALID JSON:
-
-{{
-  "product_title": "Compelling 75-100 char title with brand, benefit, and Canadian trust signal",
-  "key_features": [
-    "Precise technical spec with measurement (65-75 chars)",
-    "Canadian safety certification with standard code (65-75 chars)", 
-    "Performance metric with exact numbers (65-75 chars)",
-    "Material quality with durability claim (65-75 chars)",
-    "Compatibility detail with device support (65-75 chars)",
-    "Convenience benefit with time saving (65-75 chars)",
-    "Warranty coverage with exact Canadian terms (65-75 chars)"
-  ],
-  "description": "Professional 225-275 word description with 4 structured paragraphs: 1) Product excellence and primary benefits with emotional appeal, 2) Technical specifications with exact measurements and Canadian certifications, 3) Real-world user benefits and applications, 4) Trust signals with Canadian warranty and call-to-action. Include Canadian values and Walmart Canada-specific language.",
-  "seo_keywords": [
-    "primary product keyword 1 canada",
-    "primary product keyword 2 canadian", 
-    "primary product keyword 3 walmart canada",
-    "primary product keyword 4 bilingual",
-    "primary product keyword 5 coast to coast",
-    "problem solving long tail phrase 1 canada",
-    "problem solving long tail phrase 2 canadian",
-    "benefit focused long tail phrase 3 bilingual",
-    "use case long tail phrase 4 canada",
-    "application long tail phrase 5 canadian",
-    "technical specification term 1 canadian standards",
-    "certification standard term 2 health canada",
-    "measurement specification term 3 metric",
-    "premium brand quality term 1 canadian",
-    "professional grade term 2 canada",
-    "trusted manufacturer term 3 bilingual",
-    "home use case scenario canada",
-    "office application scenario canadian",
-    "travel convenience scenario coast to coast",
-    "competitive advantage vs brand A canada",
-    "superior feature vs brand B canadian",
-    "better value vs brand C bilingual",
-    "affordable premium option canada",
-    "best value for canadian customers",
-    "budget friendly quality canadian standards"
-  ],
-  "structured_data": {{
-    "brand": "{product.brand_name}",
-    "gtin_upc": "[SELLER TO PROVIDE] Get UPC from GS1 Canada (gs1ca.org)",
-    "manufacturer_part": "[SELLER TO PROVIDE] Your product's manufacturer part number",
-    "dimensions": "[SELLER TO PROVIDE] Exact L x W x H in cm (required for Canadian shipping)",
-    "weight": "[SELLER TO PROVIDE] Exact weight in kg (required for Canadian shipping)",
-    "material": "[SELLER TO PROVIDE] Primary construction material",
-    "color_options": ["[SELLER TO PROVIDE] List all available colors"],
-    "warranty_years": "[SELLER TO PROVIDE] Warranty period as per Canadian Consumer Protection",
-    "certifications": ["[SELLER TO PROVIDE] Get CSA certification if applicable", "[CHECK] Health Canada approval if needed"],
-    "made_in": "[SELLER TO PROVIDE] Country of manufacture (required by Competition Bureau)",
-    "assembly_required": "[SELLER TO SPECIFY] true/false",
-    "shipping_weight": "[SELLER TO PROVIDE] Weight with packaging for shipping calculations"
-  }},
-  "compliance_info": {{
-    "age_restrictions": "[SELLER TO PROVIDE] Check Health Canada or provincial requirements for your product category",
-    "safety_warnings": ["[SELLER TO PROVIDE] Add any required safety warnings - check Canadian Consumer Product Safety Act"],
-    "return_policy": "[SELLER TO PROVIDE] Must comply with Canadian Consumer Protection Act - typically 30+ days",
-    "shipping_restrictions": "[SELLER TO PROVIDE] Check Canada Post restrictions for your product type",
-    "language_compliance": "[REQUIRED] Product must have bilingual labeling (English/French) per Consumer Packaging Act"
-  }}
-}}"""
-        
-        else:  # Default to USA (walmart_usa or any other walmart marketplace)
-            return f"""🇺🇸 WALMART USA MARKETPLACE - PREMIUM LISTING GENERATION 🇺🇸
-===============================================================
-
-🚨🚨🚨 MANDATORY REQUIREMENTS - BEAT HELIUM 10, JASPER AI, COPYMONKEY 🚨🚨🚨
-
-{occasion_enhancement}
-
-{base_info}
-
-🎯 WALMART USA OPTIMIZATION REQUIREMENTS:
-
-TITLE STRUCTURE (75-100 chars max) - EXPERT WALMART OPTIMIZATION:
-✓ Format: Brand + Product + CLEAR DIFFERENTIATOR + Occasion (clean) + Value Hook
-✓ AVOID store brands: NO "Great Value", "Equate", "Mainstays" references
-✓ ADD differentiators: "German Made", "15°/20° Angles", "Professional Chef Tool", "USA Crafted"
-✓ Balance keywords + readability (NO keyword stuffing)
-✓ Value positioning: Under $50="Great Deal" | $50-200="Top Rated" | $200+="Professional Grade"
-✓ Example Premium: "HORL 2 German Made Knife Sharpener 15°/20° Angles Christmas Special"
-✓ Example Mid-range: "AudioTech Pro Gaming Headset Active Noise Cancel Black Friday Top Rated"
-✓ Example Budget: "BrightGlow 48ft LED String Lights Weatherproof July 4th Great Deal"
-
-KEY FEATURES (6-7 bullets, 65-80 chars each) - BENEFIT-DRIVEN OPTIMIZATION:
-✓ FEATURES 1-2: BENEFIT-DRIVEN: "Achieve faster prep", "Get chef-level results"
-✓ FEATURES 3-4: Technical specs + lifestyle benefits: "50mm drivers deliver immersive gaming"
-✓ FEATURE 5: Real usage benefits: "Safer sharpening eliminates knife slips"
-✓ FEATURE 6: Social proof + warranty: "Trusted by 50,000+ customers + 2-year protection"
-✓ FEATURE 7: Value comparison: "Sharper than handheld sharpeners - no guesswork needed"
-✓ NO fulfillment text: Remove "Free Store Pickup", "Ships Fast" 
-✓ Keep each bullet under 80 chars but impactful and benefit-focused
-
-DESCRIPTION (225-275 words) - CONVERSATIONAL & BENEFIT-FOCUSED:
-✓ Paragraph 1: Real-life benefits + immediate results (NO corporate fluff)
-✓ Paragraph 2: Practical scenarios: "Transform your cooking - perfect for steaks, vegetables, everyday meals"
-✓ Paragraph 3: Unique comparisons: "Sharper than handheld models - precision angles vs guesswork"
-✓ Paragraph 4: Social proof + urgency: "Join 50,000+ satisfied customers. Limited stock - order today!"
-✓ CUT repetitive phrases: "outstanding performance", "superior results"
-✓ USE conversational tone: "You'll love", "Perfect for your kitchen", "Makes cooking easier"
-✓ ADD urgency: "Limited stock alert", "Order now", "Don't miss out"
-✓ Include 1-2 subtle Walmart mentions (not every paragraph)
-✓ ADD compliance: "UL Listed", "BPA-Free materials", "FDA-approved steel" when applicable
-
-SEO KEYWORDS (25 high-impact terms) - BUYER-INTENT FOCUSED:
-✓ REDUCE duplicate variations - focus on unique high-value terms
-✓ ADD buyer-intent phrases: "best for home cooks", "easy sharpening tool", "professional results"
-✓ BLEND keywords naturally: "knife sharpener for home chefs", "gaming headset comfort"
-✓ 8 Primary: product + buyer intent + differentiation
-✓ 8 Long-tail: practical use cases + benefits + occasion
-✓ 9 Supporting: technical specs + competitive advantages + trust signals
-
-CONVERSION BOOSTERS & TRUST ELEMENTS:
-🔹 SOCIAL PROOF: "Trusted by 50,000+ customers", "Professional chefs recommend", "#1 rated by home cooks"
-🔹 TRUST EARLY: Highlight warranty & support in description paragraph 2-3
-🔹 URGENCY HOOKS: "Limited stock alert", "Order today", "While supplies last", "Don't miss out"  
-🔹 WALMART INTEGRATION: MANDATORY - Include 3-4 of these: "Walmart pickup available", "rollback price", "everyday low price", "price match guarantee", "Free store pickup", "Walmart exclusive"
-🔹 EXCLUSIVITY: "Professional grade", "Chef's choice", "Premium selection"
-🔹 VALUE PROOF: Specific comparisons - "Sharper than handheld models", "More precise than electric" 
-🔹 REALISTIC PRICING: Set premium positioning that reflects true product value
-🔹 COMPLIANCE DETAILS: "UL Listed", "BPA-Free materials", "FDA-approved components" when applicable
-🔹 AMERICAN VALUES: Include 2-3 of these: "Made in USA", "American families", "USA quality", "Trusted by Americans", "Family-owned business"
-🔹 OCCASION INTEGRATION: MANDATORY - Must include the exact occasion term from: {getattr(product, 'occasion', 'general').replace('_', ' ')} AND include phrases like "{getattr(product, 'occasion', 'general')} gift", "{getattr(product, 'occasion', 'general')} deal", "{getattr(product, 'occasion', 'general')} special"
-
-{common_rules}
-
-RETURN ONLY VALID JSON:
-
-{{
-  "product_title": "75-100 char title: Brand + Product + CLEAR DIFFERENTIATOR + Occasion + Value Hook (NO store brands)",
-  "key_features": [
-    "BENEFIT-DRIVEN: Achieve [specific result] with [measurement] (under 80 chars)",
-    "LIFESTYLE BENEFIT: Perfect for [use case] - [specific advantage] (under 80 chars)",
-    "TECHNICAL + BENEFIT: [Spec] delivers [real-world result] (under 80 chars)",
-    "SAFETY + TRUST: [Certification] ensures [peace of mind] (under 80 chars)",
-    "VALUE COMPARISON: Better than [alternative] - [specific reason] (under 80 chars)",
-    "SOCIAL PROOF: Trusted by [audience] + [warranty period] protection (under 80 chars)",
-    "USAGE BENEFIT: [Action] results in [time saving/improvement] (under 80 chars)"
-  ],
-  "description": "225-275 words, 4 paragraphs: 1) Excellence + benefits (NO corporate fluff), 2) Practical examples (home cooking, sushi prep, outdoor), 3) Value comparisons + why better, 4) Trust + warranty + urgency. Cut repetitive phrases. Add social proof early. MUST include occasion terms like '{getattr(product, 'occasion', 'general')} gift', '{getattr(product, 'occasion', 'general')} deal', '{getattr(product, 'occasion', 'general')} special'.",
-  "seo_keywords": [
-    "walmart [product] best value",
-    "[product] walmart exclusive deal", 
-    "[product] rollback price walmart",
-    "[occasion] [product] walmart gift",
-    "walmart pickup [product] ready",
-    "[product] price match guarantee",
-    "best [product] for american families",
-    "[product] made in usa quality",
-    "walmart [product] everyday low price",
-    "[product] trusted by americans",
-    "professional [product] home use",
-    "[product] better than competitors",
-    "chef recommended [product] tool",
-    "[brand] [product] usa warranty",
-    "home cooking [product] essential",
-    "[product] american kitchen upgrade",
-    "[product] gift for [occasion]",
-    "[product] value for money walmart",
-    "trusted [product] brand usa",
-    "[product] long lasting american quality",
-    "easy to use [product] family",
-    "[product] customer favorite walmart",
-    "[brand] [product] authentic usa",
-    "premium [product] affordable walmart",
-    "[product] free store pickup"
-  ],
-  "structured_data": {{
-    "brand": "{product.brand_name}",
-    "gtin_upc": "[REQUIRED] Get valid UPC from GS1 US (gs1us.org) - $30-250 per code",
-    "manufacturer_part": "[REQUIRED] Your unique manufacturer part number for inventory",
-    "dimensions": "[REQUIRED] Exact L x W x H in inches for shipping calculations",
-    "weight": "[REQUIRED] Exact weight in pounds for shipping costs",
-    "material": "[REQUIRED] Primary construction material for compliance",
-    "color_options": ["[REQUIRED] List all available color variants"],
-    "warranty_years": "[REQUIRED] Realistic warranty period (1-5 years typical)",
-    "certifications": ["[RECOMMENDED] UL/FCC if electronics", "[CHECK] CPSC compliance for safety"],
-    "made_in": "[REQUIRED] Country of origin for customs/FTC compliance",
-    "assembly_required": "[SELLER TO SPECIFY] true/false",
-    "shipping_weight": "[SELLER TO PROVIDE] Weight with packaging for shipping calculations"
-  }},
-  "compliance_info": {{
-    "age_restrictions": "[SELLER TO PROVIDE] Check CPSC.gov for age requirements for your product category",
-    "safety_warnings": ["[SELLER TO PROVIDE] Add required safety warnings - check CPSC guidelines"],
-    "return_policy": "[SELLER TO PROVIDE] Must comply with Walmart's return policy standards - typically 30+ days",
-    "shipping_restrictions": "[SELLER TO PROVIDE] Check USPS/FedEx restrictions for your product type"
-  }}
-}}"""
-    
     def _generate_walmart_listing(self, product, listing):
         from .services_occasion_enhanced import OccasionOptimizer
         
@@ -6101,11 +5664,6 @@ RETURN ONLY VALID JSON:
         # Initialize occasion optimizer for Walmart too
         occasion_optimizer = OccasionOptimizer()
             
-        
-        # Brand tone optimization (optional but recommended)
-        if not hasattr(product, 'brand_tone') or not product.brand_tone or product.brand_tone.strip() == '':
-            product.brand_tone = 'professional'  # Default to professional if not specified
-            product.save()  # Save the default value
         
         # Extract brand tone details
         brand_tone_mapping = {
@@ -6127,43 +5685,71 @@ RETURN ONLY VALID JSON:
             }
         }
         
-        # Validate brand tone is a valid option
-        if product.brand_tone.lower() not in brand_tone_mapping:
-            raise Exception(f"❌ WALMART LISTING GENERATION FAILED: Invalid brand tone '{product.brand_tone}'. Must be: professional, casual, luxury, or trendy")
-        
-        brand_details = brand_tone_mapping.get(product.brand_tone.lower(), brand_tone_mapping['professional'])
-        self.logger.info(f"✅ Brand tone validated: {product.brand_tone} - {brand_details['tone']}")
+        brand_details = brand_tone_mapping.get(product.brand_tone, brand_tone_mapping['professional'])
         
         # Generate category-specific attributes based on product
         category_prompt = self._get_walmart_category_context(product)
         
-        # Get occasion-specific enhancements for Walmart marketplace
+        # Get occasion-specific enhancements if applicable
         occasion = getattr(product, 'occasion', None)
         occasion_enhancement = ""
-        marketplace = getattr(product, 'marketplace', 'walmart_usa')
-        
         if occasion and occasion != 'None':
-            # Use marketplace-specific occasions and enhancements
-            if marketplace == 'walmart_usa':
-                walmart_occasion_enhancement = occasion_optimizer.get_walmart_usa_occasion_enhancement(occasion)
-            elif marketplace == 'walmart_canada':
-                walmart_occasion_enhancement = occasion_optimizer.get_walmart_canada_occasion_enhancement(occasion)
-            elif marketplace == 'walmart_mexico':
-                walmart_occasion_enhancement = occasion_optimizer.get_walmart_mexico_occasion_enhancement(occasion)
-            else:
-                # Fallback to USA for other walmart marketplaces
-                walmart_occasion_enhancement = occasion_optimizer.get_walmart_usa_occasion_enhancement(occasion)
-                
-            if walmart_occasion_enhancement:
-                occasion_enhancement = walmart_occasion_enhancement
-                self.logger.info(f"Applied {marketplace} occasion enhancement for: {occasion}")
-            else:
-                # Fallback to general occasion enhancement
-                occasion_enhancement = occasion_optimizer.get_occasion_prompt_enhancement(occasion)
-                self.logger.info(f"Applied general occasion enhancement for Walmart: {occasion}")
+            occasion_enhancement = occasion_optimizer.get_occasion_prompt_enhancement(occasion)
+            self.logger.info(f"Applied Walmart occasion enhancement for: {occasion}")
         
-        # Generate marketplace-specific prompt
-        prompt = self._get_walmart_marketplace_prompt(product, marketplace, occasion_enhancement, brand_details)
+        prompt = f"""Create a professional Walmart listing for this product. Return ONLY valid JSON with no extra text.
+
+{occasion_enhancement}
+
+PRODUCT: {product.name}
+BRAND: {product.brand_name}
+DESCRIPTION: {product.description}  
+FEATURES: {product.features}
+PRICE: ${product.price}
+SPECIAL OCCASION: {getattr(product, 'occasion', 'None - general purpose listing')}
+
+Requirements:
+- Title: Under 100 characters with brand and key benefit
+- Features: Exactly 5-7 bullet points, max 80 characters each
+- Description: 200-250 words, professional tone, no generic templates
+- Keywords: 20 diverse SEO terms covering primary, long-tail, technical, brand, competitive, and demographic terms
+- Include specific measurements and technical details
+
+{{
+  "product_title": "Professional title under 100 chars with brand and benefit",
+  "key_features": [
+    "Technical detail with measurement (under 80 chars)",
+    "Certification or safety standard included",
+    "Performance metric with specific numbers",
+    "Material advantage or technology feature",
+    "Compatibility or capacity specification",
+    "Design or convenience benefit",
+    "Warranty or reliability information"
+  ],
+  "description": "Write 200-250 word professional description focusing on technical advantages, performance benefits, and product superiority. Include specific details about materials, certifications, and real-world performance. Avoid generic templates.",
+  "seo_keywords": [
+    "primary keyword 1",
+    "primary keyword 2",
+    "primary keyword 3", 
+    "long tail benefit phrase 1",
+    "long tail benefit phrase 2",
+    "problem solving phrase 1",
+    "problem solving phrase 2",
+    "technical specification term 1",
+    "technical specification term 2",
+    "brand specific term 1",
+    "brand specific term 2",
+    "category keyword 1",
+    "category keyword 2",
+    "comparison vs competitor keyword",
+    "use case specific keyword",
+    "feature specific keyword",
+    "price range keyword",
+    "quality indicator keyword",
+    "seasonal/trending keyword",
+    "demographic target keyword"
+  ]
+}}"""
 
         self.logger.info("Calling OpenAI for Walmart listing generation...")
         response = self.client.chat.completions.create(
@@ -6196,160 +5782,82 @@ RETURN ONLY VALID JSON:
                 
             result = json.loads(response_content)
             
-            # Enhanced Walmart field processing with 10/10 quality validation
+            # Validate and process Walmart-specific fields
             product_title = result.get('product_title', '')[:100]  # Hard cap at 100 chars
             description = result.get('description', '')
             key_features = result.get('key_features', [])
-            seo_keywords = result.get('seo_keywords', [])
-            structured_data = result.get('structured_data', {})
-            compliance_info = result.get('compliance_info', {})
             
-            # Enhanced description validation (225-275 words for premium quality)
+            # Validate description word count (minimum 150 words)
             word_count = len(description.split()) if description else 0
-            if word_count < 225:
-                self.logger.warning(f"Walmart description only has {word_count} words, enhancing to premium quality")
-                description = self._generate_enhanced_walmart_description(product, occasion)
+            if word_count < 150:
+                self.logger.warning(f"Walmart description only has {word_count} words, minimum is 150")
+                # Use enhanced fallback description that meets requirements
+                description = self._generate_walmart_fallback_description(product)
             
-            # Mandatory brand tone validation
-            brand_tone = getattr(product, 'brand_tone', 'professional')
-            if not self._validate_brand_tone_compliance(product_title, description, key_features, brand_tone):
-                self.logger.warning(f"Brand tone compliance failed for {brand_tone}, enhancing content")
-                # Enhance content to ensure brand tone compliance
-                description = self._enhance_brand_tone_compliance(description, brand_tone)
-                product_title = self._enhance_title_brand_tone(product_title, brand_tone)
-            
-            # Validate key features (6-7 features, 65-80 chars each)
+            # Validate and truncate key features (max 80 chars each)
             validated_features = []
-            for feature in key_features[:7]:  # Max 7 features for premium quality
+            for feature in key_features[:10]:  # Max 10 features
                 if len(feature) > 80:
-                    # Smart truncation: cut at last complete word within limit
-                    truncated = feature[:77]  # Leave space for "..."
-                    last_space = truncated.rfind(' ')
-                    if last_space > 60:  # Only truncate at word boundary if it's reasonable
-                        truncated = truncated[:last_space] + "..."
-                    else:
-                        truncated = feature[:77] + "..."
-                    self.logger.warning(f"Feature truncated smartly: {feature} -> {truncated}")
-                    validated_features.append(truncated)
-                elif len(feature) < 40:
-                    self.logger.warning(f"Feature too short ({len(feature)} chars), enhancing: {feature}")
-                    validated_features.append(f"{feature} - Premium Quality Guaranteed")
+                    self.logger.warning(f"Feature truncated from {len(feature)} to 80 chars: {feature[:80]}")
+                    validated_features.append(feature[:80])
                 else:
                     validated_features.append(feature)
             
-            # Ensure we have 6-7 features for Walmart premium standards
-            while len(validated_features) < 6:
-                validated_features.extend([
-                    f"Premium {product.brand_name} Construction - Built to Last",
-                    f"Professional Grade Materials - Trusted Quality",
-                    f"Easy Installation & Setup - Ready in Minutes",
-                    f"USA Customer Support - 100% Satisfaction Guarantee",
-                    f"Free Shipping Available - Order Today",
-                    f"Best Value Price - Compare & Save"
-                ])
-            
-            # Take exactly 6-7 features for optimal Walmart presentation
-            validated_features = validated_features[:7]
-            
-            # Core Walmart content with enhanced fields
+            # Core Walmart content (platform-specific fields only)
             listing.walmart_product_title = product_title
             listing.walmart_description = description
             listing.walmart_key_features = '\n'.join(validated_features)
             
-            # General fields for all platforms
+            # General fields for all platforms (NOT platform-specific content)
             listing.title = product_title
             listing.short_description = description[:200] + "..." if len(description) > 200 else description
             listing.long_description = description
+            # DO NOT SET bullet_points for Walmart - this is Amazon-specific
             
-            # Enhanced identifiers from structured_data
-            listing.walmart_gtin_upc = structured_data.get('gtin_upc', self._generate_upc_code())
-            listing.walmart_manufacturer_part = structured_data.get('manufacturer_part', f"{product.brand_name.upper()[:3]}-{product.name[:5].upper()}-2024")
-            listing.walmart_sku_id = f"WAL-{product.id:06d}"
+            # Identifiers
+            identifiers = result.get('identifiers', {})
+            listing.walmart_gtin_upc = identifiers.get('gtin_upc', '')
+            listing.walmart_manufacturer_part = identifiers.get('manufacturer_part', '')
+            listing.walmart_sku_id = identifiers.get('sku_id', '')
             
-            # Enhanced specifications from structured_data
-            enhanced_specs = {
-                "Brand": structured_data.get('brand', product.brand_name),
-                "Dimensions": structured_data.get('dimensions', 'Contact for exact measurements'),
-                "Weight": structured_data.get('weight', 'Lightweight design'),
-                "Material": structured_data.get('material', 'Premium construction materials'),
-                "Warranty": f"{structured_data.get('warranty_years', '1')} year(s)",
-                "Certifications": ', '.join(structured_data.get('certifications', ['Quality Tested'])),
-                "Made In": structured_data.get('made_in', 'Designed in USA'),
-                "Assembly Required": "Yes" if structured_data.get('assembly_required', False) else "No",
-                "Price": str(product.price),
-                "Category": product.categories if product.categories else "Premium Products"
-            }
-            listing.walmart_specifications = json.dumps(enhanced_specs)
+            # Category and attributes
+            listing.walmart_product_type = result.get('product_type', '')
+            listing.walmart_category_path = result.get('category_path', '')
+            listing.walmart_attributes = json.dumps(result.get('attributes', {}))
             
-            # Enhanced category and attributes
-            listing.walmart_product_type = product.categories.split(',')[0] if product.categories else "Premium Product"
-            listing.walmart_category_path = product.categories.replace(',', ' > ') if product.categories else "Home > Premium Products"
+            # Specifications
+            specs = result.get('specifications', {})
+            listing.walmart_specifications = json.dumps(specs)
             
-            enhanced_attributes = {
-                "brand": product.brand_name,
-                "price": str(product.price),
-                "occasion": getattr(product, 'occasion', 'general'),
-                "brand_tone": product.brand_tone,
-                "color_options": structured_data.get('color_options', ['Standard']),
-                "warranty_years": structured_data.get('warranty_years', '1'),
-                "certifications": structured_data.get('certifications', [])
-            }
-            listing.walmart_attributes = json.dumps(enhanced_attributes)
+            # Shipping
+            shipping = result.get('shipping', {})
+            listing.walmart_shipping_weight = shipping.get('weight', '')
+            listing.walmart_shipping_dimensions = shipping.get('dimensions', '')
             
-            # Enhanced shipping information
-            listing.walmart_shipping_weight = structured_data.get('shipping_weight', 'Standard shipping weight')
-            listing.walmart_shipping_dimensions = structured_data.get('dimensions', 'Compact packaging')
+            # Warranty and compliance
+            warranty = result.get('warranty', {})
+            listing.walmart_warranty_info = json.dumps(warranty)
             
-            # Enhanced warranty and compliance
-            warranty_info = {
-                "warranty_period": f"{structured_data.get('warranty_years', '1')} year(s)",
-                "coverage": "Full manufacturer warranty",
-                "customer_service": "USA-based support team",
-                "return_policy": compliance_info.get('return_policy', '30-day hassle-free returns')
-            }
-            listing.walmart_warranty_info = json.dumps(warranty_info)
+            compliance = result.get('compliance', {})
+            listing.walmart_compliance_certifications = json.dumps(compliance.get('certifications', []))
             
-            # Enhanced compliance certifications
-            certifications = structured_data.get('certifications', ['Quality Tested'])
-            safety_warnings = compliance_info.get('safety_warnings', [])
-            listing.walmart_compliance_certifications = json.dumps({
-                'certifications': certifications,
-                'safety_warnings': safety_warnings,
-                'age_restrictions': compliance_info.get('age_restrictions', 'No age restrictions'),
-                'shipping_restrictions': compliance_info.get('shipping_restrictions', 'Standard shipping available')
-            })
+            # Assembly
+            assembly = result.get('assembly', {})
+            listing.walmart_assembly_required = assembly.get('required', False)
             
-            # Assembly information - handle guidance text properly
-            assembly_value = structured_data.get('assembly_required', False)
-            if isinstance(assembly_value, str) and '[SELLER TO SPECIFY]' in assembly_value:
-                # Default to False for guidance text
-                listing.walmart_assembly_required = False
-            elif isinstance(assembly_value, str):
-                # Parse string boolean
-                listing.walmart_assembly_required = assembly_value.lower() in ['true', 'yes', '1']
+            # Rich media
+            rich_media = result.get('rich_media', {})
+            listing.walmart_video_urls = json.dumps(rich_media.get('videos', []))
+            listing.walmart_swatch_images = json.dumps(rich_media.get('additional_images', []))
+            
+            # SEO keywords (simplified format)
+            seo_keywords = result.get('seo_keywords', [])
+            if isinstance(seo_keywords, list):
+                listing.keywords = ', '.join(seo_keywords[:20])  # Limit to 20 keywords
             else:
-                listing.walmart_assembly_required = bool(assembly_value)
-            
-            # Rich media placeholders (enhanced for Walmart)
-            listing.walmart_video_urls = json.dumps([
-                f"Product demonstration video for {product.name}",
-                f"Unboxing and setup guide for {product.brand_name}",
-                f"Customer testimonial videos"
-            ])
-            listing.walmart_swatch_images = json.dumps([
-                f"High-resolution product images for {product.name}",
-                f"Multiple angle views and detail shots",
-                f"Lifestyle and usage scenarios",
-                f"Packaging and included accessories"
-            ])
-            
-            # Enhanced SEO keywords processing (25 keywords for premium optimization)
-            if isinstance(seo_keywords, list) and len(seo_keywords) >= 20:
-                listing.keywords = ', '.join(seo_keywords[:25])  # Use up to 25 keywords
-            else:
-                # Generate enhanced keywords if AI didn't provide enough
-                enhanced_keywords = self._generate_enhanced_walmart_keywords(product, occasion)
-                listing.keywords = enhanced_keywords
+                # Handle old complex format if still present
+                all_keywords = seo_keywords.get('primary', []) + seo_keywords.get('long_tail', []) + seo_keywords.get('category', [])
+                listing.keywords = ', '.join(all_keywords[:20])
             
             # DO NOT SET bullet_points for Walmart - this is Amazon-specific
             
@@ -6495,16 +6003,61 @@ RETURN ONLY VALID JSON:
         return description
 
     def _generate_etsy_listing(self, product, listing):
-        """
-        Generate superior Etsy listing using the 2025 advanced generator
-        that beats Helium 10, Jasper AI, and CopyMonkey
-        """
-        # AI-ONLY GENERATION - NO FALLBACK
         if not self.client:
-            raise Exception("OpenAI API key not configured. AI generation is required for Etsy listings.")
+            raise Exception("OpenAI API key not configured. Please set a valid OpenAI API key to generate Etsy listings.")
+            
+        prompt = f"""You are an Etsy SEO expert specializing in handmade/vintage items. Create a story-driven Etsy listing.
+
+PRODUCT INFO:
+- Name: {product.name}
+- Brand: {product.brand_name}
+- Description: {product.description}
+- Brand Tone: {product.brand_tone} 
+- Features: {product.features}
+- Generate SEO Keywords automatically based on product details  
+- Generate Long-tail Keywords automatically based on product details
+- Generate FAQs automatically based on product details
+- Generate What is in the Box automatically based on product type
+
+ETSY REQUIREMENTS:
+- Title: 140 characters with 13 keywords naturally integrated
+- Description: Story-driven, personal, mentions process/materials
+- Tags: Exactly 13 tags, highly searched Etsy terms
+- Materials: What it is made from
+- Personal touch: Artist story, inspiration
+
+Return ONLY valid JSON:
+{{
+  "title": "Handcrafted [Product] | Unique [Style] | Perfect for [Use Case] | [Material] [Item Type]",
+  "description": "**The Story Behind This Piece**\n\nWhen I first dreamed up this [product], I wanted to create something truly special...\n\n**What Makes This Special:**\n• Handcrafted with love and attention to detail\n• Made from premium [materials]\n• Perfect for [specific use cases]\n\n**Care Instructions:**\n[How to maintain the product]\n\n**Shipping & Policies:**\n[Shipping timeline and shop policies]",
+  "tags": ["handmade jewelry", "boho necklace", "gift for her", "artisan made", "unique design", "natural stone", "bohemian style", "statement piece", "handcrafted", "one of a kind", "spiritual jewelry", "healing crystal", "custom jewelry"],
+  "materials": ["Sterling silver", "Natural gemstones", "Organic cotton cord"],
+  "sections": {{
+    "story": "Personal inspiration and creation process",
+    "features": "Unique qualities and benefits", 
+    "care": "How to maintain and store",
+    "shipping": "Processing time and shipping details"
+  }},
+  "seo_focus": "Long-tail keywords that Etsy buyers actually search for"
+}}"""
+
+        response = self.client.chat.completions.create(
+            model="gpt-5-chat-latest",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.8,
+            max_completion_tokens=1500
+        )
         
-        self._generate_ai_etsy_listing(product, listing)
-        self.logger.info(f"Generated AI-powered Etsy listing for {product.name}")
+        try:
+            result = json.loads(response.choices[0].message.content)
+            listing.title = result.get('title', '')[:500]
+            listing.long_description = result.get('description', '')
+            listing.etsy_tags = ', '.join(result.get('tags', [])[:13])
+            listing.etsy_materials = ', '.join(result.get('materials', []))
+            listing.keywords = ', '.join(result.get('tags', []))
+        except json.JSONDecodeError:
+            listing.title = f"Handmade {product.name} by {product.brand_name}"
+            listing.long_description = "AI generation failed - please regenerate"
 
     def _generate_tiktok_listing(self, product, listing):
         if not self.client:
@@ -6651,99 +6204,10 @@ Return ONLY valid JSON:
         listing.long_description = listing.short_description
         listing.keywords = f"{product.name}, {product.brand_name}, quality, value"
 
-    def _generate_ai_etsy_listing(self, product, listing):
-        """
-        Generate complete AI-powered Etsy listing with WOW features
-        NO FALLBACK - Pure AI generation only
-        """
-        brand_tone = product.brand_tone or 'handmade_artisan'
-        
-        # Create SPECIFIC, NON-GENERIC AI prompt for premium Etsy listing
-        etsy_prompt = f"""
-You are the world's top Etsy copywriter. Generate a PREMIUM, SPECIFIC listing for this exact product. NO GENERIC LANGUAGE ALLOWED.
-
-PRODUCT: {product.name}
-BRAND: {product.brand_name}
-TONE: {brand_tone} 
-PRICE: ${product.price}
-CATEGORY: {product.categories}
-DETAILS: {product.description}
-FEATURES: {product.features}
-OCCASION: {product.occasion if product.occasion else 'general'}
-
-STRICT REQUIREMENTS - NO GENERIC WORDS:
-❌ BANNED: "premium", "quality", "amazing", "perfect", "handmade", "unique", "special", "beautiful"
-✅ USE: Specific descriptors, technical details, emotional benefits, concrete features
-
-Generate JSON with these fields:
-
-"etsy_title": Start with "{product.name.split()[0]}" + specific descriptors + "{brand_tone.replace('_', ' ')}" style (140 chars max)
-"etsy_description": Write 6 specific sections:
-1. THE STORY - Origin/inspiration for THIS specific product
-2. WHAT MAKES THIS DIFFERENT - Unique technical features 
-3. WHO THIS IS FOR - Specific customer personas
-4. HOW TO USE/STYLE - Practical usage scenarios
-5. GIFT OCCASIONS - Specific events/people
-6. CARE & DETAILS - Maintenance instructions
-
-"etsy_tags": 13 specific SEO tags (no generic words)
-"etsy_materials": Exact materials used
-"etsy_processing_time": Realistic timeframe
-"etsy_who_made": "i_did"
-"etsy_when_made": "made_to_order"
-
-Make every word count. Be specific, not generic. Target {product.occasion if product.occasion else 'gift'} buyers with {brand_tone.replace('_', ' ')} preferences.
-
-Return ONLY valid JSON.
-"""
-
-        try:
-            # Generate core Etsy content with AI
-            response = self.client.chat.completions.create(
-                model="gpt-4-turbo-preview",
-                messages=[{"role": "user", "content": etsy_prompt}],
-                temperature=0.8,
-                max_completion_tokens=2000
-            )
-            
-            content = self._extract_json_from_response(response.choices[0].message.content)
-            result = json.loads(content)
-            
-            # Populate Etsy fields from AI response
-            listing.etsy_title = result.get('etsy_title', '')[:140]
-            
-            # Handle description - convert sections to readable format
-            description_data = result.get('etsy_description', '')
-            if isinstance(description_data, dict):
-                # Convert structured sections to readable description
-                description_parts = []
-                for section_name, section_content in description_data.items():
-                    description_parts.append(f"📖 {section_name.replace('_', ' ').upper()}\n{section_content}\n")
-                listing.etsy_description = '\n'.join(description_parts)
-            else:
-                listing.etsy_description = description_data
-            
-            listing.etsy_tags = json.dumps(result.get('etsy_tags', [])[:13])
-            listing.etsy_materials = result.get('etsy_materials', '')
-            listing.etsy_processing_time = result.get('etsy_processing_time', '3-5 business days')
-            listing.etsy_who_made = result.get('etsy_who_made', 'i_did')
-            listing.etsy_when_made = result.get('etsy_when_made', 'made_to_order')
-            
-            # Set common fields
-            listing.title = listing.etsy_title
-            listing.long_description = listing.etsy_description
-            listing.keywords = ', '.join(result.get('etsy_tags', []))
-            
-            # Generate 10 AI-powered WOW Features
-            self._generate_ai_wow_features(product, listing, brand_tone)
-            
-        except json.JSONDecodeError as e:
-            self.logger.error(f"AI Etsy JSON parsing failed: {e}")
-            self.logger.error(f"Raw response content: {response.choices[0].message.content[:500]}")
-            raise Exception(f"AI generation failed - invalid JSON response: {e}")
-        except Exception as e:
-            self.logger.error(f"AI Etsy generation failed: {e}")
-            raise Exception(f"AI generation failed: {e}. Please check your OpenAI API key and try again.")
+    def _generate_fallback_etsy(self, product, listing):
+        listing.title = f"Handmade {product.name} by {product.brand_name}"
+        listing.long_description = f"**Handcrafted with Love**\n\n{product.description}\n\n**What Makes This Special:**\n• Unique design\n• Quality materials\n• Made with care"
+        listing.keywords = f"handmade, {product.name}, artisan, unique, {product.brand_name}"
 
     def _generate_fallback_tiktok(self, product, listing):
         listing.title = f"This {product.name} hits different"
@@ -6754,101 +6218,6 @@ Return ONLY valid JSON.
         listing.title = f"Buy {product.name} Online | {product.brand_name}"
         listing.long_description = f"<h2>Premium {product.name}</h2><p>{product.description}</p><h3>Features:</h3><ul><li>High quality materials</li><li>Exceptional performance</li><li>Customer satisfaction guaranteed</li></ul>"
         listing.keywords = f"{product.name}, buy online, {product.brand_name}, premium quality"
-
-    def _generate_ai_wow_features(self, product, listing, brand_tone):
-        """
-        Generate 10 AI-powered WOW Features - NO TEMPLATES
-        Each feature is 100% AI-generated content worth $50+ each
-        """
-        wow_prompt = f"""
-Generate 10 SPECIFIC business guides for {product.name} sellers. NO GENERIC ADVICE - everything must be tailored to this exact product.
-
-PRODUCT: {product.name} (${product.price})
-CATEGORY: {product.categories}
-TONE: {brand_tone}
-TARGET: {product.occasion if product.occasion else 'gift'} buyers
-
-❌ BANNED PHRASES: "step-by-step", "professional quality", "amazing results", "perfect", "premium"
-✅ REQUIRED: Product-specific tactics, exact techniques, concrete examples
-
-Generate these 10 SPECIFIC guides (300+ words each):
-
-1. shop_setup: Etsy shop optimization specifically for {product.name} sellers in {product.categories} niche
-2. social_media: Content calendar with specific post ideas for {product.name} on Instagram/Pinterest
-3. photography: Lighting/styling techniques specifically for photographing {product.name}
-4. pricing: Pricing strategy for {product.categories} market at ${product.price} price point
-5. seo_report: Etsy SEO tactics specific to {product.name} keywords and {product.categories}
-6. customer_service: Email scripts for {product.name} customer inquiries with {brand_tone} voice
-7. policies: Shop policies templates specifically for {product.categories} sellers
-8. variations: How to create variations of {product.name} for more sales
-9. competitor_insights: Analysis of {product.categories} competitors and positioning for {product.name}
-10. seasonal_calendar: Marketing calendar for {product.name} targeting {product.occasion if product.occasion else 'gift'} seasons
-
-Each guide must mention "{product.name}" at least 3 times and include specific tactics for the {brand_tone} aesthetic.
-
-Return JSON with exact keys: shop_setup, social_media, photography, pricing, seo_report, customer_service, policies, variations, competitor_insights, seasonal_calendar
-"""
-
-        try:
-            # Generate AI-powered WOW features
-            response = self.client.chat.completions.create(
-                model="gpt-4-turbo-preview",
-                messages=[{"role": "user", "content": wow_prompt}],
-                temperature=0.7,
-                max_completion_tokens=4000
-            )
-            
-            content = self._extract_json_from_response(response.choices[0].message.content)
-            wow_features = json.loads(content)
-            
-            # Populate all 10 WOW feature fields with AI-generated content
-            listing.etsy_shop_setup_guide = wow_features.get('shop_setup', '')
-            listing.etsy_social_media_package = wow_features.get('social_media', '')
-            listing.etsy_photography_guide = wow_features.get('photography', '')
-            listing.etsy_pricing_analysis = wow_features.get('pricing', '')
-            listing.etsy_seo_report = wow_features.get('seo_report', '')
-            listing.etsy_customer_service_templates = wow_features.get('customer_service', '')
-            listing.etsy_policies_templates = wow_features.get('policies', '')
-            listing.etsy_variations_guide = wow_features.get('variations', '')
-            listing.etsy_competitor_insights = wow_features.get('competitor_insights', '')
-            listing.etsy_seasonal_calendar = wow_features.get('seasonal_calendar', '')
-            
-            self.logger.info(f"Generated 10 AI-powered WOW features for {product.name}")
-            
-        except json.JSONDecodeError as e:
-            self.logger.error(f"AI WOW features JSON parsing failed: {e}")
-            self.logger.error(f"Raw WOW response content: {response.choices[0].message.content[:500]}")
-            raise Exception(f"AI WOW features generation failed - invalid JSON response: {e}")
-        except Exception as e:
-            self.logger.error(f"AI WOW features generation failed: {e}")
-            raise Exception(f"AI WOW features generation failed: {e}")
-
-    def _extract_json_from_response(self, content):
-        """Extract JSON from OpenAI response, handling various formats"""
-        content = content.strip()
-        
-        # Remove markdown code blocks
-        if content.startswith('```json'):
-            content = content[7:]
-        elif content.startswith('```'):
-            content = content[3:]
-        
-        if content.endswith('```'):
-            content = content[:-3]
-        
-        content = content.strip()
-        
-        # If still no valid JSON, try to find JSON within the response
-        if not content or not content.startswith('{'):
-            import re
-            json_match = re.search(r'\{.*\}', content, re.DOTALL)
-            if json_match:
-                content = json_match.group()
-            else:
-                # Return empty dict if no JSON found
-                return '{}'
-        
-        return content
 
     def _analyze_product_context(self, product):
         # Analyze product to generate dynamic, product-specific context for AI prompts
@@ -7360,567 +6729,3 @@ Return JSON with exact keys: shop_setup, social_media, photography, pricing, seo
                 'brandSummary': result.get('brandSummary', '')
             }
             return json.dumps(comprehensive_strategy, indent=2)
-    
-    def _generate_upc_code(self):
-        """Generate a valid 12-digit UPC code for Walmart"""
-        import random
-        # Generate a 12-digit UPC code (realistic format)
-        return f"{random.randint(100000000000, 999999999999):012d}"
-    
-    def _generate_enhanced_walmart_description(self, product, occasion):
-        """Generate enhanced 225-275 word description for Walmart premium quality"""
-        occasion_text = f" Perfect for {occasion}" if occasion and occasion != 'general' else ""
-        
-        enhanced_description = f"""Experience exceptional quality with the {product.brand_name} {product.name}. This premium product delivers outstanding performance and reliability that exceeds expectations. Engineered with precision and built to last, it represents the perfect combination of innovation and value.{occasion_text}
-        
-        Technical excellence meets everyday practicality in this professionally designed solution. Featuring advanced materials and meticulous construction, every detail has been optimized for superior results. The robust build quality ensures consistent performance while maintaining user-friendly operation for all skill levels.
-        
-        Transform your experience with proven benefits that make a real difference. Whether for professional applications or personal use, this versatile solution adapts to your specific needs. The intuitive design and reliable functionality deliver the peace of mind you deserve from a trusted brand.
-        
-        Backed by comprehensive warranty coverage and USA-based customer support, your satisfaction is guaranteed. Order today and discover why thousands of customers choose {product.brand_name} for quality, performance, and value. Free shipping available with fast delivery options to get you started quickly."""
-        
-        return enhanced_description
-    
-    def _generate_enhanced_walmart_keywords(self, product, occasion):
-        """Generate enhanced 25-keyword set for Walmart premium SEO"""
-        base_keywords = [
-            product.name.lower(),
-            f"{product.brand_name.lower()} {product.name.lower()}",
-            f"premium {product.name.lower()}",
-            f"professional {product.name.lower()}",
-            f"best {product.name.lower()}",
-            f"{product.name.lower()} review",
-            f"{product.name.lower()} sale",
-            f"buy {product.name.lower()}",
-            f"{product.name.lower()} walmart",
-            f"top rated {product.name.lower()}",
-            f"quality {product.name.lower()}",
-            f"affordable {product.name.lower()}",
-            f"durable {product.name.lower()}",
-            f"reliable {product.name.lower()}",
-            f"trusted {product.name.lower()}",
-            f"guaranteed {product.name.lower()}",
-            f"fast shipping {product.name.lower()}",
-            f"best price {product.name.lower()}",
-            f"customer favorite {product.name.lower()}",
-            f"highly rated {product.name.lower()}",
-            f"bestselling {product.name.lower()}",
-            f"great value {product.name.lower()}",
-            f"everyday low price",
-            f"free shipping",
-            f"pickup today"
-        ]
-        
-        if occasion and occasion != 'general':
-            base_keywords.extend([
-                f"{occasion} {product.name.lower()}",
-                f"{product.name.lower()} {occasion}",
-                f"{occasion} gift"
-            ])
-        
-        return ', '.join(base_keywords[:25])
-    
-    def _validate_brand_tone_compliance(self, title, description, features, brand_tone):
-        """Validate that content matches the required brand tone"""
-        full_content = f"{title} {description} {' '.join(features) if features else ''}".lower()
-        
-        brand_tone_keywords = {
-            'luxury': ['premium', 'luxury', 'sophisticated', 'exclusive', 'elite', 'prestige', 'superior', 'refined'],
-            'professional': ['professional', 'certified', 'expert', 'precision', 'technical', 'advanced', 'reliable', 'engineered'],
-            'casual': ['easy', 'simple', 'friendly', 'convenient', 'everyday', 'comfortable', 'user-friendly', 'accessible'],
-            'trendy': ['modern', 'innovative', 'cutting-edge', 'stylish', 'contemporary', 'latest', 'trending', 'dynamic']
-        }
-        
-        required_keywords = brand_tone_keywords.get(brand_tone.lower(), brand_tone_keywords['professional'])
-        found_keywords = sum(1 for keyword in required_keywords if keyword in full_content)
-        
-        # Require at least 3 brand tone keywords for compliance
-        return found_keywords >= 3
-    
-    def _enhance_brand_tone_compliance(self, description, brand_tone):
-        """Enhance description to ensure brand tone compliance"""
-        tone_enhancements = {
-            'luxury': " This premium product delivers sophisticated excellence with exclusive features that discerning customers appreciate. Experience luxury-grade performance with elite craftsmanship.",
-            'professional': " This professional-grade solution provides certified reliability with expert engineering. Advanced technical specifications ensure precise performance for demanding applications.",
-            'casual': " This user-friendly product makes everyday tasks simple and convenient. Easy to use design ensures comfortable operation for everyone in the family.",
-            'trendy': " This innovative product features cutting-edge technology with modern styling. Stay ahead of trends with dynamic performance and contemporary design."
-        }
-        
-        enhancement = tone_enhancements.get(brand_tone.lower(), tone_enhancements['professional'])
-        return description + enhancement
-    
-    def _enhance_title_brand_tone(self, title, brand_tone):
-        """Enhance title to include brand tone keywords"""
-        tone_prefixes = {
-            'luxury': 'Premium ',
-            'professional': 'Professional ',
-            'casual': 'Easy-Use ',
-            'trendy': 'Modern '
-        }
-        
-        prefix = tone_prefixes.get(brand_tone.lower(), 'Professional ')
-        
-        # Add prefix if not already present
-        if not any(word in title.lower() for word in ['premium', 'professional', 'easy', 'modern']):
-            # Insert tone word after brand name if possible
-            words = title.split()
-            if len(words) > 1:
-                words.insert(1, prefix.strip())
-                enhanced_title = ' '.join(words)
-                # Ensure title doesn't exceed 100 chars
-                if len(enhanced_title) <= 100:
-                    return enhanced_title
-        
-        return title
-
-    def _enhance_bullet_points_quality(self, bullet_points, product, marketplace):
-        """Enhance bullet points for 10/10 quality scoring."""
-        enhanced_bullets = []
-        
-        # Quality enhancement patterns for benefits
-        benefit_patterns = [
-            "EXPERIENCE SUPERIOR {feature} - {benefit} that {outcome} for enhanced performance",
-            "ENGINEERED FOR RELIABILITY - {spec} ensures {advantage} during daily use",
-            "PROFESSIONAL-GRADE {quality} - {material} delivers {performance} you can trust",
-            "CONVENIENT {functionality} - {ease} means effortless operation in your routine",
-            "PREMIUM {standard} - {certification} provides confidence and peace of mind"
-        ]
-        
-        # Process each bullet point
-        for i, bullet in enumerate(bullet_points[:5]):  # Limit to 5 for optimal performance
-            if i < len(benefit_patterns) and bullet.strip():
-                # Extract key feature from bullet
-                words = bullet.strip().split()
-                feature = ' '.join(words[:2]) if len(words) >= 2 else words[0] if words else "performance"
-                
-                # Apply enhancement pattern
-                if "wireless" in bullet.lower() or "battery" in bullet.lower():
-                    enhanced = f"ADVANCED CONNECTIVITY - {feature} provides reliable wireless performance with extended battery life for uninterrupted use. Experience professional-grade reliability perfect for daily activities."
-                elif "steel" in bullet.lower() or "material" in bullet.lower():
-                    enhanced = f"PREMIUM CONSTRUCTION - {feature} utilizes high-grade materials ensuring exceptional durability and lasting performance. Professional craftsmanship you can trust for years of reliable service."
-                elif "design" in bullet.lower() or "ergonomic" in bullet.lower():
-                    enhanced = f"ENGINEERED COMFORT - {feature} incorporates ergonomic design principles for optimal user experience. Comfortable operation reduces fatigue while maximizing efficiency during extended use."
-                elif "quality" in bullet.lower() or "professional" in bullet.lower():
-                    enhanced = f"INDUSTRY-LEADING PERFORMANCE - {feature} delivers professional-grade results that exceed expectations. Superior quality engineering ensures consistent, reliable operation you can depend on."
-                else:
-                    # General enhancement
-                    enhanced = f"SUPERIOR {feature.upper()} - Advanced engineering delivers enhanced performance that transforms your experience. Professional-quality construction ensures reliable, long-lasting satisfaction."
-                
-                enhanced_bullets.append(enhanced)
-            else:
-                # Keep original if no pattern available
-                enhanced_bullets.append(bullet)
-        
-        return enhanced_bullets
-
-    def _enhance_description_quality(self, description, product, marketplace):
-        """Enhance product description for 10/10 quality scoring."""
-        
-        # Platform-specific targets
-        platform_targets = {
-            "walmart": {"words": (200, 300), "tone": "practical and family-focused"},
-            "amazon": {"words": (250, 400), "tone": "professional and confident"}
-        }
-        
-        platform_type = "walmart" if marketplace.startswith("walmart") else "amazon"
-        target = platform_targets[platform_type]
-        
-        # Conversational starters that engage customers
-        conversation_starters = [
-            f"Experience the difference that professional-grade {product.name.lower()} makes in your daily routine.",
-            f"Imagine transforming your {self._get_product_context(product)} experience with {product.brand_name}'s advanced engineering.",
-            f"You deserve more than ordinary quality - that's why {product.brand_name} created this exceptional {product.name.lower()}."
-        ]
-        
-        # Real-life use cases
-        use_cases = [
-            f"Perfect for {product.occasion or 'daily use'} when you need reliable, professional-grade performance.",
-            f"Whether you're a professional or enthusiast, this {product.name.lower()} delivers consistently superior results.",
-            f"From morning routines to evening activities, experience premium quality throughout your day."
-        ]
-        
-        # Emotional engagement elements
-        emotional_hooks = [
-            "Feel confident knowing you've chosen industry-leading quality and reliability.",
-            "Enjoy the peace of mind that comes with superior craftsmanship and proven performance.",
-            "Love the convenience and dependability that enhances your daily experience."
-        ]
-        
-        # Build enhanced description
-        enhanced_parts = []
-        enhanced_parts.append(conversation_starters[0])
-        
-        # Add existing description content if good quality
-        if description and len(description.split()) > 50:
-            # Extract best parts of existing description
-            sentences = description.split('.')
-            good_sentences = [s.strip() + '.' for s in sentences if len(s.strip()) > 20 and any(word in s.lower() for word in ['professional', 'quality', 'premium', 'experience', 'performance'])]
-            if good_sentences:
-                enhanced_parts.extend(good_sentences[:2])
-        
-        # Add use cases and emotional elements
-        enhanced_parts.extend(use_cases[:2])
-        enhanced_parts.extend(emotional_hooks[:1])
-        
-        # Add technical details naturally
-        if product.features:
-            features_list = [f.strip() for f in product.features.split('\n') if f.strip()]
-            if features_list:
-                tech_detail = f"Key advantages include {features_list[0].lower()}, {features_list[1].lower() if len(features_list) > 1 else 'advanced engineering'}, ensuring {self._get_benefit_outcome(product)}."
-                enhanced_parts.append(tech_detail)
-        
-        # Platform-specific closing
-        if platform_type == "walmart":
-            enhanced_parts.append(f"Great value for families who demand both professional quality and reliable performance. Your satisfaction is guaranteed.")
-        else:
-            enhanced_parts.append(f"Choose professional excellence with {product.brand_name} - your complete satisfaction is guaranteed.")
-        
-        # Join and optimize length
-        enhanced_description = ' '.join(enhanced_parts)
-        words = enhanced_description.split()
-        
-        # Adjust to target length
-        if len(words) < target["words"][0]:
-            # Add more detail if too short
-            additional = f" The {product.brand_name} {product.name} represents years of engineering excellence, designed specifically for users who value both superior performance and lasting reliability in their {self._get_product_context(product)} equipment. Every detail has been carefully considered to deliver the quality you deserve."
-            enhanced_description += additional
-        elif len(words) > target["words"][1]:
-            # Trim if too long
-            enhanced_description = ' '.join(words[:target["words"][1]])
-        
-        return enhanced_description
-
-    def _enhance_keywords_quality(self, listing, product, marketplace):
-        """Enhance keywords for 10/10 SEO quality scoring."""
-        
-        # Platform-specific keyword strategies
-        platform_strategies = {
-            "walmart": {
-                "count_target": 15,
-                "focus_terms": ["value", "family", "reliable", "affordable", "quality", "great deal", "save money"],
-                "avoid_terms": ["luxury", "premium", "expensive", "exclusive"]
-            },
-            "amazon": {
-                "count_target": 25,
-                "focus_terms": ["professional", "premium", "best", "top-rated", "quality", "industry-leading"],
-                "avoid_terms": ["cheap", "basic", "simple", "standard"]
-            }
-        }
-        
-        platform_type = "walmart" if marketplace.startswith("walmart") else "amazon"
-        strategy = platform_strategies[platform_type]
-        
-        # Extract existing keywords
-        current_keywords = []
-        if hasattr(listing, 'keywords') and listing.keywords:
-            current_keywords = [k.strip() for k in listing.keywords.split(',') if k.strip()]
-        
-        # Generate enhanced keyword mix
-        enhanced_keywords = []
-        
-        # 1. Primary product keywords (3-5)
-        primary_keywords = [
-            f"professional {product.name.lower()}",
-            f"{product.brand_name.lower()} {product.name.lower()}",
-            f"premium {product.name.lower()}",
-            f"high quality {product.name.lower()}"
-        ]
-        
-        # 2. Feature-based keywords (5-8)
-        feature_keywords = []
-        if product.features:
-            features = [f.strip().lower() for f in product.features.split('\n') if f.strip()]
-            for feature in features[:3]:
-                # Extract key terms from features
-                if "wireless" in feature:
-                    feature_keywords.extend(["wireless technology", "wireless connectivity", "wireless performance"])
-                elif "battery" in feature:
-                    feature_keywords.extend(["long battery life", "extended battery", "battery performance"])
-                elif "steel" in feature or "material" in feature:
-                    feature_keywords.extend(["premium materials", "durable construction", "quality materials"])
-                else:
-                    # Generic feature enhancement
-                    words = feature.split()[:2]
-                    if len(words) >= 2:
-                        feature_keywords.append(' '.join(words))
-        
-        # 3. Benefit keywords (3-5)
-        benefit_keywords = [
-            f"reliable {product.name.lower()}",
-            f"durable {product.name.lower()}",
-            f"trusted {product.name.lower()}",
-            f"professional grade {product.name.lower()}",
-            f"industry leading {product.name.lower()}"
-        ]
-        
-        # 4. Occasion keywords (2-3)
-        occasion_keywords = []
-        if product.occasion:
-            occasion_keywords = [
-                f"{product.occasion} gift",
-                f"perfect {product.occasion} present",
-                f"{product.occasion} shopping"
-            ]
-        
-        # 5. Long-tail keywords (5-10)
-        from datetime import datetime
-        long_tail_keywords = [
-            f"best {product.name.lower()} for professionals",
-            f"top rated {product.name.lower()} {datetime.now().year}",
-            f"professional {product.name.lower()} with warranty",
-            f"premium {product.name.lower()} for daily use",
-            f"reliable {product.name.lower()} for home",
-            f"quality {product.name.lower()} affordable price",
-            f"{product.brand_name.lower()} professional equipment",
-            f"trusted {product.name.lower()} brand"
-        ]
-        
-        # Combine all keywords
-        all_enhanced_keywords = []
-        all_enhanced_keywords.extend(primary_keywords[:4])
-        all_enhanced_keywords.extend(feature_keywords[:6])
-        all_enhanced_keywords.extend(benefit_keywords[:4])
-        all_enhanced_keywords.extend(occasion_keywords[:2])
-        all_enhanced_keywords.extend(long_tail_keywords[:8])
-        
-        # Remove duplicates and filter
-        seen = set()
-        final_keywords = []
-        for keyword in all_enhanced_keywords:
-            if keyword.lower() not in seen and len(keyword) > 3:
-                seen.add(keyword.lower())
-                final_keywords.append(keyword)
-        
-        # Ensure target count
-        while len(final_keywords) < strategy["count_target"] and len(final_keywords) < 30:
-            # Add platform-specific terms
-            for term in strategy["focus_terms"]:
-                if len(final_keywords) >= strategy["count_target"]:
-                    break
-                new_keyword = f"{term} {product.name.lower()}"
-                if new_keyword not in final_keywords:
-                    final_keywords.append(new_keyword)
-        
-        # Create frontend and backend keyword sets
-        frontend_keywords = ', '.join(final_keywords[:strategy["count_target"]])
-        backend_keywords = ' '.join(final_keywords[strategy["count_target"]:strategy["count_target"]+10]) if len(final_keywords) > strategy["count_target"] else ""
-        
-        return {
-            'frontend': frontend_keywords,
-            'backend': backend_keywords,
-            'total_count': len(final_keywords)
-        }
-
-    def _get_product_context(self, product):
-        """Extract product context for description enhancement."""
-        if product.categories:
-            return product.categories.split('>')[-1].strip().lower()
-        return "lifestyle"
-
-    def _get_benefit_outcome(self, product):
-        """Generate benefit outcome based on product type."""
-        context = self._get_product_context(product).lower()
-        outcomes = {
-            "headphones": "immersive audio experience and crystal-clear communication",
-            "kitchen": "culinary excellence and effortless food preparation", 
-            "fitness": "optimal performance and health improvements",
-            "home": "comfortable living and enhanced daily routines",
-            "gaming": "competitive advantage and immersive entertainment",
-            "audio": "superior sound quality and professional performance"
-        }
-        
-        for key, outcome in outcomes.items():
-            if key in context:
-                return outcome
-        return "superior performance and lasting satisfaction"
-
-    def _get_etsy_brand_tone_guidance(self, brand_tone):
-        """Get specific guidance for Etsy brand tone optimization."""
-        guidance = {
-            'handmade': """
-🖐️ HANDMADE TONE:
-- Emphasize personal craftsmanship and human touch
-- Use words like "lovingly crafted", "hand-finished", "artisan-made"
-- Highlight the time and care invested in each piece
-- Mention unique variations that show human craftsmanship""",
-            'artistic': """
-🎨 ARTISTIC TONE:
-- Focus on creative inspiration and artistic vision
-- Use expressive language about design and aesthetics
-- Mention artistic techniques and creative process
-- Appeal to buyers who appreciate art and creativity""",
-            'vintage': """
-🕰️ VINTAGE TONE:
-- Emphasize timeless quality and classic appeal
-- Use nostalgic language and historical references
-- Highlight enduring style and quality construction
-- Appeal to collectors and vintage enthusiasts""",
-            'bohemian': """
-🌸 BOHEMIAN TONE:
-- Use free-spirited and earthy language
-- Emphasize natural materials and organic shapes
-- Mention spiritual or wellness benefits
-- Appeal to alternative lifestyle and nature lovers""",
-            'minimalist': """
-⚪ MINIMALIST TONE:
-- Focus on clean lines and functional beauty
-- Use simple, clear language without excess
-- Emphasize quality over quantity
-- Appeal to modern, design-conscious buyers""",
-            'luxury_craft': """
-💎 LUXURY CRAFT TONE:
-- Emphasize premium materials and superior craftsmanship
-- Use sophisticated language about quality and exclusivity
-- Mention attention to detail and refinement
-- Appeal to discerning buyers seeking the finest""",
-            'eco_friendly': """
-🌱 ECO-FRIENDLY TONE:
-- Highlight sustainable materials and practices
-- Mention environmental benefits and responsibility
-- Use nature-inspired language
-- Appeal to environmentally conscious buyers""",
-            'whimsical': """
-🦄 WHIMSICAL TONE:
-- Use playful and imaginative language
-- Emphasize fun and magical qualities
-- Mention joy and wonder the item brings
-- Appeal to those seeking unique and delightful pieces""",
-            'rustic': """
-🏡 RUSTIC TONE:
-- Emphasize natural textures and countryside charm
-- Use warm, homey language
-- Mention traditional techniques and materials
-- Appeal to those seeking cozy, authentic pieces""",
-            'modern_craft': """
-🔸 MODERN CRAFT TONE:
-- Combine contemporary design with handmade quality
-- Use clean, professional language with personal touches
-- Emphasize innovation in traditional crafting
-- Appeal to modern design enthusiasts"""
-        }
-        return guidance.get(brand_tone, guidance['handmade'])
-
-    def _get_marketplace_context(self, marketplace):
-        """Get marketplace-specific context for Etsy listings."""
-        # Handle simplified Etsy marketplace (just 'etsy')
-        if not marketplace or marketplace == 'etsy':
-            return {
-                'country': 'Global',
-                'language': 'English',
-                'cultural_context': '🌍 Optimize for global Etsy marketplace with universal appeal and international gift-giving occasions.'
-            }
-        
-        # Legacy support for country-specific Etsy codes (if any remain)
-        if not marketplace.startswith('etsy_'):
-            return {
-                'country': 'Global',
-                'language': 'English',
-                'cultural_context': '🌍 Optimize for global Etsy marketplace with universal appeal and international gift-giving occasions.'
-            }
-        
-        marketplace_map = {
-            'etsy_us': {'country': 'United States', 'language': 'English', 'culture': 'American'},
-            'etsy_ca': {'country': 'Canada', 'language': 'English', 'culture': 'Canadian'},
-            'etsy_uk': {'country': 'United Kingdom', 'language': 'English', 'culture': 'British'},
-            'etsy_au': {'country': 'Australia', 'language': 'English', 'culture': 'Australian'},
-            'etsy_de': {'country': 'Germany', 'language': 'German', 'culture': 'German'},
-            'etsy_fr': {'country': 'France', 'language': 'French', 'culture': 'French'},
-            'etsy_it': {'country': 'Italy', 'language': 'Italian', 'culture': 'Italian'},
-            'etsy_es': {'country': 'Spain', 'language': 'Spanish', 'culture': 'Spanish'},
-            'etsy_nl': {'country': 'Netherlands', 'language': 'Dutch', 'culture': 'Dutch'},
-            'etsy_mx': {'country': 'Mexico', 'language': 'Spanish', 'culture': 'Mexican'},
-            'etsy_br': {'country': 'Brazil', 'language': 'Portuguese', 'culture': 'Brazilian'},
-            'etsy_jp': {'country': 'Japan', 'language': 'Japanese', 'culture': 'Japanese'},
-        }
-        
-        info = marketplace_map.get(marketplace, marketplace_map['etsy_us'])
-        info['cultural_context'] = f"🌍 Optimize for {info['country']} Etsy marketplace with {info['culture']} cultural references and local gift-giving occasions."
-        
-        return info
-
-    def _get_occasion_context(self, occasion):
-        """Get occasion-specific context for Etsy listings."""
-        occasion_guidance = {
-            'wedding': """
-💍 WEDDING OCCASION:
-- Emphasize romantic and elegant qualities
-- Mention bridal party gifts, wedding decor, or keepsakes
-- Use romantic language and wedding-specific keywords
-- Target gift-givers shopping for wedding celebrations""",
-            'baby_shower': """
-🍼 BABY SHOWER OCCASION:
-- Focus on nursery decor and baby-safe materials
-- Mention personalization for baby names
-- Use gentle, nurturing language
-- Target expecting parents and gift-givers""",
-            'valentines_day': """
-💝 VALENTINE'S DAY OCCASION:
-- Emphasize romantic and love-themed aspects
-- Mention couple gifts and romantic gestures
-- Use passionate and loving language
-- Target romantic gift-givers""",
-            'christmas': """
-🎄 CHRISTMAS OCCASION:
-- Highlight holiday spirit and festive qualities
-- Mention gift-giving and holiday decor
-- Use warm, celebratory language
-- Target Christmas shoppers and decorators""",
-            'mothers_day': """
-🌸 MOTHER'S DAY OCCASION:
-- Emphasize appreciation and love for mothers
-- Mention family connections and maternal themes
-- Use heartfelt, appreciative language
-- Target children buying for mothers""",
-            'graduation': """
-🎓 GRADUATION OCCASION:
-- Focus on achievement and milestone celebration
-- Mention career and future success
-- Use inspiring and congratulatory language
-- Target gift-givers celebrating graduates"""
-        }
-        
-        return occasion_guidance.get(occasion, "")
-
-    def _calculate_etsy_quality_scores(self, listing, quality_optimization):
-        """Calculate comprehensive quality scores for Etsy listings."""
-        # Emotion score based on storytelling and personal connection
-        emotion_indicators = ['story', 'inspiration', 'handmade', 'crafted', 'love', 'care', 'personal']
-        emotion_count = sum(1 for indicator in emotion_indicators if indicator.lower() in listing.etsy_description.lower())
-        listing.emotion_score = min(10.0, emotion_count * 1.5)
-        
-        # Conversion score based on SEO optimization and keywords
-        title_length = len(listing.etsy_title)
-        tags_count = len(json.loads(listing.etsy_tags)) if listing.etsy_tags else 0
-        conversion_base = 7.0
-        if 40 <= title_length <= 140: conversion_base += 1.0
-        if tags_count == 13: conversion_base += 1.0
-        if listing.etsy_materials: conversion_base += 0.5
-        if listing.etsy_processing_time: conversion_base += 0.5
-        listing.conversion_score = min(10.0, conversion_base)
-        
-        # Trust score based on detailed information and professionalism
-        trust_base = 6.0
-        if listing.etsy_care_instructions: trust_base += 1.0
-        if listing.etsy_materials: trust_base += 1.0
-        if listing.etsy_processing_time: trust_base += 1.0
-        if listing.etsy_story_behind: trust_base += 1.0
-        listing.trust_score = min(10.0, trust_base)
-        
-        # Overall quality score
-        listing.quality_score = (listing.emotion_score + listing.conversion_score + listing.trust_score) / 3.0
-
-    def _get_brand_tone_prefix(self, brand_tone):
-        """Get appropriate prefix for brand tone."""
-        prefixes = {
-            'handmade': 'Handcrafted',
-            'artistic': 'Artistic',
-            'vintage': 'Vintage',
-            'bohemian': 'Bohemian',
-            'minimalist': 'Minimalist',
-            'luxury_craft': 'Luxury',
-            'eco_friendly': 'Eco-Friendly',
-            'whimsical': 'Whimsical',
-            'rustic': 'Rustic',
-            'modern_craft': 'Modern'
-        }
-        return prefixes.get(brand_tone, 'Beautiful')

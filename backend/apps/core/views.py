@@ -115,11 +115,11 @@ class ProductViewSet(viewsets.ModelViewSet):
         import sys
         import io
         
-        # Redirect stdout to prevent console encoding issues
-        old_stdout = sys.stdout
-        old_stderr = sys.stderr
-        sys.stdout = io.StringIO()
-        sys.stderr = io.StringIO()
+        # Temporarily disable stdout redirection for debugging
+        # old_stdout = sys.stdout
+        # old_stderr = sys.stderr
+        # sys.stdout = io.StringIO()
+        # sys.stderr = io.StringIO()
         
         try:
             # Get request data
@@ -132,30 +132,74 @@ class ProductViewSet(viewsets.ModelViewSet):
                 defaults={'email': 'demo@listory.ai', 'first_name': 'Demo', 'last_name': 'User'}
             )
             
-            # Create product directly
+            # Smart brand tone detection for Etsy
+            brand_tone = data.get('brand_tone', '')
+            target_platform = data.get('target_platform', 'amazon')
+            
+            # Debug print statements
+            print(f"DEBUG: brand_tone from request: '{brand_tone}'")
+            print(f"DEBUG: target_platform from request: '{target_platform}'")
+            
+            # Auto-detect brand tone for Etsy if not provided
+            if not brand_tone and target_platform == 'etsy':
+                brand_tone = self._auto_detect_etsy_brand_tone(data)
+                print(f"DEBUG: Auto-detected brand_tone: '{brand_tone}'")
+            elif not brand_tone:
+                brand_tone = 'professional'  # Default for other platforms
+                print(f"DEBUG: Using default brand_tone: '{brand_tone}'")
+            
+            # Auto-set marketplace for Etsy
+            marketplace = data.get('marketplace', '')
+            if target_platform == 'etsy' and not marketplace:
+                marketplace = 'etsy'
+                print(f"DEBUG: Auto-set marketplace to: '{marketplace}'")
+            elif not marketplace:
+                marketplace = 'us'  # Default for other platforms
+                print(f"DEBUG: Using default marketplace: '{marketplace}'")
+            
+            # Create product directly with all fields
             product = Product.objects.create(
                 user=user,
                 name=data.get('name', ''),
                 description=data.get('description', ''),
                 brand_name=data.get('brand_name', ''),
-                brand_tone=data.get('brand_tone', 'professional'),
-                target_platform=data.get('target_platform', 'amazon'),
+                brand_tone=brand_tone,
+                target_platform=target_platform,
+                marketplace=marketplace,
+                marketplace_language=data.get('marketplace_language', 'en'),
                 competitor_urls=data.get('competitor_urls', ''),
                 price=data.get('price'),
                 categories=data.get('categories', ''),
                 features=data.get('features', ''),
-                target_keywords=data.get('target_keywords', '')
+                target_keywords=data.get('target_keywords', ''),
+                occasion=data.get('occasion', ''),
+                seo_keywords=data.get('seo_keywords', ''),
+                long_tail_keywords=data.get('long_tail_keywords', ''),
+                faqs=data.get('faqs', ''),
+                whats_in_box=data.get('whats_in_box', ''),
+                product_urls=data.get('product_urls', ''),
+                competitor_asins=data.get('competitor_asins', ''),
+                brand_persona=data.get('brand_persona', ''),
+                target_audience=data.get('target_audience', ''),
             )
             
-            # Return success response
-            return Response({
+            # Return success response with auto-detection info
+            response_data = {
                 'id': product.id,
                 'name': product.name,
                 'brand_name': product.brand_name,
+                'brand_tone': product.brand_tone,
                 'target_platform': product.target_platform,
+                'marketplace': product.marketplace,
                 'created_at': product.created_at.isoformat(),
                 'status': 'created'
-            }, status=status.HTTP_201_CREATED)
+            }
+            
+            # Add auto-detection message for Etsy
+            if target_platform == 'etsy' and not data.get('brand_tone', ''):
+                response_data['message'] = f'Etsy product created with auto-detected brand tone: {product.brand_tone}'
+            
+            return Response(response_data, status=status.HTTP_201_CREATED)
             
         except Exception as e:
             return Response({
@@ -163,9 +207,49 @@ class ProductViewSet(viewsets.ModelViewSet):
                 'message': 'Product creation failed'
             }, status=status.HTTP_400_BAD_REQUEST)
         finally:
-            # Restore stdout/stderr
-            sys.stdout = old_stdout
-            sys.stderr = old_stderr
+            # Restore stdout/stderr (commented out for debugging)
+            # sys.stdout = old_stdout
+            # sys.stderr = old_stderr
+            pass
+    
+    def _auto_detect_etsy_brand_tone(self, data):
+        """AI-powered brand tone detection for Etsy products"""
+        name = data.get('name', '').lower()
+        description = data.get('description', '').lower()
+        features = data.get('features', '').lower()
+        
+        combined_text = f"{name} {description} {features}"
+        
+        # Keywords mapping for automatic detection based on 2025 Etsy research
+        tone_keywords = {
+            'handmade_artisan': ['handmade', 'artisan', 'crafted', 'handcrafted', 'made by hand', 'craft'],
+            'vintage_charm': ['vintage', 'retro', 'antique', 'classic', 'timeless', 'nostalgic'],
+            'bohemian_free': ['bohemian', 'boho', 'free spirit', 'wanderlust', 'hippie', 'eclectic'],
+            'cottagecore_cozy': ['cottage', 'cozy', 'farmhouse', 'rustic', 'country', 'pastoral'],
+            'modern_minimalist': ['minimal', 'clean', 'simple', 'geometric', 'sleek', 'contemporary'],
+            'whimsical_playful': ['whimsical', 'playful', 'fun', 'quirky', 'cute', 'magical'],
+            'eco_conscious': ['eco', 'sustainable', 'organic', 'natural', 'bamboo', 'recycled'],
+            'luxury_handcrafted': ['luxury', 'premium', 'high-end', 'elegant', 'sophisticated'],
+            'artistic_creative': ['artistic', 'creative', 'unique', 'original', 'expressive', 'art'],
+            'messy_coquette': ['coquette', 'feminine', 'ruffles', 'bows', 'pink', 'girly'],
+            'chateaucore': ['french', 'chateau', 'romantic', 'ornate', 'baroque', 'elegant'],
+            'galactic_metallic': ['metallic', 'chrome', 'silver', 'holographic', 'futuristic', 'space'],
+        }
+        
+        # Score each tone based on keyword matches
+        tone_scores = {}
+        for tone, keywords in tone_keywords.items():
+            score = sum(1 for keyword in keywords if keyword in combined_text)
+            if score > 0:
+                tone_scores[tone] = score
+        
+        # Return the tone with highest score, or default
+        if tone_scores:
+            best_tone = max(tone_scores, key=tone_scores.get)
+            return best_tone
+        
+        # Default to handmade_artisan for Etsy
+        return 'handmade_artisan'
 
 
 @csrf_exempt

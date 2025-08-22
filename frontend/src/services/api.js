@@ -34,7 +34,7 @@ api.interceptors.response.use(
 );
 
 export const productAPI = {
-  create: (productData) => api.post('/core/products/', productData),
+  create: (productData) => api.post('/core/products/create_safe/', productData),
   list: () => api.get('/core/products/'),
   get: (id) => api.get(`/core/products/${id}/`),
   update: (id, data) => api.put(`/core/products/${id}/`, data),

@@ -5,6 +5,7 @@ import { ArrowLeft, Copy, Download, Star, Tag, Video, ShoppingCart, Eye, Trendin
 import toast from 'react-hot-toast';
 import PlatformPreview from '../components/PlatformPreview';
 import ListingOptimizationScore from '../components/ListingOptimizationScore';
+import EtsyPremiumResults from '../components/EtsyPremiumResults';
 import { listingAPI } from '../services/api';
 
 const ListingResults = () => {
@@ -135,6 +136,11 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
         </div>
       </div>
     );
+  }
+
+  // Check if this is an Etsy listing - use premium experience
+  if (currentListing?.platform === 'etsy' || currentListing?.product?.target_platform === 'etsy') {
+    return <EtsyPremiumResults listing={currentListing} />;
   }
 
   const TabButton = ({ id, label, icon: Icon, active, onClick }) => (

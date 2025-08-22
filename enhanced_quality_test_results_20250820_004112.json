@@ -1,0 +1,47 @@
+{
+  "walmart_usa": {
+    "status": "success",
+    "quality_indicators": {
+      "title_length": 78,
+      "features_count": 7,
+      "description_words": 258,
+      "keywords_count": 24,
+      "has_enhanced_language": true,
+      "has_benefit_language": true,
+      "has_emotional_hooks": true
+    },
+    "title_preview": "AudioPro Professional Gaming Headset Wireless ANC Christmas Gift Rollback Deal",
+    "features_preview": "IMMERSIVE AUDIO: High-fidelity drivers create lifelike gaming sound...",
+    "description_preview": "Make this holiday season unforgettable with the AudioPro Professional Wireless Gaming Headset \u2013 the ..."
+  },
+  "us": {
+    "status": "success",
+    "quality_indicators": {
+      "title_length": 200,
+      "features_count": 5,
+      "description_words": 153,
+      "keywords_count": 8,
+      "has_enhanced_language": true,
+      "has_benefit_language": true,
+      "has_emotional_hooks": true
+    },
+    "title_preview": "Advanced Professional Gaming Headset with Precision Audio and Calibrated Noise C...",
+    "features_preview": "PREMIUM CONSTRUCTION - TESTED DURABILITY utilizes high-grade materials ensuring ...",
+    "description_preview": "Experience the difference that professional-grade professional gaming headset makes in your daily ro..."
+  },
+  "uk": {
+    "status": "success",
+    "quality_indicators": {
+      "title_length": 200,
+      "features_count": 5,
+      "description_words": 139,
+      "keywords_count": 7,
+      "has_enhanced_language": true,
+      "has_benefit_language": true,
+      "has_emotional_hooks": true
+    },
+    "title_preview": "Advanced Professional Gaming Headset with Active Noise Cancellation - AudioPro W...",
+    "features_preview": "ADVANCED CONNECTIVITY - BRITISH ENGINEERING provides reliable wireless performan...",
+    "description_preview": "Experience the difference that professional-grade professional gaming headset makes in your daily ro..."
+  }
+}

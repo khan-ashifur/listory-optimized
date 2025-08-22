@@ -865,6 +865,46 @@ class MarketOccasions:
                 'reef_diving_season': 'Reef Diving Season',  # Great Barrier Reef
                 'wine_harvest': 'Wine Harvest',  # Vintage season
                 'farmers_market': 'Farmers Market Season'  # Local produce markets
+            },
+            
+            # Etsy-specific occasions (creative, handmade, artistic focus)
+            'etsy_global': {
+                'wedding': 'Wedding & Bridal',
+                'baby_shower': 'Baby Shower & Nursery',
+                'birthday': 'Birthday Celebration', 
+                'anniversary': 'Anniversary Gift',
+                'christmas': 'Christmas & Holidays',
+                'valentines_day': "Valentine's Day",
+                'mothers_day': "Mother's Day",
+                'fathers_day': "Father's Day",
+                'graduation': 'Graduation Gift',
+                'housewarming': 'Housewarming & New Home',
+                'bridal_shower': 'Bridal Shower',
+                'engagement': 'Engagement Celebration',
+                'thanksgiving': 'Thanksgiving Decor',
+                'easter': 'Easter & Spring',
+                'halloween': 'Halloween & Fall',
+                'new_year': 'New Year Celebration',
+                'back_to_school': 'Back to School',
+                'black_friday': 'Black Friday Sale',
+                'cyber_monday': 'Cyber Monday Deal',
+                'custom_occasion': 'Custom Occasion',
+                # Etsy-specific creative occasions
+                'art_show': 'Art Show & Gallery Opening',
+                'craft_fair': 'Craft Fair & Market',
+                'studio_opening': 'Studio Opening',
+                'art_class': 'Art Class & Workshop',
+                'maker_fair': 'Maker Fair & Expo',
+                'vintage_market': 'Vintage Market',
+                'handmade_holiday': 'Handmade Holiday Market',
+                'artist_showcase': 'Artist Showcase',
+                'creative_workshop': 'Creative Workshop',
+                'fiber_arts_show': 'Fiber Arts Show',
+                'pottery_sale': 'Pottery & Ceramics Sale',
+                'jewelry_trunk_show': 'Jewelry Trunk Show',
+                'home_decor_expo': 'Home Decor Expo',
+                'gift_market': 'Artisan Gift Market',
+                'seasonal_craft_fair': 'Seasonal Craft Fair'
             }
         }
         
@@ -881,6 +921,10 @@ class MarketOccasions:
     
     def get_market_occasions(self, marketplace):
         """Get appropriate occasions for a specific market"""
+        # Handle Etsy marketplaces with global Etsy occasions
+        if marketplace and marketplace.startswith('etsy_'):
+            return self.market_occasions.get('etsy_global', self.market_occasions['us'])
+        
         return self.market_occasions.get(marketplace, self.market_occasions['us'])
     
     def translate_occasion(self, occasion, marketplace):
