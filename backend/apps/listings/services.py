@@ -5727,6 +5727,23 @@ Requirements:
     "Warranty or reliability information"
   ],
   "description": "Write 200-250 word professional description focusing on technical advantages, performance benefits, and product superiority. Include specific details about materials, certifications, and real-world performance. Avoid generic templates.",
+  "product_type": "Specific product category (e.g., Gaming Headset, Kitchen Knife, Bluetooth Speaker)",
+  "attributes": {{
+    "color": "Primary color",
+    "size": "Dimensions or size",
+    "material": "Primary material",
+    "brand": "{product.brand_name}",
+    "model": "Model name or number",
+    "price": "{product.price}"
+  }},
+  "specifications": {{
+    "weight": "Product weight",
+    "dimensions": "L x W x H measurements",
+    "power": "Power requirements if applicable",
+    "compatibility": "Compatible devices/systems",
+    "warranty": "Warranty period",
+    "certification": "Safety certifications"
+  }},
   "seo_keywords": [
     "primary keyword 1",
     "primary keyword 2",
@@ -5753,10 +5770,10 @@ Requirements:
 
         self.logger.info("Calling OpenAI for Walmart listing generation...")
         response = self.client.chat.completions.create(
-            model="gpt-5-chat-latest",
+            model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}],
             temperature=1,
-            max_completion_tokens=3000
+            max_tokens=3000
         )
         
         try:
