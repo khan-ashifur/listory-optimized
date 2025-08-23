@@ -22,7 +22,19 @@ class Product(models.Model):
         ('bold', 'Bold'),
     ]
     
-    # Etsy-specific brand tones based on 2025 research
+    # Mexican-specific brand tones based on cultural research
+    MEXICAN_BRAND_TONES = [
+        ('familiar_caloroso', 'Familiar y Cálido'),          # Warm and family-oriented
+        ('tradicion_mexicana', 'Tradición Mexicana'),        # Mexican tradition
+        ('lujo_mexicano', 'Lujo Mexicano'),                  # Mexican luxury  
+        ('joven_vibrante', 'Joven y Vibrante'),              # Young and vibrant
+        ('confiable_profesional', 'Confiable y Profesional'), # Trustworthy professional
+        ('festivo_celebracion', 'Festivo y Celebración'),    # Festive and celebratory
+        ('moderno_mexicano', 'Moderno Mexicano'),            # Modern Mexican
+        ('hogareño_familiar', 'Hogareño y Familiar'),        # Home and family focused
+    ]
+    
+    # Etsy-specific brand tones based on 2025 research  
     ETSY_BRAND_TONES = [
         ('handmade_artisan', 'Handmade Artisan'),
         ('vintage_charm', 'Vintage Charm'),
@@ -40,7 +52,7 @@ class Product(models.Model):
     ]
     
     # Combined brand tones - dynamically created based on platform
-    BRAND_TONES = [('', 'Select')] + UNIVERSAL_BRAND_TONES + ETSY_BRAND_TONES
+    BRAND_TONES = [('', 'Select')] + UNIVERSAL_BRAND_TONES + MEXICAN_BRAND_TONES + ETSY_BRAND_TONES
     
     AMAZON_MARKETPLACES = [
         ('us', 'United States'),
@@ -77,6 +89,34 @@ class Product(models.Model):
     ]
     
     ALL_MARKETPLACES = AMAZON_MARKETPLACES + WALMART_MARKETPLACES + ETSY_MARKETPLACES
+    
+    # Mexican-specific occasions based on cultural traditions  
+    MEXICAN_OCCASIONS = [
+        ('', 'Uso Diario/Sin Ocasión Específica'),
+        # Major Mexican holidays
+        ('navidad', 'Navidad'),                    # Christmas
+        ('dia_reyes', 'Día de Reyes'),             # Three Kings Day
+        ('dia_madre', 'Día de las Madres'),        # Mother's Day (May 10)
+        ('dia_padre', 'Día del Padre'),            # Father's Day  
+        ('dia_muertos', 'Día de los Muertos'),     # Day of the Dead
+        ('independence_day', 'Día de la Independencia'), # Sept 16
+        ('guadalupe', 'Día de la Virgen de Guadalupe'),  # Dec 12
+        # Life celebrations
+        ('quinceañera', 'Quinceañera'),            # 15th birthday
+        ('boda', 'Boda'),                          # Wedding
+        ('bautizo', 'Bautizo'),                    # Baptism
+        ('primera_comunion', 'Primera Comunión'),  # First Communion
+        ('graduacion', 'Graduación'),              # Graduation
+        ('cumpleaños', 'Cumpleaños'),              # Birthday
+        # Shopping seasons
+        ('regreso_clases', 'Regreso a Clases'),    # Back to school
+        ('hot_sale', 'Hot Sale'),                  # Major shopping event
+        ('buen_fin', 'El Buen Fin'),               # Mexican Black Friday
+        # Cultural events
+        ('grito', 'El Grito'),                     # Independence celebration
+        ('posadas', 'Las Posadas'),                # Christmas celebration period
+        ('año_nuevo', 'Año Nuevo'),                # New Year
+    ]
     
     # Etsy-specific occasions based on 2025 trends and research
     ETSY_OCCASIONS = [

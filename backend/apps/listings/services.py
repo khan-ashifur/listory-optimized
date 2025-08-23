@@ -5914,9 +5914,101 @@ A: Most gamers feel the difference within their first session. Say goodbye to th
             'vintage_charm': 'classic',
             'minimalist_modern': 'sleek',
             'bohemian_free': 'versatile',
-            'handmade_artisan': 'artisan-crafted'
+            'handmade_artisan': 'artisan-crafted',
+            # Mexican brand tones
+            'familiar_caloroso': 'familiar y cálido',
+            'tradicion_mexicana': 'tradicional mexicano',
+            'lujo_mexicano': 'lujo mexicano',
+            'joven_vibrante': 'joven y vibrante',
+            'confiable_profesional': 'confiable y profesional',
+            'festivo_celebracion': 'festivo y celebrativo',
+            'moderno_mexicano': 'moderno mexicano',
+            'hogareño_familiar': 'hogareño y familiar'
         }
         return tone_mapping.get(tone, 'professional-grade')
+    
+    def _get_mexican_cultural_context(self, product):
+        """Return Mexican cultural context for Walmart Mexico generation"""
+        occasion = getattr(product, 'occasion', '') or ''
+        brand_tone = getattr(product, 'brand_tone', '') or ''
+        
+        # Mexican cultural values and context
+        cultural_context = """
+🇲🇽 CONTEXTO CULTURAL MEXICANO:
+VALORES FAMILIARES: La familia es el centro de la sociedad mexicana. Enfócate en:
+- Productos que benefician a toda la familia
+- Momentos de reunión familiar  
+- Tradiciones que se comparten entre generaciones
+- Calidad que perdura para la familia
+
+CONFIANZA Y CALIDAD: Los mexicanos valoran la confianza y la calidad:
+- Garantías sólidas y servicio post-venta
+- Certificaciones mexicanas (NOM, PROFECO)
+- Marcas establecidas con reputación
+- Testimonios de otras familias mexicanas
+
+CELEBRACIONES IMPORTANTES: México tiene ricas tradiciones:
+- Navidad y Día de Reyes (regalos familiares)
+- Día de las Madres (10 de mayo)
+- Día de los Muertos (tradición familiar)
+- Fiestas patrias y celebraciones locales
+"""
+        
+        # Occasion-specific context
+        occasion_context = ""
+        if occasion == 'navidad':
+            occasion_context = """
+NAVIDAD MEXICANA: Enfoque familiar y generoso
+- Regalos para toda la familia extendida
+- Productos que crean momentos especiales
+- Calidad que justifica la inversión navideña
+- Perfectos para Las Posadas y cenas familiares
+"""
+        elif occasion == 'dia_madre':
+            occasion_context = """
+DÍA DE LAS MADRES (10 MAYO): Celebración especial mexicana
+- Regalos que muestran amor y respeto profundo
+- Productos útiles para el hogar y la familia
+- Calidad premium para la reina de la casa
+- Que faciliten la vida de mamá
+"""
+        elif occasion == 'dia_muertos':
+            occasion_context = """
+DÍA DE LOS MUERTOS: Tradición familiar mexicana
+- Productos que honran las tradiciones
+- Para preparar altares y celebraciones familiares
+- Que conectan con las raíces culturales
+- Calidad que respeta la solemnidad de la fecha
+"""
+        
+        # Brand tone context in Spanish
+        tone_context = ""
+        if brand_tone in ['familiar_caloroso', 'hogareño_familiar']:
+            tone_context = """
+TONO FAMILIAR Y CÁLIDO:
+- Usar lenguaje cercano y familiar
+- Enfatizar beneficios para el hogar
+- Crear conexión emocional con la familia
+- Destacar comodidad y bienestar familiar
+"""
+        elif brand_tone in ['tradicion_mexicana']:
+            tone_context = """
+TRADICIÓN MEXICANA:
+- Conectar con valores tradicionales mexicanos
+- Respetar costumbres y tradiciones familiares
+- Destacar calidad artesanal o tradicional
+- Usar referencias culturales apropiadas
+"""
+        elif brand_tone in ['lujo_mexicano']:
+            tone_context = """
+LUJO MEXICANO:
+- Calidad premium accesible para familias mexicanas
+- Destacar exclusividad y prestigio
+- Justificar la inversión con beneficios duraderos
+- Crear aspiración familiar
+"""
+        
+        return cultural_context + occasion_context + tone_context
     
     def _analyze_product_context(self, product):
         """Analyze product and return comprehensive context for generation"""
@@ -6037,6 +6129,33 @@ A: Most gamers feel the difference within their first session. Say goodbye to th
         # Dynamic category-aware prompt generation
         category_context = self._get_dynamic_category_context(product)
         
+        # Detect Mexico marketplace and use Spanish cultural context
+        is_mexico = (getattr(product, 'marketplace', '') == 'walmart_mexico' or 
+                    getattr(product, 'marketplace_language', '') == 'es-mx')
+        
+        # Get Mexican cultural context and language instructions
+        if is_mexico:
+            mexican_context = self._get_mexican_cultural_context(product)
+            language_instruction = """
+🇲🇽 GENERAR CONTENIDO EN ESPAÑOL MEXICANO:
+- OBLIGATORIO: Todo el contenido DEBE estar en español mexicano
+- Usar términos familiares mexicanos (familia, hogar, tradición)  
+- Incluir valores culturales mexicanos (calidad, confianza, garantía)
+- Mencionar certificaciones mexicanas si aplica
+- Precio en pesos mexicanos ($MXN)
+"""
+            title_max = "Máximo 70 caracteres. Incluir marca, producto, beneficio clave. EN ESPAÑOL"
+            desc_instruction = "185 palabras EN ESPAÑOL MEXICANO. Descripción profesional destacando beneficios clave para familias mexicanas."
+            features_format = "EN ESPAÑOL: Nombre Característica - Beneficio específico (máx 75 caracteres)"
+            keywords_instruction = "Generar 28+ palabras clave EN ESPAÑOL separadas por comas para compradores mexicanos."
+        else:
+            mexican_context = ""
+            language_instruction = ""
+            title_max = "Max 70 chars. Include brand, product, key benefit from features"
+            desc_instruction = f"185 words. Professional description highlighting key benefits, technical advantages, and problem-solving features specific to this {product.categories} product. Use complete sentences only."
+            features_format = "Feature Name - Specific benefit with proof/numbers (max 75 chars)"
+            keywords_instruction = f"Generate 28+ comma-separated keywords for {product.categories} shoppers. Include: core product terms, material types, size variations, brand combinations, use cases, competitor alternatives, price-related terms."
+        
         prompt = f"""Generate Walmart listing core content for {product.brand_name} {product.name}.
 
 Product Info:
@@ -6044,22 +6163,25 @@ Product Info:
 - Features: {product.features}
 - Categories: {product.categories}
 - Brand Tone: {product.brand_tone}
+- Marketplace: {getattr(product, 'marketplace', 'walmart_usa')}
 
 {category_context}
+{mexican_context}
+{language_instruction}
 
 Generate core sections with NO missing words. Return valid JSON:
 
 {{
-  "title": "Max 70 chars. Include brand, product, key benefit from features",
-  "description": "185 words. Professional description highlighting key benefits, technical advantages, and problem-solving features specific to this {product.categories} product. Use complete sentences only.",
+  "title": "{title_max}",
+  "description": "{desc_instruction}",
   "key_features": [
-    "Feature Name - Specific benefit with proof/numbers (max 75 chars)",
-    "Feature Name - Specific benefit with proof/numbers (max 75 chars)",
-    "Feature Name - Specific benefit with proof/numbers (max 75 chars)",
-    "Feature Name - Specific benefit with proof/numbers (max 75 chars)",
-    "Feature Name - Specific benefit with proof/numbers (max 75 chars)"
+    "{features_format}",
+    "{features_format}",
+    "{features_format}",
+    "{features_format}",
+    "{features_format}"
   ],
-  "keywords": "Generate 28+ comma-separated keywords for {product.categories} shoppers. Include: core product terms, material types, size variations, brand combinations, use cases, competitor alternatives, price-related terms."
+  "keywords": "{keywords_instruction}"
 }}
 
 Write complete sentences. No generic templates. Product-specific content only."""
