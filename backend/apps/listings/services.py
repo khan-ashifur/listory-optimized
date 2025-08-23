@@ -2483,14 +2483,15 @@ CRITICAL: Return ONLY valid JSON - no markdown, no explanations, just pure JSON 
 
 JSON RULES: All field names and values must use double quotes, inside content use proper apostrophes for contractions (don't, can't, won't, it's), never use unescaped double quotes in content. CORRECT FORMAT: {\"field\": \"content with proper apostrophes like don't and can't\"}.
 
-🚨 KEYWORD GENERATION CRITICAL RULES:
+🚨 KEYWORD GENERATION CRITICAL RULES FOR AMAZON SUCCESS:
+- Generate BALANCED keyword distribution: SHORT-TAIL + MEDIUM-TAIL + LONG-TAIL
+- SHORT-TAIL (1-2 words): Generate 20+ high-volume competitive terms like "headset", "gaming headset", "wireless"
+- MEDIUM-TAIL (3-4 words): Generate 20+ targeted terms like "wireless gaming headset", "noise cancelling headset" 
+- LONG-TAIL (5+ words): Generate 15+ specific converting phrases like "gaming headset with microphone wireless"
+- ALWAYS include core product terms, brand terms, feature terms, platform terms (PC, PS5, Xbox)
 - For seoKeywords arrays: Generate ACTUAL keywords/phrases, NOT instruction text
-- Do NOT include text like "Generate 15+ keywords..." - that's instruction, not content
-- Primary keywords: Start with product name, brand name, then add 13+ real keywords
-- Long-tail: Create 25+ actual 3-7 word phrases customers would search
-- Problem-solving: List 15+ actual problems this product solves as keywords
-- Rufus conversational: List 15+ actual questions/phrases people ask
-- Semantic: List 10+ actual related terms and synonyms
+- Primary keywords: Include 5+ SHORT-TAIL core terms first, then brand, then features
+- Backend keywords: Focus on misspellings, synonyms, variations (stay under 249 chars)
 
 📝 GRAMMAR & LANGUAGE CRITICAL RULES:
 - ALWAYS use proper apostrophes in contractions: it's, you're, don't, can't, won't, they're
