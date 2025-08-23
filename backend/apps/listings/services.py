@@ -5889,20 +5889,53 @@ A: Most gamers feel the difference within their first session. Say goodbye to th
     ]'''
 
     def _get_occasion_context(self, product):
-        """Return appropriate occasion context"""
+        """Return appropriate occasion context with localization"""
         occasion = getattr(product, 'occasion', '') or ''
-        if not occasion or occasion == 'everyday':
-            return 'For daily use,'
-        elif 'christmas' in occasion.lower():
-            return 'Perfect for Christmas gifting,'
-        elif 'valentine' in occasion.lower():
-            return 'Ideal for Valentine\'s Day,'
-        elif 'mother' in occasion.lower():
-            return 'Great for Mother\'s Day,'
-        elif 'black_friday' in occasion.lower():
-            return 'Perfect for Black Friday savings,'
+        
+        # Check if it's Mexican market for Spanish localization
+        is_mexico = (getattr(product, 'marketplace', '') == 'walmart_mexico' or 
+                    getattr(product, 'marketplace_language', '') == 'es-mx')
+        
+        if is_mexico:
+            # Mexican occasion mapping in Spanish
+            mexican_occasions = {
+                '': 'Para uso diario,',
+                'everyday': 'Para uso diario,',
+                'navidad': 'Perfecto para Navidad,',
+                'dia_reyes': 'Ideal para el Día de Reyes,',
+                'dia_madre': 'Perfecto para el Día de las Madres,',
+                'dia_padre': 'Ideal para el Día del Padre,',
+                'dia_muertos': 'Especial para Día de Muertos,',
+                'independence_day': 'Perfecto para las Fiestas Patrias,',
+                'guadalupe': 'Ideal para el Día de la Virgen,',
+                'quinceañera': 'Perfecto para Quinceañeras,',
+                'boda': 'Ideal para Bodas,',
+                'bautizo': 'Perfecto para Bautizos,',
+                'primera_comunion': 'Ideal para Primera Comunión,',
+                'graduacion': 'Perfecto para Graduaciones,',
+                'cumpleaños': 'Ideal para Cumpleaños,',
+                'regreso_clases': 'Perfecto para Regreso a Clases,',
+                'hot_sale': 'Especial para Hot Sale,',
+                'buen_fin': 'Ideal para El Buen Fin,',
+                'grito': 'Perfecto para El Grito,',
+                'posadas': 'Ideal para Las Posadas,',
+                'año_nuevo': 'Perfecto para Año Nuevo,'
+            }
+            return mexican_occasions.get(occasion, f'Ideal para {occasion},')
         else:
-            return f'Perfect for {occasion},'
+            # English occasions for US market
+            if not occasion or occasion == 'everyday':
+                return 'For daily use,'
+            elif 'christmas' in occasion.lower():
+                return 'Perfect for Christmas gifting,'
+            elif 'valentine' in occasion.lower():
+                return 'Ideal for Valentine\'s Day,'
+            elif 'mother' in occasion.lower():
+                return 'Great for Mother\'s Day,'
+            elif 'black_friday' in occasion.lower():
+                return 'Perfect for Black Friday savings,'
+            else:
+                return f'Perfect for {occasion},'
     
     def _get_brand_tone_descriptor(self, product):
         """Return appropriate brand tone descriptor"""
@@ -6138,17 +6171,28 @@ LUJO MEXICANO:
         if is_mexico:
             mexican_context = self._get_mexican_cultural_context(product)
             language_instruction = """
-🇲🇽 GENERAR CONTENIDO EN ESPAÑOL MEXICANO:
-- OBLIGATORIO: Todo el contenido DEBE estar en español mexicano
-- Usar términos familiares mexicanos (familia, hogar, tradición)  
-- Incluir valores culturales mexicanos (calidad, confianza, garantía)
-- Mencionar certificaciones mexicanas si aplica
+🇲🇽 GENERAR TODO EN ESPAÑOL MEXICANO - CRITICAL:
+- ABSOLUTAMENTE TODO el contenido DEBE estar 100% en español mexicano
+- NO usar palabras en inglés (NO: "gaming", "wireless", "bluetooth")
+- SÍ usar traducciones mexicanas: "para videojuegos", "inalámbrico", "conexión bluetooth"
+- Título COMPLETO en español: marca + producto + beneficio + ocasión en español
+- Usar términos familiares mexicanos (familia, hogar, tradición, mamá, regalo)
+- Incluir la ocasión específica en el título y descripción
+- Mencionar valores mexicanos (calidad, confianza, garantía, familia)
 - Precio en pesos mexicanos ($MXN)
+- Palabras clave EN ESPAÑOL: "audífonos", "inalámbricos", "para mamá", etc.
 """
             title_max = "Máximo 70 caracteres. Incluir marca, producto, beneficio clave. EN ESPAÑOL"
             desc_instruction = "185 palabras EN ESPAÑOL MEXICANO. Descripción profesional destacando beneficios clave para familias mexicanas."
             features_format = "EN ESPAÑOL: Nombre Característica - Beneficio específico (máx 75 caracteres)"
-            keywords_instruction = "Generar 28+ palabras clave EN ESPAÑOL separadas por comas para compradores mexicanos."
+            keywords_instruction = """Generar 28+ palabras clave EN ESPAÑOL MEXICANO separadas por comas. 
+OBLIGATORIO incluir:
+- Términos cortos (1-2 palabras): "audífonos", "inalámbricos", "bluetooth", "gamer"
+- Términos medios (3-4 palabras): "audífonos para videojuegos", "regalo para mamá", "audífonos con micrófono"
+- Términos largos (5+ palabras): "audífonos inalámbricos para videojuegos con micrófono"
+- Términos de ocasión: "regalo día de las madres", "para mamá", "regalo 10 de mayo"
+- NO usar inglés: usar "videojuegos" NO "gaming", "inalámbrico" NO "wireless"
+"""
         else:
             mexican_context = ""
             language_instruction = ""
@@ -6157,13 +6201,17 @@ LUJO MEXICANO:
             features_format = "Feature Name - Specific benefit with proof/numbers (max 75 chars)"
             keywords_instruction = f"Generate 28+ comma-separated keywords for {product.categories} shoppers. Include: core product terms, material types, size variations, brand combinations, use cases, competitor alternatives, price-related terms."
         
+        # Get occasion context
+        occasion_context = self._get_occasion_context(product)
+        
         prompt = f"""Generate Walmart listing core content for {product.brand_name} {product.name}.
 
 Product Info:
-- Price: ${product.price}
+- Price: ${product.price} {'MXN' if is_mexico else 'USD'}
 - Features: {product.features}
 - Categories: {product.categories}
 - Brand Tone: {product.brand_tone}
+- Occasion: {occasion_context}
 - Marketplace: {getattr(product, 'marketplace', 'walmart_usa')}
 
 {category_context}
