@@ -60,12 +60,29 @@ const PlatformPreview = ({ listing, platform }) => {
           <div className="space-y-2">
             <div className="font-medium text-sm">About this item</div>
             <div className="text-sm space-y-1">
-              {listing.bullet_points?.split('\n').slice(0, 5).map((point, i) => (
-                <div key={i} className="flex items-start">
-                  <span className="mr-2">•</span>
-                  <span>{point.replace(/^[•\-\*]\s*/, '').replace(/^🎯|🔥|✅|🚀|💝/, '').trim()}</span>
-                </div>
-              ))}
+              {listing.bullet_points?.split('\n').slice(0, 5).map((point, i) => {
+                // Extract label and content from bullet points like "Label - Content"
+                const trimmedPoint = point.replace(/^[•\-*]\s*/, '').trim();
+                const parts = trimmedPoint.split(' - ');
+                const label = parts[0];
+                const content = parts.slice(1).join(' - ');
+                
+                return (
+                  <div key={i} className="flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>
+                      {label && content ? (
+                        <>
+                          <span className="font-semibold text-blue-600">{label}</span>
+                          <span className="text-gray-700"> - {content}</span>
+                        </>
+                      ) : (
+                        <span className="text-gray-700">{trimmedPoint}</span>
+                      )}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -195,6 +212,115 @@ const PlatformPreview = ({ listing, platform }) => {
               </button>
             </div>
           </div>
+
+          {/* WALMART ENHANCED SECTIONS */}
+          <div className="space-y-4">
+              {/* Compliance Guidance */}
+              <div className="bg-green-50 border border-green-200 rounded p-4">
+                <div className="text-sm font-semibold text-green-900 mb-2 flex items-center">
+                  📋 Compliance Guidance
+                  <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                    Required
+                  </span>
+                </div>
+                <div className="text-xs text-green-800">
+                  {listing?.walmart_compliance_certifications ? (
+                    (() => {
+                      try {
+                        const compliance = JSON.parse(listing.walmart_compliance_certifications);
+                        return (
+                          <div className="space-y-2">
+                            {compliance.required_certifications && (
+                              <div className="bg-white p-3 rounded border">
+                                <span className="font-medium text-green-700">Required Certifications: </span>
+                                <span className="text-green-900">{compliance.required_certifications.join(', ')}</span>
+                              </div>
+                            )}
+                            {compliance.certification_guidance && (
+                              <div className="bg-white p-3 rounded border">
+                                <span className="font-medium text-green-700">How to get certified: </span>
+                                <span className="text-green-900">{compliance.certification_guidance.substring(0, 150)}...</span>
+                              </div>
+                            )}
+                            {compliance.safety_warnings && (
+                              <div className="bg-orange-50 p-3 rounded border border-orange-200">
+                                <span className="font-medium text-orange-700">Safety Warnings: </span>
+                                <span className="text-orange-900">{compliance.safety_warnings.join(', ')}</span>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      } catch (error) {
+                        return (
+                          <div className="bg-gray-100 p-3 rounded border text-gray-700">
+                            Raw compliance data available (contact support for formatting)
+                          </div>
+                        );
+                      }
+                    })()
+                  ) : (
+                    <div className="bg-gray-100 p-3 rounded border text-gray-700">
+                      Compliance information will be generated after product approval
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Profit Maximizer */}
+              <div className="bg-yellow-50 border border-yellow-200 rounded p-4">
+                <div className="text-sm font-semibold text-yellow-900 mb-2 flex items-center">
+                  💰 Profit Maximizer
+                  <span className="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+                    Premium
+                  </span>
+                </div>
+                <div className="text-xs text-yellow-800">
+                  {listing?.walmart_profit_maximizer ? (
+                    (() => {
+                      try {
+                        const profit = JSON.parse(listing.walmart_profit_maximizer);
+                        return (
+                          <div className="space-y-2">
+                            {profit.seasonal_pricing_strategy && (
+                              <div className="bg-white p-3 rounded border">
+                                <span className="font-medium text-yellow-700">Pricing Strategy: </span>
+                                <span className="text-yellow-900">{profit.seasonal_pricing_strategy.substring(0, 120)}...</span>
+                              </div>
+                            )}
+                            {profit.inventory_optimization && (
+                              <div className="bg-white p-3 rounded border">
+                                <span className="font-medium text-yellow-700">Inventory Tips: </span>
+                                <span className="text-yellow-900">{profit.inventory_optimization.substring(0, 120)}...</span>
+                              </div>
+                            )}
+                            {profit.competitor_monitoring && (
+                              <div className="bg-white p-3 rounded border">
+                                <span className="font-medium text-yellow-700">Competitor Monitoring: </span>
+                                <span className="text-yellow-900">{profit.competitor_monitoring.substring(0, 120)}...</span>
+                              </div>
+                            )}
+                            <div className="bg-gradient-to-r from-yellow-100 to-orange-100 p-3 rounded border">
+                              <span className="font-medium text-orange-700">Plus:</span>
+                              <span className="text-orange-900"> Ad ROI optimization & seasonal trend analysis</span>
+                            </div>
+                          </div>
+                        );
+                      } catch (error) {
+                        return (
+                          <div className="bg-gray-100 p-3 rounded border text-gray-700">
+                            Advanced profit strategies available (contact support for details)
+                          </div>
+                        );
+                      }
+                    })()
+                  ) : (
+                    <div className="bg-gray-100 p-3 rounded border text-gray-700">
+                      Profit maximization strategies will be provided after listing optimization
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
 
           {/* Walmart+ benefits */}
           <div className="bg-purple-50 border border-purple-200 rounded p-2">

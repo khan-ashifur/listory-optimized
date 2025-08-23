@@ -31,8 +31,17 @@ const ListingOptimizationScore = ({ listing }) => {
     },
     {
       name: 'Keyword Optimization',
-      status: listing.keywords && listing.keywords.split(',').length >= 5 ? 'good' : 'warning',
-      message: listing.keywords ? `${listing.keywords.split(',').length} keywords` : 'No keywords',
+      status: (() => {
+        if (!listing.keywords) return 'warning';
+        const keywordString = typeof listing.keywords === 'string' ? listing.keywords : '';
+        return keywordString && keywordString.split(',').length >= 5 ? 'good' : 'warning';
+      })(),
+      message: (() => {
+        if (!listing.keywords) return 'No keywords';
+        const keywordString = typeof listing.keywords === 'string' ? listing.keywords : '';
+        const keywordCount = keywordString ? keywordString.split(',').length : 0;
+        return keywordCount > 0 ? `${keywordCount} keywords` : 'No keywords';
+      })(),
       details: 'Mix of short and long-tail keywords for better coverage'
     },
     {

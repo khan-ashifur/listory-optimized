@@ -5,6 +5,7 @@ import LandingPage from './pages/LandingPage';
 import ProductForm from './pages/ProductForm';
 import ListingResults from './pages/ListingResults';
 import Dashboard from './pages/Dashboard';
+import WalmartDebugTest from './components/WalmartDebugTest';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/create" element={<ProductForm />} />
           <Route path="/results/:listingId" element={<ListingResults />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/walmart-debug" element={<WalmartDebugTest />} />
           <Route path="/login" element={<Navigate to="/" replace />} />
           <Route path="/register" element={<Navigate to="/" replace />} />
           <Route path="*" element={<Navigate to="/" replace />} />

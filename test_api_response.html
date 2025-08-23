@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Response Test</title>
+</head>
+<body>
+    <h1>Testing API Response for Listing 1482</h1>
+    <div id="result"></div>
+    
+    <script>
+        async function testAPI() {
+            try {
+                const response = await fetch('http://localhost:8000/api/listings/generated/1482/');
+                const data = await response.json();
+                
+                console.log('🔍 Full API Response:', data);
+                
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `
+                    <h2>API Response Analysis</h2>
+                    <p><strong>Platform:</strong> ${data.platform}</p>
+                    <p><strong>Compliance exists:</strong> ${!!data.walmart_compliance_certifications}</p>
+                    <p><strong>Compliance length:</strong> ${data.walmart_compliance_certifications ? data.walmart_compliance_certifications.length : 0}</p>
+                    <p><strong>Profit exists:</strong> ${!!data.walmart_profit_maximizer}</p>
+                    <p><strong>Profit length:</strong> ${data.walmart_profit_maximizer ? data.walmart_profit_maximizer.length : 0}</p>
+                    
+                    <h3>Platform Check for PlatformPreview:</h3>
+                    <p><strong>data.platform === 'walmart':</strong> ${data.platform === 'walmart'}</p>
+                    <p><strong>typeof data.platform:</strong> ${typeof data.platform}</p>
+                    
+                    <h3>Test Compliance JSON Parse:</h3>
+                    <div id="compliance-test"></div>
+                    
+                    <h3>Raw Compliance Data:</h3>
+                    <textarea rows="5" cols="80">${data.walmart_compliance_certifications || 'None'}</textarea>
+                `;
+                
+                // Test JSON parsing
+                if (data.walmart_compliance_certifications) {
+                    try {
+                        const compliance = JSON.parse(data.walmart_compliance_certifications);
+                        document.getElementById('compliance-test').innerHTML = `
+                            <p style="color: green;">✅ JSON Parse SUCCESS</p>
+                            <p><strong>Keys:</strong> ${Object.keys(compliance).join(', ')}</p>
+                            <p><strong>Required Certs:</strong> ${compliance.required_certifications ? compliance.required_certifications.join(', ') : 'None'}</p>
+                        `;
+                    } catch (e) {
+                        document.getElementById('compliance-test').innerHTML = `
+                            <p style="color: red;">❌ JSON Parse ERROR: ${e.message}</p>
+                        `;
+                    }
+                }
+                
+            } catch (error) {
+                document.getElementById('result').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+        
+        testAPI();
+    </script>
+</body>
+</html>

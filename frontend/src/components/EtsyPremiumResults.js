@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Copy, Download, Star, Heart, Share2, Camera, 
-  DollarSign, TrendingUp, Users, MessageCircle, 
-  ShoppingBag, Calendar, Instagram, Target, 
-  BarChart3, Zap, Crown, Gift, MapPin, Award, Clock, Tag
+  Copy, Star, Camera, 
+  DollarSign, TrendingUp, MessageCircle, 
+  Calendar, Instagram, Target, 
+  BarChart3, Crown, Award, Clock, Tag
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
