@@ -135,6 +135,8 @@ class GeneratedListing(models.Model):
     # Walmart rich media
     walmart_video_urls = models.TextField(blank=True, help_text="Product video URLs")
     walmart_swatch_images = models.TextField(blank=True, help_text="Swatch/variant images")
+    walmart_rich_media = models.TextField(blank=True, help_text="Rich media recommendations JSON")
+    walmart_profit_maximizer = models.TextField(blank=True, help_text="Profit maximization strategies and guidance")
     
     shopify_seo_title = models.TextField(blank=True)
     shopify_meta_description = models.TextField(blank=True)

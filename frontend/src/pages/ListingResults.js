@@ -8,36 +8,8 @@ import ListingOptimizationScore from '../components/ListingOptimizationScore';
 import EtsyPremiumResults from '../components/EtsyPremiumResults';
 import { listingAPI } from '../services/api';
 
-const ListingResults = () => {
-  const { listingId } = useParams();
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('listing');
-  const [listing, setListing] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  // Fetch real listing data from API
-  useEffect(() => {
-    const fetchListing = async () => {
-      try {
-        const response = await listingAPI.get(listingId);
-        setListing(response.data);
-        setLoading(false);
-        
-      } catch (error) {
-        console.error('Error fetching listing:', error);
-        setLoading(false);
-        // Fallback to mock data if API fails
-        setListing(mockListing);
-      }
-    };
-
-    if (listingId) {
-      fetchListing();
-    }
-  }, [listingId]);
-
-  // Mock data as fallback
-  const mockListing = {
+// Mock data as fallback
+const mockListing = {
     platform: 'amazon',
     title: 'Wireless Bluetooth Earbuds with Premium Sound Quality - Noise Cancelling Headphones with 24H Battery Life',
     shortDescription: 'Experience premium audio with our advanced wireless earbuds featuring active noise cancellation and crystal-clear sound.',
@@ -119,6 +91,41 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
     ]
   };
 
+const ListingResults = () => {
+  const { listingId } = useParams();
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('listing');
+  const [listing, setListing] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch real listing data from API
+  useEffect(() => {
+    const fetchListing = async () => {
+      try {
+        console.log('=== FETCHING LISTING DATA ===');
+        console.log('Listing ID:', listingId);
+        const response = await listingAPI.get(listingId);
+        console.log('API Response:', response.data);
+        console.log('Platform:', response.data.platform);
+        console.log('walmart_compliance_certifications:', response.data.walmart_compliance_certifications);
+        console.log('walmart_profit_maximizer:', response.data.walmart_profit_maximizer);
+        console.log('=== END FETCH DEBUG ===');
+        setListing(response.data);
+        setLoading(false);
+        
+      } catch (error) {
+        console.error('Error fetching listing:', error);
+        setLoading(false);
+        // Fallback to mock data if API fails
+        setListing(mockListing);
+      }
+    };
+
+    if (listingId) {
+      fetchListing();
+    }
+  }, [listingId]);
+
   // Use real listing data or fallback to mock data
   const currentListing = listing || mockListing;
 
@@ -157,7 +164,7 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
     </button>
   );
 
-  const CopyableSection = ({ title, content, isHtml = false }) => (
+  const CopyableSection = ({ title, content, isHtml = false, isBulletPoints = false }) => (
     <div className="bg-gray-50 rounded-lg p-4 mb-6">
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold text-gray-900">{title}</h3>
@@ -172,6 +179,32 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
       <div className={isHtml ? 'prose prose-sm max-w-none' : 'whitespace-pre-wrap text-sm text-gray-700'}>
         {isHtml ? (
           <div dangerouslySetInnerHTML={{ __html: content }} />
+        ) : isBulletPoints && content ? (
+          // Special formatting for bullet points with labels
+          <div className="space-y-2">
+            {content.split('\n').filter(point => point.trim()).map((point, index) => {
+              const trimmedPoint = point.replace(/^[•\-*]\s*/, '').trim();
+              const parts = trimmedPoint.split(' - ');
+              const label = parts[0];
+              const bulletContent = parts.slice(1).join(' - ');
+              
+              return (
+                <div key={index} className="flex items-start">
+                  <span className="mr-2 text-blue-600">•</span>
+                  <div>
+                    {label && bulletContent ? (
+                      <>
+                        <span className="font-semibold text-blue-700">{label}</span>
+                        <span className="text-gray-700"> - {bulletContent}</span>
+                      </>
+                    ) : (
+                      <span className="text-gray-700">{trimmedPoint}</span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         ) : (
           content
         )}
@@ -245,13 +278,15 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                 active={activeTab === 'listing'}
                 onClick={setActiveTab}
               />
-              <TabButton
-                id="aplus"
-                label="A+ Content"
-                icon={Star}
-                active={activeTab === 'aplus'}
-                onClick={setActiveTab}
-              />
+              {currentListing.platform !== 'walmart' && (
+                <TabButton
+                  id="aplus"
+                  label="A+ Content"
+                  icon={Star}
+                  active={activeTab === 'aplus'}
+                  onClick={setActiveTab}
+                />
+              )}
               <TabButton
                 id="keywords"
                 label="Keywords"
@@ -298,6 +333,13 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                     active={activeTab === 'walmart-compliance'}
                     onClick={setActiveTab}
                   />
+                  <TabButton
+                    id="walmart-profit"
+                    label="💰 Profit Maximizer"
+                    icon={TrendingUp}
+                    active={activeTab === 'walmart-profit'}
+                    onClick={setActiveTab}
+                  />
                 </>
               )}
             </div>
@@ -320,14 +362,21 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                   }
                 />
                 
-                {/* Platform-specific bullet points */}
-                <CopyableSection
-                  title={currentListing.platform === 'walmart' ? 'Key Features (3-10 bullets, max 80 chars each)' : 'Bullet Points'}
-                  content={currentListing.platform === 'walmart' ? 
-                    (currentListing.walmart_key_features || 'No key features generated') :
-                    (currentListing.bullet_points || 'No bullet points generated')
-                  }
-                />
+                {/* Show optimized Key Features for Walmart, Bullet Points for other platforms */}
+                {currentListing.platform === 'walmart' ? (
+                  <CopyableSection
+                    title="Key Features (3-10 bullets, max 80 chars each)"
+                    content={currentListing.walmart_key_features || 'No key features generated'}
+                    isBulletPoints={true}
+                  />
+                ) : (
+                  /* Other platforms use Bullet Points */
+                  <CopyableSection
+                    title="Bullet Points"
+                    content={currentListing.bullet_points || 'No bullet points generated'}
+                    isBulletPoints={true}
+                  />
+                )}
                 
                 {/* Platform-specific description */}
                 <CopyableSection
@@ -384,6 +433,7 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                     </div>
                   </div>
                 )}
+
               </motion.div>
             )}
 
@@ -684,22 +734,33 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                   </div>
                 </div>
 
-                {/* Product Details */}
-                <CopyableSection
-                  title="Walmart Product Title (100 char limit)"
-                  content={currentListing.walmart_product_title || currentListing.title}
-                />
-                
-                <CopyableSection
-                  title="Product Description (Min 150 words, plain text)"
-                  content={currentListing.walmart_description || 'No description generated'}
-                />
-                
-                <CopyableSection
-                  title="Key Features (3-10 bullets, max 80 chars each)"
-                  content={currentListing.walmart_key_features || 'No key features generated'}
-                />
-
+                {/* Technical Specifications */}
+                {currentListing.walmart_specifications && (
+                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <h3 className="font-semibold text-gray-900 mb-3">⚙️ Technical Specifications</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {(() => {
+                        try {
+                          const specs = JSON.parse(currentListing.walmart_specifications);
+                          return Object.entries(specs).map(([key, value], index) => (
+                            <div key={index} className="bg-white p-3 rounded border">
+                              <div className="text-sm text-gray-600 font-medium capitalize">
+                                {key.replace(/_/g, ' ')}
+                              </div>
+                              <div className="text-gray-900 font-medium">{value}</div>
+                            </div>
+                          ));
+                        } catch {
+                          return (
+                            <div className="col-span-2 text-gray-500">
+                              Technical specifications will be generated after product optimization
+                            </div>
+                          );
+                        }
+                      })()}
+                    </div>
+                  </div>
+                )}
 
                 {/* Category & Attributes */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -847,14 +908,14 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                               </div>
                             );
                           } else {
-                            // New object format with certifications, safety_warnings, etc.
+                            // New object format with required_certifications, certification_guidance, etc.
                             return (
-                              <>
-                                {complianceData.certifications && complianceData.certifications.length > 0 && (
-                                  <div>
-                                    <h4 className="text-sm font-medium text-gray-700 mb-2">Certifications:</h4>
+                              <div className="space-y-4">
+                                {complianceData.required_certifications && complianceData.required_certifications.length > 0 && (
+                                  <div className="bg-white p-4 rounded border">
+                                    <h4 className="text-sm font-medium text-blue-700 mb-2">Required Certifications:</h4>
                                     <div className="flex flex-wrap gap-2">
-                                      {complianceData.certifications.map((cert, index) => (
+                                      {complianceData.required_certifications.map((cert, index) => (
                                         <span key={index} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm border border-blue-300">
                                           {cert}
                                         </span>
@@ -863,28 +924,42 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                                   </div>
                                 )}
                                 
-                                {complianceData.safety_warnings && complianceData.safety_warnings.length > 0 && (
-                                  <div>
-                                    <h4 className="text-sm font-medium text-gray-700 mb-2">Safety Warnings:</h4>
-                                    <div className="space-y-1">
-                                      {complianceData.safety_warnings.map((warning, index) => (
-                                        <div key={index} className="bg-orange-100 text-orange-800 px-3 py-2 rounded text-sm border border-orange-300">
-                                          ⚠️ {warning}
-                                        </div>
-                                      ))}
+                                {complianceData.certification_guidance && (
+                                  <div className="bg-white p-4 rounded border">
+                                    <h4 className="text-sm font-medium text-green-700 mb-2">Certification Guidance:</h4>
+                                    <div className="text-green-900 text-sm">
+                                      {complianceData.certification_guidance}
                                     </div>
                                   </div>
                                 )}
                                 
-                                {complianceData.age_restrictions && (
-                                  <div>
-                                    <h4 className="text-sm font-medium text-gray-700 mb-2">Age Restrictions:</h4>
-                                    <div className="bg-yellow-100 text-yellow-800 px-3 py-2 rounded text-sm border border-yellow-300">
-                                      {complianceData.age_restrictions}
+                                {complianceData.regulatory_requirements && (
+                                  <div className="bg-white p-4 rounded border">
+                                    <h4 className="text-sm font-medium text-purple-700 mb-2">Regulatory Requirements:</h4>
+                                    <div className="text-purple-900 text-sm">
+                                      {complianceData.regulatory_requirements}
                                     </div>
                                   </div>
                                 )}
-                              </>
+                                
+                                {complianceData.labeling_requirements && (
+                                  <div className="bg-white p-4 rounded border">
+                                    <h4 className="text-sm font-medium text-orange-700 mb-2">Labeling Requirements:</h4>
+                                    <div className="text-orange-900 text-sm">
+                                      {complianceData.labeling_requirements}
+                                    </div>
+                                  </div>
+                                )}
+                                
+                                {complianceData.walmart_specific_compliance && (
+                                  <div className="bg-blue-50 p-4 rounded border border-blue-200">
+                                    <h4 className="text-sm font-medium text-blue-700 mb-2">Walmart-Specific Compliance:</h4>
+                                    <div className="text-blue-900 text-sm">
+                                      {complianceData.walmart_specific_compliance}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
                             );
                           }
                         } catch (e) {
@@ -950,6 +1025,78 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                       </div>
                     </div>
                   )}
+
+                  {/* New Rich Media Content */}
+                  {currentListing.walmart_rich_media && (
+                    <div className="mb-4">
+                      {(() => {
+                        try {
+                          const richMedia = JSON.parse(currentListing.walmart_rich_media);
+                          return (
+                            <div className="space-y-4">
+                              {/* Main Images */}
+                              {richMedia.main_images && richMedia.main_images.length > 0 && (
+                                <div className="bg-white p-4 rounded border">
+                                  <h4 className="text-sm font-medium text-purple-700 mb-2">📸 Main Image Recommendations:</h4>
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                    {richMedia.main_images.map((image, index) => (
+                                      <div key={index} className="bg-purple-50 p-2 rounded border text-sm text-purple-800">
+                                        {image}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Video Content */}
+                              {richMedia.video_content && richMedia.video_content.length > 0 && (
+                                <div className="bg-white p-4 rounded border">
+                                  <h4 className="text-sm font-medium text-red-700 mb-2">🎥 Video Content Recommendations:</h4>
+                                  <div className="space-y-2">
+                                    {richMedia.video_content.map((video, index) => (
+                                      <div key={index} className="bg-red-50 p-2 rounded border text-sm text-red-800">
+                                        {video}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Infographics */}
+                              {richMedia.infographics && richMedia.infographics.length > 0 && (
+                                <div className="bg-white p-4 rounded border">
+                                  <h4 className="text-sm font-medium text-green-700 mb-2">📊 Infographic Recommendations:</h4>
+                                  <div className="space-y-2">
+                                    {richMedia.infographics.map((infographic, index) => (
+                                      <div key={index} className="bg-green-50 p-2 rounded border text-sm text-green-800">
+                                        {infographic}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* 360 View */}
+                              {richMedia["360_view"] && (
+                                <div className="bg-white p-4 rounded border">
+                                  <h4 className="text-sm font-medium text-blue-700 mb-2">🔄 360° View Recommendation:</h4>
+                                  <div className="bg-blue-50 p-2 rounded border text-sm text-blue-800">
+                                    {richMedia["360_view"]}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        } catch (e) {
+                          return (
+                            <div className="bg-gray-100 text-gray-700 px-3 py-2 rounded text-sm">
+                              Error displaying rich media content
+                            </div>
+                          );
+                        }
+                      })()}
+                    </div>
+                  )}
                   
                   {/* Additional Images */}
                   {currentListing.walmart_swatch_images && (
@@ -985,6 +1132,255 @@ A: These earbuds offer a stable connection up to 33 feet (10 meters) from your d
                   )}
                 </div>
 
+              </motion.div>
+            )}
+
+            {/* Walmart Marketplace Intelligence Tab */}
+            {activeTab === 'walmart-profit' && currentListing.platform === 'walmart' && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-6"
+              >
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
+                  <h2 className="text-xl font-bold text-blue-900 mb-4 flex items-center">
+                    📊 Marketplace Intelligence Report
+                    <span className="ml-3 text-xs bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-normal">
+                      Data-Driven Strategy
+                    </span>
+                  </h2>
+                  <p className="text-blue-800 text-sm">
+                    Actionable growth strategies based on marketplace data and category benchmarks.
+                  </p>
+                </div>
+
+                {currentListing.walmart_profit_maximizer && (() => {
+                  try {
+                    const intelligence = JSON.parse(currentListing.walmart_profit_maximizer);
+                    return (
+                      <div className="space-y-6">
+                        {/* Q1 Action Plan */}
+                        {intelligence.q1_action_plan && (
+                          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+                            <h3 className="font-semibold text-green-900 mb-3 flex items-center">
+                              🚀 Q1: Launch Strategy (Month 1-3)
+                              <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                                Action Items
+                              </span>
+                            </h3>
+                            <div className="bg-white p-4 rounded border">
+                              <div className="space-y-2">
+                                {intelligence.q1_action_plan.map((item, index) => (
+                                  <div key={index} className="flex items-start text-sm text-green-900">
+                                    <div className="font-mono mr-2">•</div>
+                                    <div>{item}</div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Q2 Growth Tactics */}
+                        {intelligence.q2_growth_tactics && (
+                          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                            <h3 className="font-semibold text-blue-900 mb-3 flex items-center">
+                              📈 Q2: Growth Phase (Month 4-6)
+                              <span className="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                                Scaling
+                              </span>
+                            </h3>
+                            <div className="bg-white p-4 rounded border">
+                              <div className="space-y-2">
+                                {intelligence.q2_growth_tactics.map((item, index) => (
+                                  <div key={index} className="flex items-start text-sm text-blue-900">
+                                    <div className="font-mono mr-2">•</div>
+                                    <div>{item}</div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Q3 Optimization */}
+                        {intelligence.q3_optimization && (
+                          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                            <h3 className="font-semibold text-purple-900 mb-3 flex items-center">
+                              ⚡ Q3: Peak Season (Month 7-9)
+                              <span className="ml-2 text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">
+                                Optimize
+                              </span>
+                            </h3>
+                            <div className="bg-white p-4 rounded border">
+                              <div className="space-y-2">
+                                {intelligence.q3_optimization.map((item, index) => (
+                                  <div key={index} className="flex items-start text-sm text-purple-900">
+                                    <div className="font-mono mr-2">•</div>
+                                    <div>{item}</div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Q4 Maximization */}
+                        {intelligence.q4_maximization && (
+                          <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
+                            <h3 className="font-semibold text-orange-900 mb-3 flex items-center">
+                              🎯 Q4: Holiday Rush (Month 10-12)
+                              <span className="ml-2 text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+                                Maximize
+                              </span>
+                            </h3>
+                            <div className="bg-white p-4 rounded border">
+                              <div className="space-y-2">
+                                {intelligence.q4_maximization.map((item, index) => (
+                                  <div key={index} className="flex items-start text-sm text-orange-900">
+                                    <div className="font-mono mr-2">•</div>
+                                    <div>{item}</div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Competitor Landscape */}
+                        {intelligence.competitor_landscape && (
+                          <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+                            <h3 className="font-semibold text-red-900 mb-3 flex items-center">
+                              🎯 Competitive Analysis
+                              <span className="ml-2 text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">
+                                Intelligence
+                              </span>
+                            </h3>
+                            <div className="bg-white p-4 rounded border text-sm">
+                              <div className="space-y-3">
+                                <div>
+                                  <span className="font-medium text-red-700">Market Position: </span>
+                                  <span className="text-red-900">{intelligence.competitor_landscape.market_position}</span>
+                                </div>
+                                <div>
+                                  <span className="font-medium text-red-700">Price Strategy: </span>
+                                  <span className="text-red-900">{intelligence.competitor_landscape.price_positioning}</span>
+                                </div>
+                                {intelligence.competitor_landscape.top_3_competitors && (
+                                  <div>
+                                    <span className="font-medium text-red-700">Monitor These Competitors:</span>
+                                    <ul className="mt-1 space-y-1">
+                                      {intelligence.competitor_landscape.top_3_competitors.map((comp, index) => (
+                                        <li key={index} className="text-red-900 ml-4">• {comp}</li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Revenue Projections */}
+                        {intelligence.revenue_projections && (
+                          <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
+                            <h3 className="font-semibold text-indigo-900 mb-3 flex items-center">
+                              💰 Revenue Projections
+                              <span className="ml-2 text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full">
+                                Forecast
+                              </span>
+                            </h3>
+                            <div className="bg-white p-4 rounded border">
+                              <div className="grid grid-cols-3 gap-4 text-sm">
+                                {intelligence.revenue_projections.conservative && (
+                                  <div className="text-center">
+                                    <div className="font-medium text-gray-700 mb-2">Conservative</div>
+                                    <div className="space-y-1 text-gray-600">
+                                      <div>M1: {intelligence.revenue_projections.conservative.month_1}</div>
+                                      <div>M3: {intelligence.revenue_projections.conservative.month_3}</div>
+                                      <div>M6: {intelligence.revenue_projections.conservative.month_6}</div>
+                                      <div className="font-semibold text-indigo-900">Y1: {intelligence.revenue_projections.conservative.month_12}</div>
+                                    </div>
+                                  </div>
+                                )}
+                                {intelligence.revenue_projections.realistic && (
+                                  <div className="text-center bg-indigo-50 p-2 rounded">
+                                    <div className="font-medium text-indigo-700 mb-2">Realistic</div>
+                                    <div className="space-y-1 text-indigo-600">
+                                      <div>M1: {intelligence.revenue_projections.realistic.month_1}</div>
+                                      <div>M3: {intelligence.revenue_projections.realistic.month_3}</div>
+                                      <div>M6: {intelligence.revenue_projections.realistic.month_6}</div>
+                                      <div className="font-semibold text-indigo-900">Y1: {intelligence.revenue_projections.realistic.month_12}</div>
+                                    </div>
+                                  </div>
+                                )}
+                                {intelligence.revenue_projections.aggressive && (
+                                  <div className="text-center">
+                                    <div className="font-medium text-gray-700 mb-2">Aggressive</div>
+                                    <div className="space-y-1 text-gray-600">
+                                      <div>M1: {intelligence.revenue_projections.aggressive.month_1}</div>
+                                      <div>M3: {intelligence.revenue_projections.aggressive.month_3}</div>
+                                      <div>M6: {intelligence.revenue_projections.aggressive.month_6}</div>
+                                      <div className="font-semibold text-indigo-900">Y1: {intelligence.revenue_projections.aggressive.month_12}</div>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Key Metrics */}
+                        {intelligence.key_metrics_to_track && (
+                          <div className="bg-teal-50 rounded-lg p-4 border border-teal-200">
+                            <h3 className="font-semibold text-teal-900 mb-3 flex items-center">
+                              📊 Key Metrics to Track
+                              <span className="ml-2 text-xs bg-teal-100 text-teal-800 px-2 py-1 rounded-full">
+                                KPIs
+                              </span>
+                            </h3>
+                            <div className="bg-white p-4 rounded border">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                {intelligence.key_metrics_to_track.map((metric, index) => (
+                                  <div key={index} className="flex items-center text-sm">
+                                    <div className="w-2 h-2 bg-teal-500 rounded-full mr-2"></div>
+                                    <span className="text-teal-900">{metric}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Value Summary */}
+                        <div className="bg-gradient-to-r from-green-100 to-blue-100 rounded-lg p-6 border-2 border-green-300">
+                          <h3 className="font-bold text-green-900 mb-3 text-lg">🏆 Business Intelligence Summary</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                            <div className="bg-white p-4 rounded-lg shadow-sm">
+                              <div className="text-2xl font-bold text-green-600">$10,000+</div>
+                              <div className="text-sm text-gray-600">Consultant Value</div>
+                            </div>
+                            <div className="bg-white p-4 rounded-lg shadow-sm">
+                              <div className="text-2xl font-bold text-blue-600">7</div>
+                              <div className="text-sm text-gray-600">Strategic Areas</div>
+                            </div>
+                            <div className="bg-white p-4 rounded-lg shadow-sm">
+                              <div className="text-2xl font-bold text-purple-600">12</div>
+                              <div className="text-sm text-gray-600">Month Roadmap</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  } catch (error) {
+                    return (
+                      <div className="bg-gray-100 p-4 rounded border text-gray-700">
+                        Advanced profit strategies are being generated. Please refresh in a few moments.
+                      </div>
+                    );
+                  }
+                })()}
               </motion.div>
             )}
           </div>
