@@ -295,13 +295,21 @@ def generate_listing_clean(request, product_id, platform):
         service = ListingGeneratorService()
         listing = service.generate_listing(product_id, platform)
         
-        # Return minimal response with safe encoding
+        # Return minimal response with safe encoding - platform-specific fields
+        # 🔧 CRITICAL FIX: Return correct platform-specific fields instead of generic ones
+        if platform == 'walmart':
+            title = listing.walmart_product_title[:100] if listing.walmart_product_title else ''
+            content_length = len(listing.walmart_description) if listing.walmart_description else 0
+        else:
+            title = listing.title[:100] if listing.title else ''
+            content_length = len(listing.amazon_aplus_content) if listing.amazon_aplus_content else 0
+            
         return JsonResponse({
             'success': True,
             'id': listing.id,
-            'title': listing.title[:100] if listing.title else '',
+            'title': title,
             'status': listing.status,
-            'aplus_length': len(listing.amazon_aplus_content) if listing.amazon_aplus_content else 0,
+            'aplus_length': content_length,
             'message': 'Listing generated successfully'
         }, status=201)
         
